@@ -1,28 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scenario Planner (Tool 7)</title>
+    <title data-i18n="tool7.page_title">Scenario Planner (Tool 7)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="engine.js"></script>
-
+    <script src="translations.js"></script>
+    <script src="i18n.js"></script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #f4f4f5; }
         .dashboard-card { @apply bg-white p-6 rounded-2xl shadow-sm border border-gray-200; }
-        
-        /* NEW Cosmetic Style */
+
         .section-title { @apply text-xl font-bold pb-2 border-b mb-4; }
         .section-title-blue { @apply text-blue-900 border-blue-200; }
-        /* --- End New Style --- */
 
         .slider-container { @apply mb-6; }
         .slider-label { @apply flex justify-between text-sm font-bold text-gray-700 mb-2; }
         .slider { @apply w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer; }
         .slider:disabled { @apply bg-gray-100; }
-        
+
         /* --- SLIDER THUMB FIX (No @apply) --- */
         input[type='range']::-webkit-slider-thumb {
             -webkit-appearance: none;
@@ -30,7 +29,7 @@
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: #4f46e5; /* Default indigo */
+            background: #4f46e5;
             cursor: pointer;
             border: 2px solid white;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -39,16 +38,16 @@
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: #4f46e5; /* Default indigo */
+            background: #4f46e5;
             cursor: pointer;
             border: 2px solid white;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         input[type='range']:disabled::-webkit-slider-thumb {
-            background-color: #cbd5e1; /* gray-300 */
+            background-color: #cbd5e1;
         }
         input[type='range']:disabled::-moz-range-thumb {
-            background-color: #cbd5e1; /* gray-300 */
+            background-color: #cbd5e1;
         }
 
         #slideCarbon::-webkit-slider-thumb { background-color: #16a34a; }
@@ -56,14 +55,12 @@
         #slideFeedstock::-webkit-slider-thumb { background-color: #7c3aed; }
         #slideCapex::-webkit-slider-thumb { background-color: #dc2626; }
         #slideOpex::-webkit-slider-thumb { background-color: #f97316; }
-        
+
         #slideCarbon::-moz-range-thumb { background-color: #16a34a; }
         #slidePrice::-moz-range-thumb { background-color: #2563eb; }
         #slideFeedstock::-moz-range-thumb { background-color: #7c3aed; }
         #slideCapex::-moz-range-thumb { background-color: #dc2626; }
         #slideOpex::-moz-range-thumb { background-color: #f97316; }
-        /* --- End Slider Fix --- */
-
 
         .comparison-val { @apply text-lg font-bold text-right; }
         .base-val { @apply text-gray-500; }
@@ -82,12 +79,12 @@
         /* --- PROGRESS BAR --- */
         .progress-bar-container { @apply w-full bg-gray-200 rounded-full h-2.5 mb-6; }
         .progress-bar { @apply bg-green-600 h-2.5 rounded-full transition-all duration-500; }
-        
-        /* --- FOOTER (NEW) --- */
+
+        /* --- FOOTER --- */
         .disclaimer {
             text-align: left;
             font-size: 0.75rem;
-            color: #6b7280; /* gray-500 */
+            color: #6b7280;
             margin-top: 3rem;
             padding-top: 1.5rem;
             border-top: 1px solid #e5e7eb;
@@ -98,7 +95,7 @@
         }
         .disclaimer strong {
             font-weight: 600;
-            color: #4b5563; /* gray-600 */
+            color: #4b5563;
             font-style: normal;
         }
 
@@ -111,31 +108,20 @@
         .nav-button-indigo { background-color: #4f46e5; color: white; }
         .nav-button-white { background-color: white; color: #2563eb; border: 2px solid #dbeafe; }
         .nav-button-white:hover { background-color: #f9fafb; }
-        
+
         .hidden { display: none; }
-        .print-only { display: none; } 
+        .print-only { display: none; }
 
         /* --- PRINT STYLES --- */
         @media print {
-            /* Hide UI Elements */
             body > div > header, body > div > .w-full.mb-8, .lg\:col-span-1, .input-section, .nav-grid, .text-center { display: none !important; }
-            
-            /* Hide Sliders */
             .lg\:col-span-1 { display: none !important; }
-            
-            /* Force Table Width */
             .lg\:col-span-2 { display: block !important; width: 100% !important; }
-            
-            /* Show Footer */
             .disclaimer-container { display: block !important; }
             footer { display: block !important; position: static !important; margin-top: 40px; font-size: 8pt !important; font-style: italic !important; color: #666; }
-            
-            /* Layout */
             body { background-color: #ffffff; padding: 0; margin: 0; zoom: 80%; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             .max-w-5xl { max-width: 100%; }
             .dashboard-card { border: none; box-shadow: none; }
-            
-            /* Hide Icons */
             .f-icon, .tooltip-container { display: none; }
         }
     </style>
@@ -143,27 +129,38 @@
 <body class="p-4 md:p-8">
 
     <div class="max-w-5xl mx-auto">
+
+        <div class="flex justify-end mb-4">
+            <select id="lang-select" onchange="BiocharI18n.setLanguage(this.value)"
+                    class="nav-button nav-button-white py-2 px-4 text-xs">
+                <option value="en">English 🇺🇸</option>
+                <option value="es">Español 🇪🇸</option>
+                <option value="pt">Português 🇧🇷</option>
+            </select>
+        </div>
+
         <header class="text-center mb-6">
-            <h1 class="text-2xl md:text-3xl font-extrabold text-green-700">Biochar Project Feasibility Calculator</h1>
-            <h2 class="text-lg font-medium text-gray-700 mt-1">for Latin American Coffee & Cacao Supply Chains</h2>
-            <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider mt-4">Climatebase Fellowship Cohort 8 Capstone Project</p>
-            <p class="text-xs font-medium text-gray-500 mt-2">(All values in USD)</p>
-            
+            <h1 class="text-2xl md:text-3xl font-extrabold text-green-700" data-i18n="common.header_h1">Biochar Project Feasibility Calculator</h1>
+            <h2 class="text-lg font-medium text-gray-700 mt-1" data-i18n="common.header_h2">for Latin American Coffee & Cacao Supply Chains</h2>
+            <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider mt-4" data-i18n="common.cohort">Climatebase Fellowship Cohort 8 Capstone Project</p>
+            <p class="text-xs font-medium text-gray-500 mt-2" data-i18n="common.usd_note">(All values in USD)</p>
+
             <div class="mt-4 mb-6">
-                <a href="https://chatgpt.com/g/g-691ea2b1c2888191b85e54e203c53b2f-biochar-feasibility-guide" 
-                   target="_blank" 
-                   class="inline-block bg-blue-50 text-blue-700 hover:text-blue-900 border border-blue-200 rounded-full px-4 py-1 text-sm font-medium transition">
+                <a href="https://chatgpt.com/g/g-691ea2b1c2888191b85e54e203c53b2f-biochar-feasibility-guide"
+                   target="_blank"
+                   class="inline-block bg-blue-50 text-blue-700 hover:text-blue-900 border border-blue-200 rounded-full px-4 py-1 text-sm font-medium transition"
+                   data-i18n="common.ai_link">
                     Questions? Click here to ask the Biochar Feasibility Guide AI assistant ↗
                 </a>
             </div>
 
-            <p class="text-lg font-medium text-green-800">Tool 7: Scenario Planner</p>
+            <p class="text-lg font-medium text-green-800" data-i18n="tool7.tool_label">Tool 7: Scenario Planner</p>
         </header>
 
         <div class="w-full mb-8">
             <div class="flex justify-between text-sm font-medium text-gray-600 mb-1">
-                <span>Step 7 of 7: Scenario Planner</span>
-                <span class="font-bold text-green-600">Complete!</span>
+                <span data-i18n="tool7.step_label">Step 7 of 7: Scenario Planner</span>
+                <span class="font-bold text-green-600" data-i18n="tool7.step_complete">Complete!</span>
             </div>
             <div class="progress-bar-container">
                 <div class="progress-bar" style="width: 100%"></div>
@@ -175,38 +172,40 @@
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
-            Loading Base Case...
+            <span data-i18n="tool7.loading_text">Loading Base Case...</span>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-            
+
             <div class="lg:col-span-1 space-y-6">
-                <div class="dashboard-card"> <h3 class="section-title section-title-blue">Scenario Controls</h3>
-                    <p class="text-sm text-blue-800 mb-6">Adjust sliders to stress-test your model.</p>
+                <div class="dashboard-card">
+                    <h3 class="section-title section-title-blue" data-i18n="tool7.controls_section">Scenario Controls</h3>
+                    <p class="text-sm text-blue-800 mb-6" data-i18n="tool7.controls_desc">Adjust sliders to stress-test your model.</p>
 
                     <div class="slider-container">
-                        <div class="slider-label"><span>Carbon Credit Price ($/t)</span><span id="valCarbon" class="text-green-700">$100</span></div>
+                        <div class="slider-label"><span data-i18n="tool7.carbon_price_label">Carbon Credit Price ($/t)</span><span id="valCarbon" class="text-green-700">$100</span></div>
                         <input type="range" id="slideCarbon" min="0" max="300" value="100" class="slider" disabled>
                     </div>
                     <div class="slider-container">
-                        <div class="slider-label"><span id="priceLabel">Biochar Price</span><span id="valPrice" class="text-blue-700">$500</span></div>
+                        <div class="slider-label"><span id="priceLabel" data-i18n="tool7.biochar_price_label">Biochar Price</span><span id="valPrice" class="text-blue-700">$500</span></div>
                         <input type="range" id="slidePrice" min="0" max="1500" value="500" class="slider" disabled>
                     </div>
                     <div class="slider-container">
-                        <div class="slider-label"><span>Avg Feedstock Price ($/t)</span><span id="valFeedstock" class="text-purple-700">$0</span></div>
+                        <div class="slider-label"><span data-i18n="tool7.feedstock_price_label">Avg Feedstock Price ($/t)</span><span id="valFeedstock" class="text-purple-700">$0</span></div>
                         <input type="range" id="slideFeedstock" min="0" max="200" value="0" step="5" class="slider" disabled>
                     </div>
                     <hr class="border-blue-200 my-4">
                     <div class="slider-container">
-                        <div class="slider-label"><span>CAPEX Overrun (%)</span><span id="valCapex" class="text-red-700">+0%</span></div>
+                        <div class="slider-label"><span data-i18n="tool7.capex_overrun_label">CAPEX Overrun (%)</span><span id="valCapex" class="text-red-700">+0%</span></div>
                         <input type="range" id="slideCapex" min="0" max="100" value="0" class="slider" disabled>
                     </div>
                     <div class="slider-container">
-                        <div class="slider-label"><span>OPEX Overrun (%)</span><span id="valOpex" class="text-orange-700">+0%</span></div>
+                        <div class="slider-label"><span data-i18n="tool7.opex_overrun_label">OPEX Overrun (%)</span><span id="valOpex" class="text-orange-700">+0%</span></div>
                         <input type="range" id="slideOpex" min="0" max="100" value="0" class="slider" disabled>
                     </div>
 
-                    <button id="resetBtn" class="w-full py-3 bg-white border-2 border-blue-300 text-blue-700 font-bold rounded-xl hover:bg-blue-50 transition" disabled>
+                    <button id="resetBtn" class="w-full py-3 bg-white border-2 border-blue-300 text-blue-700 font-bold rounded-xl hover:bg-blue-50 transition" disabled
+                            data-i18n="tool7.reset_btn">
                         Reset to Base Case
                     </button>
                 </div>
@@ -214,44 +213,44 @@
 
             <div class="lg:col-span-2">
                 <div class="dashboard-card">
-                    <h3 class="text-xl font-bold text-gray-800 mb-6">Base Case vs. Scenario</h3>
+                    <h3 class="text-xl font-bold text-gray-800 mb-6" data-i18n="tool7.comparison_title">Base Case vs. Scenario</h3>
                     <div class="overflow-x-auto">
                         <table class="w-full text-sm">
                             <thead>
                                 <tr class="text-xs uppercase text-gray-500 border-b-2 border-gray-100">
-                                    <th class="text-left py-3">Metric</th>
-                                    <th class="text-right py-3 px-4">Base Case</th>
-                                    <th class="text-right py-3 px-4 bg-blue-50 text-blue-900">Scenario</th>
-                                    <th class="text-right py-3">Impact</th>
+                                    <th class="text-left py-3" data-i18n="tool7.metric_header">Metric</th>
+                                    <th class="text-right py-3 px-4" data-i18n="tool7.base_header">Base Case</th>
+                                    <th class="text-right py-3 px-4 bg-blue-50 text-blue-900" data-i18n="tool7.scenario_header">Scenario</th>
+                                    <th class="text-right py-3" data-i18n="tool7.impact_header">Impact</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-100">
                                 <tr>
-                                    <td class="py-4 font-medium flex items-center">Total Annual Revenue<div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text">Biochar + Credits + Vinegar</span></div></td>
+                                    <td class="py-4 font-medium flex items-center"><span data-i18n="tool7.revenue_row">Total Annual Revenue</span><div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool7.revenue_tooltip">Biochar + Credits + Vinegar</span></div></td>
                                     <td id="baseRevenue" class="comparison-val base-val">$0</td>
                                     <td id="scenRevenue" class="comparison-val scenario-val bg-blue-50">$0</td>
                                     <td id="diffRevenue" class="text-right px-2">--</td>
                                 </tr>
                                 <tr>
-                                    <td class="py-4 font-medium">Total Upfront CAPEX</td>
+                                    <td class="py-4 font-medium" data-i18n="tool7.capex_row">Total Upfront CAPEX</td>
                                     <td id="baseCapex" class="comparison-val base-val">$0</td>
                                     <td id="scenCapex" class="comparison-val scenario-val bg-blue-50">$0</td>
                                     <td id="diffCapex" class="text-right px-2">--</td>
                                 </tr>
                                 <tr>
-                                    <td class="py-4 font-medium flex items-center">Annual Net Profit<div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text">(Revenue - OPEX) - Tax + Incentives</span></div></td>
+                                    <td class="py-4 font-medium flex items-center"><span data-i18n="tool7.profit_row">Annual Net Profit</span><div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool7.profit_tooltip">(Revenue - OPEX) - Tax + Incentives</span></div></td>
                                     <td id="baseProfit" class="comparison-val base-val">$0</td>
                                     <td id="scenProfit" class="comparison-val scenario-val bg-blue-50">$0</td>
                                     <td id="diffProfit" class="text-right px-2">--</td>
                                 </tr>
                                 <tr class="bg-gray-50">
-                                    <td class="py-4 font-bold text-gray-900 pl-2 flex items-center">Payback Period<div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text">CAPEX / Profit</span></div></td>
+                                    <td class="py-4 font-bold text-gray-900 pl-2 flex items-center"><span data-i18n="tool7.payback_row">Payback Period</span><div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool7.payback_tooltip">CAPEX / Profit</span></div></td>
                                     <td id="basePayback" class="comparison-val base-val px-4">--</td>
                                     <td id="scenPayback" class="comparison-val scenario-val bg-blue-100 px-4">--</td>
                                     <td id="diffPayback" class="text-right px-2">--</td>
                                 </tr>
                                 <tr class="bg-gray-50">
-                                    <td id="npvLabel" class="py-4 font-bold text-gray-900 pl-2 flex items-center">10-Year NPV<div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text">Total present value of all profits minus CAPEX.</span></div></td>
+                                    <td id="npvLabel" class="py-4 font-bold text-gray-900 pl-2 flex items-center"><span>10-Year NPV</span><div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool7.npv_tooltip">Total present value of all profits minus CAPEX.</span></div></td>
                                     <td id="baseNpv" class="comparison-val base-val px-4">$0</td>
                                     <td id="scenNpv" class="comparison-val scenario-val bg-blue-100 px-4">$0</td>
                                     <td id="diffNpv" class="text-right px-2">--</td>
@@ -264,59 +263,65 @@
         </div>
 
         <div class="input-section bg-gray-50 border-l-4 border-gray-400 p-4">
-            <h3 class="font-bold text-gray-700 mb-2 uppercase text-sm tracking-wider">Scenario Notes & Observations</h3>
-            <textarea id="toolNotes" rows="3" class="input-field bg-white" placeholder="E.g., 'Project only viable if Carbon Price stays above $80'"></textarea>
-            <button id="saveNotesButton" class="nav-button nav-button-indigo w-full mt-4">Save Scenario Notes</button>
+            <h3 class="font-bold text-gray-700 mb-2 uppercase text-sm tracking-wider" data-i18n="tool7.notes_section">Scenario Notes & Observations</h3>
+            <textarea id="toolNotes" rows="3" class="input-field bg-white"
+                      data-i18n-placeholder="tool7.notes_placeholder"
+                      placeholder="E.g., 'Project only viable if Carbon Price stays above $80'"></textarea>
+            <button id="saveNotesButton" class="nav-button nav-button-indigo w-full mt-4" data-i18n="tool7.save_btn">Save Scenario Notes</button>
             <div id="saveStatus" class="font-medium text-green-600" style="display: none; text-align: center; margin-top: 10px;"></div>
         </div>
 
         <div class="nav-grid mt-8 mb-12">
-            <button onclick="navigate('tool6.html')" class="nav-button nav-button-blue md:col-span-1">← Back to Dashboard</button>
-            <button onclick="window.print()" class="nav-button nav-button-green md:col-span-1">🖨️ Print / Save as PDF</button>
-            <button onclick="navigate('index.html')" class="nav-button nav-button-white md:col-span-1">Return to Main Menu</button>
+            <button onclick="navigate('tool6.html')" class="nav-button nav-button-blue md:col-span-1" data-i18n="tool7.back_btn">← Back to Dashboard</button>
+            <button onclick="window.print()" class="nav-button nav-button-green md:col-span-1" data-i18n="tool7.print_btn">🖨️ Print / Save as PDF</button>
+            <button onclick="navigate('index.html')" class="nav-button nav-button-white md:col-span-1" data-i18n="tool7.main_menu_btn">Return to Main Menu</button>
         </div>
     </div>
 
-    <div class="disclaimer-container"> <footer class="disclaimer max-w-5xl mx-auto">
-            <p><strong>No Guarantee:</strong> <em>The projections provided by this calculator are based on the assumptions and data entered by the user. They are for illustrative purposes only and do not constitute a guarantee of actual costs, revenues, or profitability.</em></p>
-            <p><strong>Not Financial Advice:</strong> <em>The information provided is not intended to be a substitute for professional financial, legal, or agricultural advice. Users are solely responsible for any decisions made based on the output of this tool.</em></p>
-            <p><strong>Verify All Data:</strong> <em>Users should independently verify all local costs, market prices, and regulatory requirements before making any investment.</em></p>
+    <div class="disclaimer-container">
+        <footer class="disclaimer max-w-5xl mx-auto">
+            <p><strong data-i18n="tool7.footer_no_guarantee_label">No Guarantee:</strong> <em data-i18n="tool7.footer_no_guarantee">The projections provided by this calculator are based on the assumptions and data entered by the user. They are for illustrative purposes only and do not constitute a guarantee of actual costs, revenues, or profitability.</em></p>
+            <p><strong data-i18n="tool7.footer_not_advice_label">Not Financial Advice:</strong> <em data-i18n="tool7.footer_not_advice">The information provided is not intended to be a substitute for professional financial, legal, or agricultural advice. Users are solely responsible for any decisions made based on the output of this tool.</em></p>
+            <p><strong data-i18n="tool7.footer_verify_label">Verify All Data:</strong> <em data-i18n="tool7.footer_verify">Users should independently verify all local costs, market prices, and regulatory requirements before making any investment.</em></p>
         </footer>
     </div>
+
 <script type="module">
         let projectData = {};
-        window.BASE_DATA = {}; // Will hold all base case numbers
-        let hasUnsavedChanges = false; // For notes
+        window.BASE_DATA = {};
+        let hasUnsavedChanges = false;
 
         const loadingIndicator = document.getElementById('loadingIndicator');
         const saveButton = document.getElementById('saveNotesButton');
         const saveStatus = document.getElementById('saveStatus');
 
         // --- Helper Functions ---
-        function setText(id, txt) { 
+        function setText(id, txt) {
             const el = document.getElementById(id);
-            if (el) el.textContent = txt; 
+            if (el) el.textContent = txt;
         }
-        // *** BUG FIX: formatMoney now handles prefix ***
-        function formatMoney(n, prefix = '$') { 
+        function formatMoney(n, prefix = '$') {
             if (isNaN(n) || !isFinite(n)) n = 0;
             if (Math.abs(n) >= 1000000) return prefix + (n / 1000000).toFixed(1) + 'M';
             if (Math.abs(n) >= 1000) return prefix + (n / 1000).toFixed(0) + 'k';
             return prefix + n.toFixed(0);
         }
-        function fmtPayback(n) { return !isFinite(n) || n > 50 ? "Never" : n.toFixed(1) + " yrs"; }
+        function fmtPayback(n) {
+            const unit = BiocharI18n.t('tool7.payback_unit');
+            return !isFinite(n) || n > 50 ? BiocharI18n.t('tool7.never_text') : n.toFixed(1) + unit;
+        }
         function calculateNPV(invest, flow, rate, years) {
             let npv = -invest;
             if (rate <= -1) return -Infinity;
-            for (let t = 1; t <= years; t++) { 
-                npv += flow / Math.pow(1 + rate, t); 
+            for (let t = 1; t <= years; t++) {
+                npv += flow / Math.pow(1 + rate, t);
             }
             return npv;
         }
 
-        // --- NEW: Unsaved changes for notes ---
+        // --- Unsaved changes for notes ---
         window.addEventListener("beforeunload", e => {
-            if(hasUnsavedChanges){ e.preventDefault(); e.returnValue=""; }
+            if (hasUnsavedChanges) { e.preventDefault(); e.returnValue = ""; }
         });
 
         document.getElementById('toolNotes').addEventListener('input', () => {
@@ -331,16 +336,15 @@
                 const storedData = localStorage.getItem('biocharProjectData');
                 if (storedData) projectData = JSON.parse(storedData);
             }
-            
-            // Check for all required tools
+
             if (projectData && projectData.tool1 && projectData.tool2 && projectData.tool3 && projectData.tool4 && projectData.tool5) {
                 loadBaseCase();
             } else {
-                loadingIndicator.textContent = "Data from Tools 1-5 is missing. Please complete all previous steps.";
+                loadingIndicator.querySelector('span[data-i18n]').textContent = BiocharI18n.t('tool7.missing_data_error');
                 loadingIndicator.classList.remove('animate-pulse', 'text-blue-600');
                 loadingIndicator.classList.add('text-red-600');
             }
-            
+
             document.querySelectorAll('.slider').forEach(el => el.addEventListener('input', runScenario));
             document.getElementById('resetBtn').addEventListener('click', () => {
                 document.getElementById('slideCarbon').value = window.BASE_DATA.basePriceCredit;
@@ -354,7 +358,7 @@
         });
 
         function saveNotes() {
-            saveButton.textContent = "Saving...";
+            saveButton.textContent = BiocharI18n.t('tool7.saving_text');
             saveButton.disabled = true;
             saveStatus.style.display = 'none';
             try {
@@ -364,46 +368,37 @@
                 } else {
                     localStorage.setItem('biocharProjectData', JSON.stringify(projectData));
                 }
-                saveStatus.textContent = "Notes Saved!";
+                saveStatus.textContent = BiocharI18n.t('tool7.saved_status');
                 saveStatus.style.display = 'block';
-                saveButton.textContent = "Save Scenario Notes";
+                saveButton.textContent = BiocharI18n.t('tool7.save_btn');
                 saveButton.disabled = false;
                 hasUnsavedChanges = false;
-            } catch (e) { 
-                saveStatus.textContent = "Save Failed";
+            } catch (e) {
+                saveStatus.textContent = BiocharI18n.t('tool7.save_failed');
                 saveStatus.style.display = 'block';
-             }
+            }
         }
 
-        /**
-         * This is the master calculation function, copied from Tool 6
-         * *** BUG FIX: Removed duplicate function, fixed variable names ***
-         */
         function calculateFinancials(scenario, D) {
-            // D is BASE_DATA, scenario has the slider values
-            
-            // --- CAPEX ---
             const capex = D.baseCapex * (1 + (scenario.capexOverun / 100));
 
-            // --- REVENUE ---
             const rev_Credits = D.credits * scenario.priceCredit;
             let rev_Biochar = 0;
             let opex_RetailCosts = 0;
-            
-            // *** BUG FIX: Use new "per bag" logic ***
+
             if (D.revModel === 'retail' && D.mixPercent > 0 && D.bagWeightKg > 0) {
                 const biocharPerBagKg = D.bagWeightKg * D.mixPercent;
                 const totalBags = (D.biochar * 1000) / biocharPerBagKg;
-                
-                rev_Biochar = totalBags * scenario.priceBiochar; // Here, priceBiochar is price_per_bag
-                
+
+                rev_Biochar = totalBags * scenario.priceBiochar;
+
                 const compostTonnes = (totalBags * (D.bagWeightKg * (1 - D.mixPercent))) / 1000;
-                
+
                 opex_RetailCosts = (compostTonnes * D.compostCost) +
                                  (totalBags * D.packagingCost) +
                                  (totalBags * D.distributionCost);
             } else if (D.revModel === 'bulk') {
-                rev_Biochar = D.biochar * scenario.priceBiochar; // Here, priceBiochar is price_per_tonne
+                rev_Biochar = D.biochar * scenario.priceBiochar;
             }
             rev_Biochar = rev_Biochar * D.salesRate;
 
@@ -416,35 +411,30 @@
             }
             const totalRevenue = rev_Credits + rev_Biochar + rev_Vinegar;
 
-            // --- OPEX ---
-            // *** BUG FIX: Use opex_Feedstock, not feedstockCost ***
-            const opex_Feedstock = D.feedstock * scenario.priceFeedstock; // Use slider value
-            
-            const otherBaseOpex = D.logisticsCost + 
-                                  D.baseOpexSite + 
-                                  opex_RetailCosts + 
-                                  opex_VinegarCosts + 
+            const opex_Feedstock = D.feedstock * scenario.priceFeedstock;
+
+            const otherBaseOpex = D.logisticsCost +
+                                  D.baseOpexSite +
+                                  opex_RetailCosts +
+                                  opex_VinegarCosts +
                                   D.baseOpexMarketing +
                                   D.baseOpexRetailCompliance;
-            
+
             const opex_Finance = (D.hasWcLoan ? (D.wcLoanAmount * D.wcLoanRate) : 0) + (D.loanAmount * D.loanRate);
 
-            // *** BUG FIX: Use opex_Feedstock ***
             const totalOpex = opex_Feedstock + (otherBaseOpex * (1 + (scenario.opexOverun / 100))) + opex_Finance;
 
-            // --- FINALS ---
             const preTaxProfit = totalRevenue - totalOpex;
             const tax = Math.max(0, preTaxProfit * D.taxRate);
             const netProfit = preTaxProfit - tax + D.incentives;
             const payback = netProfit > 0 ? (capex / netProfit) : Infinity;
             const npv = calculateNPV(capex, netProfit, D.discountRate, D.projectLife);
-            
+
             return { revenue: totalRevenue, capex: capex, profit: netProfit, payback: payback, npv: npv };
         }
 
         function loadBaseCase() {
             try {
-                // === 1. EXTRACT DATA FROM ALL TOOLS (with defaults) ===
                 const t1 = projectData.tool1 || {};
                 const t2 = projectData.tool2 || {};
                 const t3 = projectData.tool3 || {};
@@ -457,7 +447,6 @@
                 const o_data = t5.opex || {};
                 const fin_data = t5.finance || {};
 
-                // --- FEEDSTOCK & BIOCHAR (from T2) ---
                 const biochar1 = (f_data.f1_tonnes || 0) * (1 - (f_data.f1_ash || 0)) * (f_data.f1_yield || 0);
                 const biochar2 = (f_data.f2_tonnes || 0) * (1 - (f_data.f2_ash || 0)) * (f_data.f2_yield || 0);
                 const totalBiochar = biochar1 + biochar2;
@@ -465,31 +454,26 @@
                 const credits1 = biochar1 * (f_data.f1_carbon || 0) * (f_data.f1_conv || 0);
                 const credits2 = biochar2 * (f_data.f2_carbon || 0) * (f_data.f2_conv || 0);
                 const totalCredits = credits1 + credits2;
-                
+
                 const totalFeedstock = (f_data.f1_tonnes || 0) + (f_data.f2_tonnes || 0);
-                
-                // --- SLIDER BASE VALUES ---
+
                 const basePriceCredit = t4.carbonCreditPrice || 100;
-                // *** UPDATED: "Per bag" logic ***
                 const basePriceBiochar = t4.salesModel === 'retail' ? (t4.retailPricePerBag || 25) : (t4.bulkPrice || 500);
                 const opex_Feedstock_Base = ((f_data.f1_tonnes || 0) * (f_data.f1_price || 0)) + ((f_data.f2_tonnes || 0) * (f_data.f2_price || 0));
                 const basePriceFeedstock = totalFeedstock > 0 ? (opex_Feedstock_Base / totalFeedstock) : 0;
-                
-                // --- OPEX ---
+
                 let opex_Labor = (o_data.generalStaffCount * o_data.generalSalary) + (o_data.mgmtStaffCount * o_data.mgmtSalary);
                 let opex_Utilities = (o_data.utilities || 0);
-                
-                // *** FIXED LOGIC: Only reduce months if Strategy is 'Shutdown', ignore 'Store' ***
+
                 if (t1.seasonalityStrategy === 'shutdown') {
                     const months = (o_data.monthsOperational || 12);
                     opex_Labor = opex_Labor * (months / 12);
                     opex_Utilities = opex_Utilities * (months / 12);
                 }
-                
-                // *** UPDATED: Includes new opex lines ***
-                const baseOpexSite = opex_Labor + 
-                                     (o_data.insurance || 0) + 
-                                     opex_Utilities + 
+
+                const baseOpexSite = opex_Labor +
+                                     (o_data.insurance || 0) +
+                                     opex_Utilities +
                                      (o_data.pickupsAnnualOpex || 0) +
                                      (o_data.regulatory || 0) +
                                      (o_data.registryFees || 0) +
@@ -497,81 +481,85 @@
                                      (o_data.landLease || 0) +
                                      (o_data.totalMobileRelocationOpex || 0);
 
-                // --- Store all base numbers in global object ---
                 window.BASE_DATA = {
                     feedstock: totalFeedstock,
                     biochar: totalBiochar,
                     credits: totalCredits,
-                    
+
                     revModel: t4.salesModel || 'bulk',
                     salesRate: t4.salesRate || 0.75,
-                    
+
                     basePriceFeedstock: basePriceFeedstock,
                     basePriceBiochar: basePriceBiochar,
                     basePriceCredit: basePriceCredit,
-                    
-                    // *** UPDATED: "Per bag" data ***
-                    mixPercent: (t4.retailMixPercent || 100) / 100, 
+
+                    mixPercent: (t4.retailMixPercent || 100) / 100,
                     compostCost: t4.compostCost || 0,
                     bagWeightKg: t4.retailBagWeightKg || 20,
                     packagingCost: t4.retailPackagingCostPerBag || 1.5,
                     distributionCost: t4.retailDistributionCostPerBag || 2.0,
 
                     sellVinegar: t4.sellWoodVinegar || false,
-                    vinegarTotalFeedstock: totalFeedstock, // Use total feedstock
+                    vinegarTotalFeedstock: totalFeedstock,
                     vinegarYield: t4.woodVinegarYield || 0,
                     vinegarPrice: t4.woodVinegarPrice || 0,
                     vinegarPackaging: t4.woodVinegarPackaging || 0.30,
                     vinegarDistribution: t4.woodVinegarDistribution || 0,
-                    
+
                     logisticsCost: t3.totalAnnualLogisticsCost || 0,
-                    baseOpexSite: baseOpexSite, 
+                    baseOpexSite: baseOpexSite,
                     baseOpexRetailCompliance: t4.soilAmendmentAnnualCost || 0,
                     baseOpexMarketing: t4.marketingBudget || 0,
-                    
+
                     baseCapex: c_data.totalCapex || 0,
-                    
+
                     taxRate: (fin_data.taxRate || 30) / 100,
                     incentives: fin_data.incentives || 0,
                     loanRate: (fin_data.interestRate || 12) / 100,
                     loanAmount: fin_data.loanAmount || 0,
                     discountRate: (fin_data.discountRate || 10) / 100,
                     projectLife: fin_data.projectLife || 10,
-                    
+
                     wcLoanAmount: o_data.feedstockWorkingCapital || 0,
                     wcLoanRate: (o_data.feedstockLoanInterestRate || 15) / 100,
                     hasWcLoan: o_data.hasFeedstockLoan || false
                 };
 
-                // --- Load Notes ---
                 if (projectData.notes_T7) document.getElementById('toolNotes').value = projectData.notes_T7;
 
-                // --- Set Sliders to Base Case ---
                 document.getElementById('slideCarbon').value = basePriceCredit;
                 document.getElementById('slidePrice').value = basePriceBiochar;
-                
-                // Update slider label for biochar price
+
+                // Update biochar price label based on sales model
                 if (window.BASE_DATA.revModel === 'retail') {
-                    document.getElementById('priceLabel').textContent = 'Biochar Price ($/bag)';
+                    document.getElementById('priceLabel').textContent = BiocharI18n.t('tool7.biochar_price_per_bag');
                 } else {
-                    document.getElementById('priceLabel').textContent = 'Biochar Price ($/t)';
+                    document.getElementById('priceLabel').textContent = BiocharI18n.t('tool7.biochar_price_per_tonne');
                 }
                 document.getElementById('slideFeedstock').value = Math.round(basePriceFeedstock);
-                document.getElementById('npvLabel').textContent = `${window.BASE_DATA.projectLife}-Year NPV`;
-                
-                // *** NEW: Enable sliders and reset button ***
+
+                // Update NPV row label
+                const npvLabelEl = document.getElementById('npvLabel');
+                if (npvLabelEl) {
+                    const span = npvLabelEl.querySelector('span');
+                    if (span) span.textContent = BiocharI18n.t('tool7.npv_label', { n: window.BASE_DATA.projectLife });
+                }
+
                 document.querySelectorAll('.slider').forEach(el => el.disabled = false);
                 document.getElementById('resetBtn').disabled = false;
-                
-                runScenario(); // Run once to populate base case
+
+                runScenario();
                 loadingIndicator.classList.add('hidden');
 
-            } catch (e) { console.error(e); loadingIndicator.textContent = "Error loading base case."; }
+            } catch (e) {
+                console.error(e);
+                loadingIndicator.querySelector('span[data-i18n]').textContent = BiocharI18n.t('tool7.error_loading');
+            }
         }
 
         window.runScenario = function() {
             const D = window.BASE_DATA;
-            if (!D.hasOwnProperty('baseCapex')) return; // Not loaded yet
+            if (!D.hasOwnProperty('baseCapex')) return;
 
             const scenario = {
                 priceCredit: parseFloat(document.getElementById('slideCarbon').value),
@@ -581,14 +569,12 @@
                 opexOverun: parseFloat(document.getElementById('slideOpex').value)
             };
 
-            // Update slider readouts
             document.getElementById('valCarbon').textContent = `$${scenario.priceCredit}`;
             document.getElementById('valPrice').textContent = `$${scenario.priceBiochar}`;
             document.getElementById('valFeedstock').textContent = `$${scenario.priceFeedstock}`;
             document.getElementById('valCapex').textContent = `+${scenario.capexOverun.toFixed(0)}%`;
             document.getElementById('valOpex').textContent = `+${scenario.opexOverun.toFixed(0)}%`;
 
-            // Calculate Base and Scenario
             const baseScenario = {
                 priceCredit: D.basePriceCredit,
                 priceBiochar: D.basePriceBiochar,
@@ -596,33 +582,31 @@
                 capexOverun: 0,
                 opexOverun: 0
             };
-            
+
             const baseResults = calculateFinancials(baseScenario, D);
             const scenResults = calculateFinancials(scenario, D);
 
-            // Render table
             updateRow('Revenue', baseResults.revenue, scenResults.revenue);
             updateRow('Capex', baseResults.capex, scenResults.capex, true);
             updateRow('Profit', baseResults.profit, scenResults.profit);
             updateRow('Npv', baseResults.npv, scenResults.npv);
-            
+
             setText('basePayback', fmtPayback(baseResults.payback));
             setText('scenPayback', fmtPayback(scenResults.payback));
-            
+
             const paybackDiff = scenResults.payback - baseResults.payback;
             const pbEl = document.getElementById('diffPayback');
-            // *** BUG FIX: Use isFinite ***
+            const unit = BiocharI18n.t('tool7.payback_unit');
             if (!isFinite(baseResults.payback) || !isFinite(scenResults.payback)) {
                 pbEl.textContent = '--'; pbEl.className = 'text-right px-2 text-gray-400';
             } else {
-                pbEl.textContent = `${paybackDiff > 0 ? '+' : ''}${paybackDiff.toFixed(1)} yrs`;
+                pbEl.textContent = `${paybackDiff > 0 ? '+' : ''}${paybackDiff.toFixed(1)}${unit}`;
                 pbEl.className = `text-right px-2 ${paybackDiff > 0 ? 'diff-negative' : 'diff-positive'}`;
             }
         }
 
-        function updateRow(idSuffix, baseVal, scenVal, invertColors=false) {
-            // *** BUG FIX: Use prefix in formatMoney ***
-            const prefix = '$'; 
+        function updateRow(idSuffix, baseVal, scenVal, invertColors = false) {
+            const prefix = '$';
             document.getElementById(`base${idSuffix}`).textContent = formatMoney(baseVal, prefix);
             document.getElementById(`scen${idSuffix}`).textContent = formatMoney(scenVal, prefix);
             const diff = scenVal - baseVal;
@@ -633,45 +617,29 @@
             diffEl.className = `text-right px-2 ${isGood ? 'diff-positive' : 'diff-negative'}`;
             if (Math.abs(diff) < 1) { diffEl.textContent = '--'; diffEl.className = 'text-right px-2 text-gray-400'; }
         }
-        
-        function showError(msg) { 
-            if(saveStatus) {
-                saveStatus.textContent = msg;
-                saveStatus.style.display = 'block';
-                saveStatus.style.color = 'rgb(220 38 38)';
-            }
-            if(loadingIndicator) {
-                loadingIndicator.textContent = msg;
-                loadingIndicator.classList.remove('animate-pulse', 'text-blue-600');
-                loadingIndicator.classList.add('text-red-600');
-            }
-        }
 
-        // *** NEW: Smart Navigation ***
+        // *** Smart Navigation ***
         window.navigate = function(url) {
             if (hasUnsavedChanges) {
-                alert("You have unsaved changes. Please click the 'Save' button before continuing.");
+                alert(BiocharI18n.t('common.alert_unsaved'));
             } else {
                 window.location.href = url;
             }
         }
 
-        // *** NEW: Global Reset Button Logic ***
+        // *** Global Reset Button Logic ***
         window.resetForm = function() {
-            if (!confirm("This will clear ALL project data from all tools. Are you sure?")) return;
+            if (!confirm(BiocharI18n.t('common.confirm_reset'))) return;
 
-            // Clear everything
-            projectData = {}; 
+            projectData = {};
 
             if (window.BiocharEngine && BiocharEngine.clearProjectData) {
                 BiocharEngine.clearProjectData();
             } else {
-                // Fallback for older engine.js
                 localStorage.removeItem("biocharProjectData");
                 localStorage.removeItem("currentProjectId");
             }
 
-            // Force reload to empty form
             location.reload();
         }
     </script>
