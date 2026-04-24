@@ -1,74 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Biochar Finance & Ops Calc (Tool 5)</title>
+    <title data-i18n="tool5.page_title">Biochar Finance & Ops Calc (Tool 5)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="engine.js"></script>
+    <script src="translations.js"></script>
+    <script src="i18n.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #f4f4f5; }
-        
-        /* Visual Grouping */
         .input-section { @apply bg-white p-6 rounded-xl shadow-sm border border-gray-200 mb-6; }
-
-        /* Headers - NEW COSMETIC STYLE */
         .section-title { @apply text-xl font-bold pb-2 border-b mb-4; }
         .section-title-orange { @apply text-orange-700 border-orange-200; }
         .section-title-yellow { @apply text-yellow-900 border-yellow-300; }
         .section-title-blue { @apply text-blue-900 border-blue-200; }
         .section-title-gray { @apply text-gray-800 border-gray-300; }
         .section-title-green { @apply text-green-800 border-green-300; }
-        /* --- End New Style --- */
-
         .label-text { @apply block text-sm font-medium text-gray-700 mb-1; }
-        
-        /* Input Fields */
-        .input-field { 
-            @apply mt-1 block w-full rounded-md border-gray-400 shadow-sm p-3 bg-white focus:border-green-500 focus:ring-green-500 transition duration-150 box-border; 
-            color: #000; cursor: text;
-        }
-        /* Readonly fields (auto-loaded) */
-        .input-field[readonly] { 
-            @apply bg-gray-100 text-gray-500 cursor-not-allowed;
-            font-weight: 500;
-        }
-
-        /* --- TOOLTIPS & ICONS --- */
+        .input-field { @apply mt-1 block w-full rounded-md border-gray-400 shadow-sm p-3 bg-white focus:border-green-500 focus:ring-green-500 transition duration-150 box-border; color: #000; cursor: text; }
+        .input-field[readonly] { @apply bg-gray-100 text-gray-500 cursor-not-allowed; font-weight: 500; }
         .tooltip-container { position: relative; display: inline-flex; align-items: center; cursor: help; vertical-align: middle; }
         .f-icon { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background-color: #6b7280; color: white; border-radius: 50%; font-family: 'Georgia', serif; font-style: italic; font-weight: bold; font-size: 14px; line-height: 1; padding-bottom: 2px; margin-left: 6px; }
         .tooltip-icon { width: 16px; height: 16px; background-color: #9ca3af; color: white; font-size: 10px; font-weight: bold; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: 6px; }
-
         .tooltip-text { position: absolute; width: 240px; background-color: #374151; color: white; font-size: 0.75rem; padding: 10px; border-radius: 6px; bottom: 150%; left: 50%; transform: translateX(-50%); visibility: hidden; opacity: 0; transition: opacity 0.2s; pointer-events: none; z-index: 50; font-weight: normal; text-align: left; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
         .tooltip-container:hover .tooltip-text { visibility: visible; opacity: 1; }
-        
         .hidden { display: none; }
-
-        /* --- PROGRESS BAR --- */
         .progress-bar-container { @apply w-full bg-gray-200 rounded-full h-2.5 mb-6; }
         .progress-bar { @apply bg-green-600 h-2.5 rounded-full transition-all duration-500; }
-        
-        /* --- FOOTER (NEW) --- */
-        .disclaimer {
-            text-align: left;
-            font-size: 0.75rem;
-            color: #6b7280; /* gray-500 */
-            margin-top: 3rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #e5e7eb;
-        }
-        .disclaimer p {
-            margin-bottom: 0.5rem;
-            font-style: italic;
-        }
-        .disclaimer strong {
-            font-weight: 600;
-            color: #4b5563; /* gray-600 */
-            font-style: normal;
-        }
-
-        /* --- NAVIGATION BUTTONS --- */
+        .disclaimer { text-align: left; font-size: 0.75rem; color: #6b7280; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #e5e7eb; }
+        .disclaimer p { margin-bottom: 0.5rem; font-style: italic; }
+        .disclaimer strong { font-weight: 600; color: #4b5563; font-style: normal; }
         .nav-grid { @apply grid grid-cols-2 md:grid-cols-3 gap-3 items-center; }
         .nav-button { display: inline-block; padding: 12px 20px; font-weight: 700; border: none; border-radius: 12px; font-size: 0.875rem; cursor: pointer; transition: opacity 0.2s; text-decoration: none; text-align: center; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); }
         .nav-button:hover { opacity: 0.9; }
@@ -82,27 +45,38 @@
 <body class="p-4 md:p-8">
 
     <div class="max-w-3xl mx-auto">
+
+        <div class="flex justify-end mb-4">
+            <select id="lang-select" onchange="BiocharI18n.setLanguage(this.value)"
+                    class="nav-button nav-button-white py-2 px-4 text-xs">
+                <option value="en">English 🇺🇸</option>
+                <option value="es">Español 🇪🇸</option>
+                <option value="pt">Português 🇧🇷</option>
+            </select>
+        </div>
+
         <header class="text-center mb-6">
-            <h1 class="text-2xl md:text-3xl font-extrabold text-green-700">Biochar Project Feasibility Calculator</h1>
-            <h2 class="text-lg font-medium text-gray-700 mt-1">for Latin American Coffee & Cacao Supply Chains</h2>
-            <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider mt-4">Climatebase Fellowship Cohort 8 Capstone Project</p>
-            <p class="text-xs font-medium text-gray-500 mt-2">(All values in USD)</p>
-            
+            <h1 class="text-2xl md:text-3xl font-extrabold text-green-700" data-i18n="common.header_h1">Biochar Project Feasibility Calculator</h1>
+            <h2 class="text-lg font-medium text-gray-700 mt-1" data-i18n="common.header_h2">for Latin American Coffee &amp; Cacao Supply Chains</h2>
+            <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider mt-4" data-i18n="common.cohort">Climatebase Fellowship Cohort 8 Capstone Project</p>
+            <p class="text-xs font-medium text-gray-500 mt-2" data-i18n="common.usd_note">(All values in USD)</p>
+
             <div class="mt-4 mb-6">
-                <a href="https://chatgpt.com/g/g-691ea2b1c2888191b85e54e203c53b2f-biochar-feasibility-guide" 
-                   target="_blank" 
-                   class="inline-block bg-blue-50 text-blue-700 hover:text-blue-900 border border-blue-200 rounded-full px-4 py-1 text-sm font-medium transition">
+                <a href="https://chatgpt.com/g/g-691ea2b1c2888191b85e54e203c53b2f-biochar-feasibility-guide"
+                   target="_blank"
+                   class="inline-block bg-blue-50 text-blue-700 hover:text-blue-900 border border-blue-200 rounded-full px-4 py-1 text-sm font-medium transition"
+                   data-i18n="common.ai_link">
                     Questions? Click here to ask the Biochar Feasibility Guide AI assistant ↗
                 </a>
             </div>
 
-            <p class="text-lg font-medium text-green-800">Tool 5: CAPEX & OPEX</p>
+            <p class="text-lg font-medium text-green-800" data-i18n="tool5.tool_label">Tool 5: CAPEX &amp; OPEX</p>
         </header>
 
         <div class="w-full mb-8">
             <div class="flex justify-between text-sm font-medium text-gray-600 mb-1">
-                <span>Step 5 of 7: Finance & Ops</span>
-                <span>(Next: Dashboard)</span>
+                <span data-i18n="tool5.step_label">Step 5 of 7: Finance &amp; Ops</span>
+                <span data-i18n="tool5.step_next">(Next: Dashboard)</span>
             </div>
             <div class="progress-bar-container">
                 <div class="progress-bar" style="width: 71.4%"></div>
@@ -110,48 +84,48 @@
         </div>
 
         <div class="input-section">
-            <h2 class="section-title section-title-orange">Working Capital & Feedstock Financing</h2>
+            <h2 class="section-title section-title-orange" data-i18n="tool5.working_capital_section">Working Capital &amp; Feedstock Financing</h2>
             <div class="bg-white p-4 rounded-lg border border-orange-200 mb-4">
                 <label class="block">
-                    <span class="label-text font-bold text-gray-800">Amount to Finance (Working Capital)</span>
-                    <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text">Pre-filled with Feedstock Purchase Cost (Tool 2) + Logistics Cost (Tool 3). Adjust if you only need to finance a portion.</span></div>
+                    <span class="label-text font-bold text-gray-800" data-i18n="tool5.working_capital_label">Amount to Finance (Working Capital)</span>
+                    <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.working_capital_tooltip">Pre-filled with Feedstock Purchase Cost (Tool 2) + Logistics Cost (Tool 3). Adjust if you only need to finance a portion.</span></div>
                     <div class="flex items-center mt-1">
-                        <input type="number" id="inputFeedstockLoanAmount" class="input-field font-bold text-orange-800 border-2 border-orange-300" min="0" placeholder="Calculating...">
+                        <input type="number" id="inputFeedstockLoanAmount" class="input-field font-bold text-orange-800 border-2 border-orange-300" min="0" data-i18n-placeholder="tool5.working_capital_placeholder">
                     </div>
                 </label>
             </div>
             <div class="space-y-4">
                 <label class="flex items-center space-x-3 bg-white p-3 rounded border border-orange-200 cursor-pointer">
                     <input type="checkbox" id="checkFeedstockLoan" class="h-5 w-5 text-orange-600 focus:ring-orange-500">
-                    <span class="font-medium text-gray-800">Do you need a Line of Credit for this amount?</span>
+                    <span class="font-medium text-gray-800" data-i18n="tool5.feedstock_loan_checkbox">Do you need a Line of Credit for this amount?</span>
                 </label>
                 <div id="feedstockLoanDetails" class="hidden pl-4 border-l-2 border-orange-300">
                     <label class="block">
-                        <span class="label-text">Annual Interest Rate for Line of Credit (%)</span>
+                        <span class="label-text" data-i18n="tool5.feedstock_interest_label">Annual Interest Rate for Line of Credit (%)</span>
                         <input type="number" id="inputFeedstockInterest" value="15" class="input-field w-32" min="0">
                     </label>
-                    <p class="text-xs text-gray-500 mt-1">Interest will be added to your annual OPEX.</p>
+                    <p class="text-xs text-gray-500 mt-1" data-i18n="tool5.feedstock_interest_note">Interest will be added to your annual OPEX.</p>
                 </div>
             </div>
         </div>
 
         <div class="input-section">
-            <h2 class="section-title section-title-yellow">Physical Capital Expenses (CAPEX)</h2>
-            
+            <h2 class="section-title section-title-yellow" data-i18n="tool5.capex_section">Physical Capital Expenses (CAPEX)</h2>
+
             <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200 space-y-2 mb-6 text-sm">
                 <div class="flex justify-between">
-                        <p><span class="font-semibold">Project Scale:</span> <span id="displayScale">Loading...</span></p>
-                        <p><span class="font-semibold">Country Base:</span> <span id="displayCountry">Loading...</span></p>
+                    <p><span class="font-semibold" data-i18n="tool5.project_scale_label">Project Scale:</span> <span id="displayScale" data-i18n="tool5.loading_text">Loading...</span></p>
+                    <p><span class="font-semibold" data-i18n="tool5.country_base_label">Country Base:</span> <span id="displayCountry" data-i18n="tool5.loading_text">Loading...</span></p>
                 </div>
-                <p><span class="font-semibold">Config:</span> <span id="displayProjectType">Loading...</span> (<span id="displayHubs">1</span> hubs)</p>
+                <p><span class="font-semibold" data-i18n="tool5.config_label">Config:</span> <span id="displayProjectType" data-i18n="tool5.loading_text">Loading...</span> (<span id="displayHubs">1</span> <span data-i18n="tool5.hubs_suffix">hubs</span>)</p>
             </div>
 
             <div class="space-y-6">
                 <div class="p-4 bg-white rounded-lg border border-gray-300 shadow-sm">
                     <label class="block">
                         <div class="flex justify-between items-center">
-                            <span class="label-text font-semibold text-gray-700">Total Pyrolyzer Upfront Cost (from Tool 2)</span>
-                            <div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text">This value is loaded automatically from your kiln and shipping selections in Tool 2.</span></div>
+                            <span class="label-text font-semibold text-gray-700" data-i18n="tool5.kiln_cost_label">Total Pyrolyzer Upfront Cost (from Tool 2)</span>
+                            <div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool5.kiln_cost_tooltip">This value is loaded automatically from your kiln and shipping selections in Tool 2.</span></div>
                         </div>
                         <input type="number" id="outputTotalKilnCost" value="0" class="input-field font-bold text-gray-800 text-lg border-2 border-blue-300" readonly>
                         <p id="kilnCostWarning" class="text-xs text-gray-500 mt-1 italic"></p>
@@ -160,83 +134,83 @@
 
                 <div id="woodChipperContainer" class="hidden p-4 bg-purple-50 border-2 border-purple-300 rounded-lg">
                     <label class="block">
-                        <span class="label-text font-bold text-purple-900">Wood Chipper / Grinder ($)</span>
-                        <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text">Required for processing woody feedstocks (from Tool 2).</span></div>
+                        <span class="label-text font-bold text-purple-900" data-i18n="tool5.wood_chipper_label">Wood Chipper / Grinder ($)</span>
+                        <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.wood_chipper_tooltip">Required for processing woody feedstocks (from Tool 2).</span></div>
                         <input type="number" id="inputWoodChipperCost" value="15000" class="input-field border-purple-300 font-bold text-purple-900" min="0">
                     </label>
                 </div>
-                
+
                 <div id="storageInfraContainer" class="hidden p-4 bg-orange-50 border border-orange-200 rounded-lg">
                     <label class="block">
-                        <span class="label-text font-bold text-orange-900">Feedstock Storage Infrastructure ($)</span>
-                        <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text">Required for "Store" strategy. Includes sheds, tarps, and concrete pads.</span></div>
+                        <span class="label-text font-bold text-orange-900" data-i18n="tool5.storage_infra_label">Feedstock Storage Infrastructure ($)</span>
+                        <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.storage_infra_tooltip">Required for "Store" strategy. Includes sheds, tarps, and concrete pads.</span></div>
                         <input type="number" id="inputStorageInfra" value="10000" class="input-field border-orange-300" min="0">
                     </label>
                 </div>
 
                 <div class="space-y-4 p-4 bg-white rounded-lg border border-gray-200">
-                    <h4 class="font-semibold text-gray-700">Drying & Ancillary Equipment</h4>
+                    <h4 class="font-semibold text-gray-700" data-i18n="tool5.drying_section">Drying &amp; Ancillary Equipment</h4>
                     <label class="block">
-                        <span class="label-text">Mechanical Dryer(s) ($)</span>
+                        <span class="label-text" data-i18n="tool5.dryer_label">Mechanical Dryer(s) ($)</span>
                         <input type="number" id="inputDryerCost" value="50000" min="0" class="input-field">
                     </label>
-                    
+
                     <div class="flex items-center justify-between p-3 bg-green-50 rounded border border-green-200">
                         <label class="flex items-center cursor-pointer">
                             <input type="checkbox" id="checkSyngasDucting" class="w-5 h-5 text-green-600 rounded border-gray-300 focus:ring-green-500">
-                            <span class="ml-3 text-sm font-medium text-green-900">Use syngas waste heat for dryer?</span>
+                            <span class="ml-3 text-sm font-medium text-green-900" data-i18n="tool5.syngas_ducting_label">Use syngas waste heat for dryer?</span>
                         </label>
                         <div class="text-right">
                             <div class="flex justify-end items-center">
                                 <div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text">**Formula:**<br>(Total Pyrolyzer Cost) × 10%</span></div>
-                                <span class="text-xs text-green-700 block ml-1">+10% of pyrolyzer cost</span>
+                                <span class="text-xs text-green-700 block ml-1" data-i18n="tool5.syngas_pct_note">+10% of pyrolyzer cost</span>
                             </div>
                             <span id="outputSyngasCost" class="font-bold text-green-800">$0</span>
                         </div>
                     </div>
 
                     <label class="block">
-                        <span class="label-text">Other Ancillary Equipment ($)</span>
-                        <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text">Scales, forklifts, pallet jacks, etc.</span></div>
+                        <span class="label-text" data-i18n="tool5.ancillary_label">Other Ancillary Equipment ($)</span>
+                        <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.ancillary_tooltip">Scales, forklifts, pallet jacks, etc.</span></div>
                         <input type="number" id="inputAncillaryCost" value="25000" min="0" class="input-field">
                     </label>
                 </div>
 
                 <div class="p-4 bg-white rounded-lg border border-gray-200 space-y-4">
-                    <h4 class="font-semibold text-gray-700">Vehicles (CAPEX & OPEX)</h4>
+                    <h4 class="font-semibold text-gray-700" data-i18n="tool5.vehicles_section">Vehicles (CAPEX &amp; OPEX)</h4>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="p-3 bg-gray-50 rounded-lg border border-gray-200 space-y-2">
                             <label class="block">
-                                <span class="label-text">1. Logistics Trucks (CAPEX)</span>
-                                <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text">For Owned trucks, operating cost (OPEX) is captured in tool3 for logistics routes.</span></div>
-                                <em class="text-xs text-gray-500 block">The "Owned Trucks" used for feedstock transport in Tool 3.</em>
+                                <span class="label-text" data-i18n="tool5.logistics_trucks_label">1. Logistics Trucks (CAPEX)</span>
+                                <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.logistics_trucks_tooltip">For Owned trucks, operating cost (OPEX) is captured in tool3 for logistics routes.</span></div>
+                                <em class="text-xs text-gray-500 block" data-i18n="tool5.logistics_trucks_note">The "Owned Trucks" used for feedstock transport in Tool 3.</em>
                             </label>
                             <label class="block">
-                                <span class="label-text text-xs">Number of Logistics Trucks</span>
+                                <span class="label-text text-xs" data-i18n="tool5.num_trucks_label">Number of Logistics Trucks</span>
                                 <input type="number" id="inputNumLogisticsTrucks" value="0" min="0" class="input-field">
                             </label>
                             <label class="block">
-                                <span class="label-text text-xs">Avg. Cost per Truck ($)</span>
+                                <span class="label-text text-xs" data-i18n="tool5.truck_cost_label">Avg. Cost per Truck ($)</span>
                                 <input type="number" id="inputLogisticsTruckCost" value="40000" min="0" class="input-field">
                             </label>
                         </div>
                         <div class="p-3 bg-gray-50 rounded-lg border border-gray-200 space-y-2">
                             <label class="block">
-                                <span class="label-text">2. Pickups (CAPEX & OPEX)</span>
-                                <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text">Mobile kiln relocation costs are captured separately below.</span></div>
-                                <em class="text-xs text-gray-500 block">For managers, agronomists, general site tasks, or towing mobile kilns.</em>
+                                <span class="label-text" data-i18n="tool5.pickups_label">2. Pickups (CAPEX &amp; OPEX)</span>
+                                <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.pickups_tooltip">Mobile kiln relocation costs are captured separately below.</span></div>
+                                <em class="text-xs text-gray-500 block" data-i18n="tool5.pickups_note">For managers, agronomists, general site tasks, or towing mobile kilns.</em>
                             </label>
                             <label class="block">
-                                <span class="label-text text-xs">Number of Pickups</span>
+                                <span class="label-text text-xs" data-i18n="tool5.num_pickups_label">Number of Pickups</span>
                                 <input type="number" id="inputNumPickups" value="1" min="0" class="input-field">
                             </label>
                             <label class="block">
-                                <span class="label-text text-xs">Avg. Cost per Pickup ($)</span>
+                                <span class="label-text text-xs" data-i18n="tool5.pickup_cost_label">Avg. Cost per Pickup ($)</span>
                                 <input type="number" id="inputPickupCost" value="30000" min="0" class="input-field">
                             </label>
                             <label class="block pt-2 border-t border-gray-300">
-                                <span class="label-text text-xs font-semibold">Pickups Annual OPEX ($/yr)</span>
-                                <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text">Fuel, maintenance, and insurance for your general site vehicle(s).</span></div>
+                                <span class="label-text text-xs font-semibold" data-i18n="tool5.pickups_opex_label">Pickups Annual OPEX ($/yr)</span>
+                                <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.pickups_opex_tooltip">Fuel, maintenance, and insurance for your general site vehicle(s).</span></div>
                                 <input type="number" id="inputPickupsOpex" value="3000" min="0" class="input-field">
                             </label>
                         </div>
@@ -244,74 +218,74 @@
                 </div>
 
                 <div id="mobileRelocationContainer" class="hidden p-4 bg-white rounded-lg border border-gray-300 shadow-sm space-y-4">
-                    <h4 class="font-semibold text-gray-800">Mobile Kiln Relocation (OPEX)</h4>
-                    <p class="text-xs text-gray-500 italic">Costs for moving your mobile kiln(s) between sites. Number of kilns is loaded from Tool 2.</p>
+                    <h4 class="font-semibold text-gray-800" data-i18n="tool5.mobile_relocation_section">Mobile Kiln Relocation (OPEX)</h4>
+                    <p class="text-xs text-gray-500 italic" data-i18n="tool5.mobile_relocation_note">Costs for moving your mobile kiln(s) between sites. Number of kilns is loaded from Tool 2.</p>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <label class="block">
-                            <span class="label-text">Number of Mobile Kilns</span>
+                            <span class="label-text" data-i18n="tool5.num_mobile_kilns_label">Number of Mobile Kilns</span>
                             <input type="number" id="inputNumMobileKilns" class="input-field" readonly>
                         </label>
                         <label class="block">
-                            <span class="label-text">Relocations per Kiln per Year</span>
+                            <span class="label-text" data-i18n="tool5.relocations_per_kiln_label">Relocations per Kiln per Year</span>
                             <input type="number" id="inputRelocationsPerKiln" value="4" min="0" class="input-field">
                         </label>
                         <label class="block">
-                            <span class="label-text">Avg. Time per Relocation (Hours)</span>
+                            <span class="label-text" data-i18n="tool5.time_per_relocation_label">Avg. Time per Relocation (Hours)</span>
                             <input type="number" id="inputTimePerRelocation" value="8" min="0" class="input-field">
                         </label>
                         <label class="block">
-                            <span class="label-text">Hourly Cost per Relocation Trip</span>
-                            <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text">All-in cost for the tow vehicle (driver, fuel, maint, etc.) for a ONE-WAY trip.</span></div>
+                            <span class="label-text" data-i18n="tool5.cost_per_hour_label">Hourly Cost per Relocation Trip</span>
+                            <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.cost_per_hour_tooltip">All-in cost for the tow vehicle (driver, fuel, maint, etc.) for a ONE-WAY trip.</span></div>
                             <input type="number" id="inputCostPerHourRelocation" value="25" min="0" class="input-field">
                         </label>
                     </div>
                     <div class="bg-blue-50 p-3 rounded-lg border border-blue-200 text-right">
-                        <span class="text-sm font-semibold text-blue-900">Total Mobile Relocation OPEX:</span>
+                        <span class="text-sm font-semibold text-blue-900" data-i18n="tool5.total_mobile_opex_label">Total Mobile Relocation OPEX:</span>
                         <span id="outputTotalMobileOpex" class="text-xl font-bold text-blue-800 ml-2">$0</span>
                     </div>
                 </div>
 
                 <div class="p-4 bg-white rounded-lg border border-gray-200 space-y-3">
-                    <h4 class="font-semibold text-gray-700">Site Infrastructure & Permitting</h4>
+                    <h4 class="font-semibold text-gray-700" data-i18n="tool5.site_infra_section">Site Infrastructure &amp; Permitting</h4>
                     <label class="block">
-                        <span class="label-text">Buildings, Ventilation & Concrete Pads ($)</span>
+                        <span class="label-text" data-i18n="tool5.buildings_label">Buildings, Ventilation &amp; Concrete Pads ($)</span>
                         <input type="number" id="inputInfrastructureCost" value="75000" min="0" class="input-field">
-                        <p class="text-[0.65rem] text-gray-500 mt-1 leading-tight">
-                            This value is assumed to include relevant civil, structural, mechanical, and electrical components, as well as basic site services required for biochar operations (e.g. foundations, ventilation, safety infrastructure, and auxiliary systems). Local requirements and permitting standards may significantly affect total cost. Mobile projects may require significantly less site costs.
+                        <p class="text-[0.65rem] text-gray-500 mt-1 leading-tight" data-i18n="tool5.buildings_note">
+                            This value is assumed to include relevant civil, structural, mechanical, and electrical components, as well as basic site services required for biochar operations.
                         </p>
                     </label>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <label class="block">
-                            <span class="label-text">One-time Permit Application Fees ($)</span>
-                            <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text">Air quality permit application fees, lab fees, and consulting fees.</span></div>
+                            <span class="label-text" data-i18n="tool5.permit_label">One-time Permit Application Fees ($)</span>
+                            <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.permit_tooltip">Air quality permit application fees, lab fees, and consulting fees.</span></div>
                             <input type="number" id="inputPermitCapex" value="12000" min="0" class="input-field">
                         </label>
                         <div>
                             <label class="block mb-2">
-                                <span class="label-text">Land Model</span>
+                                <span class="label-text" data-i18n="tool5.land_model_label">Land Model</span>
                                 <select id="selectLandModel" class="input-field">
-                                    <option value="lease" selected>Annual Lease (OPEX)</option>
-                                    <option value="buy">Purchase Outright (CAPEX)</option>
+                                    <option value="lease" selected data-i18n="tool5.land_lease_option">Annual Lease (OPEX)</option>
+                                    <option value="buy" data-i18n="tool5.land_buy_option">Purchase Outright (CAPEX)</option>
                                 </select>
                             </label>
                         </div>
                         <div class="space-y-4">
                             <label class="block" id="landLeaseContainer">
-                                <span class="label-text">Land Lease ($/yr)</span>
+                                <span class="label-text" data-i18n="tool5.land_lease_label">Land Lease ($/yr)</span>
                                 <input type="number" id="inputLandLease" value="12000" min="0" class="input-field">
                             </label>
                             <label class="block hidden" id="landPurchaseContainer">
-                                <span class="label-text">Land Purchase (CAPEX - $)</span>
+                                <span class="label-text" data-i18n="tool5.land_purchase_label">Land Purchase (CAPEX - $)</span>
                                 <input type="number" id="inputLandPurchase" value="0" min="0" class="input-field">
                             </label>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="bg-green-100 p-4 rounded-lg border-2 border-green-300 text-right">
                     <span class="text-lg font-semibold text-green-900 flex justify-end items-center">
-                        <div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text">Sum of all CAPEX items above.</span></div>
-                        <span class="ml-1">Total Estimated CAPEX:</span>
+                        <div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool5.total_capex_tooltip">Sum of all CAPEX items above.</span></div>
+                        <span class="ml-1" data-i18n="tool5.total_capex_label">Total Estimated CAPEX:</span>
                     </span>
                     <span id="outputTotalCapex" class="text-3xl font-bold text-green-700">$0</span>
                 </div>
@@ -319,202 +293,203 @@
         </div>
 
         <div class="input-section">
-            <h2 class="section-title section-title-blue">Certification & MRV</h2>
+            <h2 class="section-title section-title-blue" data-i18n="tool5.cert_section">Certification &amp; MRV</h2>
             <div class="mb-6 bg-white p-4 rounded-lg border-2 border-blue-300">
                 <label class="block">
-                    <span class="label-text font-bold text-blue-900 text-base">Source of your cost estimate for Certification and MRV</span>
+                    <span class="label-text font-bold text-blue-900 text-base" data-i18n="tool5.cert_source_label">Source of your cost estimate for Certification and MRV</span>
                     <select id="selectCertSource" class="input-field font-medium text-gray-900 mt-2">
-                        <option value="" disabled selected>Choose a cost basis</option>
-                        <option value="estimate">Calculator estimate</option>
-                        <option value="quote">Quote from provider</option>
+                        <option value="" disabled selected data-i18n="tool5.cert_source_placeholder">Choose a cost basis</option>
+                        <option value="estimate" data-i18n="tool5.cert_source_estimate">Calculator estimate</option>
+                        <option value="quote" data-i18n="tool5.cert_source_quote">Quote from provider</option>
                     </select>
                 </label>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="space-y-3">
-                    <h4 class="font-bold text-blue-900 border-b border-blue-200 pb-2">Part A: Registry</h4>
+                    <h4 class="font-bold text-blue-900 border-b border-blue-200 pb-2" data-i18n="tool5.registry_part_label">Part A: Registry</h4>
                     <label class="block">
-                        <span class="label-text">Select Registry</span>
+                        <span class="label-text" data-i18n="tool5.registry_label">Select Registry</span>
                         <select id="selectRegistry" class="input-field">
-                            <option value="" disabled selected>-- Select Registry --</option>
+                            <option value="" disabled selected data-i18n="tool5.registry_placeholder">-- Select Registry --</option>
                             <option value="puro">Puro.earth</option>
                             <option value="csi">CSI (Artisan C-Sink)</option>
-                            <option value="other">Other / Custom</option>
+                            <option value="other" data-i18n="tool5.registry_other">Other / Custom</option>
                         </select>
                     </label>
                     <label class="block">
-                        <div class="flex justify-between items-center"><span class="label-text">Estimated Fees ($/yr)</span><div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text">Calculated based on your CORC volume and hub count.</span></div></div>
+                        <div class="flex justify-between items-center"><span class="label-text" data-i18n="tool5.registry_fees_label">Estimated Fees ($/yr)</span><div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool5.registry_fees_tooltip">Calculated based on your CORC volume and hub count.</span></div></div>
                         <input type="number" id="outputRegistryCost" value="0" min="0" class="input-field">
                     </label>
                     <p id="registryWarning" class="hidden text-sm text-red-600 mt-2"></p>
                 </div>
                 <div class="space-y-3">
-                    <h4 class="font-bold text-blue-900 border-b border-blue-200 pb-2">Part B: MRV Partner</h4>
+                    <h4 class="font-bold text-blue-900 border-b border-blue-200 pb-2" data-i18n="tool5.mrv_part_label">Part B: MRV Partner</h4>
                     <label class="block">
-                        <span class="label-text">Select MRV Partner</span>
+                        <span class="label-text" data-i18n="tool5.mrv_label">Select MRV Partner</span>
                         <select id="selectMRVPartner" class="input-field">
-                            <option value="" disabled selected>-- Select Partner --</option>
+                            <option value="" disabled selected data-i18n="tool5.mrv_placeholder">-- Select Partner --</option>
                             <option value="planboo">Planboo</option>
-                            <option value="custom">Custom / Other</option>
+                            <option value="custom" data-i18n="tool5.mrv_custom">Custom / Other</option>
                         </select>
                     </label>
-                    
-                    <div id="mrvWarning" class="hidden p-2 mb-2 bg-red-100 border border-red-300 text-red-800 text-xs font-bold rounded">
-                        Warning: Your volume is too low (<1000t). This partner may reject you.
+
+                    <div id="mrvWarning" class="hidden p-2 mb-2 bg-red-100 border border-red-300 text-red-800 text-xs font-bold rounded" data-i18n="tool5.mrv_warning_text">
+                        Warning: Your volume is too low (&lt;1000t). This partner may reject you.
                     </div>
-                    
-                    <div id="planbooInfo" class="hidden p-3 mb-2 bg-blue-100 border border-blue-300 text-blue-800 text-sm font-medium rounded">
+
+                    <div id="planbooInfo" class="hidden p-3 mb-2 bg-blue-100 border border-blue-300 text-blue-800 text-sm font-medium rounded" data-i18n="tool5.planboo_info">
                         Note: Planboo's fee includes the cost of a full LCA (Life Cycle Assessment).
                     </div>
 
-
                     <div class="grid grid-cols-2 gap-3">
-                        <label class="block"><div class="flex justify-between items-center"><span class="label-text text-xs font-semibold text-blue-800">Setup (CAPEX $)</span><div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text">Fixed Setup Fee</span></div></div>
+                        <label class="block"><div class="flex justify-between items-center"><span class="label-text text-xs font-semibold text-blue-800" data-i18n="tool5.mrv_setup_label">Setup (CAPEX $)</span><div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool5.mrv_setup_tooltip">Fixed Setup Fee</span></div></div>
                         <input type="number" id="outputMRVSetup" value="0" class="input-field font-semibold" min="0">
                         </label>
-                        <label class="block"><div class="flex justify-between items-center"><span class="label-text text-xs font-semibold text-blue-800">Annual (OPEX $)</span><div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text">Credits × Per-Credit Fee</span></div></div>
+                        <label class="block"><div class="flex justify-between items-center"><span class="label-text text-xs font-semibold text-blue-800" data-i18n="tool5.mrv_annual_label">Annual (OPEX $)</span><div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool5.mrv_annual_tooltip">Credits × Per-Credit Fee</span></div></div>
                         <input type="number" id="outputMRVAnnual" value="0" class="input-field font-semibold" min="0">
                         </label>
                     </div>
                 </div>
             </div>
-            
+
             <div id="lcaCostContainer" class="hidden mt-6 pt-4 border-t border-blue-200">
-                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                     <label class="block">
-                        <span class="label-text font-bold text-blue-800">One-time LCA Cost (CAPEX $)</span>
-                        <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text">Cost to hire a 3rd-party consultant for your Life Cycle Assessment (LCA), often required for certification.</span></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <label class="block">
+                        <span class="label-text font-bold text-blue-800" data-i18n="tool5.lca_cost_label">One-time LCA Cost (CAPEX $)</span>
+                        <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.lca_cost_tooltip">Cost to hire a 3rd-party consultant for your Life Cycle Assessment (LCA), often required for certification.</span></div>
                         <input type="number" id="inputLcaCost" value="5000" min="0" class="input-field border-2 border-blue-300">
                     </label>
                     <label class="block">
-                        <span class="label-text font-bold text-blue-800">Annual LCA Renewal (OPEX $)</span>
-                        <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text">Cost to refurbish the LCA data with a new audit.</span></div>
+                        <span class="label-text font-bold text-blue-800" data-i18n="tool5.lca_annual_label">Annual LCA Renewal (OPEX $)</span>
+                        <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.lca_annual_tooltip">Cost to refurbish the LCA data with a new audit.</span></div>
                         <input type="number" id="inputLcaAnnualCost" value="2000" min="0" class="input-field border-2 border-blue-300">
                     </label>
-                 </div>
-            </div>
-        </div>
-
-        <div class="input-section mb-8"> <h2 class="section-title section-title-gray">Operating Expenses (Annual OPEX)</h2>
-            
-            <div id="seasonalOpsContainer" class="hidden mb-6 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
-                <label class="block">
-                    <span class="label-text font-bold text-yellow-900">Months of Operation per Year</span>
-                    <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text">You selected "Shut Down" in Tool 1. Labor and Utility costs will be prorated based on this number.</span></div>
-                    <input type="number" id="inputMonthsOperational" value="3" min="1" max="12" class="input-field border-yellow-300 w-24">
-                </label>
-            </div>
-
-            <div id="storeProcessNote" class="hidden mb-6 p-3 bg-orange-50 border-l-4 border-orange-400 text-sm text-orange-800 italic">
-                Note: You are storing feedstock. Ensure your Labor and Utilities estimates below account for the extra work of re-handling and re-drying material.
-            </div>
-
-            <div class="space-y-6">
-                    <div class="p-4 bg-white rounded-lg border border-gray-200 shadow-sm space-y-3">
-                        <h4 class="font-semibold text-gray-700">Labor Expenses</h4>
-                        <p class="text-xs text-gray-500 italic mb-2">Enter annual salaries for all full-time or seasonal staff. This includes drivers, operators, maintenance staff, management, and site labor.</p>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block label-text">General Staff Count</label>
-                                    <input type="number" id="inputGeneralStaff" value="0" min="0" class="input-field">
-                                </div>
-                                <div>
-                                    <label class="block label-text">Avg Salary (General) ($/yr)</label>
-                                    <input type="number" id="inputGeneralSalary" value="0" min="0" class="input-field">
-                                </div>
-                                <div>
-                                    <label class="block label-text">Management Staff Count</label>
-                                    <input type="number" id="inputManagementStaff" value="0" min="0" class="input-field">
-                                </div>
-                                <div>
-                                    <label class="block label-text">Avg Salary (Management) ($/yr)</label>
-                                    <input type="number" id="inputManagementSalary" value="0" min="0" class="input-field">
-                                </div>
-                        </div>
-                    </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <label class="block"><span class="label-text">Insurance ($/yr)</span><div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text">Typically 1-2% of total CAPEX.</span></div><input type="number" id="inputInsurance" value="5000" min="0" class="input-field"></label>
-                    <label class="block"><span class="label-text">Utilities ($/yr)</span><div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text">Electricity, water, and dryer fuel.</span></div><input type="number" id="inputUtilities" value="8000" min="0" class="input-field"></label>
-                    <label class="block"><span class="label-text">Air Quality Compliance ($/yr)</span><div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text">Annual testing and reporting.</span></div><input type="number" id="inputRegulatory" value="8000" min="0" class="input-field"></label>
                 </div>
             </div>
         </div>
 
-        <div class="input-section"> 
-            <h2 class="section-title section-title-green">Financial Assumptions</h2>
-            
+        <div class="input-section mb-8">
+            <h2 class="section-title section-title-gray" data-i18n="tool5.opex_section">Operating Expenses (Annual OPEX)</h2>
+
+            <div id="seasonalOpsContainer" class="hidden mb-6 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+                <label class="block">
+                    <span class="label-text font-bold text-yellow-900" data-i18n="tool5.months_operational_label">Months of Operation per Year</span>
+                    <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.months_operational_tooltip">You selected "Shut Down" in Tool 1. Labor and Utility costs will be prorated based on this number.</span></div>
+                    <input type="number" id="inputMonthsOperational" value="3" min="1" max="12" class="input-field border-yellow-300 w-24">
+                </label>
+            </div>
+
+            <div id="storeProcessNote" class="hidden mb-6 p-3 bg-orange-50 border-l-4 border-orange-400 text-sm text-orange-800 italic" data-i18n="tool5.store_note">
+                Note: You are storing feedstock. Ensure your Labor and Utilities estimates below account for the extra work of re-handling and re-drying material.
+            </div>
+
+            <div class="space-y-6">
+                <div class="p-4 bg-white rounded-lg border border-gray-200 shadow-sm space-y-3">
+                    <h4 class="font-semibold text-gray-700" data-i18n="tool5.labor_section">Labor Expenses</h4>
+                    <p class="text-xs text-gray-500 italic mb-2" data-i18n="tool5.labor_note">Enter annual salaries for all full-time or seasonal staff. This includes drivers, operators, maintenance staff, management, and site labor.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block label-text" data-i18n="tool5.general_staff_label">General Staff Count</label>
+                            <input type="number" id="inputGeneralStaff" value="0" min="0" class="input-field">
+                        </div>
+                        <div>
+                            <label class="block label-text" data-i18n="tool5.general_salary_label">Avg Salary (General) ($/yr)</label>
+                            <input type="number" id="inputGeneralSalary" value="0" min="0" class="input-field">
+                        </div>
+                        <div>
+                            <label class="block label-text" data-i18n="tool5.mgmt_staff_label">Management Staff Count</label>
+                            <input type="number" id="inputManagementStaff" value="0" min="0" class="input-field">
+                        </div>
+                        <div>
+                            <label class="block label-text" data-i18n="tool5.mgmt_salary_label">Avg Salary (Management) ($/yr)</label>
+                            <input type="number" id="inputManagementSalary" value="0" min="0" class="input-field">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <label class="block"><span class="label-text" data-i18n="tool5.insurance_label">Insurance ($/yr)</span><div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.insurance_tooltip">Typically 1-2% of total CAPEX.</span></div><input type="number" id="inputInsurance" value="5000" min="0" class="input-field"></label>
+                    <label class="block"><span class="label-text" data-i18n="tool5.utilities_label">Utilities ($/yr)</span><div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.utilities_tooltip">Electricity, water, and dryer fuel.</span></div><input type="number" id="inputUtilities" value="8000" min="0" class="input-field"></label>
+                    <label class="block"><span class="label-text" data-i18n="tool5.regulatory_label">Air Quality Compliance ($/yr)</span><div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.regulatory_tooltip">Annual testing and reporting.</span></div><input type="number" id="inputRegulatory" value="8000" min="0" class="input-field"></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-section">
+            <h2 class="section-title section-title-green" data-i18n="tool5.finance_section">Financial Assumptions</h2>
+
             <div class="mb-6 p-4 bg-white rounded-lg border border-green-200">
                 <label class="flex items-center space-x-3 cursor-pointer">
                     <input type="checkbox" id="checkForwardContract" class="h-5 w-5 rounded text-green-600 focus:ring-green-500">
-                    <span class="font-bold text-green-900">Have you secured a Forward Purchase Agreement (pre-sale of credits)?</span>
+                    <span class="font-bold text-green-900" data-i18n="tool5.forward_contract_label">Have you secured a Forward Purchase Agreement (pre-sale of credits)?</span>
                 </label>
                 <div id="forwardContractDetails" class="hidden mt-4 pl-4 border-l-2 border-green-300 space-y-4">
                     <label class="block">
-                        <span class="label-text font-semibold text-green-800">Upfront Cash Prepayment ($)</span>
-                        <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text">Cash received before delivery. Often used to cover initial equipment down payments or Year 1 operating costs.</span></div>
+                        <span class="label-text font-semibold text-green-800" data-i18n="tool5.prepayment_label">Upfront Cash Prepayment ($)</span>
+                        <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.prepayment_tooltip">Cash received before delivery. Often used to cover initial equipment down payments or Year 1 operating costs.</span></div>
                         <input type="number" id="inputPrepayment" value="0" min="0" class="input-field border-green-300">
                     </label>
-                    <p class="text-sm text-green-700 italic">Tip: A forward contract can often secure a lower interest rate from your bank.</p>
+                    <p class="text-sm text-green-700 italic" data-i18n="tool5.prepayment_tip">Tip: A forward contract can often secure a lower interest rate from your bank.</p>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <label class="block">
-                    <span class="label-text">Loan Amount ($)</span>
+                    <span class="label-text" data-i18n="tool5.loan_amount_label">Loan Amount ($)</span>
                     <input type="number" id="inputLoanAmount" value="0" min="0" class="input-field">
                 </label>
                 <label class="block">
-                    <span class="label-text">Loan Interest Rate (%)</span>
+                    <span class="label-text" data-i18n="tool5.interest_rate_label">Loan Interest Rate (%)</span>
                     <input type="number" id="inputInterestRate" value="12" min="0" class="input-field">
                 </label>
                 <label class="block">
-                    <span class="label-text">Corporate Tax Rate (%)</span>
+                    <span class="label-text" data-i18n="tool5.tax_rate_label">Corporate Tax Rate (%)</span>
                     <input type="number" id="inputTaxRate" value="30" min="0" class="input-field">
                 </label>
                 <label class="block">
-                    <span class="label-text">Annual Tax Incentives/Grants ($)</span>
+                    <span class="label-text" data-i18n="tool5.incentives_label">Annual Tax Incentives/Grants ($)</span>
                     <input type="number" id="inputIncentives" value="0" min="0" class="input-field">
                 </label>
                 <label class="block">
-                    <span class="label-text">Discount Rate for NPV (%)</span>
-                    <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text">Used for Net Present Value (NPV). It's your 'hurdle rate' or the minimum return you expect, accounting for risk.</span></div>
+                    <span class="label-text" data-i18n="tool5.discount_rate_label">Discount Rate for NPV (%)</span>
+                    <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.discount_rate_tooltip">Used for Net Present Value (NPV). It's your 'hurdle rate' or the minimum return you expect, accounting for risk.</span></div>
                     <input type="number" id="inputDiscountRate" value="10" min="0" class="input-field">
                 </label>
                 <label class="block">
-                    <span class="label-text">Project Lifetime (Years)</span>
-                    <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text">The number of years to model for your financial projections (e.g., 10 years).</span></div>
+                    <span class="label-text" data-i18n="tool5.project_life_label">Project Lifetime (Years)</span>
+                    <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.project_life_tooltip">The number of years to model for your financial projections (e.g., 10 years).</span></div>
                     <input type="number" id="inputProjectLife" value="10" min="1" max="30" class="input-field">
                 </label>
             </div>
         </div>
 
         <div class="input-section bg-gray-50 border-gray-200 p-4">
-            <h3 class="font-bold text-gray-700 mb-2 uppercase text-sm tracking-wider">Note Missing Info for Further Research</h3>
-            <textarea id="toolNotes" rows="3" class="input-field bg-white" placeholder="Type here..."></textarea>
+            <h3 class="font-bold text-gray-700 mb-2 uppercase text-sm tracking-wider" data-i18n="tool5.notes_title">Note Missing Info for Further Research</h3>
+            <textarea id="toolNotes" rows="3" class="input-field bg-white" data-i18n-placeholder="tool5.notes_placeholder"></textarea>
         </div>
 
         <div class="mt-8 mb-12 flex flex-col space-y-4">
-            <button id="saveToDbButton" class="nav-button nav-button-indigo w-full">Save Finance & Ops Data</button>
-            <div id="unsavedWarning" class="text-red-600 font-medium text-center hidden">You have unsaved changes.</div>
-            
+            <button id="saveToDbButton" class="nav-button nav-button-indigo w-full" data-i18n="tool5.save_btn">Save Finance &amp; Ops Data</button>
+            <div id="unsavedWarning" class="text-red-600 font-medium text-center hidden" data-i18n="common.unsaved_warning">You have unsaved changes.</div>
+
             <div id="navigationButtons" class="nav-grid hidden">
-                <button onclick="navigate('tool4.html')" class="nav-button nav-button-blue md:col-span-1">← Back to Tool 4</button>
-                <button onclick="navigate('index.html')" class="nav-button nav-button-white md:col-span-1">Main Menu</button>
-                <button onclick="navigate('tool6.html')" id="nextToolButton" class="nav-button nav-button-green md:col-span-1">Proceed to Dashboard →</button>
+                <button onclick="navigate('tool4.html')" class="nav-button nav-button-blue md:col-span-1" data-i18n="tool5.back_btn">← Back to Tool 4</button>
+                <button onclick="navigate('index.html')" class="nav-button nav-button-white md:col-span-1" data-i18n="common.main_menu">Main Menu</button>
+                <button onclick="navigate('tool6.html')" id="nextToolButton" class="nav-button nav-button-green md:col-span-1" data-i18n="tool5.next_btn">Proceed to Dashboard →</button>
             </div>
             <div class="flex justify-between items-center pt-4">
-                <button onclick="resetForm()" class="text-sm text-red-500 hover:text-red-700 font-medium">Reset Form</button>
+                <button onclick="resetForm()" class="text-sm text-red-500 hover:text-red-700 font-medium" data-i18n="common.reset_form">Reset Form</button>
                 <div id="saveStatus" class="font-medium text-red-600" style="display: none;"></div>
             </div>
         </div>
     </div>
 
     <footer class="disclaimer">
-        <p><strong>No Guarantee:</strong> <em>The projections provided by this calculator are based on the assumptions and data entered by the user. They are for illustrative purposes only and do not constitute a guarantee of actual costs, revenues, or profitability.</em></p>
-        <p><strong>Not Financial Advice:</strong> <em>The information provided is not intended to be a substitute for professional financial, legal, or agricultural advice. Users are solely responsible for any decisions made based on the output of this tool.</em></p>
-        <p><strong>Verify All Data:</strong> <em>Users should independently verify all local costs, market prices, and regulatory requirements before making any investment.</em></p>
+        <p><strong data-i18n="tool5.footer_no_guarantee_label">No Guarantee:</strong> <em data-i18n="tool5.footer_no_guarantee">The projections provided by this calculator are based on the assumptions and data entered by the user. They are for illustrative purposes only and do not constitute a guarantee of actual costs, revenues, or profitability.</em></p>
+        <p><strong data-i18n="tool5.footer_not_advice_label">Not Financial Advice:</strong> <em data-i18n="tool5.footer_not_advice">The information provided is not intended to be a substitute for professional financial, legal, or agricultural advice. Users are solely responsible for any decisions made based on the output of this tool.</em></p>
+        <p><strong data-i18n="tool5.footer_verify_label">Verify All Data:</strong> <em data-i18n="tool5.footer_verify">Users should independently verify all local costs, market prices, and regulatory requirements before making any investment.</em></p>
     </footer>
+
 <script>
         let projectData = {};
         let projectState = { scale: 'micro', type: 'centralized', hubs: 1, country: 'custom', totalCredits: 0, totalFeedstock: 0 };
@@ -522,7 +497,6 @@
 
         let saveButton, navigationButtons, saveStatus, unsavedWarning;
 
-        // *** UPDATED COUNTRY DATA MATRIX ***
         const COUNTRY_DATA = {
             "bolivia": { general: 5500, management: 20000, tax: 25, interest: 12, permit: { micro: 150, small: 150, medium: 500, large: 1500 } },
             "brazil": { general: 6500, management: 28000, tax: 34, interest: 26, permit: { micro: 1000, small: 1000, medium: 2000, large: 3500 } },
@@ -541,35 +515,22 @@
         };
 
         const LABOR_MATRIX = { "micro": { general: 1, management: 0 }, "small": { general: 3, management: 1 }, "medium": { general: 6, management: 2 }, "large": { general: 15, management: 4 }};
-        
-        // *** Puro & CSI Fee Matrices ***
-        const PURO_CONVERSION_RATE = 1.10;
-        const PURO_FEES_EUR = {
-            1000: 13200,  // <= 1000
-            1999: 15992,  // 1001-1999
-            2999: 23992,  // 2000-2999
-            3999: 31992,  // 3000-3999
-            99999: 36000 // 4000+
-        };
-        const PURO_PER_HUB_FEE = 2160; // ~$2000 EUR
 
-        const CSI_FEES = {
-            micro: { base: 648, perCredit: 3.70 },
-            small: { base: 648, perCredit: 3.70 },
-            medium: { base: 1500, perCredit: 3.70 },
-            large: { base: 1500, perCredit: 3.70 }
-        };
-        const CSI_PER_HUB_FEE = 220; // ~$200 EUR
-        
+        const PURO_CONVERSION_RATE = 1.10;
+        const PURO_FEES_EUR = { 1000: 13200, 1999: 15992, 2999: 23992, 3999: 31992, 99999: 36000 };
+        const PURO_PER_HUB_FEE = 2160;
+        const CSI_FEES = { micro: { base: 648, perCredit: 3.70 }, small: { base: 648, perCredit: 3.70 }, medium: { base: 1500, perCredit: 3.70 }, large: { base: 1500, perCredit: 3.70 } };
+        const CSI_PER_HUB_FEE = 220;
+
         const inputsToTrack = [
             'inputFeedstockLoanAmount', 'checkFeedstockLoan', 'inputFeedstockInterest',
             'inputWoodChipperCost', 'inputStorageInfra', 'inputDryerCost', 'checkSyngasDucting',
-            'inputAncillaryCost', 'inputNumLogisticsTrucks', 'inputLogisticsTruckCost', 'inputNumPickups', 'inputPickupCost', 
+            'inputAncillaryCost', 'inputNumLogisticsTrucks', 'inputLogisticsTruckCost', 'inputNumPickups', 'inputPickupCost',
             'inputInfrastructureCost', 'inputPermitCapex', 'selectLandModel', 'inputLandLease', 'inputLandPurchase',
             'selectCertSource', 'selectRegistry', 'outputRegistryCost', 'selectMRVPartner',
-            'outputMRVSetup', 'outputMRVAnnual', 'inputLcaCost', 'inputLcaAnnualCost', 'inputMonthsOperational', 
+            'outputMRVSetup', 'outputMRVAnnual', 'inputLcaCost', 'inputLcaAnnualCost', 'inputMonthsOperational',
             'inputRelocationsPerKiln', 'inputTimePerRelocation', 'inputCostPerHourRelocation', 'inputPickupsOpex',
-            'inputGeneralStaff', 'inputGeneralSalary', 'inputManagementStaff', 'inputManagementSalary', 
+            'inputGeneralStaff', 'inputGeneralSalary', 'inputManagementStaff', 'inputManagementSalary',
             'inputInsurance', 'inputUtilities', 'inputRegulatory', 'checkForwardContract', 'inputPrepayment',
             'inputLoanAmount', 'inputInterestRate', 'inputTaxRate', 'inputIncentives',
             'inputDiscountRate', 'inputProjectLife', 'toolNotes'
@@ -581,10 +542,7 @@
 
         function setUnsaved() {
             hasUnsavedChanges = true;
-            if (saveButton) {
-                saveButton.classList.remove("hidden");
-                saveButton.disabled = false;
-            }
+            if (saveButton) { saveButton.classList.remove("hidden"); saveButton.disabled = false; }
             if (navigationButtons) navigationButtons.classList.add("hidden");
             if (unsavedWarning) unsavedWarning.classList.remove("hidden");
             if (saveStatus) saveStatus.style.display = 'none';
@@ -602,55 +560,47 @@
                 const storedData = localStorage.getItem('biocharProjectData');
                 if (storedData) projectData = JSON.parse(storedData);
             }
-            
+
             if (projectData && projectData.tool1 && projectData.tool2) {
                 loadProject();
             } else {
-                showError("Tool 1 or 2 data missing. Please complete previous steps.");
+                showError(BiocharI18n.t('tool5.error_t1_t2'));
             }
 
-            // Attach listeners
             inputsToTrack.forEach(id => {
                 const el = document.getElementById(id);
                 if (el) {
                     const eventType = (el.tagName === 'SELECT' || el.type === 'checkbox') ? 'change' : 'input';
-                    el.addEventListener(eventType, setUnsaved); // Track changes
-                    
+                    el.addEventListener(eventType, setUnsaved);
                     if(id === 'selectLandModel') el.addEventListener('change', toggleLandInputs);
                     else if(id === 'checkForwardContract') el.addEventListener('change', toggleForwardContract);
                     else if(id === 'checkFeedstockLoan') el.addEventListener('change', toggleFeedstockLoan);
                     else if(id === 'selectRegistry') el.addEventListener('change', handleRegistryChange);
                     else if(id === 'selectMRVPartner') el.addEventListener('change', handleMRVChange);
                     else if(id === 'inputRelocationsPerKiln' || id === 'inputTimePerRelocation' || id === 'inputCostPerHourRelocation') {
-                        el.addEventListener('input', calculateMobileOpex); 
+                        el.addEventListener('input', calculateMobileOpex);
                     }
                     else if(id.startsWith('input') || id.startsWith('select') || id.startsWith('output') || id.startsWith('check')) {
-                        el.addEventListener(eventType, calculateCapex); 
+                        el.addEventListener(eventType, calculateCapex);
                     }
                 }
             });
-            
+
             saveButton.addEventListener('click', saveProject);
         });
 
-        // *** NEW: Puro & CSI Logic ***
         function handleRegistryChange() {
             const regKey = document.getElementById('selectRegistry').value;
             const regOutput = document.getElementById('outputRegistryCost');
             const totalCredits = projectState.totalCredits;
             const hubs = projectState.hubs;
-            
-            if (regKey === 'other') {
-                // User will enter custom value
-            } else if (regKey === 'puro') {
+
+            if (regKey === 'puro') {
                 let baseFee = 0;
-                // Find the correct tier
                 const tierKey = Object.keys(PURO_FEES_EUR).find(key => totalCredits <= key) || 99999;
                 baseFee = (PURO_FEES_EUR[tierKey] || 36000) * PURO_CONVERSION_RATE;
-                
                 const hubFee = (hubs > 1 && projectState.type !== 'centralized') ? (hubs - 1) * PURO_PER_HUB_FEE : 0;
                 regOutput.value = (baseFee + hubFee).toFixed(0);
-
             } else if (regKey === 'csi') {
                 const scale = projectState.scale;
                 const feeData = CSI_FEES[scale] || CSI_FEES['micro'];
@@ -662,7 +612,6 @@
             calculateCapex();
         }
 
-        // *** NEW: Updated MRV Logic (Carbonfuture removed + LCA) ***
         function handleMRVChange() {
             const partner = document.getElementById('selectMRVPartner').value;
             const setup = document.getElementById('outputMRVSetup');
@@ -670,60 +619,57 @@
             const warning = document.getElementById('mrvWarning');
             const lcaContainer = document.getElementById('lcaCostContainer');
             const planbooInfo = document.getElementById('planbooInfo');
-            
+
             warning.classList.add('hidden');
             lcaContainer.classList.add('hidden');
             planbooInfo.classList.add('hidden');
 
             if (partner === 'custom') {
-                 lcaContainer.classList.remove('hidden'); // Custom partners need LCA
+                lcaContainer.classList.remove('hidden');
             } else {
                 if (partner === 'planboo') {
                     setup.value = 20000;
                     annual.value = (projectState.totalCredits * 8).toFixed(0);
-                    
                     if (projectState.totalCredits < 1000 && projectState.totalCredits > 0) {
-                        warning.textContent = "Volume Too Low. Planboo typically requires 1,000+ credits/yr. Please select a different partner.";
+                        warning.textContent = BiocharI18n.t('tool5.mrv_warning_text');
                         warning.classList.remove('hidden');
                     } else {
-                        planbooInfo.classList.remove('hidden'); // Show LCA info
+                        planbooInfo.textContent = BiocharI18n.t('tool5.planboo_info');
+                        planbooInfo.classList.remove('hidden');
                     }
                 } else {
                     setup.value = 0; annual.value = 0;
                 }
             }
-            calculateCapex(); // Recalculate to include/exclude LCA cost
+            calculateCapex();
         }
 
         function loadProject() {
             try {
-                // --- Load Project State from T1, T2, T3 ---
                 const t1 = projectData.tool1;
                 const t2 = projectData.tool2;
-                const t3 = projectData.tool3 || {}; 
+                const t3 = projectData.tool3 || {};
 
                 projectState.totalFeedstock = (t2.diversified.f1_tonnes || 0) + (t2.diversified.f2_tonnes || 0);
                 projectState.scale = getProjectSize(projectState.totalFeedstock / (t1.numHubs || 1));
                 projectState.country = t1.country || 'custom';
                 projectState.hubs = t1.numHubs || 1;
                 projectState.type = t1.projectType || 'centralized';
-                
+
                 const credits1 = (t2.diversified.f1_tonnes || 0) * (1 - (t2.diversified.f1_ash || 0)) * (t2.diversified.f1_yield || 0) * (t2.diversified.f1_carbon || 0) * (t2.diversified.f1_conv || 0);
                 const credits2 = (t2.diversified.f2_tonnes || 0) * (1 - (t2.diversified.f2_ash || 0)) * (t2.diversified.f2_yield || 0) * (t2.diversified.f2_carbon || 0) * (t2.diversified.f2_conv || 0);
                 projectState.totalCredits = credits1 + credits2;
-                
                 projectState.needsChipper = t2.diversified.f2_isWood || false;
                 projectState.strategy = t1.seasonalityStrategy || 'year_round';
 
-                // Display Project State
                 document.getElementById('displayScale').textContent = `${projectState.scale.toUpperCase()} (${projectState.totalFeedstock.toLocaleString()}t/yr)`;
                 document.getElementById('displayCountry').textContent = projectState.country.toUpperCase();
                 document.getElementById('displayProjectType').textContent = projectState.type.charAt(0).toUpperCase() + projectState.type.slice(1);
                 document.getElementById('displayHubs').textContent = projectState.hubs;
 
-                // --- Handle Conditional UI ---
                 if (projectState.strategy === 'store') {
                     document.getElementById('storageInfraContainer').classList.remove('hidden');
+                    document.getElementById('storeProcessNote').textContent = BiocharI18n.t('tool5.store_note');
                     document.getElementById('storeProcessNote').classList.remove('hidden');
                 }
                 if (projectState.strategy === 'shutdown') {
@@ -737,7 +683,6 @@
                     document.getElementById('inputNumMobileKilns').value = t2.kiln?.number_of_kilns || 1;
                 }
 
-                // --- Auto-fill default values on FIRST load ---
                 const savedData = projectData.tool5;
                 if (!savedData) {
                     const f1_cost = (t2.diversified.f1_tonnes || 0) * (t2.diversified.f1_price || 0);
@@ -748,32 +693,26 @@
                     const kilnCapex = t2.kiln?.total_upfront_pyrolyzer_capex || 0;
                     document.getElementById('outputTotalKilnCost').value = kilnCapex.toFixed(0);
                     if (kilnCapex === 0) {
-                        document.getElementById('kilnCostWarning').textContent = "No kiln cost found in Tool 2. You can enter a value manually.";
-                        document.getElementById('outputTotalKilnCost').removeAttribute('readonly'); // Unlock if 0
+                        document.getElementById('kilnCostWarning').textContent = BiocharI18n.t('tool5.no_kiln_warning');
+                        document.getElementById('outputTotalKilnCost').removeAttribute('readonly');
                     }
-
-                    updateCountryDefaults(true); 
+                    updateCountryDefaults(true);
                 } else {
-                    // --- Load Saved Data ---
                     document.getElementById('selectCertSource').value = savedData.certSource || '';
                     document.getElementById('checkSyngasDucting').checked = savedData.syngasDucting || false;
-                    
                     document.getElementById('outputTotalKilnCost').value = savedData.capex?.totalKilns || 0;
                     document.getElementById('inputWoodChipperCost').value = savedData.capex?.woodChipper || 15000;
                     document.getElementById('inputStorageInfra').value = savedData.capex?.storageInfra || 10000;
                     document.getElementById('inputDryerCost').value = savedData.capex?.dryer || 50000;
                     document.getElementById('inputAncillaryCost').value = savedData.capex?.ancillary || 25000;
-                    
                     document.getElementById('inputNumLogisticsTrucks').value = savedData.capex?.logisticsTrucks || 0;
                     document.getElementById('inputLogisticsTruckCost').value = savedData.capex?.logisticsTruckCost || 40000;
                     document.getElementById('inputNumPickups').value = savedData.capex?.pickups || 1;
                     document.getElementById('inputPickupCost').value = savedData.capex?.pickupCost || 30000;
-
                     document.getElementById('inputInfrastructureCost').value = savedData.capex?.infrastructure || 75000;
                     document.getElementById('inputPermitCapex').value = savedData.capex?.permitApplication || 12000;
                     document.getElementById('selectLandModel').value = savedData.capex?.landPurchase > 0 ? 'buy' : 'lease';
                     document.getElementById('inputLandPurchase').value = savedData.capex?.landPurchase || 0;
-                    
                     document.getElementById('inputGeneralStaff').value = savedData.opex?.generalStaffCount || 0;
                     document.getElementById('inputGeneralSalary').value = savedData.opex?.generalSalary || 0;
                     document.getElementById('inputManagementStaff').value = savedData.opex?.mgmtStaffCount || 0;
@@ -781,62 +720,55 @@
                     document.getElementById('inputLandLease').value = savedData.opex?.landLease || 12000;
                     document.getElementById('inputInsurance').value = savedData.opex?.insurance || 5000;
                     document.getElementById('inputUtilities').value = savedData.opex?.utilities || 8000;
-                    document.getElementById('inputPickupsOpex').value = savedData.opex?.pickupsAnnualOpex || 3000; 
+                    document.getElementById('inputPickupsOpex').value = savedData.opex?.pickupsAnnualOpex || 3000;
                     document.getElementById('inputRegulatory').value = savedData.opex?.regulatory || 8000;
                     document.getElementById('inputMonthsOperational').value = savedData.opex?.monthsOperational || 12;
-
                     document.getElementById('inputRelocationsPerKiln').value = savedData.opex?.mobileRelocationsPerKiln || 4;
                     document.getElementById('inputTimePerRelocation').value = savedData.opex?.mobileTimePerRelocation || 8;
                     document.getElementById('inputCostPerHourRelocation').value = savedData.opex?.mobileCostPerHour || 25;
-
                     document.getElementById('selectRegistry').value = savedData.opex?.registryName || "";
                     document.getElementById('selectMRVPartner').value = savedData.opex?.mrvPartner || "";
-                    
                     document.getElementById('outputRegistryCost').value = savedData.opex.registryFees || 0;
                     document.getElementById('outputMRVSetup').value = savedData.capex.mrvSetup || 0;
                     document.getElementById('outputMRVAnnual').value = savedData.opex.mrvAnnual || 0;
                     document.getElementById('inputLcaCost').value = savedData.capex.lcaCost || 5000;
-                    document.getElementById('inputLcaAnnualCost').value = savedData.opex.lcaAnnual || 2000; // *** NEW ***
-                    
+                    document.getElementById('inputLcaAnnualCost').value = savedData.opex.lcaAnnual || 2000;
                     document.getElementById('checkForwardContract').checked = savedData.finance?.forwardContract || false;
                     document.getElementById('inputPrepayment').value = savedData.finance?.prepayment || 0;
                     document.getElementById('inputFeedstockLoanAmount').value = savedData.opex?.feedstockWorkingCapital || 0;
                     document.getElementById('checkFeedstockLoan').checked = savedData.opex?.hasFeedstockLoan || false;
                     document.getElementById('inputFeedstockInterest').value = savedData.opex?.feedstockLoanInterestRate || 15;
-
                     document.getElementById('inputLoanAmount').value = savedData.finance?.loanAmount || 0;
                     document.getElementById('inputInterestRate').value = savedData.finance?.interestRate || 12;
                     document.getElementById('inputTaxRate').value = savedData.finance?.taxRate || 30;
                     document.getElementById('inputIncentives').value = savedData.finance?.incentives || 0;
                     document.getElementById('inputDiscountRate').value = savedData.finance?.discountRate || 10;
                     document.getElementById('inputProjectLife').value = savedData.finance?.projectLife || 10;
-
                     if (projectData.notes_T5) document.getElementById('toolNotes').value = projectData.notes_T5;
-                    
+
                     saveButton.classList.add('hidden');
                     navigationButtons.classList.remove('hidden');
                 }
-                
-                toggleLandInputs(false); 
+
+                toggleLandInputs(false);
                 toggleForwardContract();
                 toggleFeedstockLoan();
-                
-                handleRegistryChange(); 
-                handleMRVChange(); 
-                calculateMobileOpex(); 
-                calculateCapex(); 
+                handleRegistryChange();
+                handleMRVChange();
+                calculateMobileOpex();
+                calculateCapex();
 
                 saveButton.disabled = true;
                 unsavedWarning.classList.add('hidden');
 
-            } catch (e) { console.error(e); showError("Error loading data from previous tools."); }
+            } catch (e) { console.error(e); showError(BiocharI18n.t('tool5.error_load')); }
         }
 
         function saveProject() {
-            saveButton.textContent = "Saving...";
+            saveButton.textContent = BiocharI18n.t('tool5.saving');
             saveButton.disabled = true;
             saveStatus.style.display = 'none';
-            
+
             const dataToSave = {
                 certSource: document.getElementById('selectCertSource').value,
                 syngasDucting: document.getElementById('checkSyngasDucting').checked,
@@ -866,13 +798,13 @@
                     landLease: parseFloat(document.getElementById('inputLandLease').value) || 0,
                     insurance: parseFloat(document.getElementById('inputInsurance').value) || 0,
                     utilities: parseFloat(document.getElementById('inputUtilities').value) || 0,
-                    pickupsAnnualOpex: parseFloat(document.getElementById('inputPickupsOpex').value) || 0, 
+                    pickupsAnnualOpex: parseFloat(document.getElementById('inputPickupsOpex').value) || 0,
                     regulatory: parseFloat(document.getElementById('inputRegulatory').value) || 0,
                     registryName: document.getElementById('selectRegistry').value,
                     registryFees: parseFloat(document.getElementById('outputRegistryCost').value) || 0,
                     mrvPartner: document.getElementById('selectMRVPartner').value,
                     mrvAnnual: parseFloat(document.getElementById('outputMRVAnnual').value) || 0,
-                    lcaAnnual: parseFloat(document.getElementById('inputLcaAnnualCost').value) || 0, // *** NEW ***
+                    lcaAnnual: parseFloat(document.getElementById('inputLcaAnnualCost').value) || 0,
                     monthsOperational: parseFloat(document.getElementById('inputMonthsOperational').value) || 12,
                     feedstockWorkingCapital: parseFloat(document.getElementById('inputFeedstockLoanAmount').value) || 0,
                     feedstockLoanInterestRate: parseFloat(document.getElementById('inputFeedstockInterest')?.value) || 0,
@@ -898,39 +830,38 @@
             try {
                 projectData.tool5 = dataToSave;
                 projectData.notes_T5 = document.getElementById('toolNotes').value;
-                
+
                 if (window.BiocharEngine) {
                     BiocharEngine.saveProjectData(projectData);
                 } else {
                     localStorage.setItem('biocharProjectData', JSON.stringify(projectData));
                 }
-                
-                saveStatus.textContent = "Data Saved!";
+
+                saveStatus.textContent = BiocharI18n.t('tool5.saved_status');
                 saveStatus.style.display = 'block';
-                saveStatus.style.color = 'rgb(22 163 74)'; // green-600
-                
+                saveStatus.style.color = 'rgb(22 163 74)';
+
                 hasUnsavedChanges = false;
                 unsavedWarning.classList.add('hidden');
                 saveButton.classList.add('hidden');
                 navigationButtons.classList.remove('hidden');
-            } catch (e) { showError("Save Failed"); saveButton.disabled = false; }
+            } catch (e) { showError(BiocharI18n.t('tool5.error_save')); saveButton.disabled = false; }
         }
 
-        // --- UI HELPER FUNCTIONS ---
         function toggleLandInputs(runCalc = true) {
             const model = document.getElementById('selectLandModel').value;
             if(model === 'lease') {
-                    document.getElementById('landPurchaseContainer').classList.add('hidden');
-                    document.getElementById('landLeaseContainer').classList.remove('hidden');
-                    document.getElementById('inputLandPurchase').value = 0; // Clear value
+                document.getElementById('landPurchaseContainer').classList.add('hidden');
+                document.getElementById('landLeaseContainer').classList.remove('hidden');
+                document.getElementById('inputLandPurchase').value = 0;
             } else {
-                    document.getElementById('landLeaseContainer').classList.add('hidden');
-                    document.getElementById('landPurchaseContainer').classList.remove('hidden');
-                    document.getElementById('inputLandLease').value = 0; // Clear value
+                document.getElementById('landLeaseContainer').classList.add('hidden');
+                document.getElementById('landPurchaseContainer').classList.remove('hidden');
+                document.getElementById('inputLandLease').value = 0;
             }
             if (runCalc) calculateCapex();
         }
-        
+
         function toggleForwardContract() {
             const checked = document.getElementById('checkForwardContract').checked;
             const details = document.getElementById('forwardContractDetails');
@@ -960,13 +891,9 @@
                     document.getElementById('inputManagementSalary').value = data.management;
                     document.getElementById('inputTaxRate').value = data.tax;
                     document.getElementById('inputInterestRate').value = data.interest;
-                    
-                    // *** NEW: Handle Permit Cost by Scale ***
                     if (typeof data.permit === 'object') {
-                        // If permit is an object {micro: 100, small: ...}
                         document.getElementById('inputPermitCapex').value = data.permit[scale] || data.permit['micro'];
                     } else {
-                        // Fallback for old flat number structure
                         document.getElementById('inputPermitCapex').value = data.permit || 8000;
                     }
                 }
@@ -983,48 +910,33 @@
             const relocations = getNum('inputRelocationsPerKiln');
             const time = getNum('inputTimePerRelocation');
             const cost = getNum('inputCostPerHourRelocation');
-            
             const totalOpex = numKilns * relocations * time * cost;
-            
-            const outputEl = document.getElementById('outputTotalMobileOpex');
-            outputEl.textContent = `$${totalOpex.toLocaleString(undefined, {maximumFractionDigits: 0})}`;
+            document.getElementById('outputTotalMobileOpex').textContent = `$${totalOpex.toLocaleString(undefined, {maximumFractionDigits: 0})}`;
         }
 
         function calculateCapex() {
-            // This function is now the main aggregator
             let total = 0;
             const getNum = (id) => parseFloat(document.getElementById(id)?.value) || 0;
 
             const kilnTotal = getNum('outputTotalKilnCost');
             total += kilnTotal;
-            
             if (projectState.needsChipper) total += getNum('inputWoodChipperCost');
             if (projectState.strategy === 'store') total += getNum('inputStorageInfra');
-            
             total += getNum('inputDryerCost');
             total += getNum('inputAncillaryCost');
-            
-            const numLogisticsTrucks = getNum('inputNumLogisticsTrucks');
-            const logisticsTruckCost = getNum('inputLogisticsTruckCost');
-            total += (numLogisticsTrucks * logisticsTruckCost);
-            
-            const numPickups = getNum('inputNumPickups'); 
-            const pickupCost = getNum('inputPickupCost'); 
-            total += (numPickups * pickupCost);
-            
+            total += getNum('inputNumLogisticsTrucks') * getNum('inputLogisticsTruckCost');
+            total += getNum('inputNumPickups') * getNum('inputPickupCost');
             total += getNum('inputInfrastructureCost');
             total += getNum('inputPermitCapex');
             total += getNum('outputMRVSetup');
 
-            // *** NEW: Add LCA Cost if visible ***
             if (!document.getElementById('lcaCostContainer').classList.contains('hidden')) {
                 total += getNum('inputLcaCost');
             }
-            
             if (document.getElementById('selectLandModel').value === 'buy') {
                 total += getNum('inputLandPurchase');
             }
-            
+
             let syngas = 0;
             if (document.getElementById('checkSyngasDucting').checked) {
                 syngas = kilnTotal * 0.10;
@@ -1034,7 +946,7 @@
 
             document.getElementById('outputTotalCapex').textContent = `$${total.toLocaleString(undefined, {maximumFractionDigits: 0})}`;
         }
-        
+
         function getProjectSize(volumePerHub) {
             if (volumePerHub < 100) return 'n/a';
             if (volumePerHub >= 100 && volumePerHub < 400) return 'micro';
@@ -1043,40 +955,28 @@
             if (volumePerHub >= 6000) return 'large';
             return 'n/a';
         }
-        
-        function showError(msg) { 
-            if(saveStatus) {
-                saveStatus.textContent = msg;
-                saveStatus.style.display = 'block';
-                saveStatus.style.color = 'rgb(220 38 38)'; // red-600
-            }
+
+        function showError(msg) {
+            if(saveStatus) { saveStatus.textContent = msg; saveStatus.style.display = 'block'; saveStatus.style.color = 'rgb(220 38 38)'; }
         }
-        
-        // *** NEW: Smart Navigation ***
+
         window.navigate = function(url) {
             if (hasUnsavedChanges) {
-                alert("You have unsaved changes. Please click the 'Save' button before continuing.");
+                alert(BiocharI18n.t('common.alert_unsaved'));
             } else {
                 window.location.href = url;
             }
         }
 
-        // *** NEW: Global Reset Button Logic ***
         window.resetForm = function() {
-            if (!confirm("This will clear ALL project data from all tools. Are you sure?")) return;
-
-            // Clear everything
-            projectData = {}; 
-
+            if (!confirm(BiocharI18n.t('common.confirm_reset'))) return;
+            projectData = {};
             if (window.BiocharEngine && BiocharEngine.clearProjectData) {
                 BiocharEngine.clearProjectData();
             } else {
-                // Fallback for older engine.js
                 localStorage.removeItem("biocharProjectData");
                 localStorage.removeItem("currentProjectId");
             }
-
-            // Force reload to empty form
             location.reload();
         }
     </script>
