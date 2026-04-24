@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Dashboard (Tool 6)</title>
+    <title data-i18n="tool6.page_title">Project Dashboard (Tool 6)</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="engine.js"></script> 
+    <script src="engine.js"></script>
+    <script src="translations.js"></script>
+    <script src="i18n.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #f4f4f5; }
@@ -14,14 +16,14 @@
         .hero-label { @apply text-sm font-medium text-gray-500 uppercase tracking-wider mb-2 flex items-center; }
         .hero-value { @apply text-4xl font-extrabold text-gray-900; }
         .hero-sub { @apply text-xs font-medium mt-2; }
-        
+
         /* Risk Cards */
         .kpi-card { padding: 1rem; border-radius: 0.5rem; border-width: 2px; margin-bottom: 0.75rem; }
         .kpi-green { background-color: #f0fdf4; border-color: #bbf7d0; }
         .kpi-yellow { background-color: #fefce8; border-color: #fde047; }
         .kpi-red { background-color: #fef2f2; border-color: #fca5a5; }
-        .kpi-blue { background-color: #eff6ff; border-color: #bfdbfe; } /* New for Neutral/Info */
-        
+        .kpi-blue { background-color: #eff6ff; border-color: #bfdbfe; }
+
         .kpi-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.25rem; }
         .kpi-desc { font-size: 0.875rem; color: #374151; line-height: 1.25; }
 
@@ -30,11 +32,9 @@
         .kpi-red .kpi-title { color: #991b1b; }
         .kpi-blue .kpi-title { color: #1e40af; }
 
-        /* NEW Cosmetic Style */
         .section-title { @apply text-xl font-bold pb-2 border-b mb-4; }
         .section-title-gray { @apply text-gray-800 border-gray-300; }
         .section-title-yellow { @apply text-yellow-900 border-yellow-300; }
-        /* --- End New Style --- */
 
         .action-item { @apply p-3 bg-yellow-50 border-l-4 border-yellow-400 text-sm text-gray-700 mb-2; }
         .action-source { @apply font-bold text-yellow-900 block mb-1; }
@@ -48,12 +48,12 @@
         /* --- PROGRESS BAR --- */
         .progress-bar-container { @apply w-full bg-gray-200 rounded-full h-2.5 mb-6; }
         .progress-bar { @apply bg-green-600 h-2.5 rounded-full transition-all duration-500; }
-        
-        /* --- FOOTER (NEW) --- */
+
+        /* --- FOOTER --- */
         .disclaimer {
             text-align: left;
             font-size: 0.75rem;
-            color: #6b7280; /* gray-500 */
+            color: #6b7280;
             margin-top: 3rem;
             padding-top: 1.5rem;
             border-top: 1px solid #e5e7eb;
@@ -64,7 +64,7 @@
         }
         .disclaimer strong {
             font-weight: 600;
-            color: #4b5563; /* gray-600 */
+            color: #4b5563;
             font-style: normal;
         }
 
@@ -77,58 +77,58 @@
         .nav-button-indigo { background-color: #4f46e5; color: white; }
         .nav-button-white { background-color: white; color: #2563eb; border: 2px solid #dbeafe; }
         .nav-button-white:hover { background-color: #f9fafb; }
-        
-        .hidden { display: none; }
-        .print-only { display: none; } 
 
-        /* --- PRINT STYLES (NEW) --- */
+        .hidden { display: none; }
+        .print-only { display: none; }
+
+        /* --- PRINT STYLES --- */
         @media print {
             body > div > header, body > div > .w-full.mb-8, body > div > .nav-grid,
             body > div > .text-center, #loadingIndicator { display: none !important; }
-            
+
             .disclaimer-container { display: block !important; }
             footer { display: block !important; position: static !important; margin-top: 20px; font-size: 10px !important; }
-            
+
             .print-me { display: block !important; width: 100% !important; page-break-inside: avoid; }
-            .print-only { display: block !important; page-break-before: always; } 
-            
-            body { 
-                background-color: #ffffff; 
-                padding: 0; 
-                margin: 0; 
-                -webkit-print-color-adjust: exact; 
+            .print-only { display: block !important; page-break-before: always; }
+
+            body {
+                background-color: #ffffff;
+                padding: 0;
+                margin: 0;
+                -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
-                font-size: 11px; /* Scale down all font */
+                font-size: 11px;
             }
             .max-w-5xl { max-width: 100%; }
-            
+
             .grid.gap-4.mb-8 { display: grid !important; grid-template-columns: repeat(4, 1fr) !important; gap: 10px !important; }
             .grid.lg\:grid-cols-3 { display: grid !important; grid-template-columns: 2fr 1fr !important; gap: 15px !important; }
             .lg\:col-span-1, .lg\:col-span-2 { grid-column: auto / span 1; width: 100% !important; }
             .lg\:col-span-2 { grid-column: auto / span 2; }
-            
-            .dashboard-card, .bg-blue-50, .bg-green-50, .bg-gray-50, .kpi-card { 
-                border: 1px solid #ddd !important; 
-                box-shadow: none !important; 
-                margin-bottom: 10px; 
-                padding: 10px !important; 
-                background-color: #fff !important; 
+
+            .dashboard-card, .bg-blue-50, .bg-green-50, .bg-gray-50, .kpi-card {
+                border: 1px solid #ddd !important;
+                box-shadow: none !important;
+                margin-bottom: 10px;
+                padding: 10px !important;
+                background-color: #fff !important;
             }
             .kpi-green { background-color: #f0fdf4 !important; border-color: #bbf7d0 !important; }
             .kpi-yellow { background-color: #fefce8 !important; border-color: #fde047 !important; }
             .kpi-red { background-color: #fef2f2 !important; border-color: #fca5a5 !important; }
             .kpi-blue { background-color: #eff6ff !important; border-color: #bfdbfe !important; }
-            
-            .hero-value { font-size: 20px !important; } /* Smaller hero numbers */
+
+            .hero-value { font-size: 20px !important; }
             .hero-label { font-size: 11px !important; }
             .hero-sub { font-size: 10px !important; }
             .text-3xl { font-size: 20px !important; }
             .text-xl { font-size: 16px !important; }
             .text-sm { font-size: 11px !important; }
             .text-xs { font-size: 10px !important; }
-            
+
             .f-icon, .tooltip-container { display: none !important; }
-            
+
             #printSummary h2 { font-size: 18px; font-weight: bold; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid #ccc; }
             #printSummary h3 { font-size: 14px; font-weight: bold; margin-top: 1rem; margin-bottom: 0.5rem; }
             #printSummary table { width: 100%; border-collapse: collapse; }
@@ -140,27 +140,38 @@
 <body class="p-4 md:p-8">
 
     <div class="max-w-5xl mx-auto">
+
+        <div class="flex justify-end mb-4">
+            <select id="lang-select" onchange="BiocharI18n.setLanguage(this.value)"
+                    class="nav-button nav-button-white py-2 px-4 text-xs">
+                <option value="en">English 🇺🇸</option>
+                <option value="es">Español 🇪🇸</option>
+                <option value="pt">Português 🇧🇷</option>
+            </select>
+        </div>
+
         <header class="text-center mb-6">
-            <h1 class="text-2xl md:text-3xl font-extrabold text-green-700">Biochar Project Feasibility Calculator</h1>
-            <h2 class="text-lg font-medium text-gray-700 mt-1">for Latin American Coffee & Cacao Supply Chains</h2>
-            <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider mt-4">Climatebase Fellowship Cohort 8 Capstone Project</p>
-            <p class="text-xs font-medium text-gray-500 mt-2">(All values in USD)</p>
-            
+            <h1 class="text-2xl md:text-3xl font-extrabold text-green-700" data-i18n="common.header_h1">Biochar Project Feasibility Calculator</h1>
+            <h2 class="text-lg font-medium text-gray-700 mt-1" data-i18n="common.header_h2">for Latin American Coffee & Cacao Supply Chains</h2>
+            <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider mt-4" data-i18n="common.cohort">Climatebase Fellowship Cohort 8 Capstone Project</p>
+            <p class="text-xs font-medium text-gray-500 mt-2" data-i18n="common.usd_note">(All values in USD)</p>
+
             <div class="mt-4 mb-6">
-                <a href="https://chatgpt.com/g/g-691ea2b1c2888191b85e54e203c53b2f-biochar-feasibility-guide" 
-                   target="_blank" 
-                   class="inline-block bg-blue-50 text-blue-700 hover:text-blue-900 border border-blue-200 rounded-full px-4 py-1 text-sm font-medium transition">
+                <a href="https://chatgpt.com/g/g-691ea2b1c2888191b85e54e203c53b2f-biochar-feasibility-guide"
+                   target="_blank"
+                   class="inline-block bg-blue-50 text-blue-700 hover:text-blue-900 border border-blue-200 rounded-full px-4 py-1 text-sm font-medium transition"
+                   data-i18n="common.ai_link">
                     Questions? Click here to ask the Biochar Feasibility Guide AI assistant ↗
                 </a>
             </div>
 
-            <p class="text-lg font-medium text-green-800">Tool 6: Executive Dashboard</p>
+            <p class="text-lg font-medium text-green-800" data-i18n="tool6.tool_label">Tool 6: Executive Dashboard</p>
         </header>
 
         <div class="w-full mb-8">
             <div class="flex justify-between text-sm font-medium text-gray-600 mb-1">
-                <span>Step 6 of 7: Dashboard</span>
-                <span>(Next: Scenario Planner)</span>
+                <span data-i18n="tool6.step_label">Step 6 of 7: Dashboard</span>
+                <span data-i18n="tool6.step_next">(Next: Scenario Planner)</span>
             </div>
             <div class="progress-bar-container">
                 <div class="progress-bar" style="width: 85.7%"></div>
@@ -172,120 +183,120 @@
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
-            Calculating final results...
+            <span data-i18n="tool6.loading_text">Calculating final results...</span>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 print-me">
             <div class="dashboard-card hero-metric">
-                <span class="hero-label">Upfront Cost (CAPEX)</span>
+                <span class="hero-label" data-i18n="tool6.hero_capex_label">Upfront Cost (CAPEX)</span>
                 <span id="heroCapex" class="hero-value">$0</span>
-                <span class="hero-sub text-gray-500">Day 1 Cash Need</span>
+                <span class="hero-sub text-gray-500" data-i18n="tool6.hero_capex_sub">Day 1 Cash Need</span>
             </div>
             <div class="dashboard-card hero-metric">
-                <span class="hero-label">Annual Net Profit</span>
+                <span class="hero-label" data-i18n="tool6.hero_profit_label">Annual Net Profit</span>
                 <span id="heroProfit" class="hero-value">$0</span>
-                <span class="hero-sub text-gray-500">After Tax & OPEX</span>
+                <span class="hero-sub text-gray-500" data-i18n="tool6.hero_profit_sub">After Tax & OPEX</span>
             </div>
             <div class="dashboard-card hero-metric">
                 <span class="hero-label">
-                    Payback Period
+                    <span data-i18n="tool6.hero_payback_label">Payback Period</span>
                     <div class="tooltip-container ml-1">
                         <span class="f-icon">f</span>
-                        <span class="tooltip-text">**Formula:**<br>Total CAPEX / Annual Net Profit<br><br>Shows how many years it takes to recover your initial investment.</span>
+                        <span class="tooltip-text" data-i18n-html="tool6.hero_payback_tooltip">**Formula:**<br>Total CAPEX / Annual Net Profit<br><br>Shows how many years it takes to recover your initial investment.</span>
                     </div>
                 </span>
                 <span id="heroPayback" class="hero-value">--</span>
-                <span class="hero-sub text-gray-500">Years to break even</span>
+                <span class="hero-sub text-gray-500" data-i18n="tool6.hero_payback_sub">Years to break even</span>
             </div>
             <div class="dashboard-card hero-metric">
                 <span class="hero-label">
-                    <span id="npvYears">10-Year</span> NPV
+                    <span id="npvYears">10-Year</span> <span data-i18n="tool6.hero_npv_label">NPV</span>
                     <div class="tooltip-container ml-1">
                         <span class="f-icon">f</span>
-                        <span class="tooltip-text">**Net Present Value:**<br>The total value of all future profits in today's dollars, minus your initial investment.</span>
+                        <span class="tooltip-text" data-i18n-html="tool6.hero_npv_tooltip">**Net Present Value:**<br>The total value of all future profits in today's dollars, minus your initial investment.</span>
                     </div>
                 </span>
                 <span id="heroNpv" class="hero-value">$0</span>
-                <span class="hero-sub text-gray-500">Net Present Value</span>
+                <span class="hero-sub text-gray-500" data-i18n="tool6.hero_npv_sub">Net Present Value</span>
             </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-            
+
             <div class="lg:col-span-2 space-y-6 print-me">
-                
+
                 <div class="grid grid-cols-2 gap-4">
                     <div class="dashboard-card bg-blue-50 border-blue-100">
-                        <h3 class="text-sm font-bold text-blue-900 uppercase tracking-wider mb-1">Physical Output</h3>
+                        <h3 class="text-sm font-bold text-blue-900 uppercase tracking-wider mb-1" data-i18n="tool6.physical_output_title">Physical Output</h3>
                         <div class="flex items-baseline">
                             <span id="valBiochar" class="text-3xl font-extrabold text-blue-700 mr-2">0</span>
-                            <span class="text-blue-600 font-medium">tonnes / yr</span>
+                            <span class="text-blue-600 font-medium" data-i18n="tool6.physical_output_unit">tonnes / yr</span>
                         </div>
-                        <p class="text-xs text-blue-400 mt-1">Biochar produced</p>
+                        <p class="text-xs text-blue-400 mt-1" data-i18n="tool6.physical_output_desc">Biochar produced</p>
                     </div>
                     <div class="dashboard-card bg-green-50 border-green-100">
-                        <h3 class="text-sm font-bold text-green-900 uppercase tracking-wider mb-1">Climate Impact</h3>
+                        <h3 class="text-sm font-bold text-green-900 uppercase tracking-wider mb-1" data-i18n="tool6.climate_impact_title">Climate Impact</h3>
                         <div class="flex items-baseline">
                             <span id="valOffsets" class="text-3xl font-extrabold text-green-700 mr-2">0</span>
-                            <span class="text-green-600 font-medium">tCO2e / yr</span>
+                            <span class="text-green-600 font-medium" data-i18n="tool6.climate_impact_unit">tCO2e / yr</span>
                         </div>
-                        <p class="text-xs text-green-500 mt-1">Carbon sequestered</p>
+                        <p class="text-xs text-green-500 mt-1" data-i18n="tool6.climate_impact_desc">Carbon sequestered</p>
                     </div>
                 </div>
 
                 <div id="feedstockFeasibilityCard" class="dashboard-card">
-                    <h3 class="section-title section-title-gray">Input Cost Position</h3>
+                    <h3 class="section-title section-title-gray" data-i18n="tool6.input_cost_section">Input Cost Position</h3>
                     <div class="flex flex-col md:flex-row justify-between items-center">
                         <div>
-                            <p class="text-sm text-gray-600 mb-1">Total Delivered Cost (Purchase + Logistics)</p>
+                            <p class="text-sm text-gray-600 mb-1" data-i18n="tool6.delivered_cost_desc">Total Delivered Cost (Purchase + Logistics)</p>
                             <div class="flex items-center">
                                 <span id="valDeliveredCost" class="text-3xl font-extrabold text-gray-900">$0</span>
-                                <span class="text-gray-600 ml-2 font-medium">per tonne</span>
-                                <div class="tooltip-container ml-2"><span class="f-icon">f</span><span class="tooltip-text">**Formula:**<br>(Total Feedstock Spend + Logistics Spend) / Total Tonnes</span></div>
+                                <span class="text-gray-600 ml-2 font-medium" data-i18n="tool6.per_tonne">per tonne</span>
+                                <div class="tooltip-container ml-2"><span class="f-icon">f</span><span class="tooltip-text" data-i18n-html="tool6.delivered_cost_tooltip">**Formula:**<br>(Total Feedstock Spend + Logistics Spend) / Total Tonnes</span></div>
                             </div>
                         </div>
                         <div id="feasibilityBadge" class="mt-4 md:mt-0 px-4 py-2 rounded-full font-bold text-sm uppercase bg-gray-200 text-gray-700">
-                            Calculating...
+                            <span data-i18n="tool6.calculating">Calculating...</span>
                         </div>
                     </div>
-                    <p id="feasibilityMsg" class="text-sm mt-3 text-gray-600 italic">
+                    <p id="feasibilityMsg" class="text-sm mt-3 text-gray-600 italic" data-i18n="tool6.feasibility_comparing">
                         Comparing your costs against industry benchmarks...
                     </p>
                 </div>
 
                 <div class="dashboard-card">
-                    <h3 class="section-title section-title-gray">Annual Financial Summary</h3>
+                    <h3 class="section-title section-title-gray" data-i18n="tool6.financial_summary_section">Annual Financial Summary</h3>
                     <div class="overflow-x-auto">
                         <table class="w-full text-sm">
                             <tbody class="divide-y divide-gray-100">
                                 <tr class="bg-green-50">
-                                    <td class="py-3 px-2 font-bold text-green-900 flex items-center">Total Revenue<div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text">Biochar + Credits + Vinegar</span></div></td>
+                                    <td class="py-3 px-2 font-bold text-green-900 flex items-center"><span data-i18n="tool6.total_revenue_label">Total Revenue</span><div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool6.total_revenue_tooltip">Biochar + Credits + Vinegar</span></div></td>
                                     <td id="summRevenue" class="py-3 px-2 text-right font-bold text-green-700">$0</td>
                                 </tr>
-                                <tr><td class="py-2 px-4 text-gray-600 pl-8">- Biochar Sales</td><td id="revBiochar" class="py-2 px-4 text-right text-gray-900">$0</td></tr>
-                                <tr><td class="py-2 px-4 text-gray-600 pl-8">- Carbon Credits</td><td id="revCredits" class="py-2 px-4 text-right text-gray-900">$0</td></tr>
-                                <tr><td class="py-2 px-4 text-gray-600 pl-8">- Wood Vinegar Sales</td><td id="revVinegar" class="py-2 px-4 text-right text-gray-900">$0</td></tr>
-                                
+                                <tr><td class="py-2 px-4 text-gray-600 pl-8" data-i18n="tool6.biochar_sales_row">- Biochar Sales</td><td id="revBiochar" class="py-2 px-4 text-right text-gray-900">$0</td></tr>
+                                <tr><td class="py-2 px-4 text-gray-600 pl-8" data-i18n="tool6.carbon_credits_row">- Carbon Credits</td><td id="revCredits" class="py-2 px-4 text-right text-gray-900">$0</td></tr>
+                                <tr><td class="py-2 px-4 text-gray-600 pl-8" data-i18n="tool6.wood_vinegar_row">- Wood Vinegar Sales</td><td id="revVinegar" class="py-2 px-4 text-right text-gray-900">$0</td></tr>
+
                                 <tr class="bg-red-50">
-                                    <td class="py-3 px-2 font-bold text-red-900 flex items-center">Total Operating Costs (OPEX)<div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text">Sum of all costs below.</span></div></td>
+                                    <td class="py-3 px-2 font-bold text-red-900 flex items-center"><span data-i18n="tool6.total_opex_label">Total Operating Costs (OPEX)</span><div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool6.total_opex_tooltip">Sum of all costs below.</span></div></td>
                                     <td id="summOpex" class="py-3 px-2 text-right font-bold text-red-700">$0</td>
                                 </tr>
-                                <tr><td class="py-2 px-4 text-gray-600 pl-8">- Feedstock Purchasing</td><td id="opexFeedstock" class="py-2 px-4 text-right text-gray-900">$0</td></tr>
-                                <tr><td class="py-2 px-4 text-gray-600 pl-8">- Feedstock Logistics</td><td id="opexLogistics" class="py-2 px-4 text-right text-gray-900">$0</td></tr>
-                                <tr><td class="py-2 px-4 text-gray-600 pl-8">- Site Ops (Labor, Maint, MRV)</td><td id="opexSiteOps" class="py-2 px-4 text-right text-gray-900">$0</td></tr>
-                                <tr><td class="py-2 px-4 text-gray-600 pl-8">- Retail & Vinegar Costs</td><td id="opexRetailVinegar" class="py-2 px-4 text-right text-gray-900">$0</td></tr>
-                                <tr><td class="py-2 px-4 text-gray-600 pl-8">- Financial Costs (Interest)</td><td id="opexFinance" class="py-2 px-4 text-right text-gray-900">$0</td></tr>
-                                
+                                <tr><td class="py-2 px-4 text-gray-600 pl-8" data-i18n="tool6.feedstock_purchasing_row">- Feedstock Purchasing</td><td id="opexFeedstock" class="py-2 px-4 text-right text-gray-900">$0</td></tr>
+                                <tr><td class="py-2 px-4 text-gray-600 pl-8" data-i18n="tool6.feedstock_logistics_row">- Feedstock Logistics</td><td id="opexLogistics" class="py-2 px-4 text-right text-gray-900">$0</td></tr>
+                                <tr><td class="py-2 px-4 text-gray-600 pl-8" data-i18n="tool6.site_ops_row">- Site Ops (Labor, Maint, MRV)</td><td id="opexSiteOps" class="py-2 px-4 text-right text-gray-900">$0</td></tr>
+                                <tr><td class="py-2 px-4 text-gray-600 pl-8" data-i18n="tool6.retail_vinegar_row">- Retail & Vinegar Costs</td><td id="opexRetailVinegar" class="py-2 px-4 text-right text-gray-900">$0</td></tr>
+                                <tr><td class="py-2 px-4 text-gray-600 pl-8" data-i18n="tool6.finance_costs_row">- Financial Costs (Interest)</td><td id="opexFinance" class="py-2 px-4 text-right text-gray-900">$0</td></tr>
+
                                 <tr class="bg-gray-50 font-bold">
-                                    <td class="py-3 px-2 flex items-center">Pre-Tax Profit<div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text">Revenue - OPEX</span></div></td>
+                                    <td class="py-3 px-2 flex items-center"><span data-i18n="tool6.pretax_label">Pre-Tax Profit</span><div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool6.pretax_tooltip">Revenue - OPEX</span></div></td>
                                     <td id="summPreTax" class="py-3 px-2 text-right">$0</td>
                                 </tr>
                                 <tr>
-                                    <td class="py-2 px-2 text-gray-600 flex items-center">- Corporate Tax<div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text">Profit * Tax Rate (min 0)</span></div></td>
+                                    <td class="py-2 px-2 text-gray-600 flex items-center"><span data-i18n="tool6.tax_label">- Corporate Tax</span><div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool6.tax_tooltip">Profit * Tax Rate (min 0)</span></div></td>
                                     <td id="summTax" class="py-2 px-2 text-right text-red-600">$0</td>
                                 </tr>
                                 <tr>
-                                    <td class="py-2 px-2 text-gray-600 flex items-center">+ Incentives/Grants</td>
+                                    <td class="py-2 px-2 text-gray-600 flex items-center" data-i18n="tool6.incentives_label">+ Incentives/Grants</td>
                                     <td id="summIncentives" class="py-2 px-2 text-right text-green-600">$0</td>
                                 </tr>
                             </tbody>
@@ -296,54 +307,56 @@
 
             <div class="lg:col-span-1 print-me">
                 <div class="dashboard-card bg-gray-50 h-full">
-                    <h3 class="text-xl font-bold text-gray-800 mb-6">Key Risk Indicators</h3>
+                    <h3 class="text-xl font-bold text-gray-800 mb-6" data-i18n="tool6.risk_section_title">Key Risk Indicators</h3>
                     <div id="kpiContainer" class="space-y-4">
-                        <p class="text-gray-500 text-center italic">Loading risk assessment...</p>
+                        <p class="text-gray-500 text-center italic" data-i18n="tool6.risk_loading">Loading risk assessment...</p>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="dashboard-card bg-yellow-50 border-2 border-yellow-200 mb-6 print-me">
-            <h3 class="section-title section-title-yellow">Project Action Plan (Consolidated Notes)</h3>
+            <h3 class="section-title section-title-yellow" data-i18n="tool6.action_plan_section">Project Action Plan (Consolidated Notes)</h3>
             <div id="actionPlanContainer" class="space-y-2">
-                <p class="text-gray-500 italic">No action items flagged in previous tools.</p>
+                <p class="text-gray-500 italic" data-i18n="tool6.action_plan_empty">No action items flagged in previous tools.</p>
             </div>
         </div>
-        
-        <div id="printSummary" class="print-only dashboard-card">
-            </div>
+
+        <div id="printSummary" class="print-only dashboard-card"></div>
+
         <div class="nav-grid mt-8 mb-12">
-            <a href="tool5.html" class="nav-button nav-button-blue md:col-span-1">← Back to Tool 5</a>
-            <button onclick="window.print()" class="nav-button nav-button-green md:col-span-1">🖨️ Print / Save as PDF</button>
-            <a href="tool7.html" class="nav-button nav-button-green md:col-span-1">Proceed to Scenarios →</a>
+            <a href="tool5.html" class="nav-button nav-button-blue md:col-span-1" data-i18n="tool6.back_btn">← Back to Tool 5</a>
+            <button onclick="window.print()" class="nav-button nav-button-green md:col-span-1" data-i18n="tool6.print_btn">🖨️ Print / Save as PDF</button>
+            <a href="tool7.html" class="nav-button nav-button-green md:col-span-1" data-i18n="tool6.next_btn">Proceed to Scenarios →</a>
         </div>
         <div class="text-center">
-             <a href="index.html" class="text-sm text-gray-600 hover:text-blue-600 font-medium">← Return to Main Menu</a>
+             <a href="index.html" class="text-sm text-gray-600 hover:text-blue-600 font-medium" data-i18n="tool6.main_menu_link">← Return to Main Menu</a>
         </div>
     </div>
 
-    <div class="disclaimer-container"> <footer class="disclaimer max-w-5xl mx-auto">
-            <p><strong>No Guarantee:</strong> <em>The projections provided by this calculator are based on the assumptions and data entered by the user. They are for illustrative purposes only and do not constitute a guarantee of actual costs, revenues, or profitability.</em></p>
-            <p><strong>Not Financial Advice:</strong> <em>The information provided is not intended to be a substitute for professional financial, legal, or agricultural advice. Users are solely responsible for any decisions made based on the output of this tool.</em></p>
-            <p><strong>Verify All Data:</strong> <em>Users should independently verify all local costs, market prices, and regulatory requirements before making any investment.</em></p>
+    <div class="disclaimer-container">
+        <footer class="disclaimer max-w-5xl mx-auto">
+            <p><strong data-i18n="tool6.footer_no_guarantee_label">No Guarantee:</strong> <em data-i18n="tool6.footer_no_guarantee">The projections provided by this calculator are based on the assumptions and data entered by the user. They are for illustrative purposes only and do not constitute a guarantee of actual costs, revenues, or profitability.</em></p>
+            <p><strong data-i18n="tool6.footer_not_advice_label">Not Financial Advice:</strong> <em data-i18n="tool6.footer_not_advice">The information provided is not intended to be a substitute for professional financial, legal, or agricultural advice. Users are solely responsible for any decisions made based on the output of this tool.</em></p>
+            <p><strong data-i18n="tool6.footer_verify_label">Verify All Data:</strong> <em data-i18n="tool6.footer_verify">Users should independently verify all local costs, market prices, and regulatory requirements before making any investment.</em></p>
         </footer>
     </div>
+
 <script type="module">
         let projectData = {};
 
         // --- Helper Functions ---
-        function setText(id, txt) { 
+        function setText(id, txt) {
             const el = document.getElementById(id);
-            if (el) el.textContent = txt; 
+            if (el) el.textContent = txt;
         }
-        function formatMoney(n) { 
+        function formatMoney(n) {
             if (isNaN(n) || !isFinite(n)) n = 0;
-            return "$" + Math.round(n).toLocaleString(); 
+            return "$" + Math.round(n).toLocaleString();
         }
-        function formatTons(n) { 
+        function formatTons(n) {
             if (isNaN(n) || !isFinite(n)) n = 0;
-            return n.toLocaleString(undefined, {maximumFractionDigits: 1}); 
+            return n.toLocaleString(undefined, {maximumFractionDigits: 1});
         }
         function colorHero(id, isGood, isBad) {
             const el = document.getElementById(id);
@@ -355,30 +368,12 @@
         }
         function calculateNPV(invest, flow, rate, years) {
             let npv = -invest;
-            if (rate <= -1) return -Infinity; // Avoid division by zero if rate is -100%
-            for (let t = 1; t <= years; t++) { 
-                npv += flow / Math.pow(1 + rate, t); 
+            if (rate <= -1) return -Infinity;
+            for (let t = 1; t <= years; t++) {
+                npv += flow / Math.pow(1 + rate, t);
             }
             return npv;
         }
-
-        // --- Matrix Data (Embedded in Tool 6 for KPI lookup) ---
-        const COUNTRY_DATA = {
-            "bolivia": { permit: { time: "4–8 months" } },
-            "brazil": { permit: { time: "6-9 months" } },
-            "colombia": { permit: { time: "6 months" } },
-            "costa_rica": { permit: { time: "6–12 months" } },
-            "dominican_republic": { permit: { time: "3–6 months" } },
-            "ecuador": { permit: { time: "6–12 months" } },
-            "el_salvador": { permit: { time: "3–6 months" } },
-            "guatemala": { permit: { time: "6–12 months" } },
-            "honduras": { permit: { time: "6–12 months" } },
-            "mexico": { permit: { time: "3–6 months" } },
-            "nicaragua": { permit: { time: "4–8 months" } },
-            "panama": { permit: { time: "6–12 months" } },
-            "peru": { permit: { time: "4–8 months" } },
-            "custom": { permit: { time: "Unknown" } }
-        };
 
         // --- Data Loading & Calculation ---
         document.addEventListener('DOMContentLoaded', () => {
@@ -388,23 +383,22 @@
                 const storedData = localStorage.getItem('biocharProjectData');
                 if (storedData) projectData = JSON.parse(storedData);
             }
-            
-            // Check for required tools
+
             const missingTools = [];
-            if (!projectData.tool1) missingTools.push("Tool 1");
-            if (!projectData.tool2) missingTools.push("Tool 2");
-            if (!projectData.tool3) missingTools.push("Tool 3");
-            if (!projectData.tool4) missingTools.push("Tool 4");
-            if (!projectData.tool5) missingTools.push("Tool 5");
+            if (!projectData.tool1) missingTools.push(BiocharI18n.t('tool6.missing_t1'));
+            if (!projectData.tool2) missingTools.push(BiocharI18n.t('tool6.missing_t2'));
+            if (!projectData.tool3) missingTools.push(BiocharI18n.t('tool6.missing_t3'));
+            if (!projectData.tool4) missingTools.push(BiocharI18n.t('tool6.missing_t4'));
+            if (!projectData.tool5) missingTools.push(BiocharI18n.t('tool6.missing_t5'));
 
             if (missingTools.length === 0) {
                 loadAndCalculate();
             } else {
-                const errorMsg = `Data from the following tools is missing: ${missingTools.join(', ')}. Please go back and save data for these tools.`;
-                document.getElementById('loadingIndicator').textContent = errorMsg;
-                document.getElementById('loadingIndicator').classList.remove('animate-pulse', 'text-blue-600');
-                document.getElementById('loadingIndicator').classList.add('text-red-600');
-                document.getElementById('kpiContainer').innerHTML = "<p class='text-gray-500 text-center italic'>No data found.</p>";
+                const indicator = document.getElementById('loadingIndicator');
+                indicator.querySelector('span[data-i18n]').textContent = BiocharI18n.t('tool6.missing_tools_error', { tools: missingTools.join(', ') });
+                indicator.classList.remove('animate-pulse', 'text-blue-600');
+                indicator.classList.add('text-red-600');
+                document.getElementById('kpiContainer').innerHTML = `<p class='text-gray-500 text-center italic'>${BiocharI18n.t('tool6.kpi_no_data')}</p>`;
             }
         });
 
@@ -417,7 +411,6 @@
                 const t4 = projectData.tool4 || {};
                 const t5 = projectData.tool5 || {};
 
-                // Create safe-access objects for nested data
                 const f_data = t2.diversified || {};
                 const k_data = t2.kiln || {};
                 const c_data = t5.capex || {};
@@ -426,7 +419,6 @@
 
                 // === 2. CALCULATE TOTALS (LOGIC SYNCED WITH TOOL 7) ===
 
-                // --- FEEDSTOCK & BIOCHAR (from T2) ---
                 const biochar1 = (f_data.f1_tonnes || 0) * (1 - (f_data.f1_ash || 0)) * (f_data.f1_yield || 0);
                 const biochar2 = (f_data.f2_tonnes || 0) * (1 - (f_data.f2_ash || 0)) * (f_data.f2_yield || 0);
                 const totalBiochar = biochar1 + biochar2;
@@ -434,48 +426,43 @@
                 const credits1 = biochar1 * (f_data.f1_carbon || 0) * (f_data.f1_conv || 0);
                 const credits2 = biochar2 * (f_data.f2_carbon || 0) * (f_data.f2_conv || 0);
                 const totalCredits = credits1 + credits2;
-                
+
                 const totalFeedstock = (f_data.f1_tonnes || 0) + (f_data.f2_tonnes || 0);
 
-                // --- CAPEX (from T2 & T5) ---
-                const totalCapex = c_data.totalCapex || 0; // Use the pre-calculated total from Tool 5
+                const totalCapex = c_data.totalCapex || 0;
 
-                // --- REVENUE (from T4) ---
                 const rev_Credits = totalCredits * (t4.carbonCreditPrice || 0);
-                
+
                 let rev_Biochar = 0;
-                let opex_RetailCosts = 0; // Compost, packaging, etc.
-                const mixPercent = (t4.retailMixPercent || 0) / 100; // Define mixPercent
-                
-                // *** FIX: Per-Bag Logic ***
+                let opex_RetailCosts = 0;
+                const mixPercent = (t4.retailMixPercent || 0) / 100;
+
                 if (t4.salesModel === 'retail' && mixPercent > 0 && (t4.retailBagWeightKg || 0) > 0) {
                     const biocharPerBagKg = t4.retailBagWeightKg * mixPercent;
-                    const totalBags = (totalBiochar * 1000) / biocharPerBagKg; // Convert tonnes to kg
-                    
+                    const totalBags = (totalBiochar * 1000) / biocharPerBagKg;
+
                     rev_Biochar = totalBags * (t4.retailPricePerBag || 0);
-                    
+
                     const compostTonnes = (totalBags * (t4.retailBagWeightKg * (1 - mixPercent))) / 1000;
-                    
+
                     opex_RetailCosts = (compostTonnes * (t4.compostCost || 0)) +
                                      (totalBags * (t4.retailPackagingCostPerBag || 0)) +
                                      (totalBags * (t4.retailDistributionCostPerBag || 0));
                 } else if (t4.salesModel === 'bulk') {
                     rev_Biochar = totalBiochar * (t4.bulkPrice || 0);
                 }
-                rev_Biochar = rev_Biochar * (t4.salesRate || 1); // Apply sales rate
+                rev_Biochar = rev_Biochar * (t4.salesRate || 1);
 
                 let rev_Vinegar = 0;
                 let opex_VinegarCosts = 0;
                 if (t4.sellWoodVinegar) {
                     const totalLitres = totalFeedstock * (t4.woodVinegarYield || 0);
-                    rev_Vinegar = totalLitres * (t4.woodVinegarPrice || 0) * (t4.salesRate || 1); // Apply sales rate
+                    rev_Vinegar = totalLitres * (t4.woodVinegarPrice || 0) * (t4.salesRate || 1);
                     opex_VinegarCosts = totalLitres * ((t4.woodVinegarPackaging || 0) + (t4.woodVinegarDistribution || 0));
                 }
 
                 const totalRevenue = rev_Credits + rev_Biochar + rev_Vinegar;
 
-                // --- OPEX (from T2, T3, T4, T5) ---
-                // *** FIX: Default prices to 0 ***
                 const opex_Feedstock = ((f_data.f1_tonnes || 0) * (f_data.f1_price || 0)) + ((f_data.f2_tonnes || 0) * (f_data.f2_price || 0));
                 const opex_Logistics = t3.totalAnnualLogisticsCost || 0;
                 const opex_Marketing = t4.marketingBudget || 0;
@@ -483,55 +470,51 @@
 
                 let opex_Labor = (o_data.generalStaffCount * o_data.generalSalary) + (o_data.mgmtStaffCount * o_data.mgmtSalary);
                 let opex_Utilities = (o_data.utilities || 0);
-                
-                // *** FIX: Only reduce months if Strategy is 'Shutdown', ignore 'Store' ***
+
                 if (t1.seasonalityStrategy === 'shutdown') {
                     const months = (o_data.monthsOperational || 12);
                     opex_Labor = opex_Labor * (months / 12);
                     opex_Utilities = opex_Utilities * (months / 12);
                 }
 
-                // *** UPDATED: Includes new OPEX lines ***
-                const opex_SiteOps = opex_Labor + 
-                                     (o_data.insurance || 0) + 
-                                     opex_Utilities + 
+                const opex_SiteOps = opex_Labor +
+                                     (o_data.insurance || 0) +
+                                     opex_Utilities +
                                      (o_data.pickupsAnnualOpex || 0) +
                                      (o_data.regulatory || 0) +
                                      (o_data.registryFees || 0) +
                                      (o_data.mrvAnnual || 0) +
                                      (o_data.landLease || 0) +
                                      (o_data.totalMobileRelocationOpex || 0);
-                
+
                 const opex_Finance = (o_data.hasFeedstockLoan ? (o_data.feedstockWorkingCapital * (o_data.feedstockLoanInterestRate / 100)) : 0) +
                                      (fin_data.loanAmount * (fin_data.interestRate / 100));
 
-                const totalOpex = opex_Feedstock + 
-                                  opex_Logistics + 
-                                  opex_SiteOps + 
-                                  opex_RetailCosts + 
-                                  opex_VinegarCosts + 
-                                  opex_Marketing + 
-                                  opex_RetailCompliance + 
+                const totalOpex = opex_Feedstock +
+                                  opex_Logistics +
+                                  opex_SiteOps +
+                                  opex_RetailCosts +
+                                  opex_VinegarCosts +
+                                  opex_Marketing +
+                                  opex_RetailCompliance +
                                   opex_Finance;
 
-                // --- FINAL FINANCIALS ---
                 const preTaxProfit = totalRevenue - totalOpex;
                 const tax = Math.max(0, preTaxProfit * (fin_data.taxRate / 100));
                 const incentives = (fin_data.incentives || 0);
                 const netProfit = preTaxProfit - tax + incentives;
-                
+
                 const projectLife = fin_data.projectLife || 10;
-                const paybackYears = netProfit > 0 ? (totalCapex / netProfit) : Infinity; // Fix div by zero
+                const paybackYears = netProfit > 0 ? (totalCapex / netProfit) : Infinity;
                 const npv = calculateNPV(totalCapex, netProfit, (fin_data.discountRate / 100), projectLife);
 
                 // === 3. RENDER ===
-                setText('npvYears', `${projectLife}-Year`);
-                colorHero('heroCapex', false, true); // Capex is always a "cost"
+                setText('npvYears', BiocharI18n.t('tool6.npv_years_label', { n: projectLife }));
+                colorHero('heroCapex', false, true);
                 setText('heroCapex', formatMoney(totalCapex));
                 colorHero('heroProfit', netProfit >= 0, netProfit < 0);
                 setText('heroProfit', formatMoney(netProfit));
-                // *** FIX: Check for Infinity ***
-                setText('heroPayback', !isFinite(paybackYears) ? "Never" : `${paybackYears.toFixed(1)} Years`);
+                setText('heroPayback', !isFinite(paybackYears) ? BiocharI18n.t('tool6.never_text') : `${paybackYears.toFixed(1)}${BiocharI18n.t('tool6.years_suffix')}`);
                 colorHero('heroPayback', paybackYears <= 5, paybackYears > 10);
                 colorHero('heroNpv', npv >= 0, npv < 0);
                 setText('heroNpv', formatMoney(npv));
@@ -539,101 +522,97 @@
                 setText('valBiochar', formatTons(totalBiochar));
                 setText('valOffsets', formatTons(totalCredits));
 
-                // Feasibility
                 const deliveredCostPerTonne = totalFeedstock > 0 ? ((opex_Feedstock + opex_Logistics) / totalFeedstock) : 0;
-                renderFeasibility(deliveredCostPerTonne); // *** FIX: New logic here ***
+                renderFeasibility(deliveredCostPerTonne);
 
-                // Financial Summary Table
                 setText('summRevenue', formatMoney(totalRevenue));
                 setText('revBiochar', formatMoney(rev_Biochar));
                 setText('revCredits', formatMoney(rev_Credits));
                 setText('revVinegar', formatMoney(rev_Vinegar));
-                
+
                 setText('summOpex', formatMoney(totalOpex));
                 setText('opexFeedstock', formatMoney(opex_Feedstock));
                 setText('opexLogistics', formatMoney(opex_Logistics));
                 setText('opexSiteOps', formatMoney(opex_SiteOps));
                 setText('opexRetailVinegar', formatMoney(opex_RetailCosts + opex_VinegarCosts + opex_Marketing + opex_RetailCompliance));
                 setText('opexFinance', formatMoney(opex_Finance));
-                
+
                 setText('summPreTax', formatMoney(preTaxProfit));
                 setText('summTax', formatMoney(tax));
                 setText('summIncentives', formatMoney(incentives));
 
-                // Render KPIs and Notes
                 renderKPIs(t1, t2, t4, t5);
                 renderActionPlan(projectData);
-                renderPrintSummary(projectData); 
-                
+                renderPrintSummary(projectData);
+
                 document.getElementById('loadingIndicator').classList.add('hidden');
 
-            } catch (e) { 
-                console.error("Error during dashboard calculation:", e); 
-                document.getElementById('loadingIndicator').textContent = "An error occurred during calculation. Please check all previous tools for missing data.";
-                document.getElementById('loadingIndicator').classList.remove('animate-pulse', 'text-blue-600');
-                document.getElementById('loadingIndicator').classList.add('text-red-600');
+            } catch (e) {
+                console.error("Error during dashboard calculation:", e);
+                const indicator = document.getElementById('loadingIndicator');
+                indicator.querySelector('span[data-i18n]').textContent = BiocharI18n.t('tool6.calc_error');
+                indicator.classList.remove('animate-pulse', 'text-blue-600');
+                indicator.classList.add('text-red-600');
             }
         }
 
         function renderFeasibility(perTonne) {
-            // *** FIX: Handle NaN/0 ***
-            if (isNaN(perTonne)) perTonne = 0; 
-            
+            if (isNaN(perTonne)) perTonne = 0;
+
             document.getElementById('valDeliveredCost').textContent = formatMoney(perTonne);
             const badge = document.getElementById('feasibilityBadge');
             const msg = document.getElementById('feasibilityMsg');
-            
-            // *** UPDATED TEXT: Favorable / Less Favorable ***
+
             if (perTonne <= 0) {
                 badge.className = "mt-4 md:mt-0 px-4 py-2 rounded-full font-bold text-sm uppercase bg-green-100 text-green-800";
-                badge.textContent = "Highly Favorable";
-                msg.textContent = "Your feedstock is free ($0/t). This gives you a strong competitive advantage.";
+                badge.textContent = BiocharI18n.t('tool6.feasibility_0_badge');
+                msg.textContent = BiocharI18n.t('tool6.feasibility_0_msg');
             } else if (perTonne < 20) {
                 badge.className = "mt-4 md:mt-0 px-4 py-2 rounded-full font-bold text-sm uppercase bg-green-100 text-green-800";
-                badge.textContent = "Highly Favorable";
-                msg.textContent = "Your delivered cost is excellent (<$20/t). This gives you a strong competitive advantage.";
+                badge.textContent = BiocharI18n.t('tool6.feasibility_low_badge');
+                msg.textContent = BiocharI18n.t('tool6.feasibility_low_msg');
             } else if (perTonne <= 40) {
                 badge.className = "mt-4 md:mt-0 px-4 py-2 rounded-full font-bold text-sm uppercase bg-blue-100 text-blue-800";
-                badge.textContent = "Favorable";
-                msg.textContent = "Your delivered cost is standard ($20-$40/t). Profitability will depend on your sales model.";
+                badge.textContent = BiocharI18n.t('tool6.feasibility_mid_badge');
+                msg.textContent = BiocharI18n.t('tool6.feasibility_mid_msg');
             } else if (perTonne <= 60) {
                 badge.className = "mt-4 md:mt-0 px-4 py-2 rounded-full font-bold text-sm uppercase bg-yellow-100 text-yellow-800";
-                badge.textContent = "Marginal";
-                msg.textContent = "Your delivered cost is high ($40-$60/t). You are sensitive to biochar price drops.";
+                badge.textContent = BiocharI18n.t('tool6.feasibility_high_badge');
+                msg.textContent = BiocharI18n.t('tool6.feasibility_high_msg');
             } else {
                 badge.className = "mt-4 md:mt-0 px-4 py-2 rounded-full font-bold text-sm uppercase bg-red-100 text-red-800";
-                badge.textContent = "Less Favorable";
-                msg.textContent = "Your delivered cost is >$60/t. Transport and feedstock costs may pinch your profit.";
+                badge.textContent = BiocharI18n.t('tool6.feasibility_vhigh_badge');
+                msg.textContent = BiocharI18n.t('tool6.feasibility_vhigh_msg');
             }
         }
 
-        // *** NEW: Fully Revised KPI Function ***
         function renderKPIs(t1, t2, t4, t5) {
-            const kpiContainer = document.getElementById('kpiContainer'); 
-            kpiContainer.innerHTML = ''; // Clear loader
-            
-            // 1. Permit Timeline (NEW)
-            const country = t1.country || "custom";
-            const countryInfo = COUNTRY_DATA[country] || COUNTRY_DATA["custom"];
-            const leadTime = countryInfo.permit?.time || "Unknown";
-            addKPI('blue', `Permit Timeline: ${leadTime}`, `Based on typical air quality permitting timelines for ${country.toUpperCase().replace('_',' ')}. Plan your launch accordingly.`);
+            const kpiContainer = document.getElementById('kpiContainer');
+            kpiContainer.innerHTML = '';
 
-            // 2. Community Buy-In (from T1)
+            // 1. Permit Timeline
+            const country = t1.country || "custom";
+            const permitKey = 'tool6.permit_' + country;
+            const leadTime = BiocharI18n.t(permitKey) !== permitKey ? BiocharI18n.t(permitKey) : BiocharI18n.t('tool6.permit_unknown');
+            const countryDisplay = country.toUpperCase().replace(/_/g, ' ');
+            addKPI('blue', BiocharI18n.t('tool6.permit_title', { time: leadTime }), BiocharI18n.t('tool6.permit_msg', { country: countryDisplay }));
+
+            // 2. Community Buy-In
             const buyIn = t1.communityBuyIn || 'not_secured';
             if (buyIn === 'secured') {
-                addKPI('green', 'Community Buy-In: Secured', 'Excellent. A strong foundation for a successful project.');
+                addKPI('green', BiocharI18n.t('tool6.kpi_buyin_secured_title'), BiocharI18n.t('tool6.kpi_buyin_secured_msg'));
             } else if (buyIn === 'in_process') {
-                addKPI('yellow', 'Community Buy-In: In Progress', 'Key risk. Continue building local relationships to ensure long-term project viability.');
+                addKPI('yellow', BiocharI18n.t('tool6.kpi_buyin_process_title'), BiocharI18n.t('tool6.kpi_buyin_process_msg'));
             } else {
-                addKPI('red', 'Community Buy-In: Not Secured', 'High risk. Projects without community support often fail. Prioritize engagement immediately.');
+                addKPI('red', BiocharI18n.t('tool6.kpi_buyin_none_title'), BiocharI18n.t('tool6.kpi_buyin_none_msg'));
             }
 
-            // 3. Feedstock Risk (from T2)
+            // 3. Feedstock Risk
             const f1_comp = t2.diversified?.f1_competition;
             const f1_cont = t2.diversified?.f1_contract;
             let isHighRisk = (f1_cont === 'spot');
             let isMedRisk = (f1_cont === 'written' || f1_cont === 'verbal' || f1_comp === 'high' || f1_comp === 'moderate');
-            
+
             if (t1.seasonalityStrategy === 'diversify') {
                 const f2_comp = t2.diversified?.f2_competition;
                 const f2_cont = t2.diversified?.f2_contract;
@@ -642,57 +621,57 @@
             }
 
             if (isHighRisk) {
-                addKPI('red', 'CRITICAL RISK: Feedstock Supply', 'Relying on spot markets is a critical financial risk. Securing feedstock is the #1 challenge for biochar projects. This is a potential failure point.');
+                addKPI('red', BiocharI18n.t('tool6.kpi_feedstock_high_title'), BiocharI18n.t('tool6.kpi_feedstock_high_msg'));
             } else if (isMedRisk) {
-                addKPI('yellow', 'Feedstock Risk: Moderate', 'Competition is moderate or contracts are informal. Your feedstock costs may be unpredictable or increase over time. Secure written agreements.');
+                addKPI('yellow', BiocharI18n.t('tool6.kpi_feedstock_med_title'), BiocharI18n.t('tool6.kpi_feedstock_med_msg'));
             } else {
-                addKPI('green', 'Feedstock Risk: Low', 'Feedstock is secured via ownership or a low-competition written contract.');
+                addKPI('green', BiocharI18n.t('tool6.kpi_feedstock_low_title'), BiocharI18n.t('tool6.kpi_feedstock_low_msg'));
             }
-            
-            // 4. Marketing Plan (from T4)
+
+            // 4. Marketing Plan
             const marketing = t4.marketingPlan;
             if (marketing === 'coop') {
-                addKPI('green', 'Sales Plan: Secured', 'A built-in distribution (like a co-op) is the lowest-risk sales model.');
+                addKPI('green', BiocharI18n.t('tool6.kpi_sales_secured_title'), BiocharI18n.t('tool6.kpi_sales_secured_msg'));
             } else if (marketing === 'contract') {
-                addKPI('yellow', 'Sales Plan: Moderate Risk', 'A regional contract is good, but revenue depends on your partner\'s performance.');
+                addKPI('yellow', BiocharI18n.t('tool6.kpi_sales_moderate_title'), BiocharI18n.t('tool6.kpi_sales_moderate_msg'));
             } else {
-                addKPI('red', 'Sales Plan: High Risk', 'No marketing plan in process. This is a critical gap that threatens all revenue projections.');
+                addKPI('red', BiocharI18n.t('tool6.kpi_sales_high_title'), BiocharI18n.t('tool6.kpi_sales_high_msg'));
             }
 
-            // 5. Pyrolyzer Cost Basis (from T2)
+            // 5. Pyrolyzer Cost Basis
             const kilnBasis = t2.kiln?.pyrolyzer_cost_basis;
             if (kilnBasis === 'manufacturer_quote') {
-                addKPI('green', 'Pyrolyzer Cost: Confirmed', 'Costs are based on a manufacturer quote, making your CAPEX estimate reliable.');
+                addKPI('green', BiocharI18n.t('tool6.kpi_kiln_confirmed_title'), BiocharI18n.t('tool6.kpi_kiln_confirmed_msg'));
             } else {
-                addKPI('yellow', 'Pyrolyzer Cost: Estimate', 'Your CAPEX is based on an estimate. Get an official quote to confirm project costs.');
+                addKPI('yellow', BiocharI18n.t('tool6.kpi_kiln_estimate_title'), BiocharI18n.t('tool6.kpi_kiln_estimate_msg'));
             }
 
-            // 6. MRV Cost Basis (from T5)
+            // 6. MRV Cost Basis
             const mrvBasis = t5.certSource;
             if (mrvBasis === 'quote') {
-                addKPI('green', 'MRV Cost: Confirmed', 'Costs are based on a provider quote, making your OPEX estimate reliable.');
+                addKPI('green', BiocharI18n.t('tool6.kpi_mrv_confirmed_title'), BiocharI18n.t('tool6.kpi_mrv_confirmed_msg'));
             } else {
-                addKPI('yellow', 'MRV Cost: Estimate', 'Your MRV costs are estimates. Get an official quote to confirm this cost.');
-            }
-            
-            // 7. Lab Results (from T2)
-            const labBasis = t2.kiln?.carbonDataBasis;
-            if (labBasis === 'lab_results') {
-                addKPI('green', 'Carbon Data: Confirmed', 'Projections are based on reliable lab results.');
-            } else {
-                addKPI('red', 'Carbon Data: High Risk', 'Projections are based on generic defaults. Get lab results for your specific feedstock and kiln to confirm profitability.');
-            }
-            
-            // 8. Deforestation Risk (from T2)
-            if (t2.diversified?.f2_isWood) {
-                addKPI('red', 'Deforestation Risk', 'Using woody biomass requires a strict audit trail to prove it is waste, not deforestation. Mitigation: Contracts must include Traceability Clauses.');
+                addKPI('yellow', BiocharI18n.t('tool6.kpi_mrv_estimate_title'), BiocharI18n.t('tool6.kpi_mrv_estimate_msg'));
             }
 
-            // 9. Seasonal Strategy (from T1)
+            // 7. Lab Results
+            const labBasis = t2.kiln?.carbonDataBasis;
+            if (labBasis === 'lab_results') {
+                addKPI('green', BiocharI18n.t('tool6.kpi_lab_confirmed_title'), BiocharI18n.t('tool6.kpi_lab_confirmed_msg'));
+            } else {
+                addKPI('red', BiocharI18n.t('tool6.kpi_lab_risk_title'), BiocharI18n.t('tool6.kpi_lab_risk_msg'));
+            }
+
+            // 8. Deforestation Risk
+            if (t2.diversified?.f2_isWood) {
+                addKPI('red', BiocharI18n.t('tool6.kpi_deforestation_title'), BiocharI18n.t('tool6.kpi_deforestation_msg'));
+            }
+
+            // 9. Seasonal Strategy
             if (t1.seasonalityStrategy === 'shutdown') {
-                addKPI('red', 'Strategy Risk: High', 'Seasonal shutdowns are often economically unviable due to low equipment utilization.');
+                addKPI('red', BiocharI18n.t('tool6.kpi_shutdown_title'), BiocharI18n.t('tool6.kpi_shutdown_msg'));
             } else if (t1.seasonalityStrategy === 'store') {
-                addKPI('yellow', 'Strategy Risk: Moderate', 'Storing feedstock requires significant working capital and risk of material loss. Ensure your financing plan covers this.');
+                addKPI('yellow', BiocharI18n.t('tool6.kpi_store_title'), BiocharI18n.t('tool6.kpi_store_msg'));
             }
         }
 
@@ -705,34 +684,32 @@
             kpiContainer.appendChild(div);
         }
 
-        // *** NEW: Robust Notes Function ***
         function renderActionPlan(data) {
             const container = document.getElementById('actionPlanContainer');
-            container.innerHTML = ''; 
+            container.innerHTML = '';
 
-            // Helper to safely fetch notes from multiple possible locations
             const getNote = (toolData, key) => {
                 if (!toolData) return '';
                 return toolData[key] || '';
-            }
+            };
 
             const notes = {
                 t1: getNote(data.tool1, 'notes_T1'),
                 t2: getNote(data.tool2, 'notes_T2'),
-                t3: getNote(data.tool3, 'notes_T3'), 
+                t3: getNote(data.tool3, 'notes_T3'),
                 t4: getNote(data.tool4, 'notes_T4'),
-                t5: data.notes_T5, // *** FIX: Look at root for T5 notes ***
+                t5: data.notes_T5,
                 t7: data.notes_T7
             };
 
             let hasNotes = false;
             const toolNames = {
-                t1: "Tool 1: Project Scale",
-                t2: "Tool 2: Production",
-                t3: "Tool 3: Logistics",
-                t4: "Tool 4: Revenue",
-                t5: "Tool 5: CAPEX/OPEX",
-                t7: "Tool 7: Scenarios"
+                t1: BiocharI18n.t('tool6.action_tool_t1'),
+                t2: BiocharI18n.t('tool6.action_tool_t2'),
+                t3: BiocharI18n.t('tool6.action_tool_t3'),
+                t4: BiocharI18n.t('tool6.action_tool_t4'),
+                t5: BiocharI18n.t('tool6.action_tool_t5'),
+                t7: BiocharI18n.t('tool6.action_tool_t7')
             };
 
             for (const [key, val] of Object.entries(notes)) {
@@ -746,22 +723,22 @@
             }
 
             if (!hasNotes) {
-                container.innerHTML = '<p class="text-gray-500 italic">No action items noted in previous tools.</p>';
+                container.innerHTML = `<p class="text-gray-500 italic">${BiocharI18n.t('tool6.action_plan_empty')}</p>`;
             }
         }
 
-        // *** NEW: Print Summary Function ***
         function renderPrintSummary(data) {
             const container = document.getElementById('printSummary');
             if (!container) return;
 
-            let html = '<h2>Detailed Data Summary</h2>';
-            
+            let html = `<h2>${BiocharI18n.t('tool6.print_summary_title')}</h2>`;
+
             const createTable = (title, toolData) => {
                 if (!toolData || Object.keys(toolData).length === 0) return '';
-                let table = `<h3>${title}</h3><table><thead><tr><th>Input</th><th>Value</th></tr></thead><tbody>`;
-                
-                // Custom formatting for cleaner output
+                const inputHeader = BiocharI18n.t('tool6.print_input_header');
+                const valueHeader = BiocharI18n.t('tool6.print_value_header');
+                let table = `<h3>${title}</h3><table><thead><tr><th>${inputHeader}</th><th>${valueHeader}</th></tr></thead><tbody>`;
+
                 const formatValue = (key, val) => {
                     if (typeof val === 'number') {
                         if (key.includes('Price') || key.includes('Cost') || key.includes('Salary') || key.includes('Capex') || key.includes('loan') || key.includes('feedstockWorkingCapital') || key.includes('subtotal') || key.includes('prepayment')) {
@@ -772,10 +749,10 @@
                         }
                     }
                     if (typeof val === 'boolean') {
-                        return val ? 'Yes' : 'No';
+                        return val ? BiocharI18n.t('tool6.print_bool_yes') : BiocharI18n.t('tool6.print_bool_no');
                     }
                     if (typeof val === 'string' && val.length > 50) {
-                        return val.substring(0, 50) + '...'; // Truncate long notes
+                        return val.substring(0, 50) + '...';
                     }
                     if (val === null || val === undefined) {
                         return '--';
@@ -789,8 +766,8 @@
                             table += `<tr><td>${key} &gt; ${subKey}</td><td>${formatValue(subKey, subVal)}</td></tr>`;
                         }
                     } else if (Array.isArray(val)) {
-                         table += `<tr><td>${key}</td><td>${val.length} entries (see tool)</td></tr>`;
-                    } else if (key !== 'lastUpdated' && !key.startsWith('notes_')) { // Filter out keys
+                        table += `<tr><td>${key}</td><td>${BiocharI18n.t('tool6.print_entries', { n: val.length })}</td></tr>`;
+                    } else if (key !== 'lastUpdated' && !key.startsWith('notes_')) {
                         table += `<tr><td>${key}</td><td>${formatValue(key, val)}</td></tr>`;
                     }
                 }
@@ -798,12 +775,12 @@
                 return table;
             };
 
-            html += createTable('Tool 1: Project Setup', data.tool1);
-            html += createTable('Tool 2: Production', data.tool2);
-            html += createTable('Tool 3: Logistics', data.tool3);
-            html += createTable('Tool 4: Revenue', data.tool4);
-            html += createTable('Tool 5: CAPEX/OPEX', data.tool5);
-            
+            html += createTable(BiocharI18n.t('tool6.print_t1_title'), data.tool1);
+            html += createTable(BiocharI18n.t('tool6.print_t2_title'), data.tool2);
+            html += createTable(BiocharI18n.t('tool6.print_t3_title'), data.tool3);
+            html += createTable(BiocharI18n.t('tool6.print_t4_title'), data.tool4);
+            html += createTable(BiocharI18n.t('tool6.print_t5_title'), data.tool5);
+
             container.innerHTML = html;
         }
 
