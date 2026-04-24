@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Biochar Production Calc (Tool 2)</title>
+<title data-i18n="tool2.page_title">Biochar Production Calc (Tool 2)</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="engine.js"></script>
+<script src="translations.js"></script>
+<script src="i18n.js"></script>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
@@ -32,7 +34,7 @@ body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; color: #1118
 .calc-steps { list-style: none; padding: 0; margin: 0; }
 .calc-step {
     display: grid;
-    grid-template-columns: 1fr; /* Default for mobile */
+    grid-template-columns: 1fr;
     gap: 1rem;
     padding: 1.25rem 1.5rem;
     border-bottom: 1px solid #e5e7eb;
@@ -82,10 +84,10 @@ body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; color: #1118
 .tooltip-text { position: absolute; width: 240px; background-color: #111827; color: white; font-size: 0.75rem; padding: 0.6rem 0.7rem; border-radius: 0.6rem; bottom: 140%; left: 50%; transform: translateX(-50%); visibility: hidden; opacity: 0; transition: opacity 0.18s ease; pointer-events: none; z-index: 50; }
 .tooltip-container:hover .tooltip-text { visibility: visible; opacity: 1; }
 
-.f-icon { 
-    display: inline-flex; align-items: center; justify-content: center; 
-    width: 16px; height: 16px; background-color: #6b7280; color: white; 
-    border-radius: 50%; font-family: 'Georgia', serif; font-style: italic; 
+.f-icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 16px; height: 16px; background-color: #6b7280; color: white;
+    border-radius: 50%; font-family: 'Georgia', serif; font-style: italic;
     font-weight: bold; font-size: 12px; line-height: 1;
 }
 
@@ -123,7 +125,7 @@ body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; color: #1118
 .disclaimer {
     text-align: left;
     font-size: 0.75rem;
-    color: #6b7280; /* gray-500 */
+    color: #6b7280;
     margin-top: 3rem;
     padding-top: 1.5rem;
     border-top: 1px solid #e5e7eb;
@@ -134,7 +136,7 @@ body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; color: #1118
 }
 .disclaimer strong {
     font-weight: 600;
-    color: #4b5563; /* gray-600 */
+    color: #4b5563;
     font-style: normal;
 }
 .hidden { display: none; }
@@ -144,27 +146,37 @@ body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; color: #1118
 
 <div class="max-w-3xl mx-auto">
 
+<div class="flex justify-end mb-4">
+    <select id="lang-select" onchange="BiocharI18n.setLanguage(this.value)"
+            class="nav-button nav-button-white py-2 px-4 text-xs">
+        <option value="en">English 🇺🇸</option>
+        <option value="es">Español 🇪🇸</option>
+        <option value="pt">Português 🇧🇷</option>
+    </select>
+</div>
+
 <header class="text-center mb-6">
-    <h1 class="text-2xl md:text-3xl font-extrabold text-green-700">Biochar Project Feasibility Calculator</h1>
-    <h2 class="text-lg font-medium text-gray-700 mt-1">for Latin American Coffee & Cacao Supply Chains</h2>
-    <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider mt-4">Climatebase Fellowship Cohort 8 Capstone Project</p>
-    <p class="text-xs font-medium text-gray-500 mt-2">(All values in USD)</p> 
+    <h1 class="text-2xl md:text-3xl font-extrabold text-green-700" data-i18n="common.header_h1">Biochar Project Feasibility Calculator</h1>
+    <h2 class="text-lg font-medium text-gray-700 mt-1" data-i18n="common.header_h2">for Latin American Coffee &amp; Cacao Supply Chains</h2>
+    <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider mt-4" data-i18n="common.cohort">Climatebase Fellowship Cohort 8 Capstone Project</p>
+    <p class="text-xs font-medium text-gray-500 mt-2" data-i18n="common.usd_note">(All values in USD)</p>
 
     <div class="mt-4 mb-6">
-        <a href="https://chatgpt.com/g/g-691ea2b1c2888191b85e54e203c53b2f-biochar-feasibility-guide" 
-           target="_blank" 
-           class="inline-block bg-blue-50 text-blue-700 hover:text-blue-900 border border-blue-200 rounded-full px-4 py-1 text-sm font-medium transition">
+        <a href="https://chatgpt.com/g/g-691ea2b1c2888191b85e54e203c53b2f-biochar-feasibility-guide"
+           target="_blank"
+           class="inline-block bg-blue-50 text-blue-700 hover:text-blue-900 border border-blue-200 rounded-full px-4 py-1 text-sm font-medium transition"
+           data-i18n="common.ai_link">
             Questions? Click here to ask the Biochar Feasibility Guide AI assistant ↗
         </a>
     </div>
 
-    <p class="text-lg font-medium text-green-800">Tool 2: Production Calculator</p>
+    <p class="text-lg font-medium text-green-800" data-i18n="tool2.tool_label">Tool 2: Production Calculator</p>
 </header>
 
 <div class="w-full mb-8">
     <div class="flex justify-between text-xs md:text-sm font-medium text-gray-600 mb-2">
-        <span>Step 2 of 7: Production</span>
-        <span>(Next: Logistics)</span>
+        <span data-i18n="tool2.step_label">Step 2 of 7: Production</span>
+        <span data-i18n="tool2.step_next">(Next: Logistics)</span>
     </div>
     <div class="progress-bar-container">
         <div class="progress-bar" style="width: 28%"></div>
@@ -172,14 +184,14 @@ body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; color: #1118
 </div>
 
 <div class="input-section section-white">
-    <h2 class="section-title">Feedstock Supply Model</h2>
+    <h2 class="section-title" data-i18n="tool2.section_supply">Feedstock Supply Model</h2>
     <div class="space-y-4">
         <div>
-            <span class="label-text">Annual Supply Model (from Tool 1)</span>
+            <span class="label-text" data-i18n="tool2.supply_model_label">Annual Supply Model (from Tool 1)</span>
             <p id="displaySupplyModel" class="text-sm text-gray-400 italic">Loading...</p>
         </div>
         <div id="seasonalStrategyContainer" class="hidden p-4 bg-yellow-50 rounded-lg border border-yellow-300 space-y-3">
-            <h3 class="font-bold text-yellow-900 text-sm uppercase tracking-wide">Seasonal Strategy (from Tool 1)</h3>
+            <h3 class="font-bold text-yellow-900 text-sm uppercase tracking-wide" data-i18n="tool2.seasonal_strategy_title">Seasonal Strategy (from Tool 1)</h3>
             <p id="displayStrategy" class="text-sm text-gray-500 italic">Loading...</p>
         </div>
     </div>
@@ -187,11 +199,11 @@ body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; color: #1118
 
 <div class="input-section bg-white border-gray-200">
     <label class="block">
-        <span class="label-text font-bold text-gray-800">My carbon & yield values are based on:</span>
-        <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text">Using your own lab results is highly recommended for an accurate projection.</span></div>
+        <span class="label-text font-bold text-gray-800" data-i18n="tool2.carbon_source_label">My carbon &amp; yield values are based on:</span>
+        <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.carbon_source_tooltip">Using your own lab results is highly recommended for an accurate projection.</span></div>
         <select id="selectCarbonDataSource" class="input-field border-2 border-blue-300">
-            <option value="calculator_defaults">Calculator Defaults</option>
-            <option value="lab_results">My Own Lab Results</option>
+            <option value="calculator_defaults" data-i18n="tool2.carbon_source_defaults">Calculator Defaults</option>
+            <option value="lab_results" data-i18n="tool2.carbon_source_lab">My Own Lab Results</option>
         </select>
     </label>
 </div>
@@ -199,57 +211,67 @@ body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; color: #1118
 <div class="theme-blue mb-8">
     <div class="calc-box">
         <div class="calc-header">
-            <span>1. Primary Feedstock Calculator</span>
-            <span class="text-xs bg-blue-600 text-white px-2 py-1 rounded-full tracking-wide uppercase">Primary</span>
+            <span data-i18n="tool2.primary_calc_header">1. Primary Feedstock Calculator</span>
+            <span class="text-xs bg-blue-600 text-white px-2 py-1 rounded-full tracking-wide uppercase" data-i18n="tool2.primary_badge">Primary</span>
         </div>
         <ol class="calc-steps">
             <li class="calc-step-full">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-                    <label class="block"><span class="label-text">Feedstock Name</span><input type="text" id="divF1_Name" value="Coffee/Cocoa Waste" class="input-field"></label>
-                    <label class="block"><span class="label-text">Purchase Price ($/Tonne)</span><input type="number" id="divF1_Price" value="0" class="input-field border-blue-400" min="0"></label>
-                    <label class="block"><span class="label-text">Competition Level</span><select id="divF1_Competition" class="input-field"><option value="own">None (We own the feedstock)</option><option value="low">Low (No competing buyers / Not widely used)</option><option value="moderate">Moderate (Some local utilization)</option><option value="high">High (Strong competition / In high demand)</option></select></label>
-                    <label class="block"><span class="label-text">Feedstock Contract Obtained?</span><select id="divF1_Contract" class="input-field"><option value="own">We Own It</option><option value="verbal">Verbal / Informal</option><option value="written">Written Contract</option><option value="spot">Spot Market</option></select></label>
+                    <label class="block"><span class="label-text" data-i18n="tool2.f_name_label">Feedstock Name</span><input type="text" id="divF1_Name" class="input-field"></label>
+                    <label class="block"><span class="label-text" data-i18n="tool2.f_price_label">Purchase Price ($/Tonne)</span><input type="number" id="divF1_Price" value="0" class="input-field border-blue-400" min="0"></label>
+                    <label class="block"><span class="label-text" data-i18n="tool2.f_competition_label">Competition Level</span><select id="divF1_Competition" class="input-field">
+                        <option value="own" data-i18n="tool2.f1_comp_own">None (We own the feedstock)</option>
+                        <option value="low" data-i18n="tool2.f1_comp_low">Low (No competing buyers / Not widely used)</option>
+                        <option value="moderate" data-i18n="tool2.f1_comp_moderate">Moderate (Some local utilization)</option>
+                        <option value="high" data-i18n="tool2.f1_comp_high">High (Strong competition / In high demand)</option>
+                    </select></label>
+                    <label class="block"><span class="label-text" data-i18n="tool2.f_contract_label">Feedstock Contract Obtained?</span><select id="divF1_Contract" class="input-field">
+                        <option value="own" data-i18n="tool2.f_contract_own">We Own It</option>
+                        <option value="verbal" data-i18n="tool2.f_contract_verbal">Verbal / Informal</option>
+                        <option value="written" data-i18n="tool2.f_contract_written">Written Contract</option>
+                        <option value="spot" data-i18n="tool2.f_contract_spot">Spot Market</option>
+                    </select></label>
                 </div>
             </li>
             <li class="calc-step">
-                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">1</span><span class="label-text">Annual Volume (Dry Tonnes)</span></span><span class="step-label-right"><div class="tooltip-container"><span class="tooltip-icon">?</span><span class="tooltip-text">This value is pulled from Tool 1. It is the total dry tonnes of this feedstock available per year.</span></div></span></div><input type="number" id="divF1_Tonnes" value="0" class="input-field border-blue-300 font-semibold" readonly></div>
+                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">1</span><span class="label-text" data-i18n="tool2.f_volume_label">Annual Volume (Dry Tonnes)</span></span><span class="step-label-right"><div class="tooltip-container"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f1_volume_tooltip">This value is pulled from Tool 1. It is the total dry tonnes of this feedstock available per year.</span></div></span></div><input type="number" id="divF1_Tonnes" value="0" class="input-field border-blue-300 font-semibold" readonly></div>
                 <div class="step-connector">&rarr;</div>
-                <div class="step-output-area"><span class="step-output-label">Starting Volume</span><div id="divF1_StartingVolume" class="step-output-value">0 tonnes</div></div>
+                <div class="step-output-area"><span class="step-output-label" data-i18n="tool2.starting_volume_label">Starting Volume</span><div id="divF1_StartingVolume" class="step-output-value">0 tonnes</div></div>
             </li>
             <li class="calc-step">
-                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">2</span><span class="label-text">Ash Content (%)</span></span><span class="step-label-right">
-                    <div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text">Calculates: [Step 1 Volume] * (1 - Ash %)</span></div>
+                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">2</span><span class="label-text" data-i18n="tool2.f_ash_label">Ash Content (%)</span></span><span class="step-label-right">
+                    <div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool2.f_ash_formula_tooltip">Calculates: [Step 1 Volume] * (1 - Ash %)</span></div>
                     <div class="tooltip-container"><span class="tooltip-icon">?</span>
-                        <span class="tooltip-text">The non-organic, mineral content of feedstock. Ash content varies depending on feedstock type, contamination, and whether the biomass has been pretreated. A default value of 10% is used to represent mixed, non-pretreated coffee pulp and husk commonly available at origin. Users may adjust this value based on known feedstock composition and handling practices.</span>
+                        <span class="tooltip-text" data-i18n="tool2.f1_ash_tooltip">The non-organic, mineral content of feedstock. Ash content varies depending on feedstock type, contamination, and whether the biomass has been pretreated. A default value of 10% is used to represent mixed, non-pretreated coffee pulp and husk commonly available at origin. Users may adjust this value based on known feedstock composition and handling practices.</span>
                     </div>
                 </span></div>
                 <input type="number" id="divF1_Ash" value="10" class="input-field" min="0" step="0.1"></div>
                 <div class="step-connector">&rarr;</div>
-                <div class="step-output-area"><span class="step-output-label">Dry Ash-Free Matter</span><div id="divF1_DryAshFree" class="step-output-value">0 tonnes</div></div>
+                <div class="step-output-area"><span class="step-output-label" data-i18n="tool2.dry_ash_label">Dry Ash-Free Matter</span><div id="divF1_DryAshFree" class="step-output-value">0 tonnes</div></div>
             </li>
             <li class="calc-step">
-                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">3</span><span class="label-text">Biochar Yield (%)</span></span><span class="step-label-right">
-                    <div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text">Calculates: [Step 2 Matter] * Yield %</span></div>
-                    <div class="tooltip-container"><span class="tooltip-icon">?</span><span class="tooltip-text">The percentage of mass converted to biochar. 25% is a conservative estimate.</span></div>
+                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">3</span><span class="label-text" data-i18n="tool2.f_yield_label">Biochar Yield (%)</span></span><span class="step-label-right">
+                    <div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool2.f_yield_formula_tooltip">Calculates: [Step 2 Matter] * Yield %</span></div>
+                    <div class="tooltip-container"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f1_yield_tooltip">The percentage of mass converted to biochar. 25% is a conservative estimate.</span></div>
                 </span></div><input type="number" id="divF1_Yield" value="25" class="input-field" min="0" step="0.1"></div>
                 <div class="step-connector">&rarr;</div>
-                <div class="step-output-area"><span class="step-output-label">Total Biochar Produced</span><div id="divF1_BiocharProduced" class="step-output-value">0 tonnes</div></div>
+                <div class="step-output-area"><span class="step-output-label" data-i18n="tool2.biochar_produced_label">Total Biochar Produced</span><div id="divF1_BiocharProduced" class="step-output-value">0 tonnes</div></div>
             </li>
             <li class="calc-step">
-                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">4</span><span class="label-text">Stable Carbon (%)</span></span><span class="step-label-right">
-                    <div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text">Calculates: [Step 3 Biochar] * Carbon %</span></div>
-                    <div class="tooltip-container"><span class="tooltip-icon">?</span><span class="tooltip-text">The percentage of the final biochar's mass that is stable carbon. 70% is a good starting point.</span></div>
+                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">4</span><span class="label-text" data-i18n="tool2.f_carbon_label">Stable Carbon (%)</span></span><span class="step-label-right">
+                    <div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool2.f_carbon_formula_tooltip">Calculates: [Step 3 Biochar] * Carbon %</span></div>
+                    <div class="tooltip-container"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f1_carbon_tooltip">The percentage of the final biochar's mass that is stable carbon. 70% is a good starting point.</span></div>
                 </span></div><input type="number" id="divF1_Carbon" value="70" class="input-field" min="0" step="0.1"></div>
                 <div class="step-connector">&rarr;</div>
-                <div class="step-output-area"><span class="step-output-label">Total Stable Carbon</span><div id="divF1_StableCarbon" class="step-output-value">0 tonnes</div></div>
+                <div class="step-output-area"><span class="step-output-label" data-i18n="tool2.stable_carbon_label">Total Stable Carbon</span><div id="divF1_StableCarbon" class="step-output-value">0 tonnes</div></div>
             </li>
             <li class="calc-step">
-                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">5</span><span class="label-text">Net Crediting Factor (calibrated)</span></span><span class="step-label-right">
-                    <div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text">Calculates: [Step 4 Carbon] * Factor</span></div>
-                    <div class="tooltip-container"><span class="tooltip-icon">?</span><span class="tooltip-text">This is a net crediting factor (not the 3.67 chemistry ratio). It is calibrated to practitioner outcomes. Default 2.29 corresponds to ~1.6 tCO2e per tonne of biochar at 70% stable carbon.</span></div>
+                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">5</span><span class="label-text" data-i18n="tool2.f1_conv_label">Net Crediting Factor (calibrated)</span></span><span class="step-label-right">
+                    <div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool2.f_conv_formula_tooltip">Calculates: [Step 4 Carbon] * Factor</span></div>
+                    <div class="tooltip-container"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f1_conv_tooltip">This is a net crediting factor (not the 3.67 chemistry ratio). It is calibrated to practitioner outcomes. Default 2.29 corresponds to ~1.6 tCO2e per tonne of biochar at 70% stable carbon.</span></div>
                 </span></div><input type="number" id="divF1_Conv" value="2.29" class="input-field" min="0" step="0.1"></div>
                 <div class="step-connector">=</div>
-                <div class="step-output-area"><div class="final-output-box"><span class="step-output-label">Total Claimable Credits</span><div id="divF1_Credits" class="step-output-value">0 tCO2e</div></div></div>
+                <div class="step-output-area"><div class="final-output-box"><span class="step-output-label" data-i18n="tool2.credits_label">Total Claimable Credits</span><div id="divF1_Credits" class="step-output-value">0 tCO2e</div></div></div>
             </li>
         </ol>
     </div>
@@ -258,108 +280,117 @@ body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; color: #1118
 <div id="diversifiedCalculator" class="theme-purple mb-8 hidden">
     <div class="calc-box">
         <div class="calc-header">
-            <span>2. Secondary Feedstock Calculator</span>
-            <span class="text-xs bg-purple-600 text-white px-2 py-1 rounded-full tracking-wide uppercase">Secondary</span>
+            <span data-i18n="tool2.secondary_calc_header">2. Secondary Feedstock Calculator</span>
+            <span class="text-xs bg-purple-600 text-white px-2 py-1 rounded-full tracking-wide uppercase" data-i18n="tool2.secondary_badge">Secondary</span>
         </div>
         <ol class="calc-steps">
             <li class="calc-step-full">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-                    <label class="block"><span class="label-text">Feedstock Name</span><input type="text" id="divF2_Name" placeholder="e.g. Wood Chips" class="input-field"></label>
-                    <label class="block"><span class="label-text">Purchase Price ($/Tonne)</span><input type="number" id="divF2_Price" value="0" class="input-field border-purple-400" min="0"></label>
-                    <label class="block"><span class="label-text">Competition Level</span><select id="divF2_Competition" class="input-field border-purple-300"><option value="own">None (We own it)</option><option value="low">Low (No current market)</option><option value="moderate">Moderate (Informal use)</option><option value="high">High (High demand)</option></select></label>
-                    <label class="block"><span class="label-text">Feedstock Contract Obtained?</span><select id="divF2_Contract" class="input-field border-purple-300"><option value="own">We Own It</option><option value="verbal">Verbal / Informal</option><option value="written">Written Contract</option><option value="spot">Spot Market</option></select></label>
-                    <label class="block flex items-center pt-5 space-x-2"><input type="checkbox" id="divF2_IsWood" class="h-5 w-5"><span class="text-sm font-semibold text-purple-900">Is this Woody Biomass?</span></label>
+                    <label class="block"><span class="label-text" data-i18n="tool2.f_name_label">Feedstock Name</span><input type="text" id="divF2_Name" class="input-field" data-i18n-placeholder="tool2.f2_name_placeholder"></label>
+                    <label class="block"><span class="label-text" data-i18n="tool2.f_price_label">Purchase Price ($/Tonne)</span><input type="number" id="divF2_Price" value="0" class="input-field border-purple-400" min="0"></label>
+                    <label class="block"><span class="label-text" data-i18n="tool2.f_competition_label">Competition Level</span><select id="divF2_Competition" class="input-field border-purple-300">
+                        <option value="own" data-i18n="tool2.f2_comp_own">None (We own it)</option>
+                        <option value="low" data-i18n="tool2.f2_comp_low">Low (No current market)</option>
+                        <option value="moderate" data-i18n="tool2.f2_comp_moderate">Moderate (Informal use)</option>
+                        <option value="high" data-i18n="tool2.f2_comp_high">High (High demand)</option>
+                    </select></label>
+                    <label class="block"><span class="label-text" data-i18n="tool2.f_contract_label">Feedstock Contract Obtained?</span><select id="divF2_Contract" class="input-field border-purple-300">
+                        <option value="own" data-i18n="tool2.f_contract_own">We Own It</option>
+                        <option value="verbal" data-i18n="tool2.f_contract_verbal">Verbal / Informal</option>
+                        <option value="written" data-i18n="tool2.f_contract_written">Written Contract</option>
+                        <option value="spot" data-i18n="tool2.f_contract_spot">Spot Market</option>
+                    </select></label>
+                    <label class="block flex items-center pt-5 space-x-2"><input type="checkbox" id="divF2_IsWood" class="h-5 w-5"><span class="text-sm font-semibold text-purple-900" data-i18n="tool2.f2_is_wood_label">Is this Woody Biomass?</span></label>
                 </div>
             </li>
             <li class="calc-step">
-                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">1</span><span class="label-text">Annual Volume (Dry Tonnes)</span></span><span class="step-label-right"><div class="tooltip-container"><span class="tooltip-icon">?</span><span class="tooltip-text">Enter the total dry tonnes of this secondary feedstock available per year.</span></div></span></div><input type="number" id="divF2_Tonnes" value="0" class="input-field border-purple-300 font-semibold" min="0"></div>
+                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">1</span><span class="label-text" data-i18n="tool2.f_volume_label">Annual Volume (Dry Tonnes)</span></span><span class="step-label-right"><div class="tooltip-container"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f2_volume_tooltip">Enter the total dry tonnes of this secondary feedstock available per year.</span></div></span></div><input type="number" id="divF2_Tonnes" value="0" class="input-field border-purple-300 font-semibold" min="0"></div>
                 <div class="step-connector">&rarr;</div>
-                <div class="step-output-area"><span class="step-output-label">Starting Volume</span><div id="divF2_StartingVolume" class="step-output-value">0 tonnes</div></div>
+                <div class="step-output-area"><span class="step-output-label" data-i18n="tool2.starting_volume_label">Starting Volume</span><div id="divF2_StartingVolume" class="step-output-value">0 tonnes</div></div>
             </li>
             <li class="calc-step">
-                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">2</span><span class="label-text">Ash Content (%)</span></span><span class="step-label-right">
-                    <div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text">Calculates: [Step 1 Volume] * (1 - Ash %)</span></div>
-                    <div class="tooltip-container"><span class="tooltip-icon">?</span><span class="tooltip-text">Woody biomass typically has a lower ash content. 2% is a common default.</span></div>
+                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">2</span><span class="label-text" data-i18n="tool2.f_ash_label">Ash Content (%)</span></span><span class="step-label-right">
+                    <div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool2.f_ash_formula_tooltip">Calculates: [Step 1 Volume] * (1 - Ash %)</span></div>
+                    <div class="tooltip-container"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f2_ash_tooltip">Woody biomass typically has a lower ash content. 2% is a common default.</span></div>
                 </span></div><input type="number" id="divF2_Ash" value="2" class="input-field" min="0" step="0.1"></div>
                 <div class="step-connector">&rarr;</div>
-                <div class="step-output-area"><span class="step-output-label">Dry Ash-Free Matter</span><div id="divF2_DryAshFree" class="step-output-value">0 tonnes</div></div>
+                <div class="step-output-area"><span class="step-output-label" data-i18n="tool2.dry_ash_label">Dry Ash-Free Matter</span><div id="divF2_DryAshFree" class="step-output-value">0 tonnes</div></div>
             </li>
             <li class="calc-step">
-                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">3</span><span class="label-text">Biochar Yield (%)</span></span><span class="step-label-right">
-                    <div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text">Calculates: [Step 2 Matter] * Yield %</span></div>
-                    <div class="tooltip-container"><span class="tooltip-icon">?</span><span class="tooltip-text">Woody biomass often has a higher yield. 30% is a common default.</span></div>
+                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">3</span><span class="label-text" data-i18n="tool2.f_yield_label">Biochar Yield (%)</span></span><span class="step-label-right">
+                    <div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool2.f_yield_formula_tooltip">Calculates: [Step 2 Matter] * Yield %</span></div>
+                    <div class="tooltip-container"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f2_yield_tooltip">Woody biomass often has a higher yield. 30% is a common default.</span></div>
                 </span></div><input type="number" id="divF2_Yield" value="30" class="input-field" min="0" step="0.1"></div>
                 <div class="step-connector">&rarr;</div>
-                <div class="step-output-area"><span class="step-output-label">Total Biochar Produced</span><div id="divF2_BiocharProduced" class="step-output-value">0 tonnes</div></div>
+                <div class="step-output-area"><span class="step-output-label" data-i18n="tool2.biochar_produced_label">Total Biochar Produced</span><div id="divF2_BiocharProduced" class="step-output-value">0 tonnes</div></div>
             </li>
             <li class="calc-step">
-                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">4</span><span class="label-text">Stable Carbon (%)</span></span><span class="step-label-right">
-                    <div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text">Calculates: [Step 3 Biochar] * Carbon %</span></div>
-                    <div class="tooltip-container"><span class="tooltip-icon">?</span><span class="tooltip-text">Biochar from woody biomass often has very high carbon stability. 80% is a good default.</span></div>
+                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">4</span><span class="label-text" data-i18n="tool2.f_carbon_label">Stable Carbon (%)</span></span><span class="step-label-right">
+                    <div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool2.f_carbon_formula_tooltip">Calculates: [Step 3 Biochar] * Carbon %</span></div>
+                    <div class="tooltip-container"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f2_carbon_tooltip">Biochar from woody biomass often has very high carbon stability. 80% is a good default.</span></div>
                 </span></div><input type="number" id="divF2_Carbon" value="80" class="input-field" min="0" step="0.1"></div>
                 <div class="step-connector">&rarr;</div>
-                <div class="step-output-area"><span class="step-output-label">Total Stable Carbon</span><div id="divF2_StableCarbon" class="step-output-value">0 tonnes</div></div>
+                <div class="step-output-area"><span class="step-output-label" data-i18n="tool2.stable_carbon_label">Total Stable Carbon</span><div id="divF2_StableCarbon" class="step-output-value">0 tonnes</div></div>
             </li>
             <li class="calc-step">
-                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">5</span><span class="label-text">CO2e Credit Factor</span></span><span class="step-label-right">
-                    <div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text">Calculates: [Step 4 Carbon] * Factor</span></div>
-                    <div class="tooltip-container"><span class="tooltip-icon">?</span><span class="tooltip-text">This is a net crediting factor calibrated to practitioner outcomes. Default 2.63 corresponds to ~2.1 tCO2e per tonne of biochar at 80% stable carbon.</span></div>
+                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">5</span><span class="label-text" data-i18n="tool2.f2_conv_label">CO2e Credit Factor</span></span><span class="step-label-right">
+                    <div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool2.f_conv_formula_tooltip">Calculates: [Step 4 Carbon] * Factor</span></div>
+                    <div class="tooltip-container"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f2_conv_tooltip">This is a net crediting factor calibrated to practitioner outcomes. Default 2.63 corresponds to ~2.1 tCO2e per tonne of biochar at 80% stable carbon.</span></div>
                 </span></div><input type="number" id="divF2_Conv" value="2.63" class="input-field" min="0" step="0.1"></div>
                 <div class="step-connector">=</div>
-                <div class="step-output-area"><div class="final-output-box theme-purple"><span class="step-output-label">Total Claimable Credits</span><div id="divF2_Credits" class="step-output-value">0 tCO2e</div></div></div>
+                <div class="step-output-area"><div class="final-output-box theme-purple"><span class="step-output-label" data-i18n="tool2.credits_label">Total Claimable Credits</span><div id="divF2_Credits" class="step-output-value">0 tCO2e</div></div></div>
             </li>
         </ol>
     </div>
 </div>
 
 <div class="bg-green-50 p-4 rounded-xl border border-green-200 text-center mb-8 shadow-sm">
-    <div class="text-xs font-bold text-green-700 uppercase tracking-[0.15em] mb-1">Total Project Feedstock</div>
+    <div class="text-xs font-bold text-green-700 uppercase tracking-[0.15em] mb-1" data-i18n="tool2.total_feedstock_heading">Total Project Feedstock</div>
     <div id="displayTotalFeedstock" class="text-3xl font-extrabold text-green-900">0 tonnes</div>
-    <p class="text-[0.7rem] text-green-700 mt-1">This volume determines your machine size below.</p>
+    <p class="text-[0.7rem] text-green-700 mt-1" data-i18n="tool2.total_feedstock_note">This volume determines your machine size below.</p>
 </div>
 
 <div class="input-section bg-yellow-50 border-yellow-300">
-    <h4 class="font-bold text-yellow-900">Technology Note:</h4>
-    <p class="text-sm text-yellow-800 mt-2">
+    <h4 class="font-bold text-yellow-900" data-i18n="tool2.tech_note_title">Technology Note:</h4>
+    <p class="text-sm text-yellow-800 mt-2" data-i18n-html="tool2.tech_note_text">
         Fine, low-density feedstocks (like coffee pulp/parchment) are <strong>not suitable</strong> for low-cost batch kilns (e.g., Flame Cap or Kon-Tiki). These materials require a continuous-feed pyrolyzer.
     </p>
 </div>
 
 <div class="kiln-card">
-    <div class="kiln-card-header"><h2 class="font-bold text-lg">Kiln Selection & CAPEX</h2></div>
+    <div class="kiln-card-header"><h2 class="font-bold text-lg" data-i18n="tool2.kiln_section_title">Kiln Selection &amp; CAPEX</h2></div>
     <div class="kiln-card-content space-y-6">
-        
+
         <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
             <div class="calc-display">
-                <span class="calc-label">Total Feedstock</span>
+                <span class="calc-label" data-i18n="tool2.kiln_total_feedstock_label">Total Feedstock</span>
                 <div id="kilnTotalFeedstock" class="calc-value">0 t/y</div>
             </div>
             <div class="calc-display">
                 <div class="flex items-center justify-between">
-                    <span class="calc-label">Volume per Hub</span>
+                    <span class="calc-label" data-i18n="tool2.kiln_volume_per_hub_label">Volume per Hub</span>
                     <div class="tooltip-container">
                         <span class="info-tooltip-icon">i</span>
-                        <span class="tooltip-text">Total Feedstock / Number of Hubs. This value determines the required kiln size.</span>
+                        <span class="tooltip-text" data-i18n="tool2.kiln_volume_per_hub_tooltip">Total Feedstock / Number of Hubs. This value determines the required kiln size.</span>
                     </div>
                 </div>
                 <div id="kilnVolumePerHub" class="calc-value">0 t/y</div>
             </div>
             <div class="calc-display">
-                <span class="calc-label">Determined Size</span>
+                <span class="calc-label" data-i18n="tool2.kiln_size_label">Determined Size</span>
                 <div id="kilnProjectSize" class="calc-value">--</div>
             </div>
         </div>
 
         <div>
-            <label class="label-text" for="selectKiln">Select Your Kiln</label>
-            <select id="selectKiln" class="input-field">
-                </select>
+            <label class="label-text" for="selectKiln" data-i18n="tool2.kiln_select_label">Select Your Kiln</label>
+            <select id="selectKiln" class="input-field"></select>
             <p id="kilnWarning" class="text-sm text-red-600 mt-2" style="display:none;"></p>
-            
+
             <div id="customKilnContainer" class="hidden mt-4 p-4 bg-gray-100 rounded-lg border border-gray-300">
                 <label class="block">
-                    <span class="label-text font-bold text-gray-800">Custom Kiln Price ($)</span>
-                    <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text">Enter the total price for ONE kiln/unit. The calculator will multiply this by the "Number of Kilns" below.</span></div>
+                    <span class="label-text font-bold text-gray-800" data-i18n="tool2.kiln_custom_price_label">Custom Kiln Price ($)</span>
+                    <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.kiln_custom_price_tooltip">Enter the total price for ONE kiln/unit. The calculator will multiply this by the "Number of Kilns" below.</span></div>
                     <input type="number" id="inputCustomKilnPrice" class="input-field" value="0" min="0">
                 </label>
             </div>
@@ -368,38 +399,38 @@ body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; color: #1118
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="space-y-4">
                 <div>
-                    <label class="label-text" for="inputNumberOfKilns">Number of Kilns</label>
+                    <label class="label-text" for="inputNumberOfKilns" data-i18n="tool2.num_kilns_label">Number of Kilns</label>
                     <input type="number" id="inputNumberOfKilns" class="input-field" value="1" min="1">
                     <p id="hubsWarning" class="text-sm text-gray-500 mt-1"></p>
                 </div>
                 <div>
-                    <label class="label-text" for="selectCostBasis">Pyrolyzer Cost Basis</label>
+                    <label class="label-text" for="selectCostBasis" data-i18n="tool2.cost_basis_label">Pyrolyzer Cost Basis</label>
                     <select id="selectCostBasis" class="input-field">
-                        <option value="calculator_estimate">Calculator estimate</option>
-                        <option value="manufacturer_quote">Quote from manufacturer</option>
+                        <option value="calculator_estimate" data-i18n="tool2.cost_basis_estimate">Calculator estimate</option>
+                        <option value="manufacturer_quote" data-i18n="tool2.cost_basis_quote">Quote from manufacturer</option>
                     </select>
                 </div>
                 <div>
-                    <label class="label-text" for="inputShippingCost">Shipping & Installation (%)</label>
+                    <label class="label-text" for="inputShippingCost" data-i18n="tool2.shipping_label">Shipping &amp; Installation (%)</label>
                     <input type="number" id="inputShippingCost" class="input-field" value="15" min="0" step="1">
                 </div>
             </div>
-            
+
             <div class="space-y-3">
                 <div class="calc-display">
-                    <span class="calc-label">Pyrolyzer Cost</span>
+                    <span class="calc-label" data-i18n="tool2.pyrolyzer_cost_label">Pyrolyzer Cost</span>
                     <div id="displayPyrolyzerCost" class="calc-value">$--</div>
                 </div>
                 <div class="calc-display">
-                    <span class="calc-label">Shipping & Installation</span>
+                    <span class="calc-label" data-i18n="tool2.shipping_cost_label">Shipping &amp; Installation</span>
                     <div id="displayShippingCost" class="calc-value">$--</div>
                 </div>
                 <div class="total-capex">
                     <div class="flex items-center justify-center">
-                        <span class="total-capex-label">Total Upfront Pyrolyzer CAPEX</span>
+                        <span class="total-capex-label" data-i18n="tool2.total_capex_label">Total Upfront Pyrolyzer CAPEX</span>
                         <div class="tooltip-container">
                             <span class="info-tooltip-icon">i</span>
-                            <span class="tooltip-text">(Pyrolyzer Cost) + (Shipping & Installation). This is a primary component of your project's CAPEX.</span>
+                            <span class="tooltip-text" data-i18n="tool2.total_capex_tooltip">(Pyrolyzer Cost) + (Shipping &amp; Installation). This is a primary component of your project's CAPEX.</span>
                         </div>
                     </div>
                     <div id="displayTotalUpfrontCapex" class="total-capex-value">$--</div>
@@ -408,40 +439,39 @@ body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; color: #1118
         </div>
     </div>
 </div>
+
 <div class="input-section bg-gray-50 border-gray-200 p-4">
-    <h3 class="font-bold text-gray-700 mb-2 uppercase text-sm tracking-wider">Note Missing Info for Further Research</h3>
-    <textarea id="toolNotes" rows="3" class="input-field bg-white" placeholder="Type here..."></textarea>
+    <h3 class="font-bold text-gray-700 mb-2 uppercase text-sm tracking-wider" data-i18n="tool2.notes_title">Note Missing Info for Further Research</h3>
+    <textarea id="toolNotes" rows="3" class="input-field bg-white" data-i18n-placeholder="tool2.notes_placeholder"></textarea>
 </div>
 
-
 <div class="mt-8 mb-12 flex flex-col space-y-4">
-    <button id="saveToDbButton" class="nav-button nav-button-indigo w-full">Save Production Data</button>
-    <div id="unsavedWarning" class="text-red-600 font-medium text-center hidden">You have unsaved changes.</div>
-    
+    <button id="saveToDbButton" class="nav-button nav-button-indigo w-full" data-i18n="tool2.save_btn">Save Production Data</button>
+    <div id="unsavedWarning" class="text-red-600 font-medium text-center hidden" data-i18n="tool2.unsaved_warning">You have unsaved changes.</div>
+
     <div id="navigationButtons" class="nav-grid hidden">
-        <button onclick="navigate('tool1.html')" class="nav-button nav-button-blue">← Back to Tool 1</button>
-        <button onclick="navigate('index.html')" class="nav-button nav-button-white">Main Menu</button>
-        <button onclick="navigate('tool3.html')" id="nextToolButton" class="nav-button nav-button-green">Proceed to Tool 3 →</button>
+        <button onclick="navigate('tool1.html')" class="nav-button nav-button-blue" data-i18n="tool2.back_btn">← Back to Tool 1</button>
+        <button onclick="navigate('index.html')" class="nav-button nav-button-white" data-i18n="common.main_menu">← Main Menu</button>
+        <button onclick="navigate('tool3.html')" id="nextToolButton" class="nav-button nav-button-green" data-i18n="tool2.next_btn">Proceed to Tool 3 →</button>
     </div>
     <div class="flex justify-between items-center pt-4">
-        <button onclick="resetForm()" class="text-sm text-red-500 hover:text-red-700 font-medium">Reset Form</button>
+        <button onclick="resetForm()" class="text-sm text-red-500 hover:text-red-700 font-medium" data-i18n="common.reset_form">Reset Form</button>
         <div id="saveStatus" class="font-medium text-red-600" style="display: none;"></div>
     </div>
 </div>
 
 <footer class="disclaimer">
-    <p><strong>No Guarantee:</strong> <em>The projections provided by this calculator are based on the assumptions and data entered by the user. They are for illustrative purposes only and do not constitute a guarantee of actual costs, revenues, or profitability.</em></p>
-    <p><strong>Not Financial Advice:</strong> <em>The information provided is not intended to be a substitute for professional financial, legal, or agricultural advice. Users are solely responsible for any decisions made based on the output of this tool.</em></p>
-    <p><strong>Verify All Data:</strong> <em>Users should independently verify all local costs, market prices, and regulatory requirements before making any investment.</em></p>
+    <p><strong data-i18n="tool2.footer_no_guarantee_label">No Guarantee:</strong> <em data-i18n="tool2.footer_no_guarantee">The projections provided by this calculator are based on the assumptions and data entered by the user. They are for illustrative purposes only and do not constitute a guarantee of actual costs, revenues, or profitability.</em></p>
+    <p><strong data-i18n="tool2.footer_not_advice_label">Not Financial Advice:</strong> <em data-i18n="tool2.footer_not_advice">The information provided is not intended to be a substitute for professional financial, legal, or agricultural advice. Users are solely responsible for any decisions made based on the output of this tool.</em></p>
+    <p><strong data-i18n="tool2.footer_verify_label">Verify All Data:</strong> <em data-i18n="tool2.footer_verify">Users should independently verify all local costs, market prices, and regulatory requirements before making any investment.</em></p>
 </footer>
 
 </div>
 <script>
 let projectData = {};
-let T1_Data = {}; // To store loaded Tool 1 data
-let hasUnsavedChanges = false; // *** NEW ***
+let T1_Data = {};
+let hasUnsavedChanges = false;
 
-// *** NEW: List of inputs to track ***
 const inputsToTrack = [
     'selectCarbonDataSource', 'divF1_Name', 'divF1_Price', 'divF1_Competition', 'divF1_Contract',
     'divF1_Ash', 'divF1_Yield', 'divF1_Carbon', 'divF1_Conv',
@@ -451,7 +481,7 @@ const inputsToTrack = [
 ];
 
 // =================================================================
-// KILN DATABASE (CLEANED & DEDUPLICATED)
+// KILN DATABASE
 // =================================================================
 const KILN_DB = [
     { size: 'micro', model: 'centralized', name: 'Henan Xuye', price: 68000 },
@@ -466,17 +496,15 @@ const KILN_DB = [
     { size: 'medium', model: 'decentralized', name: 'Henan Xuye', price: 68000 },
     { size: 'medium', model: 'decentralized', name: 'Mingjie (MJT-1000)', price: 400000 },
     { size: 'medium', model: 'centralized', name: 'Beston (Model BST-50)', price: 480000 },
-    { size: 'medium', model: 'centralized', name: 'Henan Xuye', price: 68000 }, // *** RESTORED ***
+    { size: 'medium', model: 'centralized', name: 'Henan Xuye', price: 68000 },
     { size: 'large', model: 'centralized', name: 'Beston (Model BST-50)', price: 480000 },
     { size: 'large', model: 'centralized', name: 'Henan Xuye', price: 68000 }
 ];
-
 
 // =================================================================
 // MAIN SCRIPT
 // =================================================================
 
-// *** NEW: Unsaved changes logic ***
 window.addEventListener("beforeunload", e => {
     if (hasUnsavedChanges) { e.preventDefault(); e.returnValue = ""; }
 });
@@ -498,25 +526,19 @@ function setUnsaved() {
 
 document.addEventListener('DOMContentLoaded', () => {
     if (!window.BiocharEngine) { showError("engine.js missing"); return; }
-    
-    // Load all data
+
     loadProject();
 
-    // Set up listeners for all inputs
     const safeListener = (id, event, func) => { const el = document.getElementById(id); if (el) el.addEventListener(event, func); };
-    
-    // --- Attach Listeners ---
-    // Recalculate listeners
+
     ['divF1_Tonnes','divF1_Ash','divF1_Yield','divF1_Carbon','divF1_Conv','divF2_Tonnes','divF2_Ash','divF2_Yield','divF2_Carbon','divF2_Conv'].forEach(id => safeListener(id, 'input', calculateAll));
     safeListener('selectKiln', 'change', handleKilnSelectChange);
     safeListener('inputCustomKilnPrice', 'input', updateTotalCapex);
     safeListener('inputNumberOfKilns', 'input', updateTotalCapex);
-    safeListener('inputShippingCost', 'input', updateTotalCapex); 
+    safeListener('inputShippingCost', 'input', updateTotalCapex);
 
-    // Save button
     safeListener('saveToDbButton', 'click', saveProject);
 
-    // "Set Unsaved" listeners
     inputsToTrack.forEach(id => {
         const el = document.getElementById(id);
         if (el) {
@@ -528,33 +550,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function loadProject() {
     projectData = BiocharEngine.loadProjectData() || {};
-    if (!projectData.tool1) { 
-        showError("Tool 1 data missing. Please complete Tool 1 first."); 
-        return; 
+    if (!projectData.tool1) {
+        showError(BiocharI18n.t('tool2.error_missing_tool1'));
+        return;
     }
-    
-    T1_Data = projectData.tool1; // Store Tool 1 data in global var
+
+    T1_Data = projectData.tool1;
 
     if (!T1_Data.projectType || !T1_Data.numHubs) {
-        showError("Tool 1 data is incomplete (missing Project Type or Hubs). Kiln logic may be incorrect. Please re-save Tool 1.");
+        showError(BiocharI18n.t('tool2.error_incomplete_tool1'));
     }
 
-    // Populate Tool 1 data displays
     document.getElementById('displaySupplyModel').textContent = T1_Data.supplyModel || '--';
     document.getElementById('displayStrategy').textContent = T1_Data.seasonalityStrategy || '--';
-    
+
     const t1Input = document.getElementById('divF1_Tonnes');
     if (t1Input) t1Input.value = T1_Data.feedstockTonnes || 0;
 
     handleSupplyModelChange();
-    
-    // --- Load Saved Tool 2 Data ---
+
     if (projectData.tool2 && projectData.tool2.lastUpdated) {
         const t2 = projectData.tool2;
         const d = t2.diversified || {};
-        
-        // Load feedstock data
-        document.getElementById('divF1_Name').value = d.f1_name || 'Coffee/Cocoa Waste';
+
+        document.getElementById('divF1_Name').value = d.f1_name || BiocharI18n.t('tool2.f1_default_name');
         document.getElementById('divF1_Price').value = d.f1_price || 0;
         document.getElementById('divF1_Competition').value = d.f1_competition || 'own';
         document.getElementById('divF1_Contract').value = d.f1_contract || 'own';
@@ -562,7 +581,7 @@ function loadProject() {
         document.getElementById('divF1_Yield').value = (d.f1_yield * 100) || 25;
         document.getElementById('divF1_Carbon').value = (d.f1_carbon * 100) || 70;
         document.getElementById('divF1_Conv').value = d.f1_conv || 2.29;
-        
+
         document.getElementById('divF2_Name').value = d.f2_name || '';
         document.getElementById('divF2_Price').value = d.f2_price || 0;
         document.getElementById('divF2_Competition').value = d.f2_competition || 'own';
@@ -574,7 +593,6 @@ function loadProject() {
         document.getElementById('divF2_Carbon').value = (d.f2_carbon * 100) || 80;
         document.getElementById('divF2_Conv').value = d.f2_conv || 2.63;
 
-        // Load kiln data (fields other than kiln selection)
         if (t2.kiln) {
             document.getElementById('selectCarbonDataSource').value = t2.kiln.carbonDataBasis || 'calculator_defaults';
             document.getElementById('inputNumberOfKilns').value = t2.kiln.number_of_kilns || T1_Data.numHubs || 1;
@@ -584,19 +602,17 @@ function loadProject() {
                 document.getElementById('inputCustomKilnPrice').value = t2.kiln.selected_price_per_unit || 0;
             }
         }
-        
-        // Load notes
+
         document.getElementById('toolNotes').value = t2.notes_T2 || '';
 
-        // Show nav buttons if data is already saved
         document.getElementById('saveToDbButton').classList.add('hidden');
         document.getElementById('navigationButtons').classList.remove('hidden');
     } else {
+        document.getElementById('divF1_Name').value = BiocharI18n.t('tool2.f1_default_name');
         document.getElementById('saveToDbButton').disabled = true;
         document.getElementById('navigationButtons').classList.add('hidden');
     }
 
-    // Run all calculations on load (this also builds kiln options & restores selection)
     calculateAll();
 }
 
@@ -608,28 +624,30 @@ function handleSupplyModelChange() {
 
 function calculateAll() {
     const getNum = id => parseFloat(document.getElementById(id)?.value) || 0;
-    
+    const tonUnit = ' ' + BiocharI18n.t('tool2.unit_tonnes');
+
     // --- F1 (Primary) Calculations ---
     const t1 = getNum('divF1_Tonnes');
     const a1 = getNum('divF1_Ash') / 100, y1 = getNum('divF1_Yield') / 100, c1 = getNum('divF1_Carbon') / 100, conv1 = getNum('divF1_Conv');
-    setVal('divF1_StartingVolume', formatTonnage(t1, ' tonnes'));
-    const dryAshFree1 = t1 * (1 - a1); setVal('divF1_DryAshFree', formatTonnage(dryAshFree1, ' tonnes'));
-    const biocharProduced1 = dryAshFree1 * y1; setVal('divF1_BiocharProduced', formatTonnage(biocharProduced1, ' tonnes'));
-    const stableCarbon1 = biocharProduced1 * c1; setVal('divF1_StableCarbon', formatTonnage(stableCarbon1, ' tonnes'));
+    setVal('divF1_StartingVolume', formatTonnage(t1, tonUnit));
+    const dryAshFree1 = t1 * (1 - a1); setVal('divF1_DryAshFree', formatTonnage(dryAshFree1, tonUnit));
+    const biocharProduced1 = dryAshFree1 * y1; setVal('divF1_BiocharProduced', formatTonnage(biocharProduced1, tonUnit));
+    const stableCarbon1 = biocharProduced1 * c1; setVal('divF1_StableCarbon', formatTonnage(stableCarbon1, tonUnit));
     const credits1 = stableCarbon1 * conv1; setVal('divF1_Credits', formatTonnage(credits1, ' tCO2e'));
 
     // --- F2 (Secondary) Calculations ---
     const t2 = getNum('divF2_Tonnes');
     const a2 = getNum('divF2_Ash') / 100, y2 = getNum('divF2_Yield') / 100, c2 = getNum('divF2_Carbon') / 100, conv2 = getNum('divF2_Conv');
-    setVal('divF2_StartingVolume', formatTonnage(t2, ' tonnes'));
-    const dryAshFree2 = t2 * (1 - a2); setVal('divF2_DryAshFree', formatTonnage(dryAshFree2, ' tonnes'));
-    const biocharProduced2 = dryAshFree2 * y2; setVal('divF2_BiocharProduced', formatTonnage(biocharProduced2, ' tonnes'));
-    const stableCarbon2 = biocharProduced2 * c2; setVal('divF2_StableCarbon', formatTonnage(stableCarbon2, ' tonnes'));
+    setVal('divF2_StartingVolume', formatTonnage(t2, tonUnit));
+    const dryAshFree2 = t2 * (1 - a2); setVal('divF2_DryAshFree', formatTonnage(dryAshFree2, tonUnit));
+    const biocharProduced2 = dryAshFree2 * y2; setVal('divF2_BiocharProduced', formatTonnage(biocharProduced2, tonUnit));
+    const stableCarbon2 = biocharProduced2 * c2; setVal('divF2_StableCarbon', formatTonnage(stableCarbon2, tonUnit));
     const credits2 = stableCarbon2 * conv2; setVal('divF2_Credits', formatTonnage(credits2, ' tCO2e'));
 
-    // --- Total Feedstock (at the bottom) ---
+    // --- Total Feedstock ---
     const totalFeedstock = t1 + t2;
-    document.getElementById('displayTotalFeedstock').textContent = totalFeedstock.toLocaleString(undefined, {maximumFractionDigits: 1}) + " tonnes";
+    document.getElementById('displayTotalFeedstock').textContent =
+        totalFeedstock.toLocaleString(undefined, {maximumFractionDigits: 1}) + ' ' + BiocharI18n.t('tool2.unit_total_tonnes');
 
     runKilnLogic(totalFeedstock);
 }
@@ -638,8 +656,7 @@ function saveProject() {
     const getNum = id => parseFloat(document.getElementById(id)?.value) || 0;
     const getVal = id => document.getElementById(id)?.value;
     const getCheck = id => document.getElementById(id)?.checked;
-    
-    // Get Kiln Data
+
     const kilnSelect = document.getElementById('selectKiln');
     const selectedKiln = kilnSelect.options[kilnSelect.selectedIndex];
     let kilnPrice = parseFloat(selectedKiln.value) || 0;
@@ -649,7 +666,7 @@ function saveProject() {
         kilnPrice = getNum('inputCustomKilnPrice');
         kilnName = 'Custom';
     }
-    
+
     const numKilns = parseInt(document.getElementById('inputNumberOfKilns').value) || 0;
     const shippingPercent = (parseFloat(document.getElementById('inputShippingCost').value) || 0) / 100;
 
@@ -657,33 +674,31 @@ function saveProject() {
     const shippingCost = pyrolyzerCost * shippingPercent;
     const totalUpfrontCapex = pyrolyzerCost + shippingCost;
 
-    const dataToSave = { 
+    const dataToSave = {
         tool2: {
-            // Feedstock Data
             supplyModel: T1_Data.supplyModel,
             seasonalityStrategy: T1_Data.seasonalityStrategy,
             diversified: {
-                f1_name: getVal('divF1_Name'), 
-                f1_tonnes: getNum('divF1_Tonnes'), 
-                f1_price: getNum('divF1_Price'), 
-                f1_ash: getNum('divF1_Ash') / 100, 
-                f1_yield: getNum('divF1_Yield') / 100, 
-                f1_carbon: getNum('divF1_Carbon') / 100, 
-                f1_conv: getNum('divF1_Conv'), 
-                f1_competition: getVal('divF1_Competition'), 
+                f1_name: getVal('divF1_Name'),
+                f1_tonnes: getNum('divF1_Tonnes'),
+                f1_price: getNum('divF1_Price'),
+                f1_ash: getNum('divF1_Ash') / 100,
+                f1_yield: getNum('divF1_Yield') / 100,
+                f1_carbon: getNum('divF1_Carbon') / 100,
+                f1_conv: getNum('divF1_Conv'),
+                f1_competition: getVal('divF1_Competition'),
                 f1_contract: getVal('divF1_Contract'),
-                f2_name: getVal('divF2_Name'), 
-                f2_tonnes: getNum('divF2_Tonnes'), 
-                f2_price: getNum('divF2_Price'), 
-                f2_ash: getNum('divF2_Ash') / 100, 
-                f2_yield: getNum('divF2_Yield') / 100, 
-                f2_carbon: getNum('divF2_Carbon') / 100, 
-                f2_conv: getNum('divF2_Conv'), 
-                f2_competition: getVal('divF2_Competition'), 
-                f2_contract: getVal('divF2_Contract'), 
+                f2_name: getVal('divF2_Name'),
+                f2_tonnes: getNum('divF2_Tonnes'),
+                f2_price: getNum('divF2_Price'),
+                f2_ash: getNum('divF2_Ash') / 100,
+                f2_yield: getNum('divF2_Yield') / 100,
+                f2_carbon: getNum('divF2_Carbon') / 100,
+                f2_conv: getNum('divF2_Conv'),
+                f2_competition: getVal('divF2_Competition'),
+                f2_contract: getVal('divF2_Contract'),
                 f2_isWood: getCheck('divF2_IsWood')
             },
-            // Kiln Data
             kiln: {
                 carbonDataBasis: getVal('selectCarbonDataSource'),
                 selected_name: kilnPrice > 0 ? kilnName : 'None',
@@ -700,16 +715,15 @@ function saveProject() {
         }
     };
 
-    // Merge Tool 2 with existing project so Tool 1 is not deleted
-BiocharEngine.saveProjectData({
-    ...projectData,
-    ...dataToSave
-});
+    BiocharEngine.saveProjectData({
+        ...projectData,
+        ...dataToSave
+    });
 
-    setVal('saveStatus','Data Saved!'); 
+    setVal('saveStatus', BiocharI18n.t('tool2.saved_status'));
     document.getElementById('saveStatus').style.color = 'rgb(22 163 74)';
     document.getElementById('saveStatus').style.display = 'block';
-    
+
     hasUnsavedChanges = false;
     document.getElementById('unsavedWarning').classList.add('hidden');
     document.getElementById('saveToDbButton').classList.add('hidden');
@@ -717,50 +731,46 @@ BiocharEngine.saveProjectData({
 }
 
 // =================================================================
-// KILN LOGIC FUNCTIONS (INTEGRATED, WITH SELECTION RESTORE)
+// KILN LOGIC FUNCTIONS
 // =================================================================
 
 function runKilnLogic(totalFeedstock) {
-    // 1. Get inputs from loaded T1_Data
     let numHubs = T1_Data.numHubs || 1;
     const projectType = T1_Data.projectType || 'centralized';
 
     if (projectType === 'centralized') numHubs = 1;
     if (numHubs <= 0) numHubs = 1;
 
-    // 2. Perform calculations
     const volumePerHub = totalFeedstock / numHubs;
     const projectSize = getProjectSize(volumePerHub);
+    const tyUnit = ' ' + BiocharI18n.t('tool2.unit_ty');
 
-    // 3. Update calculation display in Kiln Card
-    setVal('kilnTotalFeedstock', `${totalFeedstock.toLocaleString(undefined, {maximumFractionDigits: 1})} t/y`);
-    setVal('kilnVolumePerHub', `${volumePerHub.toLocaleString(undefined, {maximumFractionDigits: 1})} t/y`);
+    setVal('kilnTotalFeedstock', totalFeedstock.toLocaleString(undefined, {maximumFractionDigits: 1}) + tyUnit);
+    setVal('kilnVolumePerHub', volumePerHub.toLocaleString(undefined, {maximumFractionDigits: 1}) + tyUnit);
     setVal('kilnProjectSize', projectSize === 'n/a' ? 'N/A' : projectSize.charAt(0).toUpperCase() + projectSize.slice(1));
-    
+
     const numKilnsInput = document.getElementById('inputNumberOfKilns');
     if (!hasUnsavedChanges && numKilnsInput) {
-        numKilnsInput.value = numHubs; 
+        numKilnsInput.value = numHubs;
     }
-    document.getElementById('hubsWarning').textContent = `Minimum ${numHubs} required (from Tool 1)`;
+    document.getElementById('hubsWarning').textContent = BiocharI18n.t('tool2.hubs_warning_min', { n: numHubs });
 
-    // 4. Get UI elements
     const kilnSelect = document.getElementById('selectKiln');
     const kilnWarning = document.getElementById('kilnWarning');
-    const oldKilnValue = kilnSelect.value; // Whatever user picked this session
+    const oldKilnValue = kilnSelect.value;
 
-    kilnSelect.innerHTML = ''; // Clear old options
+    kilnSelect.innerHTML = '';
 
-    // 5. Handle 'n/a' project size
     if (projectSize === 'n/a') {
         kilnWarning.style.display = 'block';
-        kilnWarning.textContent = 'Volume per hub is below the 100 t/y minimum. No kilns available. Please enter a custom price below.';
-        addKilnOption(kilnSelect, 'Not Applicable', 'n/a', true);
+        kilnWarning.textContent = BiocharI18n.t('tool2.kiln_warning_below_min');
+        addKilnOption(kilnSelect, BiocharI18n.t('tool2.kiln_na_option'), 'n/a', true);
     } else {
         kilnSelect.disabled = false;
         const filteredKilns = KILN_DB.filter(kiln => kiln.size === projectSize && kiln.model === projectType);
 
-        addKilnOption(kilnSelect, '-- Select a matching kiln --', '0');
-        
+        addKilnOption(kilnSelect, BiocharI18n.t('tool2.kiln_select_placeholder'), '0');
+
         if (filteredKilns.length > 0) {
             kilnWarning.style.display = 'none';
             filteredKilns.forEach(kiln => {
@@ -768,14 +778,12 @@ function runKilnLogic(totalFeedstock) {
             });
         } else {
             kilnWarning.style.display = 'block';
-            kilnWarning.textContent = `No pre-loaded kilns match your criteria (Size: ${projectSize}, Model: ${projectType}). Please enter a custom price below.`;
+            kilnWarning.textContent = BiocharI18n.t('tool2.kiln_warning_no_match', { size: projectSize, model: projectType });
         }
     }
-    
-    // Always add Custom option
-    addKilnOption(kilnSelect, 'Custom / Enter Price Below', 'custom');
-    
-    // === NEW: restore saved kiln selection, WITHOUT touching formulas ===
+
+    addKilnOption(kilnSelect, BiocharI18n.t('tool2.kiln_custom_option'), 'custom');
+
     let restored = false;
     const savedKiln = projectData.tool2 && projectData.tool2.kiln ? projectData.tool2.kiln : null;
 
@@ -797,12 +805,10 @@ function runKilnLogic(totalFeedstock) {
         }
     }
 
-    // Fallback: keep whatever user just picked in this session
     if (!restored && oldKilnValue) {
         kilnSelect.value = oldKilnValue;
     }
 
-    // This will show/hide custom box and update CAPEX display
     handleKilnSelectChange();
 }
 
@@ -817,13 +823,13 @@ function addKilnOption(selectEl, text, value, disabled = false) {
 function handleKilnSelectChange() {
     const kilnSelect = document.getElementById('selectKiln');
     const customContainer = document.getElementById('customKilnContainer');
-    
+
     if (kilnSelect.value === 'custom') {
         customContainer.classList.remove('hidden');
     } else {
         customContainer.classList.add('hidden');
     }
-    
+
     updateTotalCapex();
 }
 
@@ -839,26 +845,25 @@ function getProjectSize(volumePerHub) {
 function updateTotalCapex() {
     const kilnSelect = document.getElementById('selectKiln');
     if (!kilnSelect) return;
-    
+
     let kilnPrice = 0;
     if (kilnSelect.value === 'custom') {
         kilnPrice = parseFloat(document.getElementById('inputCustomKilnPrice').value) || 0;
     } else {
         kilnPrice = parseFloat(kilnSelect.value) || 0;
     }
-    
+
     const numKilns = parseInt(document.getElementById('inputNumberOfKilns').value) || 0;
     const shippingPercent = (parseFloat(document.getElementById('inputShippingCost').value) || 0) / 100;
 
     const pyrolyzerCost = kilnPrice * numKilns;
     const shippingCost = pyrolyzerCost * shippingPercent;
     const totalUpfrontCapex = pyrolyzerCost + shippingCost;
-    
+
     setVal('displayPyrolyzerCost', kilnPrice > 0 ? formatUSD(pyrolyzerCost) : '$--');
     setVal('displayShippingCost', kilnPrice > 0 ? formatUSD(shippingCost) : '$--');
     setVal('displayTotalUpfrontCapex', kilnPrice > 0 ? formatUSD(totalUpfrontCapex) : '$--');
 }
-
 
 // =================================================================
 // GENERAL HELPER FUNCTIONS
@@ -874,28 +879,26 @@ function formatUSD(n) {
     return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n);
 }
 function showError(msg) {
-    const s = document.getElementById('saveStatus'); 
+    const s = document.getElementById('saveStatus');
     if (s) {
-        s.textContent = msg; 
+        s.textContent = msg;
         s.style.color = 'rgb(220 38 38)';
         s.style.display = 'block';
     }
 }
 
-// *** Smart Navigation ***
 window.navigate = function(url) {
     if (hasUnsavedChanges) {
-        alert("You have unsaved changes. Please click the 'Save' button before continuing.");
+        alert(BiocharI18n.t('common.alert_unsaved'));
     } else {
         window.location.href = url;
     }
 }
 
-// *** Local Reset Button Logic ***
 window.resetForm = function() {
-    if (confirm("Are you sure you want to reset this form? All data on this page will be lost.")) {
+    if (confirm(BiocharI18n.t('common.confirm_reset'))) {
         if (projectData) {
-            projectData.tool2 = {}; // Clear only Tool 2 data
+            projectData.tool2 = {};
             if (window.BiocharEngine) {
                 BiocharEngine.saveProjectData(projectData);
             } else {
