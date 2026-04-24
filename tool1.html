@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Biochar Project Setup (Tool 1)</title>
+<title data-i18n="tool1.page_title">Biochar Project Setup (Tool 1)</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
@@ -53,7 +53,7 @@ body { font-family: 'Inter', sans-serif; background-color: #f4f4f5; }
 .disclaimer {
     text-align: left;
     font-size: 0.75rem;
-    color: #6b7280; /* gray-500 */
+    color: #6b7280;
     margin-top: 3rem;
     padding-top: 1.5rem;
     border-top: 1px solid #e5e7eb;
@@ -64,7 +64,7 @@ body { font-family: 'Inter', sans-serif; background-color: #f4f4f5; }
 }
 .disclaimer strong {
     font-weight: 600;
-    color: #4b5563; /* gray-600 */
+    color: #4b5563;
     font-style: normal;
 }
 </style>
@@ -73,27 +73,37 @@ body { font-family: 'Inter', sans-serif; background-color: #f4f4f5; }
 
 <div class="max-w-2xl mx-auto">
 
+<div class="flex justify-end mb-4">
+    <select id="lang-select" onchange="BiocharI18n.setLanguage(this.value)"
+            class="nav-button nav-button-white py-2 px-4 text-xs">
+        <option value="en">English 🇺🇸</option>
+        <option value="es">Español 🇪🇸</option>
+        <option value="pt">Português 🇧🇷</option>
+    </select>
+</div>
+
 <header class="text-center mb-6">
-    <h1 class="text-2xl md:text-3xl font-extrabold text-green-700">Biochar Project Feasibility Calculator</h1>
-    <h2 class="text-lg font-medium text-gray-700 mt-1">for Latin American Coffee & Cacao Supply Chains</h2>
-    <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider mt-4">Climatebase Fellowship Cohort 8 Capstone Project</p>
-    <p class="text-xs font-medium text-gray-500 mt-2">(All values in USD)</p>
-    
+    <h1 class="text-2xl md:text-3xl font-extrabold text-green-700" data-i18n="common.header_h1">Biochar Project Feasibility Calculator</h1>
+    <h2 class="text-lg font-medium text-gray-700 mt-1" data-i18n="common.header_h2">for Latin American Coffee & Cacao Supply Chains</h2>
+    <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider mt-4" data-i18n="common.cohort">Climatebase Fellowship Cohort 8 Capstone Project</p>
+    <p class="text-xs font-medium text-gray-500 mt-2" data-i18n="common.usd_note">(All values in USD)</p>
+
     <div class="mt-4 mb-6">
-        <a href="https://chatgpt.com/g/g-691ea2b1c2888191b85e54e203c53b2f-biochar-feasibility-guide" 
-           target="_blank" 
-           class="inline-block bg-blue-50 text-blue-700 hover:text-blue-900 border border-blue-200 rounded-full px-4 py-1 text-sm font-medium transition">
+        <a href="https://chatgpt.com/g/g-691ea2b1c2888191b85e54e203c53b2f-biochar-feasibility-guide"
+           target="_blank"
+           class="inline-block bg-blue-50 text-blue-700 hover:text-blue-900 border border-blue-200 rounded-full px-4 py-1 text-sm font-medium transition"
+           data-i18n="common.ai_link">
             Questions? Click here to ask the Biochar Feasibility Guide AI assistant ↗
         </a>
     </div>
 
-    <p class="text-lg font-medium text-green-800">Tool 1: Project Information &amp; Scale</p>
+    <p class="text-lg font-medium text-green-800" data-i18n="tool1.tool_label">Tool 1: Project Information &amp; Scale</p>
 </header>
 
 <div class="w-full mb-8">
     <div class="flex justify-between text-sm font-medium text-gray-600 mb-1">
-        <span>Step 1 of 7: Project Setup</span>
-        <span>(Next: Production)</span>
+        <span data-i18n="tool1.step_label">Step 1 of 7: Project Setup</span>
+        <span data-i18n="tool1.step_next">(Next: Production)</span>
     </div>
     <div class="progress-bar-container">
         <div class="progress-bar" style="width: 14%"></div>
@@ -101,132 +111,132 @@ body { font-family: 'Inter', sans-serif; background-color: #f4f4f5; }
 </div>
 
 <div class="input-section">
-    <h2 class="section-title">Project Information</h2>
+    <h2 class="section-title" data-i18n="tool1.section_project_info">Project Information</h2>
     <div class="space-y-4">
         <label class="block">
-            <span class="label-text">Project ID (Unique Name)</span>
-            <input type="text" id="inputProjectId" placeholder="e.g., coop-santa-ana-1" class="input-field" required>
+            <span class="label-text" data-i18n="tool1.project_id_label">Project ID (Unique Name)</span>
+            <input type="text" id="inputProjectId" data-i18n-placeholder="tool1.project_id_placeholder" placeholder="e.g., coop-santa-ana-1" class="input-field" required>
         </label>
 
         <hr class="my-4 border-gray-200">
 
         <label class="block">
-            <span class="label-text font-bold text-green-800">Annual Coffee/Cocoa Feedstock Volume (Tonnes - dry feedstock assumed)</span>
-            <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text">1 tonne = 1,000 kg = ~2,204.6 lbs</span></div>
+            <span class="label-text font-bold text-green-800" data-i18n="tool1.feedstock_label">Annual Coffee/Cocoa Feedstock Volume (Tonnes - dry feedstock assumed)</span>
+            <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool1.feedstock_tooltip">1 tonne = 1,000 kg = ~2,204.6 lbs</span></div>
             <input type="number" id="inputFeedstockTonnes" class="input-field border-2 border-green-500" min="0" required placeholder="0.00">
         </label>
 
-        <p class="text-sm text-gray-500 text-center">- OR -</p>
+        <p class="text-sm text-gray-500 text-center" data-i18n="tool1.or_separator">- OR -</p>
 
-        <button id="toggleFeedstockCalc" class="w-full text-center px-4 py-2 bg-green-100 text-green-800 font-medium rounded-lg hover:bg-green-200 transition">
+        <button id="toggleFeedstockCalc" class="w-full text-center px-4 py-2 bg-green-100 text-green-800 font-medium rounded-lg hover:bg-green-200 transition" data-i18n="tool1.toggle_calc_btn">
             Calculate Volume from Coffee Export Containers
         </button>
 
         <div id="feedstockCalculatorSection">
             <div class="p-4 space-y-4">
-                <h3 class="text-lg font-bold text-green-800">Container Calculator</h3>
-                
+                <h3 class="text-lg font-bold text-green-800" data-i18n="tool1.calc_title">Container Calculator</h3>
+
                 <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 space-y-4">
                     <label class="block">
-                        <span class="label-text">Region / Bag Size</span>
+                        <span class="label-text" data-i18n="tool1.region_label">Region / Bag Size</span>
                         <select id="modalRegionSelect" class="input-field">
-                            <option value="60" data-bags="320">60 kg (Brazil, Africa, Asia)</option>
-                            <option value="69" data-bags="275">69 kg (Central and South America)</option>
-                            <option value="70" data-bags="275">70 kg (Colombia)</option>
+                            <option value="60" data-bags="320" data-i18n="tool1.region_opt_60">60 kg (Brazil, Africa, Asia)</option>
+                            <option value="69" data-bags="275" data-i18n="tool1.region_opt_69">69 kg (Central and South America)</option>
+                            <option value="70" data-bags="275" data-i18n="tool1.region_opt_70">70 kg (Colombia)</option>
                         </select>
                     </label>
                     <div class="grid grid-cols-2 gap-3">
                         <label class="block">
-                            <span class="label-text">Bags per Container</span>
+                            <span class="label-text" data-i18n="tool1.bags_per_container_label">Bags per Container</span>
                             <input type="number" id="modalBagsPerContainer" class="input-field" value="320" min="0" readonly>
                         </label>
                         <label class="block">
-                            <span class="label-text"># of Containers/Year</span>
+                            <span class="label-text" data-i18n="tool1.num_containers_label"># of Containers/Year</span>
                             <input type="number" id="modalNumContainers" class="input-field" min="0">
                         </label>
                     </div>
                     <label class="block">
-                        <span class="label-text">Feedstock Type</span>
+                        <span class="label-text" data-i18n="tool1.feedstock_type_label">Feedstock Type</span>
                         <select id="modalFeedstockType" class="input-field">
-                            <option value="0.35">Washed or Pulped Natural (Dried Pulp Only)</option>
-                            <option value="0.21">Washed or Pulped Natural (Parchment Only)</option>
-                            <option value="0.56">Washed or Pulped Natural (Dried Pulp & Parchment)</option>
-                            <option value="3.0">Natural Coffee (Husk/Pods)</option>
-                            <option value="1.4">Cacao Pods</option>
+                            <option value="0.35" data-i18n="tool1.feedstock_type_washed_pulp">Washed or Pulped Natural (Dried Pulp Only)</option>
+                            <option value="0.21" data-i18n="tool1.feedstock_type_washed_parchment">Washed or Pulped Natural (Parchment Only)</option>
+                            <option value="0.56" data-i18n="tool1.feedstock_type_washed_both">Washed or Pulped Natural (Dried Pulp & Parchment)</option>
+                            <option value="3.0" data-i18n="tool1.feedstock_type_natural">Natural Coffee (Husk/Pods)</option>
+                            <option value="1.4" data-i18n="tool1.feedstock_type_cacao">Cacao Pods</option>
                         </select>
                     </label>
                 </div>
-                
+
                 <div class="grid grid-cols-2 gap-3">
-                    <button id="addBatchBtn" class="nav-button nav-button-blue">
+                    <button id="addBatchBtn" class="nav-button nav-button-blue" data-i18n="tool1.add_batch_btn">
                         Calculate & Add to List
                     </button>
-                    <button id="clearForNextBtn" class="nav-button nav-button-white">
+                    <button id="clearForNextBtn" class="nav-button nav-button-white" data-i18n="tool1.clear_next_btn">
                         Add More Coffee/Cacao
                     </button>
                 </div>
 
                 <div id="batchSummary" class="mt-4 space-y-2">
-                    <h3 class="text-sm font-bold text-gray-500 uppercase">Calculated Coffee Types</h3>
+                    <h3 class="text-sm font-bold text-gray-500 uppercase" data-i18n="tool1.batch_summary_title">Calculated Coffee Types</h3>
                     <div id="batchList" class="space-y-1">
-                        <p id="noBatches" class="text-sm text-gray-400 italic">No coffee types added yet.</p>
+                        <p id="noBatches" class="text-sm text-gray-400 italic" data-i18n="tool1.no_batches">No coffee types added yet.</p>
                     </div>
                     <div class="final-total">
-                        Total Calculated: <span id="totalCalculated">0.00</span> tonnes
+                        <span data-i18n="tool1.total_calculated_label">Total Calculated:</span> <span id="totalCalculated">0.00</span> <span data-i18n="tool1.total_unit">tonnes</span>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-4 mt-6">
-                    <button id="closeModalBtn" class="nav-button nav-button-white" style="color: #4b5563; border-color: #d1d5db;">Cancel</button>
-                    <button id="useTotalBtn" class="nav-button nav-button-green">Use This Total</button>
+                    <button id="closeModalBtn" class="nav-button nav-button-white" style="color: #4b5563; border-color: #d1d5db;" data-i18n="tool1.cancel_btn">Cancel</button>
+                    <button id="useTotalBtn" class="nav-button nav-button-green" data-i18n="tool1.use_total_btn">Use This Total</button>
                 </div>
             </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <label class="block">
-                <span class="label-text">Project Type</span>
+                <span class="label-text" data-i18n="tool1.project_type_label">Project Type</span>
                 <select id="selectProjectType" class="input-field" required>
-                    <option value="" disabled selected>-- Select Project Type --</option>
-                    <option value="centralized">Centralized (Single Hub)</option>
-                    <option value="decentralized">Decentralized (Multiple Hubs)</option>
-                    <option value="mobile">Mobile Kiln(s)</option>
+                    <option value="" disabled selected data-i18n="tool1.project_type_placeholder">-- Select Project Type --</option>
+                    <option value="centralized" data-i18n="tool1.project_type_centralized">Centralized (Single Hub)</option>
+                    <option value="decentralized" data-i18n="tool1.project_type_decentralized">Decentralized (Multiple Hubs)</option>
+                    <option value="mobile" data-i18n="tool1.project_type_mobile">Mobile Kiln(s)</option>
                 </select>
             </label>
             <label class="block" id="hubsContainer" style="display:none;">
-                <span class="label-text" id="hubsLabel">Number of Processing Locations</span>
+                <span class="label-text" id="hubsLabel" data-i18n="tool1.hub_label_decentralized">Number of Processing Locations</span>
                 <input type="number" id="inputNumHubs" value="1" min="1" class="input-field">
             </label>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <label class="block">
-                <span class="label-text">Country</span>
+                <span class="label-text" data-i18n="tool1.country_label">Country</span>
                 <select id="selectCountry" class="input-field" required>
-                    <option value="" disabled selected>Select Country</option>
-                    <option value="bolivia">Bolivia</option>
-                    <option value="brazil">Brazil</option>
-                    <option value="colombia">Colombia</option>
-                    <option value="costa_rica">Costa Rica</option>
-                    <option value="dominican_republic">Dominican Republic</option>
-                    <option value="ecuador">Ecuador</option>
-                    <option value="el_salvador">El Salvador</option>
-                    <option value="guatemala">Guatemala</option>
-                    <option value="honduras">Honduras</option>
-                    <option value="mexico">Mexico</option>
-                    <option value="nicaragua">Nicaragua</option>
-                    <option value="panama">Panama</option>
-                    <option value="peru">Peru</option>
-                    <option value="custom">Custom / Other</option>
+                    <option value="" disabled selected data-i18n="tool1.country_placeholder">Select Country</option>
+                    <option value="bolivia" data-i18n="tool1.country_bolivia">Bolivia</option>
+                    <option value="brazil" data-i18n="tool1.country_brazil">Brazil</option>
+                    <option value="colombia" data-i18n="tool1.country_colombia">Colombia</option>
+                    <option value="costa_rica" data-i18n="tool1.country_costa_rica">Costa Rica</option>
+                    <option value="dominican_republic" data-i18n="tool1.country_dominican_republic">Dominican Republic</option>
+                    <option value="ecuador" data-i18n="tool1.country_ecuador">Ecuador</option>
+                    <option value="el_salvador" data-i18n="tool1.country_el_salvador">El Salvador</option>
+                    <option value="guatemala" data-i18n="tool1.country_guatemala">Guatemala</option>
+                    <option value="honduras" data-i18n="tool1.country_honduras">Honduras</option>
+                    <option value="mexico" data-i18n="tool1.country_mexico">Mexico</option>
+                    <option value="nicaragua" data-i18n="tool1.country_nicaragua">Nicaragua</option>
+                    <option value="panama" data-i18n="tool1.country_panama">Panama</option>
+                    <option value="peru" data-i18n="tool1.country_peru">Peru</option>
+                    <option value="custom" data-i18n="tool1.country_custom">Custom / Other</option>
                 </select>
             </label>
             <label class="block">
-                <span class="label-text">Community Buy-In</span>
+                <span class="label-text" data-i18n="tool1.community_label">Community Buy-In</span>
                 <select id="selectCommunityBuyIn" class="input-field">
-                    <option value="" disabled selected>-- Select Status --</option>
-                    <option value="not_secured">Not secured</option>
-                    <option value="in_process">In process</option>
-                    <option value="secured">Fully secured</option>
+                    <option value="" disabled selected data-i18n="tool1.community_placeholder">-- Select Status --</option>
+                    <option value="not_secured" data-i18n="tool1.community_not_secured">Not secured</option>
+                    <option value="in_process" data-i18n="tool1.community_in_process">In process</option>
+                    <option value="secured" data-i18n="tool1.community_secured">Fully secured</option>
                 </select>
             </label>
         </div>
@@ -234,16 +244,16 @@ body { font-family: 'Inter', sans-serif; background-color: #f4f4f5; }
 </div>
 
 <div class="input-section">
-    <h2 class="section-title">Feedstock Seasonality Model</h2>
+    <h2 class="section-title" data-i18n="tool1.section_seasonality">Feedstock Seasonality Model</h2>
     <div class="space-y-4">
         <label class="block">
-            <span class="label-text font-bold text-gray-800">
+            <span class="label-text font-bold text-gray-800" data-i18n="tool1.supply_question">
                 How is your primary coffee feedstock available?
             </span>
             <select id="selectSupplyModel" class="input-field border-2 border-blue-300" required>
-                <option value="" disabled selected>-- Select one --</option>
-                <option value="year_round">[A] My coffee feedstock is available year-round.</option>
-                <option value="seasonal">[B] My coffee feedstock is only available during a harvest season.</option>
+                <option value="" disabled selected data-i18n="tool1.supply_placeholder">-- Select one --</option>
+                <option value="year_round" data-i18n="tool1.supply_year_round">[A] My coffee feedstock is available year-round.</option>
+                <option value="seasonal" data-i18n="tool1.supply_seasonal">[B] My coffee feedstock is only available during a harvest season.</option>
             </select>
         </label>
         <p id="supplyDesc" class="text-sm text-gray-600 italic pl-2 border-l-2 border-blue-300">
@@ -252,46 +262,46 @@ body { font-family: 'Inter', sans-serif; background-color: #f4f4f5; }
 
         <div id="seasonalStrategyContainer" class="space-y-3 hidden mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
             <label class="block">
-                <span class="label-text font-bold text-yellow-900">
+                <span class="label-text font-bold text-yellow-900" data-i18n="tool1.strategy_question">
                     If your coffee feedstock is seasonal, how will you run your facility?
                 </span>
                 <select id="selectSeasonalityStrategy" class="input-field">
-                    <option value="" disabled selected>-- Select one --</option>
-                    <option value="store">[1] Buy and stockpile feedstock</option>
-                    <option value="diversify">[2] Use other feedstocks the rest of the year</option>
-                    <option value="shutdown">[3] Process during harvest only, then shutdown</option>
+                    <option value="" disabled selected data-i18n="tool1.strategy_placeholder">-- Select one --</option>
+                    <option value="store" data-i18n="tool1.strategy_store">[1] Buy and stockpile feedstock</option>
+                    <option value="diversify" data-i18n="tool1.strategy_diversify">[2] Use other feedstocks the rest of the year</option>
+                    <option value="shutdown" data-i18n="tool1.strategy_shutdown">[3] Process during harvest only, then shutdown</option>
                 </select>
             </label>
-            <p id="strategyDesc" class="text-sm text-yellow-800 italic">Choose the option that best matches how you plan to operate.</p>
+            <p id="strategyDesc" class="text-sm text-yellow-800 italic" data-i18n="tool1.strategy_default_desc">Choose the option that best matches how you plan to operate.</p>
         </div>
     </div>
 </div>
 
 <div class="input-section bg-gray-50 border-l-4 border-gray-400 p-4">
-    <h3 class="font-bold text-gray-700 mb-2 uppercase text-sm tracking-wider">Note Missing Info for Further Research</h3>
-    <textarea id="toolNotes" rows="3" class="input-field bg-white" placeholder="Type here..."></textarea>
+    <h3 class="font-bold text-gray-700 mb-2 uppercase text-sm tracking-wider" data-i18n="tool1.notes_title">Note Missing Info for Further Research</h3>
+    <textarea id="toolNotes" rows="3" class="input-field bg-white" data-i18n-placeholder="tool1.notes_placeholder" placeholder="Type here..."></textarea>
 </div>
 
 <div class="mt-8 mb-12 flex flex-col space-y-4">
-    <button id="saveProjectButton" class="nav-button nav-button-indigo w-full">Save Project Data</button>
-    <div id="unsavedWarning" class="text-red-600 font-medium text-center hidden">You have unsaved changes.</div>
-    <div id="savedConfirmation" class="text-green-600 font-medium text-center hidden">All changes saved.</div>
+    <button id="saveProjectButton" class="nav-button nav-button-indigo w-full" data-i18n="common.save_project">Save Project Data</button>
+    <div id="unsavedWarning" class="text-red-600 font-medium text-center hidden" data-i18n="common.unsaved_warning">You have unsaved changes.</div>
+    <div id="savedConfirmation" class="text-green-600 font-medium text-center hidden" data-i18n="common.saved_confirmation">All changes saved.</div>
 
     <div id="navigationButtons" class="nav-grid">
-        <button onclick="navigate('index.html')" class="nav-button nav-button-white md:col-span-1">← Main Menu</button>
-        <button onclick="navigate('tool2.html')" id="nextToolButton" class="nav-button nav-button-green md:col-span-2">Proceed to Tool 2 →</button>
+        <button onclick="navigate('index.html')" class="nav-button nav-button-white md:col-span-1" data-i18n="common.main_menu">← Main Menu</button>
+        <button onclick="navigate('tool2.html')" id="nextToolButton" class="nav-button nav-button-green md:col-span-2" data-i18n="tool1.next_tool_btn">Proceed to Tool 2 →</button>
     </div>
 </div>
 
 <div class="flex justify-between items-center pt-4">
-    <button onclick="resetForm()" class="text-sm text-red-500 hover:text-red-700 font-medium">Reset Form</button>
+    <button onclick="resetForm()" class="text-sm text-red-500 hover:text-red-700 font-medium" data-i18n="common.reset_form">Reset Form</button>
     <div id="saveStatus" class="font-medium text-green-600" style="display:none;"></div>
 </div>
 
 <footer class="disclaimer">
-    <p><strong>No Guarantee:</strong> <em>The projections provided by this calculator are based on the assumptions and data entered by the user. They are for illustrative purposes only and do not constitute a guarantee of actual costs, revenues, or profitability.</em></p>
-    <p><strong>Not Financial Advice:</strong> <em>The information provided is not intended to be a substitute for professional financial, legal, or agricultural advice. Users are solely responsible for any decisions made based on the output of this tool.</em></p>
-    <p><strong>Verify All Data:</strong> <em>Users should independently verify all local costs, market prices, and regulatory requirements before making any investment.</em></p>
+    <p><strong data-i18n="tool1.footer_no_guarantee_label">No Guarantee:</strong> <em data-i18n="tool1.footer_no_guarantee">The projections provided by this calculator are based on the assumptions and data entered by the user. They are for illustrative purposes only and do not constitute a guarantee of actual costs, revenues, or profitability.</em></p>
+    <p><strong data-i18n="tool1.footer_not_advice_label">Not Financial Advice:</strong> <em data-i18n="tool1.footer_not_advice">The information provided is not intended to be a substitute for professional financial, legal, or agricultural advice. Users are solely responsible for any decisions made based on the output of this tool.</em></p>
+    <p><strong data-i18n="tool1.footer_verify_label">Verify All Data:</strong> <em data-i18n="tool1.footer_verify">Users should independently verify all local costs, market prices, and regulatory requirements before making any investment.</em></p>
 </footer>
 
 </div>
@@ -304,12 +314,14 @@ body { font-family: 'Inter', sans-serif; background-color: #f4f4f5; }
 </template>
 
 <script src="engine.js"></script>
+<script src="translations.js"></script>
+<script src="i18n.js"></script>
 <script>
 /* TOOL 1 LOGIC */
 let projectData = {};
 let hasUnsavedChanges = false;
-let calculatedBatches = []; // For multi-batch
-let batchCounter = 1;       // For multi-batch
+let calculatedBatches = [];
+let batchCounter = 1;
 
 const saveButton = document.getElementById("saveProjectButton");
 const unsavedWarning = document.getElementById("unsavedWarning");
@@ -370,26 +382,26 @@ function updateSeasonalityUI() {
     const strategyDesc = document.getElementById("strategyDesc");
 
     if (!model) {
-        if (supplyDesc) supplyDesc.textContent = "Select an option above to describe your situation.";
+        if (supplyDesc) supplyDesc.textContent = BiocharI18n.t('tool1.supply_desc_default');
         if (seasonalBox) seasonalBox.classList.add("hidden");
         return;
     }
 
     if (model === "year_round") {
-        if (supplyDesc) supplyDesc.textContent = "My coffee feedstock is available 12 months a year.";
+        if (supplyDesc) supplyDesc.textContent = BiocharI18n.t('tool1.supply_desc_year_round');
         if (seasonalBox) seasonalBox.classList.add("hidden");
     } else {
-        if (supplyDesc) supplyDesc.textContent = "My main coffee feedstock is clustered into a harvest season.";
+        if (supplyDesc) supplyDesc.textContent = BiocharI18n.t('tool1.supply_desc_seasonal');
         if (seasonalBox) seasonalBox.classList.remove("hidden");
     }
 
     if (strategyDesc && strategy) {
         if (strategy === "store") {
-            strategyDesc.textContent = "I will buy most/all feedstock during harvest and stockpile it to process year-round.";
+            strategyDesc.textContent = BiocharI18n.t('tool1.strategy_desc_store');
         } else if (strategy === "diversify") {
-            strategyDesc.textContent = "I will process coffee during harvest and use other feedstocks the rest of the year.";
+            strategyDesc.textContent = BiocharI18n.t('tool1.strategy_desc_diversify');
         } else if (strategy === "shutdown") {
-            strategyDesc.textContent = "I will process during harvest and shut down for the rest of the year.";
+            strategyDesc.textContent = BiocharI18n.t('tool1.strategy_desc_shutdown');
         }
     }
 }
@@ -397,11 +409,10 @@ function updateSeasonalityUI() {
 document.getElementById("selectSupplyModel")?.addEventListener("change", updateSeasonalityUI);
 document.getElementById("selectSeasonalityStrategy")?.addEventListener("change", updateSeasonalityUI);
 
-// Load existing data (CLEAN WORKING VERSION)
+// Load existing data
 document.addEventListener("DOMContentLoaded", () => {
     let stored = null;
 
-    // Load from engine or localStorage
     if (window.BiocharEngine && BiocharEngine.loadProjectData) {
         stored = BiocharEngine.loadProjectData();
     } else {
@@ -412,7 +423,6 @@ document.addEventListener("DOMContentLoaded", () => {
     projectData = stored && typeof stored === "object" ? stored : {};
     const d = projectData.tool1 || {};
 
-    // Restore values safely
     if (d.projectId) document.getElementById("inputProjectId").value = d.projectId;
     if (typeof d.feedstockTonnes !== "undefined") document.getElementById("inputFeedstockTonnes").value = d.feedstockTonnes;
     if (d.projectType) document.getElementById("selectProjectType").value = d.projectType;
@@ -423,7 +433,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (d.supplyModel) document.getElementById("selectSupplyModel").value = d.supplyModel;
     if (d.seasonalityStrategy) document.getElementById("selectSeasonalityStrategy").value = d.seasonalityStrategy;
 
-    // UI state
     if (d.projectId) {
         saveButton.classList.add("hidden");
         navigationButtons.classList.remove("hidden");
@@ -436,7 +445,6 @@ document.addEventListener("DOMContentLoaded", () => {
     updateSeasonalityUI();
     updateBagsPerContainer();
 });
-
 
 // Popup Calculator Logic
 toggleFeedstockCalcBtn?.addEventListener("click", () => {
@@ -472,7 +480,7 @@ addBatchBtn?.addEventListener("click", () => {
     const typeText = typeSelect.options[typeSelect.selectedIndex].text.split("(")[0].trim();
 
     if (containers === 0) {
-        alert("Please enter a number of containers for this batch.");
+        alert(BiocharI18n.t('tool1.alert_no_containers'));
         return;
     }
 
@@ -481,7 +489,7 @@ addBatchBtn?.addEventListener("click", () => {
 
     const batch = {
         id: batchCounter,
-        text: `Coffee Type ${batchCounter} (${typeText}): ${feedstockTonnes.toFixed(2)} tonnes`,
+        text: BiocharI18n.t('tool1.batch_text', { n: batchCounter, type: typeText, tonnes: feedstockTonnes.toFixed(2) }),
         tonnes: feedstockTonnes
     };
     batchCounter++;
@@ -538,7 +546,7 @@ useTotalBtn?.addEventListener("click", () => {
 saveButton?.addEventListener("click", () => {
     const projectId = document.getElementById("inputProjectId").value.trim();
     if (!projectId) {
-        alert("Please enter a Project ID.");
+        alert(BiocharI18n.t('tool1.alert_no_project_id'));
         return;
     }
 
@@ -548,7 +556,7 @@ saveButton?.addEventListener("click", () => {
     const feedstock = document.getElementById("inputFeedstockTonnes").value;
 
     if (!projectId || !projectType || !supplyModel || !country || !feedstock) {
-        alert("Please fill out all required fields: Project ID, Feedstock Volume, Project Type, Country, and Supply Model.");
+        alert(BiocharI18n.t('tool1.alert_required'));
         return;
     }
 
@@ -587,7 +595,6 @@ if (!projectData || typeof projectData !== "object") {
     localStorage.setItem("biocharProjectData", JSON.stringify(merged));
 }
 
-
     localStorage.setItem("currentProjectId", projectId);
 
     hasUnsavedChanges = false;
@@ -618,12 +625,12 @@ function handleProjectTypeChange() {
         input.min = 1;
     } else if (type === "decentralized") {
         container.style.display = "block";
-        label.textContent = "Number of Processing Locations";
+        label.textContent = BiocharI18n.t('tool1.hub_label_decentralized');
         if (input.value < 2) input.value = 2;
         input.min = 2;
     } else if (type === "mobile") {
         container.style.display = "block";
-        label.textContent = "Number of Mobile Kilns";
+        label.textContent = BiocharI18n.t('tool1.hub_label_mobile');
         input.value = 1;
         input.min = 1;
     }
@@ -633,15 +640,15 @@ document.getElementById("selectProjectType")?.addEventListener("change", handleP
 // Smart Navigation
 window.navigate = function(url) {
     if (hasUnsavedChanges) {
-        alert("You have unsaved changes. Please click the 'Save' button before continuing.");
+        alert(BiocharI18n.t('common.alert_unsaved'));
     } else {
         window.location.href = url;
     }
 };
 
-// Global Reset Button Logic (clear ALL project data)
+// Global Reset Button Logic
 window.resetForm = function() {
-    if (!confirm("This will clear ALL project data from all tools. Are you sure?")) return;
+    if (!confirm(BiocharI18n.t('common.confirm_reset'))) return;
 
     projectData = {};
 
