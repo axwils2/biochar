@@ -1,189 +1,168 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="index.page_title">Biochar Feasibility Platform</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="translations.js"></script>
-    <script src="i18n.js"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f4f4f5;
-        }
-
-        .tool-card {
-            @apply bg-white p-6 rounded-2xl shadow-sm border border-gray-200 hover:shadow-md transition duration-200 flex flex-col h-full;
-        }
-        .tool-number { @apply text-xs font-bold text-blue-600 uppercase tracking-wider mb-2; }
-        .tool-title { @apply text-xl font-bold text-gray-900 mb-2; }
-        .tool-desc { @apply text-gray-600 text-sm flex-grow; }
-
-        .nav-button {
-            display: inline-block;
-            padding: 12px 20px;
-            font-weight: 700;
-            border: none;
-            border-radius: 12px;
-            font-size: 0.875rem;
-            cursor: pointer;
-            transition: opacity 0.2s;
-            text-align: center;
-            text-decoration: none;
-        }
-        .nav-button:hover { opacity: 0.9; }
-
-        .nav-button-blue { background-color: #2563eb; color: white; }
-        .nav-button-green { background-color: #16a34a; color: white; }
-        .nav-button-red { background-color: #dc2626; color: white; }
-
-        .nav-button-white {
-            background-color: white;
-            color: #2563eb;
-            border: 2px solid #dbeafe;
-        }
-        .nav-button-white:hover { background-color: #f9fafb; }
-
-        .hidden { display: none; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="index.page_title">Biochar Feasibility Platform</title>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<script src="engine.js"></script>
+<script src="translations.js"></script>
+<script src="i18n.js"></script>
+<link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="p-4 md:p-12">
+<body>
 
-    <div class="max-w-6xl mx-auto">
+<!-- ── App Header ─────────────────────────────────────────── -->
+<header class="app-header">
+  <a href="index.html" class="app-logo">
+    <div class="app-logo-mark"></div>
+    <span class="app-logo-name" data-i18n="common.header_h1">Biochar Calculator</span>
+  </a>
+  <select id="lang-select" onchange="BiocharI18n.setLanguage(this.value)" class="app-lang-select">
+    <option value="en">EN 🇺🇸</option>
+    <option value="es">ES 🇪🇸</option>
+    <option value="pt">PT 🇧🇷</option>
+  </select>
+</header>
 
-        <div class="flex justify-end mb-4">
-            <select id="lang-select" onchange="BiocharI18n.setLanguage(this.value)"
-                    class="nav-button nav-button-white py-2 px-4 text-xs">
-                <option value="en">English 🇺🇸</option>
-                <option value="es">Español 🇪🇸</option>
-                <option value="pt">Português 🇧🇷</option>
-            </select>
-        </div>
+<!-- ── Page Content ───────────────────────────────────────── -->
+<main class="page-content">
+  <div class="max-w-5xl mx-auto">
 
-        <header class="text-center mb-8">
-            <h1 class="text-4xl font-extrabold text-green-700 mb-2" data-i18n="index.h1">
-                Biochar Project Feasibility Calculator
-            </h1>
-            <h2 class="text-lg font-medium text-gray-700" data-i18n="index.h2">
-                for Latin American Coffee & Cacao Supply Chains
-            </h2>
-            <p class="text-sm text-gray-500 mt-2" data-i18n="index.cohort">
-                Climatebase Fellowship Cohort 8 Capstone Project
-            </p>
-
-            <div class="mt-4">
-                <a href="https://chatgpt.com/g/g-691ea2b1c2888191b85e54e203c53b2f-biochar-feasibility-guide"
-                   target="_blank"
-                   class="inline-block bg-blue-50 text-blue-700 hover:text-blue-900 border border-blue-200 rounded-full px-4 py-1 text-sm font-medium transition"
-                   data-i18n="index.ai_link">
-                    Questions? Click here to ask the Biochar Feasibility Guide AI assistant ↗
-                </a>
-            </div>
-        </header>
-
-        <div id="welcomeBack"
-             class="hidden mb-12 bg-blue-50 border-l-4 border-blue-500 p-6 rounded-r-xl shadow-sm
-                    flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-
-            <div>
-                <h2 class="text-xl font-bold text-blue-900" data-i18n="index.welcome_heading">You have a project in progress.</h2>
-                <p class="text-blue-700">
-                    <span data-i18n="index.welcome_continue">Continue working on project:</span>
-                    <strong id="currentProjectName" class="font-extrabold bg-blue-100 px-2 py-1 rounded">Draft Project</strong>
-                </p>
-            </div>
-
-            <div class="flex space-x-4">
-                <button onclick="clearProject()"
-                        class="nav-button nav-button-white"
-                        style="color:#dc2626; border-color:#fee2e2;"
-                        data-i18n="index.start_new">
-                    Start New Project
-                </button>
-
-                <a href="tool1.html" class="nav-button nav-button-blue" data-i18n="index.resume">
-                    Resume Project →
-                </a>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-            <div class="tool-card">
-                <span class="tool-number" data-i18n="index.step1_num">Step 1</span>
-                <h3 class="tool-title" data-i18n="index.step1_title">Project Information & Scale</h3>
-                <p class="tool-desc" data-i18n="index.step1_desc">Define your project ID, location, and total feedstock volume.</p>
-                <a href="tool1.html" class="nav-button nav-button-blue mt-6" data-i18n="index.step1_btn">Open Tool 1 →</a>
-            </div>
-
-            <div class="tool-card">
-                <span class="tool-number" data-i18n="index.step2_num">Step 2</span>
-                <h3 class="tool-title" data-i18n="index.step2_title">Production Calculator</h3>
-                <p class="tool-desc" data-i18n="index.step2_desc">Select kiln tech and estimate biochar & carbon credit yields.</p>
-                <a href="tool2.html" class="nav-button nav-button-blue mt-6" data-i18n="index.step2_btn">Open Tool 2 →</a>
-            </div>
-
-            <div class="tool-card">
-                <span class="tool-number" data-i18n="index.step3_num">Step 3</span>
-                <h3 class="tool-title" data-i18n="index.step3_title">Logistics Planner</h3>
-                <p class="tool-desc" data-i18n="index.step3_desc">Build transport routes and seasonality-based cost estimates.</p>
-                <a href="tool3.html" class="nav-button nav-button-blue mt-6" data-i18n="index.step3_btn">Open Tool 3 →</a>
-            </div>
-
-            <div class="tool-card">
-                <span class="tool-number" data-i18n="index.step4_num">Step 4</span>
-                <h3 class="tool-title" data-i18n="index.step4_title">Revenue Streams</h3>
-                <p class="tool-desc" data-i18n="index.step4_desc">Set pricing for biochar sales, carbon credits, and wood vinegar.</p>
-                <a href="tool4.html" class="nav-button nav-button-blue mt-6" data-i18n="index.step4_btn">Open Tool 4 →</a>
-            </div>
-
-            <div class="tool-card">
-                <span class="tool-number" data-i18n="index.step5_num">Step 5</span>
-                <h3 class="tool-title" data-i18n="index.step5_title">Site, Ops & Finance</h3>
-                <p class="tool-desc" data-i18n="index.step5_desc">CAPEX, OPEX, and lending assumptions for full feasibility.</p>
-                <a href="tool5.html" class="nav-button nav-button-blue mt-6" data-i18n="index.step5_btn">Open Tool 5 →</a>
-            </div>
-
-            <div class="tool-card bg-blue-50 border-blue-200">
-                <span class="tool-number text-blue-800" data-i18n="index.analysis_num">Analysis</span>
-                <h3 class="tool-title text-blue-900" data-i18n="index.analysis_title">Results & Scenarios</h3>
-                <p class="tool-desc text-blue-800" data-i18n="index.analysis_desc">Executive dashboard + stress-testing.</p>
-
-                <div class="flex space-x-3 mt-6">
-                    <a href="tool6.html" class="nav-button nav-button-blue" style="width:50%;" data-i18n="index.dashboard_btn">Dashboard</a>
-                    <a href="tool7.html" class="nav-button nav-button-white" style="width:50%;" data-i18n="index.scenarios_btn">Scenarios</a>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="mt-12 text-center text-gray-400 text-sm">
-            </div>
-
+    <!-- Hero -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-extrabold mb-1" style="color:var(--color-primary-deepest);" data-i18n="index.h1">
+        Biochar Project Feasibility Calculator
+      </h1>
+      <p class="text-sm mb-1" style="color:var(--color-neutral-500);" data-i18n="index.h2">
+        for Latin American Coffee &amp; Cacao Supply Chains
+      </p>
+      <p class="text-xs mb-4" style="color:var(--color-neutral-500);" data-i18n="index.cohort">
+        Climatebase Fellowship Cohort 8 Capstone Project
+      </p>
+      <a href="https://chatgpt.com/g/g-691ea2b1c2888191b85e54e203c53b2f-biochar-feasibility-guide"
+         target="_blank"
+         class="inline-block text-xs font-medium px-4 py-1.5 rounded-full border transition"
+         style="background:var(--color-primary-light);color:var(--color-primary-dark);border-color:var(--color-primary-border);"
+         data-i18n="index.ai_link">
+        Questions? Click here to ask the Biochar Feasibility Guide AI assistant ↗
+      </a>
     </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const currentId = localStorage.getItem("currentProjectId");
-            const hasData = localStorage.getItem("biocharProjectData");
+    <!-- Welcome-back banner -->
+    <div id="welcomeBack" class="hidden mb-8 section-card flex flex-col md:flex-row justify-between items-center gap-4"
+         style="border-left: 4px solid var(--color-primary);">
+      <div>
+        <h2 class="text-base font-bold mb-1" style="color:var(--color-primary-deepest);" data-i18n="index.welcome_heading">
+          You have a project in progress.
+        </h2>
+        <p class="text-sm" style="color:var(--color-primary-dark);">
+          <span data-i18n="index.welcome_continue">Continue working on project:</span>
+          <strong id="currentProjectName" class="font-extrabold ml-1 px-2 py-0.5 rounded"
+                  style="background:var(--color-primary-light);">Draft</strong>
+        </p>
+      </div>
+      <div class="flex gap-3 flex-shrink-0">
+        <button onclick="clearProject()" class="btn btn-danger btn-sm" data-i18n="index.start_new">
+          Start New Project
+        </button>
+        <a href="tool1.html" class="btn btn-primary btn-sm" data-i18n="index.resume">
+          Resume Project →
+        </a>
+      </div>
+    </div>
 
-            if (currentId || hasData) {
-                document.getElementById("currentProjectName").textContent = currentId || BiocharI18n.t('index.welcome_default_name');
-                document.getElementById("welcomeBack").classList.remove("hidden");
-            }
-        });
+    <!-- Tool cards grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
 
-        function clearProject() {
-            if (confirm(BiocharI18n.t('index.confirm_new'))) {
-                localStorage.removeItem("currentProjectId");
-                localStorage.removeItem("biocharProjectData");
-                location.reload();
-            }
-        }
-    </script>
+      <div class="tool-card">
+        <div class="tool-card-number" data-i18n="index.step1_num">Step 1</div>
+        <h3 class="tool-card-title" data-i18n="index.step1_title">Project Information &amp; Scale</h3>
+        <p class="tool-card-desc" data-i18n="index.step1_desc">Define your project ID, location, and total feedstock volume.</p>
+        <a href="tool1.html" class="btn btn-primary btn-sm mt-4" data-i18n="index.step1_btn">Open Tool 1 →</a>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-number" data-i18n="index.step2_num">Step 2</div>
+        <h3 class="tool-card-title" data-i18n="index.step2_title">Production Calculator</h3>
+        <p class="tool-card-desc" data-i18n="index.step2_desc">Select kiln tech and estimate biochar &amp; carbon credit yields.</p>
+        <a href="tool2.html" class="btn btn-primary btn-sm mt-4" data-i18n="index.step2_btn">Open Tool 2 →</a>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-number" data-i18n="index.step3_num">Step 3</div>
+        <h3 class="tool-card-title" data-i18n="index.step3_title">Logistics Planner</h3>
+        <p class="tool-card-desc" data-i18n="index.step3_desc">Build transport routes and seasonality-based cost estimates.</p>
+        <a href="tool3.html" class="btn btn-primary btn-sm mt-4" data-i18n="index.step3_btn">Open Tool 3 →</a>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-number" data-i18n="index.step4_num">Step 4</div>
+        <h3 class="tool-card-title" data-i18n="index.step4_title">Revenue Streams</h3>
+        <p class="tool-card-desc" data-i18n="index.step4_desc">Set pricing for biochar sales, carbon credits, and wood vinegar.</p>
+        <a href="tool4.html" class="btn btn-primary btn-sm mt-4" data-i18n="index.step4_btn">Open Tool 4 →</a>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-number" data-i18n="index.step5_num">Step 5</div>
+        <h3 class="tool-card-title" data-i18n="index.step5_title">Site, Ops &amp; Finance</h3>
+        <p class="tool-card-desc" data-i18n="index.step5_desc">CAPEX, OPEX, and lending assumptions for full feasibility.</p>
+        <a href="tool5.html" class="btn btn-primary btn-sm mt-4" data-i18n="index.step5_btn">Open Tool 5 →</a>
+      </div>
+
+      <div class="tool-card" style="background:var(--color-primary-light);border-color:var(--color-primary-border);">
+        <div class="tool-card-number" data-i18n="index.analysis_num">Analysis</div>
+        <h3 class="tool-card-title" data-i18n="index.analysis_title">Results &amp; Scenarios</h3>
+        <p class="tool-card-desc" data-i18n="index.analysis_desc">Executive dashboard + stress-testing.</p>
+        <div class="flex gap-2 mt-4">
+          <a href="tool6.html" class="btn btn-primary btn-sm flex-1 justify-center" data-i18n="index.dashboard_btn">Dashboard</a>
+          <a href="tool7.html" class="btn btn-secondary btn-sm flex-1 justify-center" data-i18n="index.scenarios_btn">Scenarios</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<!-- ── Footer ─────────────────────────────────────────────── -->
+<footer class="app-footer">
+  <div class="footer-disclaimer-grid">
+    <div class="footer-card">
+      <div class="footer-card-title" data-i18n="common.footer_no_guarantee_label">No Guarantee</div>
+      <p class="footer-card-text" data-i18n="common.footer_no_guarantee">Projections are based on user-entered data and are for illustrative purposes only.</p>
+    </div>
+    <div class="footer-card">
+      <div class="footer-card-title" data-i18n="common.footer_not_advice_label">Not Financial Advice</div>
+      <p class="footer-card-text" data-i18n="common.footer_not_advice">Not a substitute for professional financial, legal, or agricultural advice.</p>
+    </div>
+    <div class="footer-card">
+      <div class="footer-card-title" data-i18n="common.footer_verify_label">Verify All Data</div>
+      <p class="footer-card-text" data-i18n="common.footer_verify">Verify local costs, market prices, and regulations before investing.</p>
+    </div>
+  </div>
+  <p class="footer-attr" data-i18n="common.cohort">Climatebase Fellowship · Cohort 8 Capstone</p>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const currentId = localStorage.getItem("currentProjectId");
+  const hasData = localStorage.getItem("biocharProjectData");
+  if (currentId || hasData) {
+    document.getElementById("currentProjectName").textContent =
+      currentId || BiocharI18n.t('index.welcome_default_name');
+    document.getElementById("welcomeBack").classList.remove("hidden");
+  }
+});
+
+function clearProject() {
+  if (confirm(BiocharI18n.t('index.confirm_new'))) {
+    localStorage.removeItem("currentProjectId");
+    localStorage.removeItem("biocharProjectData");
+    location.reload();
+  }
+}
+</script>
 
 </body>
 </html>

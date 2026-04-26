@@ -1,31 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title data-i18n="tool2.page_title">Biochar Production Calc (Tool 2)</title>
 
-<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <script src="engine.js"></script>
 <script src="translations.js"></script>
 <script src="i18n.js"></script>
+<link rel="stylesheet" href="styles.css">
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-
 /* ---------- GLOBAL ---------- */
-body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; color: #111827; }
 .max-w-3xl { max-width: 56rem; }
 
 /* ---------- CARD / SECTION STYLING ---------- */
-.input-section { padding: 1.75rem; margin-bottom: 1.5rem; border-radius: 1rem; border: 1px solid #e5e7eb; background-color: #ffffff; box-shadow: 0 18px 40px rgba(15, 23, 42, 0.03); }
-.section-title { font-size: 1.1rem; font-weight: 700; color: #166534; padding-bottom: 0.5rem; margin-bottom: 1rem; border-bottom: 1px solid #e5e7eb; }
-.label-text { display: block; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; color: #6b7280; margin-bottom: 0.15rem; }
-.input-field { margin-top: 0.15rem; display: block; width: 100%; border-radius: 0.6rem; border: 1px solid #d1d5db; padding: 0.55rem 0.7rem; background-color: #ffffff; font-size: 0.9rem; box-sizing: border-box; transition: border-color 120ms ease, box-shadow 120ms ease, background-color 120ms ease; }
-.input-field:focus { outline: none; border-color: #16a34a; box-shadow: 0 0 0 1px rgba(22, 163, 74, 0.25); background-color: #f9fafb; }
-.input-field[readonly] { background-color: #f9fafb; color: #6b7280; cursor: not-allowed; }
-.input-field:disabled { background-color: #f9fafb; color: #6b7280; cursor: not-allowed; }
-
 /* ---------- CALCULATOR THEMES ---------- */
 .calc-box { border-radius: 1.1rem; border: 1px solid #dbeafe; overflow: hidden; margin-bottom: 1.75rem; background-color: #ffffff; box-shadow: 0 18px 40px rgba(15, 23, 42, 0.04); }
 .calc-header { padding: 0.9rem 1.5rem; border-bottom: 1px solid #e5e7eb; font-weight: 700; font-size: 0.95rem; display: flex; justify-content: space-between; align-items: center; }
@@ -79,12 +69,7 @@ body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; color: #1118
 .theme-purple .final-output-box .step-output-label, .theme-purple .final-output-box .step-output-value { color: #ffffff; }
 
 /* ---------- TOOLTIPS (BOTH KINDS) ---------- */
-.tooltip-container { position: relative; display: inline-flex; align-items: center; cursor: help; }
-.tooltip-icon { width: 16px; height: 16px; background-color: #9ca3af; color: white; font-size: 0.65rem; font-weight: 700; border-radius: 999px; display: flex; align-items: center; justify-content: center; }
-.tooltip-text { position: absolute; width: 240px; background-color: #111827; color: white; font-size: 0.75rem; padding: 0.6rem 0.7rem; border-radius: 0.6rem; bottom: 140%; left: 50%; transform: translateX(-50%); visibility: hidden; opacity: 0; transition: opacity 0.18s ease; pointer-events: none; z-index: 50; }
-.tooltip-container:hover .tooltip-text { visibility: visible; opacity: 1; }
-
-.f-icon {
+.tooltip-container:hover .f-icon {
     display: inline-flex; align-items: center; justify-content: center;
     width: 16px; height: 16px; background-color: #6b7280; color: white;
     border-radius: 50%; font-family: 'Georgia', serif; font-style: italic;
@@ -105,89 +90,57 @@ body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; color: #1118
 .total-capex-value { font-size: 2rem; font-weight: 800; color: #1e40af; }
 
 /* ---------- PROGRESS BAR ---------- */
-.progress-bar-container { width: 100%; background-color: #e5e7eb; border-radius: 999px; height: 0.55rem; overflow: hidden; }
-.progress-bar { background: linear-gradient(90deg, #16a34a, #22c55e); height: 100%; border-radius: 999px; transition: width 0.5s ease; }
-
 /* ---------- BUTTONS ---------- */
-.nav-button { display: block; text-align: center; font-weight: 600; padding: 0.75rem 1.25rem; border-radius: 0.75rem; text-decoration: none; transition: all 150ms ease; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); cursor: pointer; border: none; }
-.nav-button-indigo { background-color: #4f46e5; color: white; }
-.nav-button-indigo:hover { background-color: #4338ca; }
-.nav-button-green { background-color: #16a34a; color: white; }
-.nav-button-green:hover { background-color: #15803d; }
-.nav-button-blue { background-color: #2563eb; color: white; }
-.nav-button-blue:hover { background-color: #1d4ed8; }
-.nav-button-white { background-color: #ffffff; color: #1f2937; border: 1px solid #d1d5db; }
-.nav-button-white:hover { background-color: #f9fafb; }
-.nav-grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 0.75rem; }
-@media (min-width: 768px) { .nav-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 768px) { }
 
 /* ---------- FOOTER ---------- */
-.disclaimer {
-    text-align: left;
-    font-size: 0.75rem;
-    color: #6b7280;
-    margin-top: 3rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid #e5e7eb;
-}
-.disclaimer p {
-    margin-bottom: 0.5rem;
-    font-style: italic;
-}
-.disclaimer strong {
-    font-weight: 600;
-    color: #4b5563;
-    font-style: normal;
-}
-.hidden { display: none; }
 </style>
 </head>
-<body class="p-4 md:p-8">
+<body>
 
+<header class="app-header">
+  <a href="index.html" class="app-logo">
+    <div class="app-logo-mark"></div>
+    <span class="app-logo-name" data-i18n="common.header_h1">Biochar Calculator</span>
+  </a>
+  <span class="app-step-badge">2</span>
+  <span class="app-step-name" data-i18n="tool2.step_name">Production</span>
+  <span class="app-step-of">· 2 of 7</span>
+  <select id="lang-select" onchange="BiocharI18n.setLanguage(this.value)" class="app-lang-select">
+    <option value="en">EN 🇺🇸</option>
+    <option value="es">ES 🇪🇸</option>
+    <option value="pt">PT 🇧🇷</option>
+  </select>
+</header>
+<div class="app-progress-track">
+  <div class="app-progress-fill" style="width:29%;"></div>
+</div>
+<nav class="step-nav">
+  <button onclick="navigate('tool1.html')" class="step-pill step-pill-done">✓ Project Info</button>
+  <span class="step-pill step-pill-active">2 · Production</span>
+  <button onclick="navigate('tool3.html')" class="step-pill step-pill-future">3 · Logistics</button>
+  <button onclick="navigate('tool4.html')" class="step-pill step-pill-future">4 · Revenue</button>
+  <button onclick="navigate('tool5.html')" class="step-pill step-pill-future">5 · Finance</button>
+  <button onclick="navigate('tool6.html')" class="step-pill step-pill-future">6 · Results</button>
+  <button onclick="navigate('tool7.html')" class="step-pill step-pill-future">7 · Scenarios</button>
+</nav>
+<div id="depAlert" class="dep-alert" style="display:none;">
+  <div class="dep-alert-icon">⚠️</div>
+  <div class="dep-alert-text">
+    <strong data-i18n="tool2.dep_alert_title">Missing upstream data.</strong>
+    <span data-i18n="tool2.dep_alert_msg"> Showing defaults.</span>
+    <a href="tool1.html" data-i18n="tool2.dep_alert_link">Complete Tool 1 →</a>
+  </div>
+</div>
+
+<main class="page-content">
 <div class="max-w-3xl mx-auto">
 
-<div class="flex justify-end mb-4">
-    <select id="lang-select" onchange="BiocharI18n.setLanguage(this.value)"
-            class="nav-button nav-button-white py-2 px-4 text-xs">
-        <option value="en">English 🇺🇸</option>
-        <option value="es">Español 🇪🇸</option>
-        <option value="pt">Português 🇧🇷</option>
-    </select>
-</div>
-
-<header class="text-center mb-6">
-    <h1 class="text-2xl md:text-3xl font-extrabold text-green-700" data-i18n="common.header_h1">Biochar Project Feasibility Calculator</h1>
-    <h2 class="text-lg font-medium text-gray-700 mt-1" data-i18n="common.header_h2">for Latin American Coffee &amp; Cacao Supply Chains</h2>
-    <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider mt-4" data-i18n="common.cohort">Climatebase Fellowship Cohort 8 Capstone Project</p>
-    <p class="text-xs font-medium text-gray-500 mt-2" data-i18n="common.usd_note">(All values in USD)</p>
-
-    <div class="mt-4 mb-6">
-        <a href="https://chatgpt.com/g/g-691ea2b1c2888191b85e54e203c53b2f-biochar-feasibility-guide"
-           target="_blank"
-           class="inline-block bg-blue-50 text-blue-700 hover:text-blue-900 border border-blue-200 rounded-full px-4 py-1 text-sm font-medium transition"
-           data-i18n="common.ai_link">
-            Questions? Click here to ask the Biochar Feasibility Guide AI assistant ↗
-        </a>
-    </div>
-
-    <p class="text-lg font-medium text-green-800" data-i18n="tool2.tool_label">Tool 2: Production Calculator</p>
-</header>
-
-<div class="w-full mb-8">
-    <div class="flex justify-between text-xs md:text-sm font-medium text-gray-600 mb-2">
-        <span data-i18n="tool2.step_label">Step 2 of 7: Production</span>
-        <span data-i18n="tool2.step_next">(Next: Logistics)</span>
-    </div>
-    <div class="progress-bar-container">
-        <div class="progress-bar" style="width: 28%"></div>
-    </div>
-</div>
-
-<div class="input-section section-white">
-    <h2 class="section-title" data-i18n="tool2.section_supply">Feedstock Supply Model</h2>
+<div class="section-card">
+    <h2 class="section-card-header" data-i18n="tool2.section_supply">Feedstock Supply Model</h2>
     <div class="space-y-4">
         <div>
-            <span class="label-text" data-i18n="tool2.supply_model_label">Annual Supply Model (from Tool 1)</span>
+            <span class="input-label" data-i18n="tool2.supply_model_label">Annual Supply Model (from Tool 1)</span>
             <p id="displaySupplyModel" class="text-sm text-gray-400 italic">Loading...</p>
         </div>
         <div id="seasonalStrategyContainer" class="hidden p-4 bg-yellow-50 rounded-lg border border-yellow-300 space-y-3">
@@ -197,11 +150,11 @@ body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; color: #1118
     </div>
 </div>
 
-<div class="input-section bg-white border-gray-200">
+<div class="section-card bg-white border-gray-200">
     <label class="block">
-        <span class="label-text font-bold text-gray-800" data-i18n="tool2.carbon_source_label">My carbon &amp; yield values are based on:</span>
-        <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.carbon_source_tooltip">Using your own lab results is highly recommended for an accurate projection.</span></div>
-        <select id="selectCarbonDataSource" class="input-field border-2 border-blue-300">
+        <span class="input-label font-bold text-gray-800" data-i18n="tool2.carbon_source_label">My carbon &amp; yield values are based on:</span>
+        <div class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.carbon_source_tooltip">Using your own lab results is highly recommended for an accurate projection.</span></div>
+        <select id="selectCarbonDataSource" class="input border-2 border-blue-300">
             <option value="calculator_defaults" data-i18n="tool2.carbon_source_defaults">Calculator Defaults</option>
             <option value="lab_results" data-i18n="tool2.carbon_source_lab">My Own Lab Results</option>
         </select>
@@ -217,15 +170,15 @@ body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; color: #1118
         <ol class="calc-steps">
             <li class="calc-step-full">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-                    <label class="block"><span class="label-text" data-i18n="tool2.f_name_label">Feedstock Name</span><input type="text" id="divF1_Name" class="input-field"></label>
-                    <label class="block"><span class="label-text" data-i18n="tool2.f_price_label">Purchase Price ($/Tonne)</span><input type="number" id="divF1_Price" value="0" class="input-field border-blue-400" min="0"></label>
-                    <label class="block"><span class="label-text" data-i18n="tool2.f_competition_label">Competition Level</span><select id="divF1_Competition" class="input-field">
+                    <label class="block"><span class="input-label" data-i18n="tool2.f_name_label">Feedstock Name</span><input type="text" id="divF1_Name" class="input"></label>
+                    <label class="block"><span class="input-label" data-i18n="tool2.f_price_label">Purchase Price ($/Tonne)</span><input type="number" id="divF1_Price" value="0" class="input border-blue-400" min="0"></label>
+                    <label class="block"><span class="input-label" data-i18n="tool2.f_competition_label">Competition Level</span><select id="divF1_Competition" class="input">
                         <option value="own" data-i18n="tool2.f1_comp_own">None (We own the feedstock)</option>
                         <option value="low" data-i18n="tool2.f1_comp_low">Low (No competing buyers / Not widely used)</option>
                         <option value="moderate" data-i18n="tool2.f1_comp_moderate">Moderate (Some local utilization)</option>
                         <option value="high" data-i18n="tool2.f1_comp_high">High (Strong competition / In high demand)</option>
                     </select></label>
-                    <label class="block"><span class="label-text" data-i18n="tool2.f_contract_label">Feedstock Contract Obtained?</span><select id="divF1_Contract" class="input-field">
+                    <label class="block"><span class="input-label" data-i18n="tool2.f_contract_label">Feedstock Contract Obtained?</span><select id="divF1_Contract" class="input">
                         <option value="own" data-i18n="tool2.f_contract_own">We Own It</option>
                         <option value="verbal" data-i18n="tool2.f_contract_verbal">Verbal / Informal</option>
                         <option value="written" data-i18n="tool2.f_contract_written">Written Contract</option>
@@ -234,42 +187,42 @@ body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; color: #1118
                 </div>
             </li>
             <li class="calc-step">
-                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">1</span><span class="label-text" data-i18n="tool2.f_volume_label">Annual Volume (Dry Tonnes)</span></span><span class="step-label-right"><div class="tooltip-container"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f1_volume_tooltip">This value is pulled from Tool 1. It is the total dry tonnes of this feedstock available per year.</span></div></span></div><input type="number" id="divF1_Tonnes" value="0" class="input-field border-blue-300 font-semibold" readonly></div>
+                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">1</span><span class="input-label" data-i18n="tool2.f_volume_label">Annual Volume (Dry Tonnes)</span></span><span class="step-label-right"><div class="tooltip-wrap"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f1_volume_tooltip">This value is pulled from Tool 1. It is the total dry tonnes of this feedstock available per year.</span></div></span></div><input type="number" id="divF1_Tonnes" value="0" class="input border-blue-300 font-semibold" readonly></div>
                 <div class="step-connector">&rarr;</div>
                 <div class="step-output-area"><span class="step-output-label" data-i18n="tool2.starting_volume_label">Starting Volume</span><div id="divF1_StartingVolume" class="step-output-value">0 tonnes</div></div>
             </li>
             <li class="calc-step">
-                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">2</span><span class="label-text" data-i18n="tool2.f_ash_label">Ash Content (%)</span></span><span class="step-label-right">
-                    <div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool2.f_ash_formula_tooltip">Calculates: [Step 1 Volume] * (1 - Ash %)</span></div>
-                    <div class="tooltip-container"><span class="tooltip-icon">?</span>
+                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">2</span><span class="input-label" data-i18n="tool2.f_ash_label">Ash Content (%)</span></span><span class="step-label-right">
+                    <div class="tooltip-wrap"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool2.f_ash_formula_tooltip">Calculates: [Step 1 Volume] * (1 - Ash %)</span></div>
+                    <div class="tooltip-wrap"><span class="tooltip-icon">?</span>
                         <span class="tooltip-text" data-i18n="tool2.f1_ash_tooltip">The non-organic, mineral content of feedstock. Ash content varies depending on feedstock type, contamination, and whether the biomass has been pretreated. A default value of 10% is used to represent mixed, non-pretreated coffee pulp and husk commonly available at origin. Users may adjust this value based on known feedstock composition and handling practices.</span>
                     </div>
                 </span></div>
-                <input type="number" id="divF1_Ash" value="10" class="input-field" min="0" step="0.1"></div>
+                <input type="number" id="divF1_Ash" value="10" class="input" min="0" step="0.1"></div>
                 <div class="step-connector">&rarr;</div>
                 <div class="step-output-area"><span class="step-output-label" data-i18n="tool2.dry_ash_label">Dry Ash-Free Matter</span><div id="divF1_DryAshFree" class="step-output-value">0 tonnes</div></div>
             </li>
             <li class="calc-step">
-                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">3</span><span class="label-text" data-i18n="tool2.f_yield_label">Biochar Yield (%)</span></span><span class="step-label-right">
-                    <div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool2.f_yield_formula_tooltip">Calculates: [Step 2 Matter] * Yield %</span></div>
-                    <div class="tooltip-container"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f1_yield_tooltip">The percentage of mass converted to biochar. 25% is a conservative estimate.</span></div>
-                </span></div><input type="number" id="divF1_Yield" value="25" class="input-field" min="0" step="0.1"></div>
+                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">3</span><span class="input-label" data-i18n="tool2.f_yield_label">Biochar Yield (%)</span></span><span class="step-label-right">
+                    <div class="tooltip-wrap"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool2.f_yield_formula_tooltip">Calculates: [Step 2 Matter] * Yield %</span></div>
+                    <div class="tooltip-wrap"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f1_yield_tooltip">The percentage of mass converted to biochar. 25% is a conservative estimate.</span></div>
+                </span></div><input type="number" id="divF1_Yield" value="25" class="input" min="0" step="0.1"></div>
                 <div class="step-connector">&rarr;</div>
                 <div class="step-output-area"><span class="step-output-label" data-i18n="tool2.biochar_produced_label">Total Biochar Produced</span><div id="divF1_BiocharProduced" class="step-output-value">0 tonnes</div></div>
             </li>
             <li class="calc-step">
-                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">4</span><span class="label-text" data-i18n="tool2.f_carbon_label">Stable Carbon (%)</span></span><span class="step-label-right">
-                    <div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool2.f_carbon_formula_tooltip">Calculates: [Step 3 Biochar] * Carbon %</span></div>
-                    <div class="tooltip-container"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f1_carbon_tooltip">The percentage of the final biochar's mass that is stable carbon. 70% is a good starting point.</span></div>
-                </span></div><input type="number" id="divF1_Carbon" value="70" class="input-field" min="0" step="0.1"></div>
+                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">4</span><span class="input-label" data-i18n="tool2.f_carbon_label">Stable Carbon (%)</span></span><span class="step-label-right">
+                    <div class="tooltip-wrap"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool2.f_carbon_formula_tooltip">Calculates: [Step 3 Biochar] * Carbon %</span></div>
+                    <div class="tooltip-wrap"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f1_carbon_tooltip">The percentage of the final biochar's mass that is stable carbon. 70% is a good starting point.</span></div>
+                </span></div><input type="number" id="divF1_Carbon" value="70" class="input" min="0" step="0.1"></div>
                 <div class="step-connector">&rarr;</div>
                 <div class="step-output-area"><span class="step-output-label" data-i18n="tool2.stable_carbon_label">Total Stable Carbon</span><div id="divF1_StableCarbon" class="step-output-value">0 tonnes</div></div>
             </li>
             <li class="calc-step">
-                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">5</span><span class="label-text" data-i18n="tool2.f1_conv_label">Net Crediting Factor (calibrated)</span></span><span class="step-label-right">
-                    <div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool2.f_conv_formula_tooltip">Calculates: [Step 4 Carbon] * Factor</span></div>
-                    <div class="tooltip-container"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f1_conv_tooltip">This is a net crediting factor (not the 3.67 chemistry ratio). It is calibrated to practitioner outcomes. Default 2.29 corresponds to ~1.6 tCO2e per tonne of biochar at 70% stable carbon.</span></div>
-                </span></div><input type="number" id="divF1_Conv" value="2.29" class="input-field" min="0" step="0.1"></div>
+                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">5</span><span class="input-label" data-i18n="tool2.f1_conv_label">Net Crediting Factor (calibrated)</span></span><span class="step-label-right">
+                    <div class="tooltip-wrap"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool2.f_conv_formula_tooltip">Calculates: [Step 4 Carbon] * Factor</span></div>
+                    <div class="tooltip-wrap"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f1_conv_tooltip">This is a net crediting factor (not the 3.67 chemistry ratio). It is calibrated to practitioner outcomes. Default 2.29 corresponds to ~1.6 tCO2e per tonne of biochar at 70% stable carbon.</span></div>
+                </span></div><input type="number" id="divF1_Conv" value="2.29" class="input" min="0" step="0.1"></div>
                 <div class="step-connector">=</div>
                 <div class="step-output-area"><div class="final-output-box"><span class="step-output-label" data-i18n="tool2.credits_label">Total Claimable Credits</span><div id="divF1_Credits" class="step-output-value">0 tCO2e</div></div></div>
             </li>
@@ -286,15 +239,15 @@ body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; color: #1118
         <ol class="calc-steps">
             <li class="calc-step-full">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-                    <label class="block"><span class="label-text" data-i18n="tool2.f_name_label">Feedstock Name</span><input type="text" id="divF2_Name" class="input-field" data-i18n-placeholder="tool2.f2_name_placeholder"></label>
-                    <label class="block"><span class="label-text" data-i18n="tool2.f_price_label">Purchase Price ($/Tonne)</span><input type="number" id="divF2_Price" value="0" class="input-field border-purple-400" min="0"></label>
-                    <label class="block"><span class="label-text" data-i18n="tool2.f_competition_label">Competition Level</span><select id="divF2_Competition" class="input-field border-purple-300">
+                    <label class="block"><span class="input-label" data-i18n="tool2.f_name_label">Feedstock Name</span><input type="text" id="divF2_Name" class="input" data-i18n-placeholder="tool2.f2_name_placeholder"></label>
+                    <label class="block"><span class="input-label" data-i18n="tool2.f_price_label">Purchase Price ($/Tonne)</span><input type="number" id="divF2_Price" value="0" class="input border-purple-400" min="0"></label>
+                    <label class="block"><span class="input-label" data-i18n="tool2.f_competition_label">Competition Level</span><select id="divF2_Competition" class="input border-purple-300">
                         <option value="own" data-i18n="tool2.f2_comp_own">None (We own it)</option>
                         <option value="low" data-i18n="tool2.f2_comp_low">Low (No current market)</option>
                         <option value="moderate" data-i18n="tool2.f2_comp_moderate">Moderate (Informal use)</option>
                         <option value="high" data-i18n="tool2.f2_comp_high">High (High demand)</option>
                     </select></label>
-                    <label class="block"><span class="label-text" data-i18n="tool2.f_contract_label">Feedstock Contract Obtained?</span><select id="divF2_Contract" class="input-field border-purple-300">
+                    <label class="block"><span class="input-label" data-i18n="tool2.f_contract_label">Feedstock Contract Obtained?</span><select id="divF2_Contract" class="input border-purple-300">
                         <option value="own" data-i18n="tool2.f_contract_own">We Own It</option>
                         <option value="verbal" data-i18n="tool2.f_contract_verbal">Verbal / Informal</option>
                         <option value="written" data-i18n="tool2.f_contract_written">Written Contract</option>
@@ -304,39 +257,39 @@ body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; color: #1118
                 </div>
             </li>
             <li class="calc-step">
-                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">1</span><span class="label-text" data-i18n="tool2.f_volume_label">Annual Volume (Dry Tonnes)</span></span><span class="step-label-right"><div class="tooltip-container"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f2_volume_tooltip">Enter the total dry tonnes of this secondary feedstock available per year.</span></div></span></div><input type="number" id="divF2_Tonnes" value="0" class="input-field border-purple-300 font-semibold" min="0"></div>
+                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">1</span><span class="input-label" data-i18n="tool2.f_volume_label">Annual Volume (Dry Tonnes)</span></span><span class="step-label-right"><div class="tooltip-wrap"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f2_volume_tooltip">Enter the total dry tonnes of this secondary feedstock available per year.</span></div></span></div><input type="number" id="divF2_Tonnes" value="0" class="input border-purple-300 font-semibold" min="0"></div>
                 <div class="step-connector">&rarr;</div>
                 <div class="step-output-area"><span class="step-output-label" data-i18n="tool2.starting_volume_label">Starting Volume</span><div id="divF2_StartingVolume" class="step-output-value">0 tonnes</div></div>
             </li>
             <li class="calc-step">
-                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">2</span><span class="label-text" data-i18n="tool2.f_ash_label">Ash Content (%)</span></span><span class="step-label-right">
-                    <div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool2.f_ash_formula_tooltip">Calculates: [Step 1 Volume] * (1 - Ash %)</span></div>
-                    <div class="tooltip-container"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f2_ash_tooltip">Woody biomass typically has a lower ash content. 2% is a common default.</span></div>
-                </span></div><input type="number" id="divF2_Ash" value="2" class="input-field" min="0" step="0.1"></div>
+                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">2</span><span class="input-label" data-i18n="tool2.f_ash_label">Ash Content (%)</span></span><span class="step-label-right">
+                    <div class="tooltip-wrap"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool2.f_ash_formula_tooltip">Calculates: [Step 1 Volume] * (1 - Ash %)</span></div>
+                    <div class="tooltip-wrap"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f2_ash_tooltip">Woody biomass typically has a lower ash content. 2% is a common default.</span></div>
+                </span></div><input type="number" id="divF2_Ash" value="2" class="input" min="0" step="0.1"></div>
                 <div class="step-connector">&rarr;</div>
                 <div class="step-output-area"><span class="step-output-label" data-i18n="tool2.dry_ash_label">Dry Ash-Free Matter</span><div id="divF2_DryAshFree" class="step-output-value">0 tonnes</div></div>
             </li>
             <li class="calc-step">
-                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">3</span><span class="label-text" data-i18n="tool2.f_yield_label">Biochar Yield (%)</span></span><span class="step-label-right">
-                    <div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool2.f_yield_formula_tooltip">Calculates: [Step 2 Matter] * Yield %</span></div>
-                    <div class="tooltip-container"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f2_yield_tooltip">Woody biomass often has a higher yield. 30% is a common default.</span></div>
-                </span></div><input type="number" id="divF2_Yield" value="30" class="input-field" min="0" step="0.1"></div>
+                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">3</span><span class="input-label" data-i18n="tool2.f_yield_label">Biochar Yield (%)</span></span><span class="step-label-right">
+                    <div class="tooltip-wrap"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool2.f_yield_formula_tooltip">Calculates: [Step 2 Matter] * Yield %</span></div>
+                    <div class="tooltip-wrap"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f2_yield_tooltip">Woody biomass often has a higher yield. 30% is a common default.</span></div>
+                </span></div><input type="number" id="divF2_Yield" value="30" class="input" min="0" step="0.1"></div>
                 <div class="step-connector">&rarr;</div>
                 <div class="step-output-area"><span class="step-output-label" data-i18n="tool2.biochar_produced_label">Total Biochar Produced</span><div id="divF2_BiocharProduced" class="step-output-value">0 tonnes</div></div>
             </li>
             <li class="calc-step">
-                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">4</span><span class="label-text" data-i18n="tool2.f_carbon_label">Stable Carbon (%)</span></span><span class="step-label-right">
-                    <div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool2.f_carbon_formula_tooltip">Calculates: [Step 3 Biochar] * Carbon %</span></div>
-                    <div class="tooltip-container"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f2_carbon_tooltip">Biochar from woody biomass often has very high carbon stability. 80% is a good default.</span></div>
-                </span></div><input type="number" id="divF2_Carbon" value="80" class="input-field" min="0" step="0.1"></div>
+                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">4</span><span class="input-label" data-i18n="tool2.f_carbon_label">Stable Carbon (%)</span></span><span class="step-label-right">
+                    <div class="tooltip-wrap"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool2.f_carbon_formula_tooltip">Calculates: [Step 3 Biochar] * Carbon %</span></div>
+                    <div class="tooltip-wrap"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f2_carbon_tooltip">Biochar from woody biomass often has very high carbon stability. 80% is a good default.</span></div>
+                </span></div><input type="number" id="divF2_Carbon" value="80" class="input" min="0" step="0.1"></div>
                 <div class="step-connector">&rarr;</div>
                 <div class="step-output-area"><span class="step-output-label" data-i18n="tool2.stable_carbon_label">Total Stable Carbon</span><div id="divF2_StableCarbon" class="step-output-value">0 tonnes</div></div>
             </li>
             <li class="calc-step">
-                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">5</span><span class="label-text" data-i18n="tool2.f2_conv_label">CO2e Credit Factor</span></span><span class="step-label-right">
-                    <div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool2.f_conv_formula_tooltip">Calculates: [Step 4 Carbon] * Factor</span></div>
-                    <div class="tooltip-container"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f2_conv_tooltip">This is a net crediting factor calibrated to practitioner outcomes. Default 2.63 corresponds to ~2.1 tCO2e per tonne of biochar at 80% stable carbon.</span></div>
-                </span></div><input type="number" id="divF2_Conv" value="2.63" class="input-field" min="0" step="0.1"></div>
+                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">5</span><span class="input-label" data-i18n="tool2.f2_conv_label">CO2e Credit Factor</span></span><span class="step-label-right">
+                    <div class="tooltip-wrap"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool2.f_conv_formula_tooltip">Calculates: [Step 4 Carbon] * Factor</span></div>
+                    <div class="tooltip-wrap"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f2_conv_tooltip">This is a net crediting factor calibrated to practitioner outcomes. Default 2.63 corresponds to ~2.1 tCO2e per tonne of biochar at 80% stable carbon.</span></div>
+                </span></div><input type="number" id="divF2_Conv" value="2.63" class="input" min="0" step="0.1"></div>
                 <div class="step-connector">=</div>
                 <div class="step-output-area"><div class="final-output-box theme-purple"><span class="step-output-label" data-i18n="tool2.credits_label">Total Claimable Credits</span><div id="divF2_Credits" class="step-output-value">0 tCO2e</div></div></div>
             </li>
@@ -350,7 +303,7 @@ body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; color: #1118
     <p class="text-[0.7rem] text-green-700 mt-1" data-i18n="tool2.total_feedstock_note">This volume determines your machine size below.</p>
 </div>
 
-<div class="input-section bg-yellow-50 border-yellow-300">
+<div class="section-card bg-yellow-50 border-yellow-300">
     <h4 class="font-bold text-yellow-900" data-i18n="tool2.tech_note_title">Technology Note:</h4>
     <p class="text-sm text-yellow-800 mt-2" data-i18n-html="tool2.tech_note_text">
         Fine, low-density feedstocks (like coffee pulp/parchment) are <strong>not suitable</strong> for low-cost batch kilns (e.g., Flame Cap or Kon-Tiki). These materials require a continuous-feed pyrolyzer.
@@ -369,7 +322,7 @@ body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; color: #1118
             <div class="calc-display">
                 <div class="flex items-center justify-between">
                     <span class="calc-label" data-i18n="tool2.kiln_volume_per_hub_label">Volume per Hub</span>
-                    <div class="tooltip-container">
+                    <div class="tooltip-wrap">
                         <span class="info-tooltip-icon">i</span>
                         <span class="tooltip-text" data-i18n="tool2.kiln_volume_per_hub_tooltip">Total Feedstock / Number of Hubs. This value determines the required kiln size.</span>
                     </div>
@@ -383,15 +336,15 @@ body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; color: #1118
         </div>
 
         <div>
-            <label class="label-text" for="selectKiln" data-i18n="tool2.kiln_select_label">Select Your Kiln</label>
-            <select id="selectKiln" class="input-field"></select>
+            <label class="input-label" for="selectKiln" data-i18n="tool2.kiln_select_label">Select Your Kiln</label>
+            <select id="selectKiln" class="input"></select>
             <p id="kilnWarning" class="text-sm text-red-600 mt-2" style="display:none;"></p>
 
             <div id="customKilnContainer" class="hidden mt-4 p-4 bg-gray-100 rounded-lg border border-gray-300">
                 <label class="block">
-                    <span class="label-text font-bold text-gray-800" data-i18n="tool2.kiln_custom_price_label">Custom Kiln Price ($)</span>
-                    <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.kiln_custom_price_tooltip">Enter the total price for ONE kiln/unit. The calculator will multiply this by the "Number of Kilns" below.</span></div>
-                    <input type="number" id="inputCustomKilnPrice" class="input-field" value="0" min="0">
+                    <span class="input-label font-bold text-gray-800" data-i18n="tool2.kiln_custom_price_label">Custom Kiln Price ($)</span>
+                    <div class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.kiln_custom_price_tooltip">Enter the total price for ONE kiln/unit. The calculator will multiply this by the "Number of Kilns" below.</span></div>
+                    <input type="number" id="inputCustomKilnPrice" class="input" value="0" min="0">
                 </label>
             </div>
         </div>
@@ -399,20 +352,20 @@ body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; color: #1118
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="space-y-4">
                 <div>
-                    <label class="label-text" for="inputNumberOfKilns" data-i18n="tool2.num_kilns_label">Number of Kilns</label>
-                    <input type="number" id="inputNumberOfKilns" class="input-field" value="1" min="1">
+                    <label class="input-label" for="inputNumberOfKilns" data-i18n="tool2.num_kilns_label">Number of Kilns</label>
+                    <input type="number" id="inputNumberOfKilns" class="input" value="1" min="1">
                     <p id="hubsWarning" class="text-sm text-gray-500 mt-1"></p>
                 </div>
                 <div>
-                    <label class="label-text" for="selectCostBasis" data-i18n="tool2.cost_basis_label">Pyrolyzer Cost Basis</label>
-                    <select id="selectCostBasis" class="input-field">
+                    <label class="input-label" for="selectCostBasis" data-i18n="tool2.cost_basis_label">Pyrolyzer Cost Basis</label>
+                    <select id="selectCostBasis" class="input">
                         <option value="calculator_estimate" data-i18n="tool2.cost_basis_estimate">Calculator estimate</option>
                         <option value="manufacturer_quote" data-i18n="tool2.cost_basis_quote">Quote from manufacturer</option>
                     </select>
                 </div>
                 <div>
-                    <label class="label-text" for="inputShippingCost" data-i18n="tool2.shipping_label">Shipping &amp; Installation (%)</label>
-                    <input type="number" id="inputShippingCost" class="input-field" value="15" min="0" step="1">
+                    <label class="input-label" for="inputShippingCost" data-i18n="tool2.shipping_label">Shipping &amp; Installation (%)</label>
+                    <input type="number" id="inputShippingCost" class="input" value="15" min="0" step="1">
                 </div>
             </div>
 
@@ -428,7 +381,7 @@ body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; color: #1118
                 <div class="total-capex">
                     <div class="flex items-center justify-center">
                         <span class="total-capex-label" data-i18n="tool2.total_capex_label">Total Upfront Pyrolyzer CAPEX</span>
-                        <div class="tooltip-container">
+                        <div class="tooltip-wrap">
                             <span class="info-tooltip-icon">i</span>
                             <span class="tooltip-text" data-i18n="tool2.total_capex_tooltip">(Pyrolyzer Cost) + (Shipping &amp; Installation). This is a primary component of your project's CAPEX.</span>
                         </div>
@@ -440,33 +393,45 @@ body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; color: #1118
     </div>
 </div>
 
-<div class="input-section bg-gray-50 border-gray-200 p-4">
+<div class="section-card bg-gray-50 border-gray-200 p-4">
     <h3 class="font-bold text-gray-700 mb-2 uppercase text-sm tracking-wider" data-i18n="tool2.notes_title">Note Missing Info for Further Research</h3>
-    <textarea id="toolNotes" rows="3" class="input-field bg-white" data-i18n-placeholder="tool2.notes_placeholder"></textarea>
+    <textarea id="toolNotes" rows="3" class="input bg-white" data-i18n-placeholder="tool2.notes_placeholder"></textarea>
 </div>
 
 <div class="mt-8 mb-12 flex flex-col space-y-4">
-    <button id="saveToDbButton" class="nav-button nav-button-indigo w-full" data-i18n="tool2.save_btn">Save Production Data</button>
+    <button id="saveToDbButton" class="btn btn-primary w-full" data-i18n="tool2.save_btn">Save Production Data</button>
     <div id="unsavedWarning" class="text-red-600 font-medium text-center hidden" data-i18n="tool2.unsaved_warning">You have unsaved changes.</div>
 
     <div id="navigationButtons" class="nav-grid hidden">
-        <button onclick="navigate('tool1.html')" class="nav-button nav-button-blue" data-i18n="tool2.back_btn">← Back to Tool 1</button>
-        <button onclick="navigate('index.html')" class="nav-button nav-button-white" data-i18n="common.main_menu">← Main Menu</button>
-        <button onclick="navigate('tool3.html')" id="nextToolButton" class="nav-button nav-button-green" data-i18n="tool2.next_btn">Proceed to Tool 3 →</button>
+        <button onclick="navigate('tool1.html')" class="btn btn-primary" data-i18n="tool2.back_btn">← Back to Tool 1</button>
+        <button onclick="navigate('index.html')" class="btn btn-secondary" data-i18n="common.main_menu">← Main Menu</button>
+        <button onclick="navigate('tool3.html')" id="nextToolButton" class="btn btn-primary" data-i18n="tool2.next_btn">Proceed to Tool 3 →</button>
     </div>
     <div class="flex justify-between items-center pt-4">
         <button onclick="resetForm()" class="text-sm text-red-500 hover:text-red-700 font-medium" data-i18n="common.reset_form">Reset Form</button>
         <div id="saveStatus" class="font-medium text-red-600" style="display: none;"></div>
     </div>
 </div>
-
-<footer class="disclaimer">
-    <p><strong data-i18n="tool2.footer_no_guarantee_label">No Guarantee:</strong> <em data-i18n="tool2.footer_no_guarantee">The projections provided by this calculator are based on the assumptions and data entered by the user. They are for illustrative purposes only and do not constitute a guarantee of actual costs, revenues, or profitability.</em></p>
-    <p><strong data-i18n="tool2.footer_not_advice_label">Not Financial Advice:</strong> <em data-i18n="tool2.footer_not_advice">The information provided is not intended to be a substitute for professional financial, legal, or agricultural advice. Users are solely responsible for any decisions made based on the output of this tool.</em></p>
-    <p><strong data-i18n="tool2.footer_verify_label">Verify All Data:</strong> <em data-i18n="tool2.footer_verify">Users should independently verify all local costs, market prices, and regulatory requirements before making any investment.</em></p>
-</footer>
-
 </div>
+</main>
+
+<footer class="app-footer">
+  <div class="footer-disclaimer-grid">
+    <div class="footer-card">
+      <div class="footer-card-title" data-i18n="common.footer_no_guarantee_label">No Guarantee</div>
+      <p class="footer-card-text" data-i18n="common.footer_no_guarantee">Projections are based on user-entered data and are for illustrative purposes only.</p>
+    </div>
+    <div class="footer-card">
+      <div class="footer-card-title" data-i18n="common.footer_not_advice_label">Not Financial Advice</div>
+      <p class="footer-card-text" data-i18n="common.footer_not_advice">Not a substitute for professional financial, legal, or agricultural advice.</p>
+    </div>
+    <div class="footer-card">
+      <div class="footer-card-title" data-i18n="common.footer_verify_label">Verify All Data</div>
+      <p class="footer-card-text" data-i18n="common.footer_verify">Verify local costs, market prices, and regulations before investing.</p>
+    </div>
+  </div>
+  <p class="footer-attr" data-i18n="common.cohort">Climatebase Fellowship · Cohort 8 Capstone</p>
+</footer>
 <script>
 let projectData = {};
 let T1_Data = {};
@@ -889,10 +854,9 @@ function showError(msg) {
 
 window.navigate = function(url) {
     if (hasUnsavedChanges) {
-        alert(BiocharI18n.t('common.alert_unsaved'));
-    } else {
-        window.location.href = url;
+        if (!confirm(BiocharI18n.t('common.alert_unsaved_confirm'))) return;
     }
+    window.location.href = url;
 }
 
 window.resetForm = function() {
