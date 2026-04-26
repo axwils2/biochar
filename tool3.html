@@ -1,36 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Biochar Logistics Calc (Tool 3)</title>
+    <title data-i18n="tool3.page_title">Biochar Logistics Calc (Tool 3)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="engine.js"></script>
+    <script src="translations.js"></script>
+    <script src="i18n.js"></script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #f4f4f5; }
-        
+
         /* Grouping Style */
         .input-section { @apply bg-white p-6 rounded-xl shadow-sm border border-gray-200 mb-6; }
         .step-group { @apply bg-gray-50 border-gray-300; }
 
         /* Green Headers */
         .section-title { @apply text-2xl font-extrabold text-green-700 mb-4 pb-2 border-b border-gray-200; }
-        
+
         .label-text { @apply block text-sm font-medium text-gray-700 mb-1; }
         .input-field { @apply mt-1 block w-full rounded-md border-gray-400 shadow-sm p-2 bg-white focus:border-green-500 focus:ring-green-500 transition duration-150 box-border; }
         .input-field[readonly] { @apply bg-gray-100 text-gray-500 cursor-not-allowed; }
-        
+
         .route-card { @apply bg-white p-4 rounded-lg border border-gray-300 mb-4 relative shadow-sm; }
         .remove-route { @apply absolute top-2 right-2 text-red-500 hover:text-red-700 cursor-pointer text-xl font-bold; }
         .add-button { @apply w-full py-4 bg-green-600 border-2 border-transparent text-white font-bold text-lg rounded-xl hover:bg-green-700 transition duration-150 flex items-center justify-center shadow-md; }
         .summary-box { @apply p-4 rounded-lg text-white shadow-md; }
-        
+
         /* --- TOOLTIPS & ICONS --- */
         .tooltip-container { position: relative; display: inline-flex; align-items: center; cursor: help; vertical-align: middle; }
         .tooltip-icon { width: 16px; height: 16px; background-color: #9ca3af; color: white; font-size: 10px; font-weight: bold; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: 6px; }
-        
+
         /* Formula Icon (f) */
         .f-icon { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background-color: #6b7280; color: white; border-radius: 50%; font-family: 'Georgia', serif; font-style: italic; font-weight: bold; font-size: 14px; line-height: 1; padding-bottom: 2px; margin-left: 6px; }
         .f-icon-light { background-color: #fff; color: #1e3a8a; margin-left: 6px; }
@@ -41,12 +43,12 @@
         /* --- PROGRESS BAR --- */
         .progress-bar-container { @apply w-full bg-gray-200 rounded-full h-2.5 mb-6; }
         .progress-bar { @apply bg-green-600 h-2.5 rounded-full transition-all duration-500; }
-        
-        /* --- FOOTER (NEW) --- */
+
+        /* --- FOOTER --- */
         .disclaimer {
             text-align: left;
             font-size: 0.75rem;
-            color: #6b7280; /* gray-500 */
+            color: #6b7280;
             margin-top: 3rem;
             padding-top: 1.5rem;
             border-top: 1px solid #e5e7eb;
@@ -57,7 +59,7 @@
         }
         .disclaimer strong {
             font-weight: 600;
-            color: #4b5563; /* gray-600 */
+            color: #4b5563;
             font-style: normal;
         }
 
@@ -70,119 +72,130 @@
         .nav-button-indigo { background-color: #4f46e5; color: white; }
         .nav-button-white { background-color: white; color: #2563eb; border: 2px solid #dbeafe; }
         .nav-button-white:hover { background-color: #f9fafb; }
-        
+
         .hidden { display: none; }
     </style>
 </head>
 <body class="p-4 md:p-8">
 
     <div class="max-w-3xl mx-auto">
+
+        <div class="flex justify-end mb-4">
+            <select id="lang-select" onchange="BiocharI18n.setLanguage(this.value)"
+                    class="nav-button nav-button-white py-2 px-4 text-xs">
+                <option value="en">English 🇺🇸</option>
+                <option value="es">Español 🇪🇸</option>
+                <option value="pt">Português 🇧🇷</option>
+            </select>
+        </div>
+
         <header class="text-center mb-6">
-            <h1 class="text-2xl md:text-3xl font-extrabold text-green-700">Biochar Project Feasibility Calculator</h1>
-            <h2 class="text-lg font-medium text-gray-700 mt-1">for Latin American Coffee & Cacao Supply Chains</h2>
-            <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider mt-4">Climatebase Fellowship Cohort 8 Capstone Project</p>
-            <p class="text-xs font-medium text-gray-500 mt-2">(All values in USD)</p>
-            
+            <h1 class="text-2xl md:text-3xl font-extrabold text-green-700" data-i18n="common.header_h1">Biochar Project Feasibility Calculator</h1>
+            <h2 class="text-lg font-medium text-gray-700 mt-1" data-i18n="common.header_h2">for Latin American Coffee & Cacao Supply Chains</h2>
+            <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider mt-4" data-i18n="common.cohort">Climatebase Fellowship Cohort 8 Capstone Project</p>
+            <p class="text-xs font-medium text-gray-500 mt-2" data-i18n="common.usd_note">(All values in USD)</p>
+
             <div class="mt-4 mb-6">
-                <a href="https://chatgpt.com/g/g-691ea2b1c2888191b85e54e203c53b2f-biochar-feasibility-guide" 
-                   target="_blank" 
-                   class="inline-block bg-blue-50 text-blue-700 hover:text-blue-900 border border-blue-200 rounded-full px-4 py-1 text-sm font-medium transition">
+                <a href="https://chatgpt.com/g/g-691ea2b1c2888191b85e54e203c53b2f-biochar-feasibility-guide"
+                   target="_blank"
+                   class="inline-block bg-blue-50 text-blue-700 hover:text-blue-900 border border-blue-200 rounded-full px-4 py-1 text-sm font-medium transition"
+                   data-i18n="common.ai_link">
                     Questions? Click here to ask the Biochar Feasibility Guide AI assistant ↗
                 </a>
             </div>
 
-            <p class="text-lg font-medium text-green-800">Tool 3: Logistics (Inbound)</p>
+            <p class="text-lg font-medium text-green-800" data-i18n="tool3.tool_label">Tool 3: Logistics (Inbound)</p>
         </header>
 
         <div class="w-full mb-8">
             <div class="flex justify-between text-sm font-medium text-gray-600 mb-1">
-                <span>Step 3 of 7: Logistics</span>
-                <span>(Next: Revenue Streams)</span>
+                <span data-i18n="tool3.step_label">Step 3 of 7: Logistics</span>
+                <span data-i18n="tool3.step_next">(Next: Revenue Streams)</span>
             </div>
             <div class="progress-bar-container">
-                <div class="progress-bar" style="width: 42.8%"></div> </div>
+                <div class="progress-bar" style="width: 42.8%"></div>
+            </div>
         </div>
 
         <div class="input-section step-group">
-            <h2 class="section-title">Step 1: Set Your Logistics Target</h2>
-            
+            <h2 class="section-title" data-i18n="tool3.step1_title">Step 1: Set Your Logistics Target</h2>
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 bg-white p-4 rounded-lg border border-gray-300">
                 <label class="block">
-                    <span class="label-text font-semibold text-gray-900">Total Feedstock Required</span>
+                    <span class="label-text font-semibold text-gray-900" data-i18n="tool3.total_feedstock_label">Total Feedstock Required</span>
                     <input type="number" id="inputTotalFeedstock" value="0" class="input-field" readonly>
-                    <p id="loadingIndicator" class="text-xs text-yellow-700 mt-1">Loading from Tool 2...</p>
+                    <p id="loadingIndicator" class="text-xs text-yellow-700 mt-1" data-i18n="tool3.loading_from_t2">Loading from Tool 2...</p>
                 </label>
                 <label class="block">
-                    <span class="label-text font-semibold text-gray-900">(-) Self-Delivered ($0 Cost)</span>
-                        <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text">Feedstock that arrives at the kiln with NO logistics cost to you.</span></div>
+                    <span class="label-text font-semibold text-gray-900" data-i18n="tool3.self_delivered_label">(-) Self-Delivered ($0 Cost)</span>
+                    <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool3.self_delivered_tooltip">Feedstock that arrives at the kiln with NO logistics cost to you.</span></div>
                     <input type="number" id="inputSelfDelivered" value="0" min="0" class="input-field border-yellow-400" required>
                 </label>
                 <div class="flex flex-col justify-center p-3 bg-yellow-100 rounded-lg border-2 border-yellow-300 text-center">
-                    <span class="label-text font-bold text-yellow-900 uppercase tracking-wider">Logistics Target</span>
+                    <span class="label-text font-bold text-yellow-900 uppercase tracking-wider" data-i18n="tool3.logistics_target_label">Logistics Target</span>
                     <span id="logisticsTarget" class="text-3xl font-extrabold text-yellow-800">0 t</span>
                 </div>
             </div>
 
             <div id="annualRainContainer" class="mb-4 hidden">
                 <label class="block">
-                    <span class="label-text">Annual Rainy Season Duration (Months/Year)</span>
-                        <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text">Used to weight the annual cost between Dry and Rainy season rates.</span></div>
+                    <span class="label-text" data-i18n="tool3.rainy_months_label">Annual Rainy Season Duration (Months/Year)</span>
+                    <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool3.rainy_months_tooltip">Used to weight the annual cost between Dry and Rainy season rates.</span></div>
                     <input type="range" id="inputRainyMonths" min="0" max="12" value="6" class="w-full h-2 bg-blue-200 rounded-lg appearance-none cursor-pointer mt-2">
                     <div class="flex justify-between text-xs text-gray-500 px-1 mt-1">
-                        <span>0m (All Dry)</span><span id="rainyMonthsVal" class="font-bold text-blue-600">6 months</span><span>12m (All Rainy)</span>
+                        <span data-i18n="tool3.rainy_slider_left">0m (All Dry)</span><span id="rainyMonthsVal" class="font-bold text-blue-600">6 months</span><span data-i18n="tool3.rainy_slider_right">12m (All Rainy)</span>
                     </div>
                 </label>
             </div>
 
             <div id="seasonalWindowContainer" class="hidden mt-4 p-4 bg-blue-100 rounded-lg border border-blue-300">
-                <h4 class="font-bold text-blue-900 mb-3">Seasonal Collection Logic</h4>
-                <p class="text-sm text-blue-800 mb-3">Your project is seasonal. Please define the specific weather window for each route you build below.</p>
+                <h4 class="font-bold text-blue-900 mb-3" data-i18n="tool3.seasonal_window_title">Seasonal Collection Logic</h4>
+                <p class="text-sm text-blue-800 mb-3" data-i18n="tool3.seasonal_window_text">Your project is seasonal. Please define the specific weather window for each route you build below.</p>
             </div>
-            
+
             <div id="mobileInfoBox" class="hidden mt-4 p-4 bg-blue-100 rounded-lg border border-blue-300">
-                <p class="text-sm font-bold text-blue-900">Note: Mobile kiln relocation costs are found in Tool 5.</p>
+                <p class="text-sm font-bold text-blue-900" data-i18n="tool3.mobile_info_text">Note: Mobile kiln relocation costs are found in Tool 5.</p>
             </div>
         </div>
 
         <div class="input-section step-group">
-            <h2 class="section-title">Step 2: Build Feedstock Transport Routes</h2>
-            <p class="text-sm text-gray-600 mb-4">Your remaining feedstock can arrive via regional transport. Allocate this volume to transportation routes below.</p>
+            <h2 class="section-title" data-i18n="tool3.step2_title">Step 2: Build Feedstock Transport Routes</h2>
+            <p class="text-sm text-gray-600 mb-4" data-i18n="tool3.step2_intro">Your remaining feedstock can arrive via regional transport. Allocate this volume to transportation routes below.</p>
 
-            <div id="routesContainer">
-                </div>
+            <div id="routesContainer"></div>
 
             <button id="addRouteBtn" class="add-button">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                 </svg>
-                Add Transport Route
+                <span data-i18n="tool3.add_route_btn">Add Transport Route</span>
             </button>
         </div>
-        
+
         <div class="input-section step-group">
-            <h2 class="section-title">Step 3: Final Logistics Summary</h2>
+            <h2 class="section-title" data-i18n="tool3.step3_title">Step 3: Final Logistics Summary</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                 <div class="summary-box bg-blue-800 text-white">
-                    <h3 class="text-sm uppercase tracking-wider opacity-80 mb-1 text-blue-200">Target Status</h3>
+                    <h3 class="text-sm uppercase tracking-wider opacity-80 mb-1 text-blue-200" data-i18n="tool3.target_status_label">Target Status</h3>
                     <p id="outputStatus" class="text-2xl font-bold mt-2 leading-tight text-white">0t / 0t</p>
-                    <p id="outputStatusSub" class="text-xs opacity-80">Volume Moved vs. Target</p>
+                    <p id="outputStatusSub" class="text-xs opacity-80" data-i18n="tool3.target_status_sub">Volume Moved vs. Target</p>
                 </div>
                 <div class="summary-box bg-green-700">
                     <h3 class="text-sm uppercase tracking-wider opacity-80 mb-1 text-green-100 flex items-center">
-                        Total Annual Logistics Cost
+                        <span data-i18n="tool3.annual_cost_label">Total Annual Logistics Cost</span>
                         <div class="tooltip-container">
                             <span class="f-icon f-icon-light">f</span>
-                            <span class="tooltip-text">**Formula:**<br>Sum of all route costs.<br><br>Each route: (Trips/Year) × (Weighted Avg. Cost)</span>
+                            <span class="tooltip-text" data-i18n="tool3.annual_cost_tooltip">**Formula:**&#10;Sum of all route costs.&#10;&#10;Each route: (Trips/Year) × (Weighted Avg. Cost)</span>
                         </div>
                     </h3>
                     <p id="outputAnnualCost" class="text-3xl font-extrabold text-white">$0</p>
                 </div>
                 <div class="summary-box bg-blue-600">
                     <h3 class="text-sm uppercase tracking-wider opacity-80 mb-1 text-blue-100 flex items-center">
-                        Logistics Cost per Tonne
+                        <span data-i18n="tool3.cost_per_tonne_label">Logistics Cost per Tonne</span>
                         <div class="tooltip-container">
                             <span class="f-icon f-icon-light">f</span>
-                            <span class="tooltip-text">**Formula:**<br> (Total Logistics Cost) / (Total Feedstock Required)</span>
+                            <span class="tooltip-text" data-i18n="tool3.cost_per_tonne_tooltip">**Formula:**&#10; (Total Logistics Cost) / (Total Feedstock Required)</span>
                         </div>
                     </h3>
                     <p id="outputCostPerTonne" class="text-3xl font-extrabold text-white">$--</p>
@@ -191,21 +204,21 @@
         </div>
 
         <div class="input-section bg-gray-50 border-l-4 border-gray-400 p-4">
-            <h3 class="font-bold text-gray-700 mb-2 uppercase text-sm tracking-wider">Note Missing Info for Further Research</h3>
-            <textarea id="toolNotes" rows="3" class="input-field bg-white" placeholder="Type here..."></textarea>
+            <h3 class="font-bold text-gray-700 mb-2 uppercase text-sm tracking-wider" data-i18n="tool3.notes_title">Note Missing Info for Further Research</h3>
+            <textarea id="toolNotes" rows="3" class="input-field bg-white" data-i18n-placeholder="tool3.notes_placeholder" placeholder="Type here..."></textarea>
         </div>
 
         <div class="mt-8 mb-12 flex flex-col space-y-4">
-            <button id="saveToDbButton" class="nav-button nav-button-indigo w-full">Save Logistics Data</button>
-            <div id="unsavedWarning" class="text-red-600 font-medium text-center hidden">You have unsaved changes.</div>
+            <button id="saveToDbButton" class="nav-button nav-button-indigo w-full" data-i18n="tool3.save_btn">Save Logistics Data</button>
+            <div id="unsavedWarning" class="text-red-600 font-medium text-center hidden" data-i18n="common.unsaved_warning">You have unsaved changes.</div>
 
             <div id="navigationButtons" class="nav-grid hidden">
-                <button onclick="navigate('tool2.html')" class="nav-button nav-button-blue md:col-span-1">← Back to Tool 2</button>
-                <button onclick="navigate('index.html')" class="nav-button nav-button-white md:col-span-1">Main Menu</button>
-                <button onclick="navigate('tool4.html')" id="nextToolButton" class="nav-button nav-button-green md:col-span-1">Proceed to Tool 4 →</button>
+                <button onclick="navigate('tool2.html')" class="nav-button nav-button-blue md:col-span-1" data-i18n="tool3.back_btn">← Back to Tool 2</button>
+                <button onclick="navigate('index.html')" class="nav-button nav-button-white md:col-span-1" data-i18n="common.main_menu">Main Menu</button>
+                <button onclick="navigate('tool4.html')" id="nextToolButton" class="nav-button nav-button-green md:col-span-1" data-i18n="tool3.next_btn">Proceed to Tool 4 →</button>
             </div>
             <div class="flex justify-between items-center pt-4">
-                <button onclick="resetForm()" class="text-sm text-red-500 hover:text-red-700 font-medium">
+                <button onclick="resetForm()" class="text-sm text-red-500 hover:text-red-700 font-medium" data-i18n="common.reset_form">
                     Reset Form
                 </button>
                 <div id="saveStatus" class="font-medium text-green-600" style="display: none;"></div>
@@ -215,119 +228,87 @@
 
     <template id="routeTemplate">
         <div class="route-card">
-            <div class="remove-route" style="display: none;">×</div> <h3 class="font-bold text-gray-800 mb-3 route-title">Route #1</h3>
-            
+            <div class="remove-route" style="display: none;">×</div>
+            <h3 class="font-bold text-gray-800 mb-3 route-title">Route #1</h3>
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="space-y-3">
-                    <label class="block"><span class="label-text">Route Name</span><input type="text" class="input-field route-name" placeholder="e.g., Farm A Weekly Run"></label>
+                    <label class="block">
+                        <span class="label-text" data-i18n="tool3.route_name_label">Route Name</span>
+                        <input type="text" class="input-field route-name" data-i18n-placeholder="tool3.route_name_placeholder" placeholder="e.g., Farm A Weekly Run">
+                    </label>
                     <div class="grid grid-cols-2 gap-3">
-                        <label class="block"><span class="label-text">Annual Volume (t)</span><input type="number" class="input-field route-vol" value="0" min="0"></label>
-                        <label class="block"><span class="label-text">Trips per Year</span><input type="number" class="input-field route-freq" value="52" min="1"></label>
+                        <label class="block"><span class="label-text" data-i18n="tool3.route_vol_label">Annual Volume (t)</span><input type="number" class="input-field route-vol" value="0" min="0"></label>
+                        <label class="block"><span class="label-text" data-i18n="tool3.route_freq_label">Trips per Year</span><input type="number" class="input-field route-freq" value="52" min="1"></label>
                     </div>
-                    
-                    <p class="text-xs text-gray-500 italic">Avg Load: <span class="route-avg-load font-bold">0</span> t/trip <span class="tooltip-container ml-1"><span class="f-icon">f</span><span class="tooltip-text">**Formula:** (Annual Volume) / (Trips per Year)</span></span> <span class="block mt-1 text-gray-400">Note: Ensure trip frequency is realistic within your collection window. Typical max weight for a rural truck is about 4-5 tonnes.</span></p>
-                    
+
+                    <p class="text-xs text-gray-500 italic">
+                        <span data-i18n="tool3.route_avg_load_prefix">Avg Load:</span> <span class="route-avg-load font-bold">0</span> <span data-i18n="tool3.route_avg_load_unit">t/trip</span>
+                        <span class="tooltip-container ml-1"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool3.route_avg_load_tooltip">**Formula:** (Annual Volume) / (Trips per Year)</span></span>
+                        <span class="block mt-1 text-gray-400" data-i18n="tool3.route_note">Note: Ensure trip frequency is realistic within your collection window. Typical max weight for a rural truck is about 4-5 tonnes.</span>
+                    </p>
+
                     <div class="seasonal-route-inputs hidden mt-3 p-3 bg-blue-50 rounded border border-blue-200">
-                        <h4 class="text-xs font-bold text-blue-800 mb-2 uppercase tracking-wider">Seasonal Window</h4>
+                        <h4 class="text-xs font-bold text-blue-800 mb-2 uppercase tracking-wider" data-i18n="tool3.seasonal_window_section_title">Seasonal Window</h4>
                         <div class="grid grid-cols-2 gap-3">
-                            <label class="block"><span class="label-text text-xs">Duration (Weeks)</span><input type="number" class="input-field route-weeks" value="10" min="1"></label>
-                            <label class="block"><span class="label-text text-xs">Rainy Weeks</span><input type="number" class="input-field route-rainy-weeks" value="0" min="0"></label>
+                            <label class="block"><span class="label-text text-xs" data-i18n="tool3.route_weeks_label">Duration (Weeks)</span><input type="number" class="input-field route-weeks" value="10" min="1"></label>
+                            <label class="block"><span class="label-text text-xs" data-i18n="tool3.route_rainy_weeks_label">Rainy Weeks</span><input type="number" class="input-field route-rainy-weeks" value="0" min="0"></label>
                         </div>
                     </div>
                 </div>
 
                 <div class="space-y-3 bg-gray-100 p-4 rounded-lg border-2 border-gray-300">
                     <label class="block">
-                        <span class="label-text font-bold text-gray-800">Truck Ownership Model</span>
-                        <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text">Select 'Owned' if you pay a driver by the hour. Select 'Hired' if you pay a flat fee per trip.</span></div>
+                        <span class="label-text font-bold text-gray-800" data-i18n="tool3.truck_model_label">Truck Ownership Model</span>
+                        <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool3.truck_model_tooltip">Select 'Owned' if you pay a driver by the hour. Select 'Hired' if you pay a flat fee per trip.</span></div>
                         <select class="input-field route-method font-medium text-gray-900">
-                            <option value="" disabled selected>-- Select Ownership Model --</option>
-                            <option value="time">Owned Truck (Time-Based Calc)</option>
-                            <option value="flat">Hired Truck (Flat Quote)</option>
+                            <option value="" disabled selected data-i18n="tool3.truck_model_placeholder">-- Select Ownership Model --</option>
+                            <option value="time" data-i18n="tool3.truck_model_time">Owned Truck (Time-Based Calc)</option>
+                            <option value="flat" data-i18n="tool3.truck_model_flat">Hired Truck (Flat Quote)</option>
                         </select>
                     </label>
-                    
+
                     <div class="time-inputs hidden space-y-5 mt-4">
                         <label class="block">
-                            <span class="label-text font-semibold">All-In Hourly Cost ($/hr)</span>
-                            <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text">Include operating expenses such as fuel, maintenance, repairs, insurance, and registration. Do not include driver wages (those should be entered in Tool 5 with salaries) or the cost of buying the vehicle (also in Tool 5). If unsure, ask the AI assistant: "Help me estimate my truck’s hourly operating cost."</span></div>
+                            <span class="label-text font-semibold" data-i18n="tool3.hourly_rate_label">All-In Hourly Cost ($/hr)</span>
+                            <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool3.hourly_rate_tooltip">Include operating expenses such as fuel, maintenance, repairs, insurance, and registration. Do not include driver wages (those should be entered in Tool 5 with salaries) or the cost of buying the vehicle (also in Tool 5). If unsure, ask the AI assistant: "Help me estimate my truck's hourly operating cost."</span></div>
                             <input type="number" class="input-field route-rate border-2 border-gray-300" value="55" min="0">
                         </label>
                         <div class="grid grid-cols-2 gap-4">
-                            <div class="bg-orange-100 rounded-lg border-2 border-orange-300 p-3"><label class="block"><span class="label-text text-orange-900 font-bold mb-2 block leading-tight">Dry Season Round-Trip (Hrs)</span><input type="number" class="input-field route-hours-dry border-orange-300" value="4" min="0.5" step="0.5"></label></div>
-                            <div class="bg-blue-100 rounded-lg border-2 border-blue-300 p-3"><label class="block"><span class="label-text text-blue-900 font-bold mb-2 block leading-tight">Rainy Season Round-Trip (Hrs)</span><input type="number" class="input-field route-hours-rain border-blue-300" value="6" min="0.5" step="0.5"></label></div>
+                            <div class="bg-orange-100 rounded-lg border-2 border-orange-300 p-3"><label class="block"><span class="label-text text-orange-900 font-bold mb-2 block leading-tight" data-i18n="tool3.dry_hours_label">Dry Season Round-Trip (Hrs)</span><input type="number" class="input-field route-hours-dry border-orange-300" value="4" min="0.5" step="0.5"></label></div>
+                            <div class="bg-blue-100 rounded-lg border-2 border-blue-300 p-3"><label class="block"><span class="label-text text-blue-900 font-bold mb-2 block leading-tight" data-i18n="tool3.rainy_hours_label">Rainy Season Round-Trip (Hrs)</span><input type="number" class="input-field route-hours-rain border-blue-300" value="6" min="0.5" step="0.5"></label></div>
                         </div>
                     </div>
 
                     <div class="flat-inputs hidden space-y-5 mt-4">
-                        <p class="text-xs text-gray-500 mb-2">
-                            <span class="font-bold">Note:</span> Use the full price negotiated with the driver for a round trip.
+                        <p class="text-xs text-gray-500 mb-2" data-i18n-html="tool3.flat_note">
+                            <strong>Note:</strong> Use the full price negotiated with the driver for a round trip.
                         </p>
                         <div class="grid grid-cols-2 gap-4">
-                            <div class="bg-orange-100 rounded-lg border-2 border-orange-300 p-3"><label class="block"><span class="label-text text-orange-900 font-bold mb-2 block">Dry Season Quote ($)</span><input type="number" class="input-field route-quote-dry border-orange-300" value="150" min="0"></label></div>
-                            <div class="bg-blue-100 rounded-lg border-2 border-blue-300 p-3"><label class="block"><span class="label-text text-blue-900 font-bold mb-2 block">Rainy Season Quote ($)</span><input type="number" class="input-field route-quote-rain border-blue-300" value="175" min="0"></label></div>
+                            <div class="bg-orange-100 rounded-lg border-2 border-orange-300 p-3"><label class="block"><span class="label-text text-orange-900 font-bold mb-2 block" data-i18n="tool3.dry_quote_label">Dry Season Quote ($)</span><input type="number" class="input-field route-quote-dry border-orange-300" value="150" min="0"></label></div>
+                            <div class="bg-blue-100 rounded-lg border-2 border-blue-300 p-3"><label class="block"><span class="label-text text-blue-900 font-bold mb-2 block" data-i18n="tool3.rainy_quote_label">Rainy Season Quote ($)</span><input type="number" class="input-field route-quote-rain border-blue-300" value="175" min="0"></label></div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="mt-3 text-right text-sm font-bold text-green-700">
-                Est. Annual Cost: <span class="route-annual-cost">$0</span>
-                <span class="tooltip-container ml-1"><span class="f-icon">f</span><span class="tooltip-text">**Formula:** (Trips) × (Weighted Avg Cost)</span></span>
+                <span data-i18n="tool3.route_annual_cost_prefix">Est. Annual Cost:</span> <span class="route-annual-cost">$0</span>
+                <span class="tooltip-container ml-1"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool3.route_annual_cost_tooltip">**Formula:** (Trips) × (Weighted Avg Cost)</span></span>
             </div>
         </div>
     </template>
 
     <footer class="disclaimer">
-        <p><strong>No Guarantee:</strong> <em>The projections provided by this calculator are based on the assumptions and data entered by the user. They are for illustrative purposes only and do not constitute a guarantee of actual costs, revenues, or profitability.</em></p>
-        <p><strong>Not Financial Advice:</strong> <em>The information provided is not intended to be a substitute for professional financial, legal, or agricultural advice. Users are solely responsible for any decisions made based on the output of this tool.</em></p>
-        <p><strong>Verify All Data:</strong> <em>Users should independently verify all local costs, market prices, and regulatory requirements before making any investment.</em></p>
+        <p><strong data-i18n="tool3.footer_no_guarantee_label">No Guarantee:</strong> <em data-i18n="tool3.footer_no_guarantee">The projections provided by this calculator are based on the assumptions and data entered by the user. They are for illustrative purposes only and do not constitute a guarantee of actual costs, revenues, or profitability.</em></p>
+        <p><strong data-i18n="tool3.footer_not_advice_label">Not Financial Advice:</strong> <em data-i18n="tool3.footer_not_advice">The information provided is not intended to be a substitute for professional financial, legal, or agricultural advice. Users are solely responsible for any decisions made based on the output of this tool.</em></p>
+        <p><strong data-i18n="tool3.footer_verify_label">Verify All Data:</strong> <em data-i18n="tool3.footer_verify">Users should independently verify all local costs, market prices, and regulatory requirements before making any investment.</em></p>
     </footer>
+
 <script>
-        // --- *** NEW: Global state and listeners *** ---
         let projectData = {};
-        let T1_Data = {}; // To store loaded Tool 1 data
+        let T1_Data = {};
         let routeCount = 0;
         let hasUnsavedChanges = false;
-
-        // --- Route Card Builder with Automatic Numbering (kept for compatibility) ---
-        function createRouteCard() {
-            routeCount++; // increase the route number each time a card is created
-
-            // Create card container
-            const card = document.createElement('div');
-            card.className = 'route-card p-4 mb-4 bg-white rounded-lg border border-gray-200';
-
-            // Default Route Name
-            const routeName = document.createElement('input');
-            routeName.type = 'text';
-            routeName.className = 'route-name input-field';
-            routeName.value = `Route ${routeCount}`; // names Route 1, Route 2, etc.
-
-            // Default volume input
-            const routeVol = document.createElement('input');
-            routeVol.type = 'number';
-            routeVol.className = 'route-vol input-field';
-            routeVol.value = 0;
-
-            // Default trips per year
-            const routeFreq = document.createElement('input');
-            routeFreq.type = 'number';
-            routeFreq.className = 'route-freq input-field';
-            routeFreq.value = 0;
-
-            // Default transport method
-            const routeMethod = document.createElement('select');
-            routeMethod.className = 'route-method input-field';
-            routeMethod.innerHTML = `<option value="owned">Owned Truck</option><option value="hired">Hired Truck</option>`;
-
-            // Put inputs inside the card
-            card.appendChild(routeName);
-            card.appendChild(routeVol);
-            card.appendChild(routeFreq);
-            card.appendChild(routeMethod);
-
-            return card;
-        }
 
         // --- Static DOM references ---
         const saveButton = document.getElementById('saveToDbButton');
@@ -335,7 +316,7 @@
         const loadingIndicator = document.getElementById('loadingIndicator');
         const saveStatus = document.getElementById('saveStatus');
         const unsavedWarning = document.getElementById('unsavedWarning');
-        
+
         const seasonalContainer = document.getElementById('seasonalWindowContainer');
         const annualContainer = document.getElementById('annualRainContainer');
         const mobileInfoBox = document.getElementById('mobileInfoBox');
@@ -344,7 +325,6 @@
             'inputSelfDelivered', 'inputRainyMonths', 'toolNotes'
         ];
 
-        // Warn about unsaved changes when leaving page
         window.addEventListener("beforeunload", e => {
             if (hasUnsavedChanges) {
                 e.preventDefault();
@@ -362,16 +342,15 @@
             if (unsavedWarning) unsavedWarning.classList.remove("hidden");
             if (saveStatus) saveStatus.style.display = 'none';
         }
-        
+
         function addUnsavedListeners(elements) {
             elements.forEach(el => {
                 const eventType = (el.tagName === 'SELECT' || el.type === 'checkbox') ? 'change' : 'input';
                 el.addEventListener(eventType, setUnsaved);
             });
         }
-        // --- *** End new state and listeners *** ---
 
-       document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', () => {
             // 1. Load data
             if (window.BiocharEngine && BiocharEngine.loadProjectData) {
                 projectData = BiocharEngine.loadProjectData() || {};
@@ -379,7 +358,7 @@
                 const stored = localStorage.getItem("biocharProjectData");
                 projectData = stored ? JSON.parse(stored) : {};
             }
-            const t3 = projectData.tool3 || {}; // safely reference saved Tool 3 data
+            const t3 = projectData.tool3 || {};
 
             // 2. Handle Tool 1 safely
             const t1 = projectData.tool1 || {};
@@ -388,10 +367,9 @@
                 projectType: t1.projectType || "centralized"
             };
 
-            // 2.5 Warn ONLY if the user has saved the project before AND tool1 is truly missing
             if (Object.keys(projectData).length > 0 && !projectData.tool1) {
                 console.warn("Tool 1 missing for this project");
-                showError("Tool 1 data missing. Please complete Tool 1 first.");
+                showError(BiocharI18n.t('tool3.error_missing_tool1'));
             }
 
             // 3. Handle Tool 2 safely
@@ -400,13 +378,13 @@
                 const d = projectData.tool2.diversified;
                 totalFeedstock = (d.f1_tonnes || 0) + (d.f2_tonnes || 0);
                 if (loadingIndicator) {
-                    loadingIndicator.textContent = "Loaded from Tool 2";
+                    loadingIndicator.textContent = BiocharI18n.t('tool3.loaded_from_t2');
                     loadingIndicator.classList.remove('text-yellow-700', 'text-red-600');
                     loadingIndicator.classList.add('text-green-600');
                 }
             } else {
                 if (loadingIndicator) {
-                    loadingIndicator.textContent = "Tool 2 data missing";
+                    loadingIndicator.textContent = BiocharI18n.t('tool3.missing_t2');
                     loadingIndicator.classList.remove('text-yellow-700', 'text-green-600');
                     loadingIndicator.classList.add('text-red-600');
                 }
@@ -425,9 +403,9 @@
             const notesArea = document.getElementById('toolNotes');
             const routesContainer = document.getElementById('routesContainer');
 
-            routeCount = 0; // Reset route numbering before restoring saved routes
+            routeCount = 0;
             if (routesContainer) {
-                routesContainer.innerHTML = ''; // Clear first
+                routesContainer.innerHTML = '';
             }
 
             if (t3 && t3.lastUpdated) {
@@ -435,32 +413,31 @@
                 if (rainyMonthsInput) {
                     rainyMonthsInput.value = t3.rainySeasonMonths || 6;
                     if (rainyMonthsVal) {
-                        rainyMonthsVal.textContent = `${rainyMonthsInput.value} months`;
+                        rainyMonthsVal.textContent = `${rainyMonthsInput.value} ${BiocharI18n.t('tool3.months_unit')}`;
                     }
                 }
                 if (notesArea && t3.notes_T3) {
                     notesArea.value = t3.notes_T3;
                 }
             } else {
-                // Defaults if no saved Tool 3
                 if (selfDeliveredInput && selfDeliveredInput.value === "") {
                     selfDeliveredInput.value = 0;
                 }
                 if (rainyMonthsInput && rainyMonthsInput.value === "") {
                     rainyMonthsInput.value = 6;
                     if (rainyMonthsVal) {
-                        rainyMonthsVal.textContent = "6 months";
+                        rainyMonthsVal.textContent = `6 ${BiocharI18n.t('tool3.months_unit')}`;
                     }
                 }
             }
 
-            // Restore routes (ONLY ONCE)
+            // Restore routes
             if (Array.isArray(t3.routes) && t3.routes.length > 0) {
                 t3.routes.forEach((r) => {
                     addRoute(r);
                 });
             } else {
-                addRoute(); // Start with one blank route if none saved
+                addRoute();
             }
 
             // Saved vs new state
@@ -474,7 +451,7 @@
                 if (unsavedWarning) unsavedWarning.classList.add('hidden');
 
                 if (loadingIndicator) {
-                    loadingIndicator.textContent = "Loaded from Tool 3";
+                    loadingIndicator.textContent = BiocharI18n.t('tool3.loaded_from_t3');
                     loadingIndicator.classList.remove('text-red-600', 'text-yellow-700');
                     loadingIndicator.classList.add('text-green-600');
                 }
@@ -488,10 +465,8 @@
                 if (unsavedWarning) unsavedWarning.classList.add('hidden');
             }
 
-            // Initial calc
             calculateAll();
 
-            // Event listeners that depend on DOM
             const addRouteBtn = document.getElementById('addRouteBtn');
             if (addRouteBtn) {
                 addRouteBtn.addEventListener('click', () => {
@@ -503,12 +478,12 @@
             if (rainyMonthsInput) {
                 rainyMonthsInput.addEventListener('input', (e) => {
                     if (rainyMonthsVal) {
-                        rainyMonthsVal.textContent = `${e.target.value} months`;
+                        rainyMonthsVal.textContent = `${e.target.value} ${BiocharI18n.t('tool3.months_unit')}`;
                     }
                     calculateAll();
                 });
             }
-            
+
             if (selfDeliveredInput) {
                 selfDeliveredInput.addEventListener('input', calculateAll);
             }
@@ -517,45 +492,43 @@
                 saveButton.addEventListener('click', saveProject);
             }
 
-            // Attach "unsaved" listeners to static inputs
             addUnsavedListeners(inputsToTrack.map(id => document.getElementById(id)).filter(Boolean));
-        }); // <-- closes DOMContentLoaded
+        });
 
         function toggleSeasonalWindow(isSeasonal, isMobile) {
             if (isSeasonal) {
                 seasonalContainer.classList.remove('hidden');
-                annualContainer.classList.add('hidden'); // Hide Annual Slider
+                annualContainer.classList.add('hidden');
             } else {
                 seasonalContainer.classList.add('hidden');
-                annualContainer.classList.remove('hidden'); // Show Annual Slider
+                annualContainer.classList.remove('hidden');
             }
-            
+
             if (isMobile) {
                 mobileInfoBox.classList.remove('hidden');
             } else {
                 mobileInfoBox.classList.add('hidden');
             }
 
-            // ALSO toggle per-route inputs
             document.querySelectorAll('.seasonal-route-inputs').forEach(div => {
                 if (isSeasonal) div.classList.remove('hidden');
                 else div.classList.add('hidden');
             });
- 
-            calculateAll(); 
+
+            calculateAll();
         }
 
         function saveProject() {
-            saveButton.textContent = "Saving...";
+            saveButton.textContent = BiocharI18n.t('tool3.saving');
             saveButton.disabled = true;
             saveStatus.style.display = 'none';
-            
+
             const selfDelivered = document.getElementById('inputSelfDelivered').value;
             if (selfDelivered === "") {
-                 alert("Please enter a value for 'Self-Delivered ($0 Cost)'. You can enter 0.");
-                 saveButton.textContent = "Save Logistics Data";
-                 saveButton.disabled = false;
-                 return;
+                alert(BiocharI18n.t('tool3.error_self_delivered'));
+                saveButton.textContent = BiocharI18n.t('tool3.save_btn');
+                saveButton.disabled = false;
+                return;
             }
 
             let maxWindow = 0;
@@ -581,23 +554,20 @@
             });
 
             const isSeasonal = (T1_Data.supplyModel === 'seasonal');
-            const masterWindow = (isSeasonal && maxWindow > 0) ? maxWindow : 52; 
+            const masterWindow = (isSeasonal && maxWindow > 0) ? maxWindow : 52;
 
-            // Save as Tool 3
             projectData.tool3 = {
                 selfDelivered: parseFloat(selfDelivered) || 0,
                 rainySeasonMonths: parseFloat(document.getElementById('inputRainyMonths').value) || 0,
-                collectionWeeks: masterWindow, 
+                collectionWeeks: masterWindow,
                 routes: routes,
                 totalAnnualLogisticsCost: parseFloat(document.getElementById('outputAnnualCost').textContent.replace(/[^0-9.]/g, '')) || 0,
                 avgLogisticsCostPerTonne: parseFloat(document.getElementById('outputCostPerTonne').textContent.replace(/[^0-9.]/g, '')) || 0,
                 notes_T3: document.getElementById('toolNotes').value,
                 lastUpdated: new Date().toISOString()
             };
-            
-            // Clean up old tool4 data if it exists
+
             if (projectData.tool4) {
-                // This is a safety check in case old "tool4" (logistics) data is still present
                 if (!projectData.tool4.salesModel) {
                     delete projectData.tool4;
                 }
@@ -605,7 +575,6 @@
 
             try {
                 if (window.BiocharEngine) {
-                    // MERGE instead of overwriting
                     BiocharEngine.saveProjectData({
                         ...(projectData || {}),
                         tool3: projectData.tool3
@@ -619,7 +588,7 @@
                     localStorage.setItem("biocharProjectData", JSON.stringify(merged));
                 }
 
-                saveStatus.textContent = "Data Saved!";
+                saveStatus.textContent = BiocharI18n.t('tool3.saved_status');
                 saveStatus.style.display = 'block';
 
                 hasUnsavedChanges = false;
@@ -628,17 +597,16 @@
                 navigationButtons.classList.remove('hidden');
 
             } catch (error) {
-                showError("Failed to save.");
-                saveButton.textContent = "Save Logistics Data";
+                showError(BiocharI18n.t('tool3.error_save_failed'));
+                saveButton.textContent = BiocharI18n.t('tool3.save_btn');
                 saveButton.disabled = false;
             }
-        }  // <-- closing brace to end saveProject()
+        }
 
         function calculateRouteCost(card, isSeasonal) {
             const trips = parseFloat(card.querySelector('.route-freq').value) || 0;
             const method = card.querySelector('.route-method').value;
 
-            // Determine Weather Ratios
             let rainyRatio = 0;
             if (isSeasonal) {
                 const dur = parseFloat(card.querySelector('.route-weeks').value) || 10;
@@ -650,7 +618,6 @@
             }
             const dryRatio = 1 - rainyRatio;
 
-            // Calculate Avg Cost per Trip
             let avgCostPerTrip = 0;
             if (method === 'time') {
                 const rate = parseFloat(card.querySelector('.route-rate').value) || 0;
@@ -670,9 +637,9 @@
 
         function calculateAll() {
             const isSeasonal = T1_Data.supplyModel === 'seasonal';
-            
+
             const totalProjectFeedstockDisplay = parseFloat(document.getElementById('inputTotalFeedstock').value) || 0;
-            const selfDelivered = parseFloat(document.getElementById('inputSelfDelivered').value); // Can be NaN if blank
+            const selfDelivered = parseFloat(document.getElementById('inputSelfDelivered').value);
             const logisticsTarget = Math.max(0, totalProjectFeedstockDisplay - (isNaN(selfDelivered) ? 0 : selfDelivered));
             document.getElementById('logisticsTarget').textContent = `${logisticsTarget.toLocaleString()} t`;
 
@@ -699,24 +666,37 @@
             const ratio = logisticsTarget > 0 ? totalVolume / logisticsTarget : (totalVolume > 0 ? 999 : 1);
             if (ratio < 0.95) {
                 statusEl.classList.add('text-yellow-300');
-                statusSub.textContent = "Target not met";
+                statusSub.textContent = BiocharI18n.t('tool3.status_not_met');
             } else if (ratio > 1.05) {
                 statusEl.classList.add('text-red-300');
-                statusSub.textContent = "Over-capacity";
+                statusSub.textContent = BiocharI18n.t('tool3.status_over_capacity');
             } else {
                 statusEl.classList.add('text-green-300');
-                statusSub.textContent = "Target met";
+                statusSub.textContent = BiocharI18n.t('tool3.status_met');
             }
         }
 
-        function addRoute(data = null) {
+        function addRoute(data) {
             routeCount++;
             const template = document.getElementById('routeTemplate');
             if (!template) return;
-            
+
             const clone = template.content.cloneNode(true);
-            clone.querySelector('.route-title').textContent = `Route #${routeCount}`;
-            
+
+            // Apply i18n translations to template content (not processed by i18n.js DOMContentLoaded)
+            clone.querySelectorAll('[data-i18n]').forEach(el => {
+                el.textContent = BiocharI18n.t(el.dataset.i18n);
+            });
+            clone.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                el.placeholder = BiocharI18n.t(el.dataset.i18nPlaceholder);
+            });
+            clone.querySelectorAll('[data-i18n-html]').forEach(el => {
+                el.innerHTML = BiocharI18n.t(el.dataset.i18nHtml);
+            });
+
+            // Override route title with current count
+            clone.querySelector('.route-title').textContent = BiocharI18n.t('tool3.route_title', { n: routeCount });
+
             const isSeasonal = (T1_Data.supplyModel === 'seasonal');
             const seasonalInputs = clone.querySelector('.seasonal-route-inputs');
             if (isSeasonal) seasonalInputs.classList.remove('hidden');
@@ -724,7 +704,7 @@
 
             if (data) {
                 clone.querySelector('.route-name').value = data.name || '';
-                clone.querySelector('.route-vol').value = data.annualVolume || 0; 
+                clone.querySelector('.route-vol').value = data.annualVolume || 0;
                 clone.querySelector('.route-freq').value = data.tripsPerYear || 52;
                 clone.querySelector('.route-method').value = data.method || '';
                 clone.querySelector('.route-rate').value = data.hourlyRate || 55;
@@ -734,33 +714,31 @@
                 clone.querySelector('.route-quote-rain').value = data.rainyQuote || 175;
                 if (data.routeDuration) clone.querySelector('.route-weeks').value = data.routeDuration;
                 if (data.routeRainyWeeks !== undefined) clone.querySelector('.route-rainy-weeks').value = data.routeRainyWeeks;
-                
+
                 const methodSelect = clone.querySelector('.route-method');
-                toggleMethod(methodSelect, false); 
+                toggleMethod(methodSelect, false);
             }
 
-            // Add unsaved listeners to dynamic inputs
             const dynamicInputs = clone.querySelectorAll('input, select');
             dynamicInputs.forEach(el => {
                 const eventType = (el.tagName === 'SELECT' || el.type === 'checkbox') ? 'change' : 'input';
                 el.addEventListener(eventType, calculateAll);
                 el.addEventListener(eventType, setUnsaved);
             });
-            
+
             clone.querySelector('.remove-route').addEventListener('click', function() {
                 removeRoute(this.closest('.route-card'));
-                setUnsaved(); // Removing is an unsaved change
+                setUnsaved();
             });
             clone.querySelector('.route-method').addEventListener('change', function() {
-                toggleMethod(this, true); 
+                toggleMethod(this, true);
             });
 
             document.getElementById('routesContainer').appendChild(clone);
-            updateRemoveButtons(); 
+            updateRemoveButtons();
             if (!data) {
-                calculateAll(); 
+                calculateAll();
             }
-            return clone;
         }
 
         function updateRemoveButtons() {
@@ -777,14 +755,14 @@
         function removeRoute(el) {
             el.closest('.route-card').remove();
             calculateAll();
-            updateRemoveButtons(); 
+            updateRemoveButtons();
         }
 
-        function toggleMethod(selectEl, doCalculate = true) {
+        function toggleMethod(selectEl, doCalculate) {
             const card = selectEl.closest('.route-card');
             const timeInputs = card.querySelector('.time-inputs');
             const flatInputs = card.querySelector('.flat-inputs');
-            
+
             timeInputs.classList.add('hidden');
             flatInputs.classList.add('hidden');
 
@@ -793,13 +771,13 @@
             } else if (selectEl.value === 'flat') {
                 flatInputs.classList.remove('hidden');
             }
-            
+
             if (doCalculate) {
                 calculateAll();
             }
         }
-        
-        function formatCurrency(num, twoDecimals = false) {
+
+        function formatCurrency(num, twoDecimals) {
             const options = { style: 'currency', currency: 'USD', maximumFractionDigits: twoDecimals ? 2 : 0 };
             return new Intl.NumberFormat('en-US', options).format(num);
         }
@@ -808,7 +786,7 @@
             if (saveStatus) {
                 saveStatus.textContent = msg;
                 saveStatus.style.display = 'block';
-                saveStatus.className = 'font-medium text-red-600'; // Make sure it's red
+                saveStatus.className = 'font-medium text-red-600';
             }
             if (loadingIndicator) {
                 loadingIndicator.textContent = msg;
@@ -817,34 +795,28 @@
             }
         }
 
-        // *** NEW: Smart Navigation ***
         window.navigate = function(url) {
             if (hasUnsavedChanges) {
-                alert("You have unsaved changes. Please click the 'Save' button before continuing.");
+                alert(BiocharI18n.t('common.alert_unsaved'));
             } else {
                 window.location.href = url;
             }
         }
 
-        // *** NEW: Global Reset Button Logic ***
         window.resetForm = function() {
-            if (!confirm("This will clear ALL project data from all tools. Are you sure?")) return;
+            if (!confirm(BiocharI18n.t('common.confirm_reset'))) return;
 
-            // Clear everything
-            projectData = {}; 
+            projectData = {};
 
             if (window.BiocharEngine && BiocharEngine.clearProjectData) {
                 BiocharEngine.clearProjectData();
             } else {
-                // Fallback for older engine.js
                 localStorage.removeItem("biocharProjectData");
                 localStorage.removeItem("currentProjectId");
             }
 
-            // Force reload to empty form
             location.reload();
         }
-
     </script>
 </body>
 </html>
