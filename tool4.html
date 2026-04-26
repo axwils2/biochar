@@ -10,12 +10,12 @@
 <script src="i18n.js"></script>
 <link rel="stylesheet" href="styles.css">
 <style>
-    .section-green-tint { @apply bg-green-50 border-green-200; }
-    .section-title-green { @apply text-green-800 border-green-300; }
-    .section-title-blue { @apply text-blue-900 border-blue-200; }
-    .section-title-gray { @apply text-gray-800 border-gray-300; }
+    .section-green-tint { background-color: #f0fdf4; border-color: #bbf7d0; }
+    .section-title-green { color: #166534; border-color: #86efac; }
+    .section-title-blue { color: #1e3a5f; border-color: #bfdbfe; }
+    .section-title-gray { color: #1f2937; border-color: #d1d5db; }
     .f-icon { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background-color: #6b7280; color: white; border-radius: 50%; font-family: 'Georgia', serif; font-style: italic; font-weight: bold; font-size: 14px; line-height: 1; padding-bottom: 2px; margin-right: 6px; }
-    .tooltip-container:hover </style>
+    </style>
 </head>
 <body>
 
@@ -47,6 +47,7 @@
 </nav>
 
 <main class="page-content">
+<div class="max-w-2xl mx-auto">
 
 <div class="section-card">
 <h2 class="section-card-header section-title-green" data-i18n="tool4.carbon_section_title">Carbon Credit Revenue</h2>
@@ -172,6 +173,7 @@
 <div class="flex justify-between items-center pt-4">
 <button onclick="resetForm()" class="text-sm text-red-500 hover:text-red-700 font-medium" data-i18n="common.reset_form">Reset Form</button>
 <div id="saveStatus" class="font-medium text-green-600" style="display: none;"></div>
+</div>
 </div>
 </div>
 </div>

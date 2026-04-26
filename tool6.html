@@ -10,11 +10,11 @@
     <script src="i18n.js"></script>
 <link rel="stylesheet" href="styles.css">
     <style>
-        .dashboard-card { @apply bg-white p-6 rounded-2xl shadow-sm border border-gray-200; }
-        .hero-metric { @apply flex flex-col justify-between h-full; }
-        .hero-label { @apply text-sm font-medium text-gray-500 uppercase tracking-wider mb-2 flex items-center; }
-        .hero-value { @apply text-4xl font-extrabold text-gray-900; }
-        .hero-sub { @apply text-xs font-medium mt-2; }
+        .dashboard-card { background-color: #fff; padding: 1.5rem; border-radius: 1rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); border: 1px solid #e5e7eb; }
+        .hero-metric { display: flex; flex-direction: column; justify-content: space-between; height: 100%; }
+        .hero-label { font-size: 0.875rem; font-weight: 500; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; display: flex; align-items: center; }
+        .hero-value { font-size: 2.25rem; font-weight: 800; color: #111827; }
+        .hero-sub { font-size: 0.75rem; font-weight: 500; margin-top: 0.5rem; }
 
         /* Risk Cards */
         .kpi-card { padding: 1rem; border-radius: 0.5rem; border-width: 2px; margin-bottom: 0.75rem; }
@@ -31,17 +31,14 @@
         .kpi-red .kpi-title { color: #991b1b; }
         .kpi-blue .kpi-title { color: #1e40af; }
 
-        .section-title-gray { @apply text-gray-800 border-gray-300; }
-        .section-title-yellow { @apply text-yellow-900 border-yellow-300; }
+        .section-title-gray { color: #1f2937; border-color: #d1d5db; }
+        .section-title-yellow { color: #713f12; border-color: #fde047; }
 
-        .action-item { @apply p-3 bg-yellow-50 border-l-4 border-yellow-400 text-sm text-gray-700 mb-2; }
-        .action-source { @apply font-bold text-yellow-900 block mb-1; }
+        .action-item { padding: 0.75rem; background-color: #fefce8; border-left: 4px solid #facc15; font-size: 0.875rem; color: #374151; margin-bottom: 0.5rem; }
+        .action-source { font-weight: 700; color: #713f12; display: block; margin-bottom: 0.25rem; }
 
         /* --- ICONS --- */
         .f-icon { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background-color: #6b7280; color: white; border-radius: 50%; font-family: 'Georgia', serif; font-style: italic; font-weight: bold; font-size: 14px; line-height: 1; padding-bottom: 2px; margin-left: 6px; }
-        .tooltip-container:hover /* --- PROGRESS BAR --- */
-        /* --- FOOTER --- */
-        /* --- NAVIGATION BUTTONS --- */
         .print-only { display: none; }
 
         /* --- PRINT STYLES --- */
@@ -136,7 +133,7 @@
 </div>
 
 <main class="page-content">
-
+<div class="max-w-5xl mx-auto">
 
         <div id="loadingIndicator" class="flex items-center text-blue-600 font-medium animate-pulse mt-4 text-sm">
             <svg class="animate-spin -ml-1 mr-3 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -315,6 +312,9 @@
   <p class="footer-attr" data-i18n="common.cohort">Climatebase Fellowship · Cohort 8 Capstone</p>
 </footer>
 
+<script>
+window.navigate = function(url) { window.location.href = url; };
+</script>
 <script type="module">
         let projectData = {};
 
