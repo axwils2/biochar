@@ -1,20 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="tool7.page_title">Scenario Planner (Tool 7)</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="engine.js"></script>
     <script src="translations.js"></script>
     <script src="i18n.js"></script>
+<link rel="stylesheet" href="styles.css">
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #f4f4f5; }
         .dashboard-card { @apply bg-white p-6 rounded-2xl shadow-sm border border-gray-200; }
 
-        .section-title { @apply text-xl font-bold pb-2 border-b mb-4; }
         .section-title-blue { @apply text-blue-900 border-blue-200; }
 
         .slider-container { @apply mb-6; }
@@ -67,49 +65,11 @@
         .scenario-val { @apply text-blue-600; }
         .diff-positive { @apply text-green-600 text-xs font-medium; }
         .diff-negative { @apply text-red-600 text-xs font-medium; }
-        .input-section { @apply bg-white p-6 rounded-xl shadow-sm border border-gray-200 mb-6; }
-        .input-field { @apply mt-1 block w-full rounded-md border-gray-400 shadow-sm p-3 bg-white focus:border-green-500 focus:ring-green-500 transition duration-150; }
-
         /* --- TOOLTIPS & ICONS --- */
-        .tooltip-container { position: relative; display: inline-flex; align-items: center; cursor: help; vertical-align: middle; }
         .f-icon { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background-color: #6b7280; color: white; border-radius: 50%; font-family: 'Georgia', serif; font-style: italic; font-weight: bold; font-size: 14px; line-height: 1; padding-bottom: 2px; margin-left: 6px; }
-        .tooltip-text { position: absolute; width: 240px; background-color: #374151; color: white; font-size: 0.75rem; padding: 10px; border-radius: 6px; bottom: 150%; left: 50%; transform: translateX(-50%); visibility: hidden; opacity: 0; transition: opacity 0.2s; pointer-events: none; z-index: 50; font-weight: normal; text-align: left; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
-        .tooltip-container:hover .tooltip-text { visibility: visible; opacity: 1; }
-
-        /* --- PROGRESS BAR --- */
-        .progress-bar-container { @apply w-full bg-gray-200 rounded-full h-2.5 mb-6; }
-        .progress-bar { @apply bg-green-600 h-2.5 rounded-full transition-all duration-500; }
-
+        .tooltip-container:hover /* --- PROGRESS BAR --- */
         /* --- FOOTER --- */
-        .disclaimer {
-            text-align: left;
-            font-size: 0.75rem;
-            color: #6b7280;
-            margin-top: 3rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #e5e7eb;
-        }
-        .disclaimer p {
-            margin-bottom: 0.5rem;
-            font-style: italic;
-        }
-        .disclaimer strong {
-            font-weight: 600;
-            color: #4b5563;
-            font-style: normal;
-        }
-
         /* --- NAVIGATION BUTTONS --- */
-        .nav-grid { @apply grid grid-cols-2 md:grid-cols-3 gap-3 items-center; }
-        .nav-button { display: inline-block; padding: 12px 20px; font-weight: 700; border: none; border-radius: 12px; font-size: 0.875rem; cursor: pointer; transition: opacity 0.2s; text-decoration: none; text-align: center; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); }
-        .nav-button:hover { opacity: 0.9; }
-        .nav-button-blue { background-color: #2563eb; color: white; }
-        .nav-button-green { background-color: #16a34a; color: white; }
-        .nav-button-indigo { background-color: #4f46e5; color: white; }
-        .nav-button-white { background-color: white; color: #2563eb; border: 2px solid #dbeafe; }
-        .nav-button-white:hover { background-color: #f9fafb; }
-
-        .hidden { display: none; }
         .print-only { display: none; }
 
         /* --- PRINT STYLES --- */
@@ -122,50 +82,48 @@
             body { background-color: #ffffff; padding: 0; margin: 0; zoom: 80%; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             .max-w-5xl { max-width: 100%; }
             .dashboard-card { border: none; box-shadow: none; }
-            .f-icon, .tooltip-container { display: none; }
-        }
+            .f-icon, }
     </style>
 </head>
-<body class="p-4 md:p-8">
+<body>
 
-    <div class="max-w-5xl mx-auto">
+<header class="app-header">
+  <a href="index.html" class="app-logo">
+    <div class="app-logo-mark"></div>
+    <span class="app-logo-name" data-i18n="common.header_h1">Biochar Calculator</span>
+  </a>
+  <span class="app-step-badge">7</span>
+  <span class="app-step-name" data-i18n="tool7.step_name">Scenarios</span>
+  <span class="app-step-of">· 7 of 7</span>
+  <select id="lang-select" onchange="BiocharI18n.setLanguage(this.value)" class="app-lang-select">
+    <option value="en">EN 🇺🇸</option>
+    <option value="es">ES 🇪🇸</option>
+    <option value="pt">PT 🇧🇷</option>
+  </select>
+</header>
+<div class="app-progress-track">
+  <div class="app-progress-fill" style="width:100%;"></div>
+</div>
+<nav class="step-nav">
+  <button onclick="navigate('tool1.html')" class="step-pill step-pill-done">✓ Project Info</button>
+  <button onclick="navigate('tool2.html')" class="step-pill step-pill-done">✓ Production</button>
+  <button onclick="navigate('tool3.html')" class="step-pill step-pill-done">✓ Logistics</button>
+  <button onclick="navigate('tool4.html')" class="step-pill step-pill-done">✓ Revenue</button>
+  <button onclick="navigate('tool5.html')" class="step-pill step-pill-done">✓ Finance</button>
+  <button onclick="navigate('tool6.html')" class="step-pill step-pill-done">✓ Results</button>
+  <span class="step-pill step-pill-active">7 · Scenarios</span>
+</nav>
+<div id="depAlert" class="dep-alert" style="display:none;">
+  <div class="dep-alert-icon">⚠️</div>
+  <div class="dep-alert-text">
+    <strong data-i18n="tool7.dep_alert_title">Missing upstream data.</strong>
+    <span data-i18n="tool7.dep_alert_msg"> Showing defaults.</span>
+    <a href="tool1.html" data-i18n="tool7.dep_alert_link">Complete Tool 1 →</a>
+  </div>
+</div>
 
-        <div class="flex justify-end mb-4">
-            <select id="lang-select" onchange="BiocharI18n.setLanguage(this.value)"
-                    class="nav-button nav-button-white py-2 px-4 text-xs">
-                <option value="en">English 🇺🇸</option>
-                <option value="es">Español 🇪🇸</option>
-                <option value="pt">Português 🇧🇷</option>
-            </select>
-        </div>
+<main class="page-content">
 
-        <header class="text-center mb-6">
-            <h1 class="text-2xl md:text-3xl font-extrabold text-green-700" data-i18n="common.header_h1">Biochar Project Feasibility Calculator</h1>
-            <h2 class="text-lg font-medium text-gray-700 mt-1" data-i18n="common.header_h2">for Latin American Coffee & Cacao Supply Chains</h2>
-            <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider mt-4" data-i18n="common.cohort">Climatebase Fellowship Cohort 8 Capstone Project</p>
-            <p class="text-xs font-medium text-gray-500 mt-2" data-i18n="common.usd_note">(All values in USD)</p>
-
-            <div class="mt-4 mb-6">
-                <a href="https://chatgpt.com/g/g-691ea2b1c2888191b85e54e203c53b2f-biochar-feasibility-guide"
-                   target="_blank"
-                   class="inline-block bg-blue-50 text-blue-700 hover:text-blue-900 border border-blue-200 rounded-full px-4 py-1 text-sm font-medium transition"
-                   data-i18n="common.ai_link">
-                    Questions? Click here to ask the Biochar Feasibility Guide AI assistant ↗
-                </a>
-            </div>
-
-            <p class="text-lg font-medium text-green-800" data-i18n="tool7.tool_label">Tool 7: Scenario Planner</p>
-        </header>
-
-        <div class="w-full mb-8">
-            <div class="flex justify-between text-sm font-medium text-gray-600 mb-1">
-                <span data-i18n="tool7.step_label">Step 7 of 7: Scenario Planner</span>
-                <span class="font-bold text-green-600" data-i18n="tool7.step_complete">Complete!</span>
-            </div>
-            <div class="progress-bar-container">
-                <div class="progress-bar" style="width: 100%"></div>
-            </div>
-        </div>
 
         <div id="loadingIndicator" class="flex items-center text-blue-600 font-medium animate-pulse mt-4 text-sm">
             <svg class="animate-spin -ml-1 mr-3 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -179,7 +137,7 @@
 
             <div class="lg:col-span-1 space-y-6">
                 <div class="dashboard-card">
-                    <h3 class="section-title section-title-blue" data-i18n="tool7.controls_section">Scenario Controls</h3>
+                    <h3 class="section-card-header section-title-blue" data-i18n="tool7.controls_section">Scenario Controls</h3>
                     <p class="text-sm text-blue-800 mb-6" data-i18n="tool7.controls_desc">Adjust sliders to stress-test your model.</p>
 
                     <div class="slider-container">
@@ -226,7 +184,7 @@
                             </thead>
                             <tbody class="divide-y divide-gray-100">
                                 <tr>
-                                    <td class="py-4 font-medium flex items-center"><span data-i18n="tool7.revenue_row">Total Annual Revenue</span><div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool7.revenue_tooltip">Biochar + Credits + Vinegar</span></div></td>
+                                    <td class="py-4 font-medium flex items-center"><span data-i18n="tool7.revenue_row">Total Annual Revenue</span><div class="tooltip-wrap"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool7.revenue_tooltip">Biochar + Credits + Vinegar</span></div></td>
                                     <td id="baseRevenue" class="comparison-val base-val">$0</td>
                                     <td id="scenRevenue" class="comparison-val scenario-val bg-blue-50">$0</td>
                                     <td id="diffRevenue" class="text-right px-2">--</td>
@@ -238,19 +196,19 @@
                                     <td id="diffCapex" class="text-right px-2">--</td>
                                 </tr>
                                 <tr>
-                                    <td class="py-4 font-medium flex items-center"><span data-i18n="tool7.profit_row">Annual Net Profit</span><div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool7.profit_tooltip">(Revenue - OPEX) - Tax + Incentives</span></div></td>
+                                    <td class="py-4 font-medium flex items-center"><span data-i18n="tool7.profit_row">Annual Net Profit</span><div class="tooltip-wrap"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool7.profit_tooltip">(Revenue - OPEX) - Tax + Incentives</span></div></td>
                                     <td id="baseProfit" class="comparison-val base-val">$0</td>
                                     <td id="scenProfit" class="comparison-val scenario-val bg-blue-50">$0</td>
                                     <td id="diffProfit" class="text-right px-2">--</td>
                                 </tr>
                                 <tr class="bg-gray-50">
-                                    <td class="py-4 font-bold text-gray-900 pl-2 flex items-center"><span data-i18n="tool7.payback_row">Payback Period</span><div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool7.payback_tooltip">CAPEX / Profit</span></div></td>
+                                    <td class="py-4 font-bold text-gray-900 pl-2 flex items-center"><span data-i18n="tool7.payback_row">Payback Period</span><div class="tooltip-wrap"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool7.payback_tooltip">CAPEX / Profit</span></div></td>
                                     <td id="basePayback" class="comparison-val base-val px-4">--</td>
                                     <td id="scenPayback" class="comparison-val scenario-val bg-blue-100 px-4">--</td>
                                     <td id="diffPayback" class="text-right px-2">--</td>
                                 </tr>
                                 <tr class="bg-gray-50">
-                                    <td id="npvLabel" class="py-4 font-bold text-gray-900 pl-2 flex items-center"><span>10-Year NPV</span><div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool7.npv_tooltip">Total present value of all profits minus CAPEX.</span></div></td>
+                                    <td id="npvLabel" class="py-4 font-bold text-gray-900 pl-2 flex items-center"><span>10-Year NPV</span><div class="tooltip-wrap"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool7.npv_tooltip">Total present value of all profits minus CAPEX.</span></div></td>
                                     <td id="baseNpv" class="comparison-val base-val px-4">$0</td>
                                     <td id="scenNpv" class="comparison-val scenario-val bg-blue-100 px-4">$0</td>
                                     <td id="diffNpv" class="text-right px-2">--</td>
@@ -262,29 +220,42 @@
             </div>
         </div>
 
-        <div class="input-section bg-gray-50 border-l-4 border-gray-400 p-4">
+        <div class="section-card bg-gray-50 border-l-4 border-gray-400 p-4">
             <h3 class="font-bold text-gray-700 mb-2 uppercase text-sm tracking-wider" data-i18n="tool7.notes_section">Scenario Notes & Observations</h3>
-            <textarea id="toolNotes" rows="3" class="input-field bg-white"
+            <textarea id="toolNotes" rows="3" class="input bg-white"
                       data-i18n-placeholder="tool7.notes_placeholder"
                       placeholder="E.g., 'Project only viable if Carbon Price stays above $80'"></textarea>
-            <button id="saveNotesButton" class="nav-button nav-button-indigo w-full mt-4" data-i18n="tool7.save_btn">Save Scenario Notes</button>
+            <button id="saveNotesButton" class="btn btn-primary w-full mt-4" data-i18n="tool7.save_btn">Save Scenario Notes</button>
             <div id="saveStatus" class="font-medium text-green-600" style="display: none; text-align: center; margin-top: 10px;"></div>
         </div>
 
         <div class="nav-grid mt-8 mb-12">
-            <button onclick="navigate('tool6.html')" class="nav-button nav-button-blue md:col-span-1" data-i18n="tool7.back_btn">← Back to Dashboard</button>
-            <button onclick="window.print()" class="nav-button nav-button-green md:col-span-1" data-i18n="tool7.print_btn">🖨️ Print / Save as PDF</button>
-            <button onclick="navigate('index.html')" class="nav-button nav-button-white md:col-span-1" data-i18n="tool7.main_menu_btn">Return to Main Menu</button>
+            <button onclick="navigate('tool6.html')" class="btn btn-primary md:col-span-1" data-i18n="tool7.back_btn">← Back to Dashboard</button>
+            <button onclick="window.print()" class="btn btn-primary md:col-span-1" data-i18n="tool7.print_btn">🖨️ Print / Save as PDF</button>
+            <button onclick="navigate('index.html')" class="btn btn-secondary md:col-span-1" data-i18n="tool7.main_menu_btn">Return to Main Menu</button>
         </div>
     </div>
 
-    <div class="disclaimer-container">
-        <footer class="disclaimer max-w-5xl mx-auto">
-            <p><strong data-i18n="tool7.footer_no_guarantee_label">No Guarantee:</strong> <em data-i18n="tool7.footer_no_guarantee">The projections provided by this calculator are based on the assumptions and data entered by the user. They are for illustrative purposes only and do not constitute a guarantee of actual costs, revenues, or profitability.</em></p>
-            <p><strong data-i18n="tool7.footer_not_advice_label">Not Financial Advice:</strong> <em data-i18n="tool7.footer_not_advice">The information provided is not intended to be a substitute for professional financial, legal, or agricultural advice. Users are solely responsible for any decisions made based on the output of this tool.</em></p>
-            <p><strong data-i18n="tool7.footer_verify_label">Verify All Data:</strong> <em data-i18n="tool7.footer_verify">Users should independently verify all local costs, market prices, and regulatory requirements before making any investment.</em></p>
-        </footer>
+
+</main>
+
+<footer class="app-footer">
+  <div class="footer-disclaimer-grid">
+    <div class="footer-card">
+      <div class="footer-card-title" data-i18n="common.footer_no_guarantee_label">No Guarantee</div>
+      <p class="footer-card-text" data-i18n="common.footer_no_guarantee">Projections are based on user-entered data and are for illustrative purposes only.</p>
     </div>
+    <div class="footer-card">
+      <div class="footer-card-title" data-i18n="common.footer_not_advice_label">Not Financial Advice</div>
+      <p class="footer-card-text" data-i18n="common.footer_not_advice">Not a substitute for professional financial, legal, or agricultural advice.</p>
+    </div>
+    <div class="footer-card">
+      <div class="footer-card-title" data-i18n="common.footer_verify_label">Verify All Data</div>
+      <p class="footer-card-text" data-i18n="common.footer_verify">Verify local costs, market prices, and regulations before investing.</p>
+    </div>
+  </div>
+  <p class="footer-attr" data-i18n="common.cohort">Climatebase Fellowship · Cohort 8 Capstone</p>
+</footer>
 
 <script type="module">
         let projectData = {};
@@ -621,10 +592,9 @@
         // *** Smart Navigation ***
         window.navigate = function(url) {
             if (hasUnsavedChanges) {
-                alert(BiocharI18n.t('common.alert_unsaved'));
-            } else {
-                window.location.href = url;
+                if (!confirm(BiocharI18n.t('common.alert_unsaved_confirm'))) return;
             }
+            window.location.href = url;
         }
 
         // *** Global Reset Button Logic ***

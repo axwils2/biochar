@@ -1,106 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title data-i18n="tool4.page_title">Biochar Revenue Calc (Tool 4)</title>
-<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <script src="engine.js"></script>
 <script src="translations.js"></script>
 <script src="i18n.js"></script>
+<link rel="stylesheet" href="styles.css">
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-    body { font-family: 'Inter', sans-serif; background-color: #f4f4f5; }
-    .input-section { @apply bg-white p-6 rounded-xl shadow-sm border border-gray-200 mb-6; }
     .section-green-tint { @apply bg-green-50 border-green-200; }
-    .section-title { @apply text-xl font-bold pb-2 border-b mb-4; }
     .section-title-green { @apply text-green-800 border-green-300; }
     .section-title-blue { @apply text-blue-900 border-blue-200; }
     .section-title-gray { @apply text-gray-800 border-gray-300; }
-    .label-text { @apply block text-sm font-medium text-gray-700 mb-1; }
-    .input-field { @apply mt-1 block w-full rounded-md border-gray-400 shadow-sm p-3 bg-white focus:border-green-500 focus:ring-green-500 transition duration-150; }
-    .input-field[readonly] { @apply bg-gray-100 text-gray-500 cursor-not-allowed; }
-    .tooltip-container { position: relative; display: inline-flex; align-items: center; cursor: help; vertical-align: middle; }
-    .tooltip-icon { width: 16px; height: 16px; background-color: #9ca3af; color: white; font-size: 10px; font-weight: bold; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: 6px; }
     .f-icon { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background-color: #6b7280; color: white; border-radius: 50%; font-family: 'Georgia', serif; font-style: italic; font-weight: bold; font-size: 14px; line-height: 1; padding-bottom: 2px; margin-right: 6px; }
-    .tooltip-text { position: absolute; width: 240px; background-color: #374151; color: white; font-size: 0.75rem; padding: 10px; border-radius: 6px; bottom: 150%; left: 50%; transform: translateX(-50%); visibility: hidden; opacity: 0; transition: opacity 0.2s; pointer-events: none; z-index: 50; font-weight: normal; text-align: left; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
-    .tooltip-container:hover .tooltip-text { visibility: visible; opacity: 1; }
-    .hidden { display: none; }
-    .progress-bar-container { @apply w-full bg-gray-200 rounded-full h-2.5 mb-6; }
-    .progress-bar { @apply bg-green-600 h-2.5 rounded-full transition-all duration-500; }
-    .disclaimer { text-align: left; font-size: 0.75rem; color: #6b7280; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #e5e7eb; }
-    .disclaimer p { margin-bottom: 0.5rem; font-style: italic; }
-    .disclaimer strong { font-weight: 600; color: #4b5563; font-style: normal; }
-    .nav-grid { @apply grid grid-cols-2 md:grid-cols-3 gap-3 items-center; }
-    .nav-button { display: inline-block; padding: 12px 20px; font-weight: 700; border: none; border-radius: 12px; font-size: 0.875rem; cursor: pointer; transition: opacity 0.2s; text-decoration: none; text-align: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -2px rgba(0,0,0,0.1); }
-    .nav-button:hover { opacity: 0.9; }
-    .nav-button-blue { background-color: #2563eb; color: white; }
-    .nav-button-green { background-color: #16a34a; color: white; }
-    .nav-button-indigo { background-color: #4f46e5; color: white; }
-    .nav-button-white { background-color: white; color: #2563eb; border: 2px solid #dbeafe; }
-    .nav-button-white:hover { background-color: #f9fafb; }
-</style>
+    .tooltip-container:hover </style>
 </head>
-<body class="p-4 md:p-8">
-<div class="max-w-2xl mx-auto">
+<body>
 
-<div class="flex justify-end mb-4">
-    <select id="lang-select" onchange="BiocharI18n.setLanguage(this.value)"
-            class="nav-button nav-button-white py-2 px-4 text-xs">
-        <option value="en">English 🇺🇸</option>
-        <option value="es">Español 🇪🇸</option>
-        <option value="pt">Português 🇧🇷</option>
-    </select>
-</div>
-
-<header class="text-center mb-6">
-    <h1 class="text-2xl md:text-3xl font-extrabold text-green-700" data-i18n="common.header_h1">Biochar Project Feasibility Calculator</h1>
-    <h2 class="text-lg font-medium text-gray-700 mt-1" data-i18n="common.header_h2">for Latin American Coffee & Cacao Supply Chains</h2>
-    <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider mt-4" data-i18n="common.cohort">Climatebase Fellowship Cohort 8 Capstone Project</p>
-    <p class="text-xs font-medium text-gray-500 mt-2" data-i18n="common.usd_note">(All values in USD)</p>
-
-    <div class="mt-4 mb-6">
-        <a href="https://chatgpt.com/g/g-691ea2b1c2888191b85e54e203c53b2f-biochar-feasibility-guide"
-           target="_blank"
-           class="inline-block bg-blue-50 text-blue-700 hover:text-blue-900 border border-blue-200 rounded-full px-4 py-1 text-sm font-medium transition"
-           data-i18n="common.ai_link">
-            Questions? Click here to ask the Biochar Feasibility Guide AI assistant ↗
-        </a>
-    </div>
-
-    <p class="text-lg font-medium text-green-800" data-i18n="tool4.tool_label">Tool 4: Revenue Streams</p>
+<header class="app-header">
+  <a href="index.html" class="app-logo">
+    <div class="app-logo-mark"></div>
+    <span class="app-logo-name" data-i18n="common.header_h1">Biochar Calculator</span>
+  </a>
+  <span class="app-step-badge">4</span>
+  <span class="app-step-name" data-i18n="tool4.step_name">Revenue</span>
+  <span class="app-step-of">· 4 of 7</span>
+  <select id="lang-select" onchange="BiocharI18n.setLanguage(this.value)" class="app-lang-select">
+    <option value="en">EN 🇺🇸</option>
+    <option value="es">ES 🇪🇸</option>
+    <option value="pt">PT 🇧🇷</option>
+  </select>
 </header>
+<div class="app-progress-track">
+  <div class="app-progress-fill" style="width:57%;"></div>
+</div>
+<nav class="step-nav">
+  <button onclick="navigate('tool1.html')" class="step-pill step-pill-done">✓ Project Info</button>
+  <button onclick="navigate('tool2.html')" class="step-pill step-pill-done">✓ Production</button>
+  <button onclick="navigate('tool3.html')" class="step-pill step-pill-done">✓ Logistics</button>
+  <span class="step-pill step-pill-active">4 · Revenue</span>
+  <button onclick="navigate('tool5.html')" class="step-pill step-pill-future">5 · Finance</button>
+  <button onclick="navigate('tool6.html')" class="step-pill step-pill-future">6 · Results</button>
+  <button onclick="navigate('tool7.html')" class="step-pill step-pill-future">7 · Scenarios</button>
+</nav>
 
-<div class="w-full mb-8">
-<div class="flex justify-between text-sm font-medium text-gray-600 mb-1">
-<span data-i18n="tool4.step_label">Step 4 of 7: Revenue Streams</span>
-<span data-i18n="tool4.step_next">(Next: CAPEX &amp; OPEX)</span>
-</div>
-<div class="progress-bar-container">
-<div class="progress-bar" style="width: 57.1%"></div>
-</div>
-</div>
+<main class="page-content">
 
-<div class="input-section section-green-tint">
-<h2 class="section-title section-title-green" data-i18n="tool4.carbon_section_title">Carbon Credit Revenue</h2>
+<div class="section-card">
+<h2 class="section-card-header section-title-green" data-i18n="tool4.carbon_section_title">Carbon Credit Revenue</h2>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-<label class="block"><span class="label-text font-semibold text-gray-800" data-i18n="tool4.total_credits_label">Total Claimable Credits (tCO2e)</span>
-<input type="number" id="inputTotalCredits" value="0" class="input-field" readonly></label>
-<label class="block"><span class="label-text font-semibold text-green-800" data-i18n="tool4.credit_price_label">Carbon Credit Price ($/tCO2e)</span>
-<input type="number" id="inputCreditPrice" value="100" min="0" class="input-field border-2 border-green-500"></label>
+<label class="block"><span class="input-label font-semibold text-gray-800" data-i18n="tool4.total_credits_label">Total Claimable Credits (tCO2e)</span>
+<input type="number" id="inputTotalCredits" value="0" class="input" readonly></label>
+<label class="block"><span class="input-label font-semibold text-green-800" data-i18n="tool4.credit_price_label">Carbon Credit Price ($/tCO2e)</span>
+<input type="number" id="inputCreditPrice" value="100" min="0" class="input border-2 border-green-500"></label>
 </div>
 <p id="loadingIndicatorCredits" class="text-xs text-yellow-700" data-i18n="tool4.loading_from_t2">Loading from Tool 2...</p>
 </div>
 
-<div class="input-section">
-<h2 class="section-title section-title-blue" data-i18n="tool4.biochar_section_title">Biochar Sales Revenue</h2>
+<div class="section-card">
+<h2 class="section-card-header section-title-blue" data-i18n="tool4.biochar_section_title">Biochar Sales Revenue</h2>
 
 <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200 space-y-3 mb-6">
 <label class="block">
-<span class="label-text font-semibold text-yellow-800" data-i18n="tool4.total_biochar_label">Total Biochar Produced (Tonnes)</span>
+<span class="input-label font-semibold text-yellow-800" data-i18n="tool4.total_biochar_label">Total Biochar Produced (Tonnes)</span>
 <div class="flex items-center">
-<input type="number" id="inputTotalBiocharTonnes" value="0" class="input-field" readonly>
-<div class="tooltip-container ml-2"><span class="tooltip-icon">?</span>
+<input type="number" id="inputTotalBiocharTonnes" value="0" class="input" readonly>
+<div class="tooltip-wrap ml-2"><span class="tooltip-icon">?</span>
 <span class="tooltip-text" data-i18n="tool4.total_biochar_tooltip">Sum of biochar produced from Tool 2.</span></div>
 </div>
 <p id="loadingIndicatorBiochar" class="text-xs text-yellow-700 mt-1" data-i18n="tool4.loading_from_t2">Loading from Tool 2...</p>
@@ -109,8 +76,8 @@
 
 <div class="space-y-6">
 <label class="block">
-<span class="label-text" data-i18n="tool4.sales_model_label">Biochar Sales Model</span>
-<select id="selectBiocharModel" class="input-field" required>
+<span class="input-label" data-i18n="tool4.sales_model_label">Biochar Sales Model</span>
+<select id="selectBiocharModel" class="input" required>
 <option value="" disabled selected data-i18n="tool4.sales_model_placeholder">Select Sales Model</option>
 <option value="retail" data-i18n="tool4.sales_model_retail">Retail Biochar/Compost Mix</option>
 <option value="bulk" data-i18n="tool4.sales_model_bulk">Bulk Biochar</option>
@@ -119,44 +86,44 @@
 
 <div id="retailFields" class="p-4 bg-white rounded-lg border border-gray-200 space-y-4" style="display: none;">
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<label class="block"><span class="label-text" data-i18n="tool4.biochar_pct_label">Biochar % in Mix</span>
-<input type="number" id="inputBiocharPercentInMix" value="30" min="0" max="100" class="input-field"></label>
-<label class="block"><span class="label-text" data-i18n="tool4.compost_cost_label">Compost Cost ($/Tonne)</span>
-<input type="number" id="inputCompostCost" value="50" min="0" class="input-field"></label>
-<label class="block"><span class="label-text" data-i18n="tool4.bag_weight_label">Weight per Bag (kg)</span>
-<input type="number" id="inputBagWeightKg" value="20" min="0" class="input-field"></label>
-<label class="block"><span class="label-text font-semibold text-green-800" data-i18n="tool4.retail_price_label">Retail Price ($ / bag)</span>
-<input type="number" id="inputRetailPricePerBag" value="25" min="0" step="0.01" class="input-field border-2 border-green-500"></label>
-<label class="block"><span class="label-text" data-i18n="tool4.packaging_cost_label">Packaging Cost ($ / bag)</span>
-<input type="number" id="inputPackagingCostPerBag" value="1.50" min="0" step="0.01" class="input-field"></label>
-<label class="block"><span class="label-text" data-i18n="tool4.distribution_cost_label">Distribution Cost ($ / bag)</span>
-<input type="number" id="inputDistributionCostPerBag" value="2.00" min="0" step="0.01" class="input-field"></label>
+<label class="block"><span class="input-label" data-i18n="tool4.biochar_pct_label">Biochar % in Mix</span>
+<input type="number" id="inputBiocharPercentInMix" value="30" min="0" max="100" class="input"></label>
+<label class="block"><span class="input-label" data-i18n="tool4.compost_cost_label">Compost Cost ($/Tonne)</span>
+<input type="number" id="inputCompostCost" value="50" min="0" class="input"></label>
+<label class="block"><span class="input-label" data-i18n="tool4.bag_weight_label">Weight per Bag (kg)</span>
+<input type="number" id="inputBagWeightKg" value="20" min="0" class="input"></label>
+<label class="block"><span class="input-label font-semibold text-green-800" data-i18n="tool4.retail_price_label">Retail Price ($ / bag)</span>
+<input type="number" id="inputRetailPricePerBag" value="25" min="0" step="0.01" class="input border-2 border-green-500"></label>
+<label class="block"><span class="input-label" data-i18n="tool4.packaging_cost_label">Packaging Cost ($ / bag)</span>
+<input type="number" id="inputPackagingCostPerBag" value="1.50" min="0" step="0.01" class="input"></label>
+<label class="block"><span class="input-label" data-i18n="tool4.distribution_cost_label">Distribution Cost ($ / bag)</span>
+<input type="number" id="inputDistributionCostPerBag" value="2.00" min="0" step="0.01" class="input"></label>
 </div>
 
 <div class="pt-4 border-t border-gray-300 space-y-4">
-<label class="block"><span class="label-text font-semibold text-blue-800" data-i18n="tool4.initial_compliance_label">Initial Product Registration &amp; Lab Fees (CAPEX)</span>
-<input type="number" id="inputInitialComplianceCost" value="0" min="0" class="input-field border-2 border-blue-300"></label>
-<label class="block"><span class="label-text font-semibold text-blue-800" data-i18n="tool4.annual_compliance_label">Annual Product Compliance (OPEX)</span>
-<input type="number" id="inputAnnualComplianceCost" value="1000" min="0" class="input-field border-2 border-blue-300"></label>
+<label class="block"><span class="input-label font-semibold text-blue-800" data-i18n="tool4.initial_compliance_label">Initial Product Registration &amp; Lab Fees (CAPEX)</span>
+<input type="number" id="inputInitialComplianceCost" value="0" min="0" class="input border-2 border-blue-300"></label>
+<label class="block"><span class="input-label font-semibold text-blue-800" data-i18n="tool4.annual_compliance_label">Annual Product Compliance (OPEX)</span>
+<input type="number" id="inputAnnualComplianceCost" value="1000" min="0" class="input border-2 border-blue-300"></label>
 </div>
 </div>
 
 <div id="bulkFields" class="p-4 bg-white rounded-lg border border-gray-200 space-y-2" style="display: none;">
-<label class="block"><span class="label-text font-semibold text-green-800" data-i18n="tool4.bulk_price_label">Bulk Biochar Sale Price ($/Tonne)</span>
-<input type="number" id="inputBulkPrice" value="500" min="0" class="input-field border-2 border-green-500"></label>
+<label class="block"><span class="input-label font-semibold text-green-800" data-i18n="tool4.bulk_price_label">Bulk Biochar Sale Price ($/Tonne)</span>
+<input type="number" id="inputBulkPrice" value="500" min="0" class="input border-2 border-green-500"></label>
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<label class="block"><span class="label-text inline" data-i18n="tool4.sales_rate_label">Expected Sales Rate (%)</span>
-<select id="selectSalesRate" class="input-field">
+<label class="block"><span class="input-label inline" data-i18n="tool4.sales_rate_label">Expected Sales Rate (%)</span>
+<select id="selectSalesRate" class="input">
 <option value="1.0" data-i18n="tool4.sales_rate_100">100% (Great Uptake)</option>
 <option value="0.75" selected data-i18n="tool4.sales_rate_75">75% (Good Uptake)</option>
 <option value="0.5" data-i18n="tool4.sales_rate_50">50% (Poor Uptake)</option>
 <option value="0.25" data-i18n="tool4.sales_rate_25">25% (Very Poor Uptake)</option>
 </select>
 </label>
-<label class="block"><span class="label-text inline" data-i18n="tool4.marketing_plan_label">Marketing Plan</span>
-<select id="selectMarketingPlan" class="input-field">
+<label class="block"><span class="input-label inline" data-i18n="tool4.marketing_plan_label">Marketing Plan</span>
+<select id="selectMarketingPlan" class="input">
 <option value="" disabled selected data-i18n="tool4.marketing_plan_placeholder">Select Marketing Plan</option>
 <option value="coop" data-i18n="tool4.marketing_plan_coop">Coop/Built-in Distribution</option>
 <option value="contract" data-i18n="tool4.marketing_plan_contract">Regional distribution contract</option>
@@ -165,12 +132,12 @@
 </label>
 </div>
 
-<label class="block"><span class="label-text" data-i18n="tool4.marketing_budget_label">Annual Sales &amp; Marketing Budget ($)</span>
-<input type="number" id="inputMarketingBudget" value="5000" min="0" class="input-field"></label>
+<label class="block"><span class="input-label" data-i18n="tool4.marketing_budget_label">Annual Sales &amp; Marketing Budget ($)</span>
+<input type="number" id="inputMarketingBudget" value="5000" min="0" class="input"></label>
 </div>
 
-<div class="input-section">
-<h2 class="section-title section-title-gray" data-i18n="tool4.other_section_title">Other Revenue Streams (Optional)</h2>
+<div class="section-card">
+<h2 class="section-card-header section-title-gray" data-i18n="tool4.other_section_title">Other Revenue Streams (Optional)</h2>
 <div class="p-4 bg-white rounded-lg border border-gray-200 space-y-3">
 <label class="flex items-center space-x-3 cursor-pointer">
 <input type="checkbox" id="checkSellWoodVinegar" class="h-5 w-5 rounded text-green-600 focus:ring-green-500">
@@ -178,29 +145,29 @@
 </label>
 <div id="woodVinegarFields" class="space-y-3 transition-all duration-300" style="max-height: 0; opacity: 0; overflow: hidden;">
 <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-<label class="block"><span class="label-text" data-i18n="tool4.wv_price_label">Sale Price ($/L)</span>
-<input type="number" id="inputWoodVinegarPrice" value="1.00" min="0" class="input-field border-blue-300"></label>
-<label class="block"><span class="label-text" data-i18n="tool4.wv_packaging_label">Packaging Cost ($/L)</span>
-<input type="number" id="inputWoodVinegarPackaging" value="0.30" min="0" class="input-field"></label>
-<label class="block"><span class="label-text" data-i18n="tool4.wv_distribution_label">Distribution Cost ($/L)</span>
-<input type="number" id="inputWoodVinegarDistribution" value="0.05" min="0" class="input-field"></label>
+<label class="block"><span class="input-label" data-i18n="tool4.wv_price_label">Sale Price ($/L)</span>
+<input type="number" id="inputWoodVinegarPrice" value="1.00" min="0" class="input border-blue-300"></label>
+<label class="block"><span class="input-label" data-i18n="tool4.wv_packaging_label">Packaging Cost ($/L)</span>
+<input type="number" id="inputWoodVinegarPackaging" value="0.30" min="0" class="input"></label>
+<label class="block"><span class="input-label" data-i18n="tool4.wv_distribution_label">Distribution Cost ($/L)</span>
+<input type="number" id="inputWoodVinegarDistribution" value="0.05" min="0" class="input"></label>
 </div>
 </div>
 </div>
 </div>
 
-<div class="input-section bg-gray-50 border-gray-200 p-4">
+<div class="section-card bg-gray-50 border-gray-200 p-4">
 <h3 class="font-bold text-gray-700 mb-2 uppercase text-sm tracking-wider" data-i18n="tool4.notes_title">Note Missing Info for Further Research</h3>
-<textarea id="toolNotes" rows="3" class="input-field bg-white" data-i18n-placeholder="tool4.notes_placeholder"></textarea>
+<textarea id="toolNotes" rows="3" class="input bg-white" data-i18n-placeholder="tool4.notes_placeholder"></textarea>
 </div>
 
 <div class="mt-8 mb-12 flex flex-col space-y-4">
-<button id="saveToDbButton" class="nav-button nav-button-indigo w-full" data-i18n="tool4.save_btn">Save Revenue Data</button>
+<button id="saveToDbButton" class="btn btn-primary w-full" data-i18n="tool4.save_btn">Save Revenue Data</button>
 <div id="unsavedWarning" class="text-red-600 font-medium text-center hidden" data-i18n="common.unsaved_warning">You have unsaved changes.</div>
 <div id="navigationButtons" class="nav-grid hidden">
-<button onclick="navigate('tool3.html')" class="nav-button nav-button-blue md:col-span-1" data-i18n="tool4.back_btn">← Back to Tool 3</button>
-<button onclick="navigate('index.html')" class="nav-button nav-button-white md:col-span-1" data-i18n="common.main_menu">Main Menu</button>
-<button onclick="navigate('tool5.html')" id="nextToolButton" class="nav-button nav-button-green md:col-span-1" data-i18n="tool4.next_btn">Proceed to Tool 5 →</button>
+<button onclick="navigate('tool3.html')" class="btn btn-primary md:col-span-1" data-i18n="tool4.back_btn">← Back to Tool 3</button>
+<button onclick="navigate('index.html')" class="btn btn-secondary md:col-span-1" data-i18n="common.main_menu">Main Menu</button>
+<button onclick="navigate('tool5.html')" id="nextToolButton" class="btn btn-primary md:col-span-1" data-i18n="tool4.next_btn">Proceed to Tool 5 →</button>
 </div>
 <div class="flex justify-between items-center pt-4">
 <button onclick="resetForm()" class="text-sm text-red-500 hover:text-red-700 font-medium" data-i18n="common.reset_form">Reset Form</button>
@@ -209,10 +176,25 @@
 </div>
 </div>
 
-<footer class="disclaimer">
-<p><strong data-i18n="tool4.footer_no_guarantee_label">No Guarantee:</strong> <em data-i18n="tool4.footer_no_guarantee">The projections provided by this calculator are based on the assumptions and data entered by the user. They are for illustrative purposes only and do not constitute a guarantee of actual costs, revenues, or profitability.</em></p>
-<p><strong data-i18n="tool4.footer_not_advice_label">Not Financial Advice:</strong> <em data-i18n="tool4.footer_not_advice">The information provided is not intended to be a substitute for professional financial, legal, or agricultural advice. Users are solely responsible for any decisions made based on the output of this tool.</em></p>
-<p><strong data-i18n="tool4.footer_verify_label">Verify All Data:</strong> <em data-i18n="tool4.footer_verify">Users should independently verify all local costs, market prices, and regulatory requirements before making any investment.</em></p>
+</main>
+
+<!-- ── Footer ─────────────────────────────────────────────── -->
+<footer class="app-footer">
+  <div class="footer-disclaimer-grid">
+    <div class="footer-card">
+      <div class="footer-card-title" data-i18n="common.footer_no_guarantee_label">No Guarantee</div>
+      <p class="footer-card-text" data-i18n="common.footer_no_guarantee">Projections are based on user-entered data and are for illustrative purposes only.</p>
+    </div>
+    <div class="footer-card">
+      <div class="footer-card-title" data-i18n="common.footer_not_advice_label">Not Financial Advice</div>
+      <p class="footer-card-text" data-i18n="common.footer_not_advice">Not a substitute for professional financial, legal, or agricultural advice.</p>
+    </div>
+    <div class="footer-card">
+      <div class="footer-card-title" data-i18n="common.footer_verify_label">Verify All Data</div>
+      <p class="footer-card-text" data-i18n="common.footer_verify">Verify local costs, market prices, and regulations before investing.</p>
+    </div>
+  </div>
+  <p class="footer-attr" data-i18n="common.cohort">Climatebase Fellowship · Cohort 8 Capstone</p>
 </footer>
 
 <script>
@@ -436,7 +418,7 @@ function showError(msg){
     if(loadingIndicatorCredits){ loadingIndicatorCredits.textContent=msg; loadingIndicatorCredits.classList.add('text-red-600'); }
     if(loadingIndicatorBiochar){ loadingIndicatorBiochar.textContent=msg; loadingIndicatorBiochar.classList.add('text-red-600'); }
 }
-window.navigate=function(url){ if(hasUnsavedChanges){ alert(BiocharI18n.t('common.alert_unsaved')); } else { window.location.href=url; } }
+window.navigate=function(url){ if(hasUnsavedChanges){ if(!confirm(BiocharI18n.t('common.alert_unsaved_confirm'))) return; } window.location.href=url; }
 window.resetForm=function(){ if(!confirm(BiocharI18n.t('common.confirm_reset'))) return; projectData={}; if(window.BiocharEngine && BiocharEngine.clearProjectData){ BiocharEngine.clearProjectData(); } else{ localStorage.removeItem("biocharProjectData"); localStorage.removeItem("currentProjectId"); } location.reload(); }
 </script>
 </body>

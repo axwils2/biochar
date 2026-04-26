@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="tool6.page_title">Project Dashboard (Tool 6)</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="engine.js"></script>
     <script src="translations.js"></script>
     <script src="i18n.js"></script>
+<link rel="stylesheet" href="styles.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #f4f4f5; }
         .dashboard-card { @apply bg-white p-6 rounded-2xl shadow-sm border border-gray-200; }
         .hero-metric { @apply flex flex-col justify-between h-full; }
         .hero-label { @apply text-sm font-medium text-gray-500 uppercase tracking-wider mb-2 flex items-center; }
@@ -32,7 +31,6 @@
         .kpi-red .kpi-title { color: #991b1b; }
         .kpi-blue .kpi-title { color: #1e40af; }
 
-        .section-title { @apply text-xl font-bold pb-2 border-b mb-4; }
         .section-title-gray { @apply text-gray-800 border-gray-300; }
         .section-title-yellow { @apply text-yellow-900 border-yellow-300; }
 
@@ -40,45 +38,10 @@
         .action-source { @apply font-bold text-yellow-900 block mb-1; }
 
         /* --- ICONS --- */
-        .tooltip-container { position: relative; display: inline-flex; align-items: center; cursor: help; }
         .f-icon { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background-color: #6b7280; color: white; border-radius: 50%; font-family: 'Georgia', serif; font-style: italic; font-weight: bold; font-size: 14px; line-height: 1; padding-bottom: 2px; margin-left: 6px; }
-        .tooltip-text { position: absolute; width: 240px; background-color: #374151; color: white; font-size: 0.75rem; padding: 10px; border-radius: 6px; bottom: 150%; left: 50%; transform: translateX(-50%); visibility: hidden; opacity: 0; transition: opacity 0.2s; pointer-events: none; z-index: 50; font-weight: normal; text-align: left; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
-        .tooltip-container:hover .tooltip-text { visibility: visible; opacity: 1; }
-
-        /* --- PROGRESS BAR --- */
-        .progress-bar-container { @apply w-full bg-gray-200 rounded-full h-2.5 mb-6; }
-        .progress-bar { @apply bg-green-600 h-2.5 rounded-full transition-all duration-500; }
-
+        .tooltip-container:hover /* --- PROGRESS BAR --- */
         /* --- FOOTER --- */
-        .disclaimer {
-            text-align: left;
-            font-size: 0.75rem;
-            color: #6b7280;
-            margin-top: 3rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #e5e7eb;
-        }
-        .disclaimer p {
-            margin-bottom: 0.5rem;
-            font-style: italic;
-        }
-        .disclaimer strong {
-            font-weight: 600;
-            color: #4b5563;
-            font-style: normal;
-        }
-
         /* --- NAVIGATION BUTTONS --- */
-        .nav-grid { @apply grid grid-cols-2 md:grid-cols-3 gap-3 items-center; }
-        .nav-button { display: inline-block; padding: 12px 20px; font-weight: 700; border: none; border-radius: 12px; font-size: 0.875rem; cursor: pointer; transition: opacity 0.2s; text-decoration: none; text-align: center; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); }
-        .nav-button:hover { opacity: 0.9; }
-        .nav-button-blue { background-color: #2563eb; color: white; }
-        .nav-button-green { background-color: #16a34a; color: white; }
-        .nav-button-indigo { background-color: #4f46e5; color: white; }
-        .nav-button-white { background-color: white; color: #2563eb; border: 2px solid #dbeafe; }
-        .nav-button-white:hover { background-color: #f9fafb; }
-
-        .hidden { display: none; }
         .print-only { display: none; }
 
         /* --- PRINT STYLES --- */
@@ -127,9 +90,7 @@
             .text-sm { font-size: 11px !important; }
             .text-xs { font-size: 10px !important; }
 
-            .f-icon, .tooltip-container { display: none !important; }
-
-            #printSummary h2 { font-size: 18px; font-weight: bold; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid #ccc; }
+            .f-icon, #printSummary h2 { font-size: 18px; font-weight: bold; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid #ccc; }
             #printSummary h3 { font-size: 14px; font-weight: bold; margin-top: 1rem; margin-bottom: 0.5rem; }
             #printSummary table { width: 100%; border-collapse: collapse; }
             #printSummary th, #printSummary td { border: 1px solid #eee; padding: 6px; text-align: left; font-size: 10px; }
@@ -137,46 +98,45 @@
         }
     </style>
 </head>
-<body class="p-4 md:p-8">
+<body>
 
-    <div class="max-w-5xl mx-auto">
+<header class="app-header">
+  <a href="index.html" class="app-logo">
+    <div class="app-logo-mark"></div>
+    <span class="app-logo-name" data-i18n="common.header_h1">Biochar Calculator</span>
+  </a>
+  <span class="app-step-badge">6</span>
+  <span class="app-step-name" data-i18n="tool6.step_name">Results</span>
+  <span class="app-step-of">· 6 of 7</span>
+  <select id="lang-select" onchange="BiocharI18n.setLanguage(this.value)" class="app-lang-select">
+    <option value="en">EN 🇺🇸</option>
+    <option value="es">ES 🇪🇸</option>
+    <option value="pt">PT 🇧🇷</option>
+  </select>
+</header>
+<div class="app-progress-track">
+  <div class="app-progress-fill" style="width:86%;"></div>
+</div>
+<nav class="step-nav">
+  <button onclick="navigate('tool1.html')" class="step-pill step-pill-done">✓ Project Info</button>
+  <button onclick="navigate('tool2.html')" class="step-pill step-pill-done">✓ Production</button>
+  <button onclick="navigate('tool3.html')" class="step-pill step-pill-done">✓ Logistics</button>
+  <button onclick="navigate('tool4.html')" class="step-pill step-pill-done">✓ Revenue</button>
+  <button onclick="navigate('tool5.html')" class="step-pill step-pill-done">✓ Finance</button>
+  <span class="step-pill step-pill-active">6 · Results</span>
+  <button onclick="navigate('tool7.html')" class="step-pill step-pill-future">7 · Scenarios</button>
+</nav>
+<div id="depAlert" class="dep-alert" style="display:none;">
+  <div class="dep-alert-icon">⚠️</div>
+  <div class="dep-alert-text">
+    <strong data-i18n="tool6.dep_alert_title">Missing upstream data.</strong>
+    <span data-i18n="tool6.dep_alert_msg"> Showing defaults.</span>
+    <a href="tool1.html" data-i18n="tool6.dep_alert_link">Complete Tool 1 →</a>
+  </div>
+</div>
 
-        <div class="flex justify-end mb-4">
-            <select id="lang-select" onchange="BiocharI18n.setLanguage(this.value)"
-                    class="nav-button nav-button-white py-2 px-4 text-xs">
-                <option value="en">English 🇺🇸</option>
-                <option value="es">Español 🇪🇸</option>
-                <option value="pt">Português 🇧🇷</option>
-            </select>
-        </div>
+<main class="page-content">
 
-        <header class="text-center mb-6">
-            <h1 class="text-2xl md:text-3xl font-extrabold text-green-700" data-i18n="common.header_h1">Biochar Project Feasibility Calculator</h1>
-            <h2 class="text-lg font-medium text-gray-700 mt-1" data-i18n="common.header_h2">for Latin American Coffee & Cacao Supply Chains</h2>
-            <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider mt-4" data-i18n="common.cohort">Climatebase Fellowship Cohort 8 Capstone Project</p>
-            <p class="text-xs font-medium text-gray-500 mt-2" data-i18n="common.usd_note">(All values in USD)</p>
-
-            <div class="mt-4 mb-6">
-                <a href="https://chatgpt.com/g/g-691ea2b1c2888191b85e54e203c53b2f-biochar-feasibility-guide"
-                   target="_blank"
-                   class="inline-block bg-blue-50 text-blue-700 hover:text-blue-900 border border-blue-200 rounded-full px-4 py-1 text-sm font-medium transition"
-                   data-i18n="common.ai_link">
-                    Questions? Click here to ask the Biochar Feasibility Guide AI assistant ↗
-                </a>
-            </div>
-
-            <p class="text-lg font-medium text-green-800" data-i18n="tool6.tool_label">Tool 6: Executive Dashboard</p>
-        </header>
-
-        <div class="w-full mb-8">
-            <div class="flex justify-between text-sm font-medium text-gray-600 mb-1">
-                <span data-i18n="tool6.step_label">Step 6 of 7: Dashboard</span>
-                <span data-i18n="tool6.step_next">(Next: Scenario Planner)</span>
-            </div>
-            <div class="progress-bar-container">
-                <div class="progress-bar" style="width: 85.7%"></div>
-            </div>
-        </div>
 
         <div id="loadingIndicator" class="flex items-center text-blue-600 font-medium animate-pulse mt-4 text-sm">
             <svg class="animate-spin -ml-1 mr-3 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -200,7 +160,7 @@
             <div class="dashboard-card hero-metric">
                 <span class="hero-label">
                     <span data-i18n="tool6.hero_payback_label">Payback Period</span>
-                    <div class="tooltip-container ml-1">
+                    <div class="tooltip-wrap ml-1">
                         <span class="f-icon">f</span>
                         <span class="tooltip-text" data-i18n-html="tool6.hero_payback_tooltip">**Formula:**<br>Total CAPEX / Annual Net Profit<br><br>Shows how many years it takes to recover your initial investment.</span>
                     </div>
@@ -211,7 +171,7 @@
             <div class="dashboard-card hero-metric">
                 <span class="hero-label">
                     <span id="npvYears">10-Year</span> <span data-i18n="tool6.hero_npv_label">NPV</span>
-                    <div class="tooltip-container ml-1">
+                    <div class="tooltip-wrap ml-1">
                         <span class="f-icon">f</span>
                         <span class="tooltip-text" data-i18n-html="tool6.hero_npv_tooltip">**Net Present Value:**<br>The total value of all future profits in today's dollars, minus your initial investment.</span>
                     </div>
@@ -245,14 +205,14 @@
                 </div>
 
                 <div id="feedstockFeasibilityCard" class="dashboard-card">
-                    <h3 class="section-title section-title-gray" data-i18n="tool6.input_cost_section">Input Cost Position</h3>
+                    <h3 class="section-card-header section-title-gray" data-i18n="tool6.input_cost_section">Input Cost Position</h3>
                     <div class="flex flex-col md:flex-row justify-between items-center">
                         <div>
                             <p class="text-sm text-gray-600 mb-1" data-i18n="tool6.delivered_cost_desc">Total Delivered Cost (Purchase + Logistics)</p>
                             <div class="flex items-center">
                                 <span id="valDeliveredCost" class="text-3xl font-extrabold text-gray-900">$0</span>
                                 <span class="text-gray-600 ml-2 font-medium" data-i18n="tool6.per_tonne">per tonne</span>
-                                <div class="tooltip-container ml-2"><span class="f-icon">f</span><span class="tooltip-text" data-i18n-html="tool6.delivered_cost_tooltip">**Formula:**<br>(Total Feedstock Spend + Logistics Spend) / Total Tonnes</span></div>
+                                <div class="tooltip-wrap ml-2"><span class="f-icon">f</span><span class="tooltip-text" data-i18n-html="tool6.delivered_cost_tooltip">**Formula:**<br>(Total Feedstock Spend + Logistics Spend) / Total Tonnes</span></div>
                             </div>
                         </div>
                         <div id="feasibilityBadge" class="mt-4 md:mt-0 px-4 py-2 rounded-full font-bold text-sm uppercase bg-gray-200 text-gray-700">
@@ -265,12 +225,12 @@
                 </div>
 
                 <div class="dashboard-card">
-                    <h3 class="section-title section-title-gray" data-i18n="tool6.financial_summary_section">Annual Financial Summary</h3>
+                    <h3 class="section-card-header section-title-gray" data-i18n="tool6.financial_summary_section">Annual Financial Summary</h3>
                     <div class="overflow-x-auto">
                         <table class="w-full text-sm">
                             <tbody class="divide-y divide-gray-100">
                                 <tr class="bg-green-50">
-                                    <td class="py-3 px-2 font-bold text-green-900 flex items-center"><span data-i18n="tool6.total_revenue_label">Total Revenue</span><div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool6.total_revenue_tooltip">Biochar + Credits + Vinegar</span></div></td>
+                                    <td class="py-3 px-2 font-bold text-green-900 flex items-center"><span data-i18n="tool6.total_revenue_label">Total Revenue</span><div class="tooltip-wrap"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool6.total_revenue_tooltip">Biochar + Credits + Vinegar</span></div></td>
                                     <td id="summRevenue" class="py-3 px-2 text-right font-bold text-green-700">$0</td>
                                 </tr>
                                 <tr><td class="py-2 px-4 text-gray-600 pl-8" data-i18n="tool6.biochar_sales_row">- Biochar Sales</td><td id="revBiochar" class="py-2 px-4 text-right text-gray-900">$0</td></tr>
@@ -278,7 +238,7 @@
                                 <tr><td class="py-2 px-4 text-gray-600 pl-8" data-i18n="tool6.wood_vinegar_row">- Wood Vinegar Sales</td><td id="revVinegar" class="py-2 px-4 text-right text-gray-900">$0</td></tr>
 
                                 <tr class="bg-red-50">
-                                    <td class="py-3 px-2 font-bold text-red-900 flex items-center"><span data-i18n="tool6.total_opex_label">Total Operating Costs (OPEX)</span><div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool6.total_opex_tooltip">Sum of all costs below.</span></div></td>
+                                    <td class="py-3 px-2 font-bold text-red-900 flex items-center"><span data-i18n="tool6.total_opex_label">Total Operating Costs (OPEX)</span><div class="tooltip-wrap"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool6.total_opex_tooltip">Sum of all costs below.</span></div></td>
                                     <td id="summOpex" class="py-3 px-2 text-right font-bold text-red-700">$0</td>
                                 </tr>
                                 <tr><td class="py-2 px-4 text-gray-600 pl-8" data-i18n="tool6.feedstock_purchasing_row">- Feedstock Purchasing</td><td id="opexFeedstock" class="py-2 px-4 text-right text-gray-900">$0</td></tr>
@@ -288,11 +248,11 @@
                                 <tr><td class="py-2 px-4 text-gray-600 pl-8" data-i18n="tool6.finance_costs_row">- Financial Costs (Interest)</td><td id="opexFinance" class="py-2 px-4 text-right text-gray-900">$0</td></tr>
 
                                 <tr class="bg-gray-50 font-bold">
-                                    <td class="py-3 px-2 flex items-center"><span data-i18n="tool6.pretax_label">Pre-Tax Profit</span><div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool6.pretax_tooltip">Revenue - OPEX</span></div></td>
+                                    <td class="py-3 px-2 flex items-center"><span data-i18n="tool6.pretax_label">Pre-Tax Profit</span><div class="tooltip-wrap"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool6.pretax_tooltip">Revenue - OPEX</span></div></td>
                                     <td id="summPreTax" class="py-3 px-2 text-right">$0</td>
                                 </tr>
                                 <tr>
-                                    <td class="py-2 px-2 text-gray-600 flex items-center"><span data-i18n="tool6.tax_label">- Corporate Tax</span><div class="tooltip-container"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool6.tax_tooltip">Profit * Tax Rate (min 0)</span></div></td>
+                                    <td class="py-2 px-2 text-gray-600 flex items-center"><span data-i18n="tool6.tax_label">- Corporate Tax</span><div class="tooltip-wrap"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool6.tax_tooltip">Profit * Tax Rate (min 0)</span></div></td>
                                     <td id="summTax" class="py-2 px-2 text-right text-red-600">$0</td>
                                 </tr>
                                 <tr>
@@ -316,7 +276,7 @@
         </div>
 
         <div class="dashboard-card bg-yellow-50 border-2 border-yellow-200 mb-6 print-me">
-            <h3 class="section-title section-title-yellow" data-i18n="tool6.action_plan_section">Project Action Plan (Consolidated Notes)</h3>
+            <h3 class="section-card-header section-title-yellow" data-i18n="tool6.action_plan_section">Project Action Plan (Consolidated Notes)</h3>
             <div id="actionPlanContainer" class="space-y-2">
                 <p class="text-gray-500 italic" data-i18n="tool6.action_plan_empty">No action items flagged in previous tools.</p>
             </div>
@@ -325,22 +285,35 @@
         <div id="printSummary" class="print-only dashboard-card"></div>
 
         <div class="nav-grid mt-8 mb-12">
-            <a href="tool5.html" class="nav-button nav-button-blue md:col-span-1" data-i18n="tool6.back_btn">← Back to Tool 5</a>
-            <button onclick="window.print()" class="nav-button nav-button-green md:col-span-1" data-i18n="tool6.print_btn">🖨️ Print / Save as PDF</button>
-            <a href="tool7.html" class="nav-button nav-button-green md:col-span-1" data-i18n="tool6.next_btn">Proceed to Scenarios →</a>
+            <a href="tool5.html" class="btn btn-primary md:col-span-1" data-i18n="tool6.back_btn">← Back to Tool 5</a>
+            <button onclick="window.print()" class="btn btn-primary md:col-span-1" data-i18n="tool6.print_btn">🖨️ Print / Save as PDF</button>
+            <a href="tool7.html" class="btn btn-primary md:col-span-1" data-i18n="tool6.next_btn">Proceed to Scenarios →</a>
         </div>
         <div class="text-center">
              <a href="index.html" class="text-sm text-gray-600 hover:text-blue-600 font-medium" data-i18n="tool6.main_menu_link">← Return to Main Menu</a>
         </div>
     </div>
 
-    <div class="disclaimer-container">
-        <footer class="disclaimer max-w-5xl mx-auto">
-            <p><strong data-i18n="tool6.footer_no_guarantee_label">No Guarantee:</strong> <em data-i18n="tool6.footer_no_guarantee">The projections provided by this calculator are based on the assumptions and data entered by the user. They are for illustrative purposes only and do not constitute a guarantee of actual costs, revenues, or profitability.</em></p>
-            <p><strong data-i18n="tool6.footer_not_advice_label">Not Financial Advice:</strong> <em data-i18n="tool6.footer_not_advice">The information provided is not intended to be a substitute for professional financial, legal, or agricultural advice. Users are solely responsible for any decisions made based on the output of this tool.</em></p>
-            <p><strong data-i18n="tool6.footer_verify_label">Verify All Data:</strong> <em data-i18n="tool6.footer_verify">Users should independently verify all local costs, market prices, and regulatory requirements before making any investment.</em></p>
-        </footer>
+
+</main>
+
+<footer class="app-footer">
+  <div class="footer-disclaimer-grid">
+    <div class="footer-card">
+      <div class="footer-card-title" data-i18n="common.footer_no_guarantee_label">No Guarantee</div>
+      <p class="footer-card-text" data-i18n="common.footer_no_guarantee">Projections are based on user-entered data and are for illustrative purposes only.</p>
     </div>
+    <div class="footer-card">
+      <div class="footer-card-title" data-i18n="common.footer_not_advice_label">Not Financial Advice</div>
+      <p class="footer-card-text" data-i18n="common.footer_not_advice">Not a substitute for professional financial, legal, or agricultural advice.</p>
+    </div>
+    <div class="footer-card">
+      <div class="footer-card-title" data-i18n="common.footer_verify_label">Verify All Data</div>
+      <p class="footer-card-text" data-i18n="common.footer_verify">Verify local costs, market prices, and regulations before investing.</p>
+    </div>
+  </div>
+  <p class="footer-attr" data-i18n="common.cohort">Climatebase Fellowship · Cohort 8 Capstone</p>
+</footer>
 
 <script type="module">
         let projectData = {};

@@ -1,146 +1,99 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="tool3.page_title">Biochar Logistics Calc (Tool 3)</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="engine.js"></script>
     <script src="translations.js"></script>
     <script src="i18n.js"></script>
+<link rel="stylesheet" href="styles.css">
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #f4f4f5; }
-
         /* Grouping Style */
-        .input-section { @apply bg-white p-6 rounded-xl shadow-sm border border-gray-200 mb-6; }
         .step-group { @apply bg-gray-50 border-gray-300; }
 
         /* Green Headers */
-        .section-title { @apply text-2xl font-extrabold text-green-700 mb-4 pb-2 border-b border-gray-200; }
-
-        .label-text { @apply block text-sm font-medium text-gray-700 mb-1; }
-        .input-field { @apply mt-1 block w-full rounded-md border-gray-400 shadow-sm p-2 bg-white focus:border-green-500 focus:ring-green-500 transition duration-150 box-border; }
-        .input-field[readonly] { @apply bg-gray-100 text-gray-500 cursor-not-allowed; }
-
         .route-card { @apply bg-white p-4 rounded-lg border border-gray-300 mb-4 relative shadow-sm; }
         .remove-route { @apply absolute top-2 right-2 text-red-500 hover:text-red-700 cursor-pointer text-xl font-bold; }
         .add-button { @apply w-full py-4 bg-green-600 border-2 border-transparent text-white font-bold text-lg rounded-xl hover:bg-green-700 transition duration-150 flex items-center justify-center shadow-md; }
         .summary-box { @apply p-4 rounded-lg text-white shadow-md; }
 
         /* --- TOOLTIPS & ICONS --- */
-        .tooltip-container { position: relative; display: inline-flex; align-items: center; cursor: help; vertical-align: middle; }
-        .tooltip-icon { width: 16px; height: 16px; background-color: #9ca3af; color: white; font-size: 10px; font-weight: bold; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: 6px; }
-
         /* Formula Icon (f) */
         .f-icon { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background-color: #6b7280; color: white; border-radius: 50%; font-family: 'Georgia', serif; font-style: italic; font-weight: bold; font-size: 14px; line-height: 1; padding-bottom: 2px; margin-left: 6px; }
         .f-icon-light { background-color: #fff; color: #1e3a8a; margin-left: 6px; }
 
-        .tooltip-text { position: absolute; width: 240px; background-color: #374151; color: white; font-size: 0.75rem; padding: 10px; border-radius: 6px; bottom: 150%; left: 50%; transform: translateX(-50%); visibility: hidden; opacity: 0; transition: opacity 0.2s; pointer-events: none; z-index: 50; font-weight: normal; text-align: left; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
-        .tooltip-container:hover .tooltip-text { visibility: visible; opacity: 1; }
-
-        /* --- PROGRESS BAR --- */
-        .progress-bar-container { @apply w-full bg-gray-200 rounded-full h-2.5 mb-6; }
-        .progress-bar { @apply bg-green-600 h-2.5 rounded-full transition-all duration-500; }
-
+        .tooltip-container:hover /* --- PROGRESS BAR --- */
         /* --- FOOTER --- */
-        .disclaimer {
-            text-align: left;
-            font-size: 0.75rem;
-            color: #6b7280;
-            margin-top: 3rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #e5e7eb;
-        }
-        .disclaimer p {
-            margin-bottom: 0.5rem;
-            font-style: italic;
-        }
-        .disclaimer strong {
-            font-weight: 600;
-            color: #4b5563;
-            font-style: normal;
-        }
-
         /* --- NAVIGATION BUTTONS --- */
-        .nav-grid { @apply grid grid-cols-2 md:grid-cols-3 gap-3 items-center; }
-        .nav-button { display: inline-block; padding: 12px 20px; font-weight: 700; border: none; border-radius: 12px; font-size: 0.875rem; cursor: pointer; transition: opacity 0.2s; text-decoration: none; text-align: center; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); }
-        .nav-button:hover { opacity: 0.9; }
-        .nav-button-blue { background-color: #2563eb; color: white; }
-        .nav-button-green { background-color: #16a34a; color: white; }
-        .nav-button-indigo { background-color: #4f46e5; color: white; }
-        .nav-button-white { background-color: white; color: #2563eb; border: 2px solid #dbeafe; }
-        .nav-button-white:hover { background-color: #f9fafb; }
-
-        .hidden { display: none; }
-    </style>
+        </style>
 </head>
-<body class="p-4 md:p-8">
+<body>
 
-    <div class="max-w-3xl mx-auto">
+<header class="app-header">
+  <a href="index.html" class="app-logo">
+    <div class="app-logo-mark"></div>
+    <span class="app-logo-name" data-i18n="common.header_h1">Biochar Calculator</span>
+  </a>
+  <span class="app-step-badge">3</span>
+  <span class="app-step-name" data-i18n="tool3.step_name">Logistics</span>
+  <span class="app-step-of">· 3 of 7</span>
+  <select id="lang-select" onchange="BiocharI18n.setLanguage(this.value)" class="app-lang-select">
+    <option value="en">EN 🇺🇸</option>
+    <option value="es">ES 🇪🇸</option>
+    <option value="pt">PT 🇧🇷</option>
+  </select>
+</header>
+<div class="app-progress-track">
+  <div class="app-progress-fill" style="width:43%;"></div>
+</div>
+<nav class="step-nav">
+  <button onclick="navigate('tool1.html')" class="step-pill step-pill-done">✓ Project Info</button>
+  <button onclick="navigate('tool2.html')" class="step-pill step-pill-done">✓ Production</button>
+  <span class="step-pill step-pill-active">3 · Logistics</span>
+  <button onclick="navigate('tool4.html')" class="step-pill step-pill-future">4 · Revenue</button>
+  <button onclick="navigate('tool5.html')" class="step-pill step-pill-future">5 · Finance</button>
+  <button onclick="navigate('tool6.html')" class="step-pill step-pill-future">6 · Results</button>
+  <button onclick="navigate('tool7.html')" class="step-pill step-pill-future">7 · Scenarios</button>
+</nav>
+<div id="depAlert" class="dep-alert" style="display:none;">
+  <div class="dep-alert-icon">⚠️</div>
+  <div class="dep-alert-text">
+    <strong data-i18n="tool3.dep_alert_title">Missing upstream data.</strong>
+    <span data-i18n="tool3.dep_alert_msg"> Showing defaults.</span>
+    <a href="tool1.html" data-i18n="tool3.dep_alert_link">Complete Tool 1 →</a>
+  </div>
+</div>
 
-        <div class="flex justify-end mb-4">
-            <select id="lang-select" onchange="BiocharI18n.setLanguage(this.value)"
-                    class="nav-button nav-button-white py-2 px-4 text-xs">
-                <option value="en">English 🇺🇸</option>
-                <option value="es">Español 🇪🇸</option>
-                <option value="pt">Português 🇧🇷</option>
-            </select>
-        </div>
+<main class="page-content">
 
-        <header class="text-center mb-6">
-            <h1 class="text-2xl md:text-3xl font-extrabold text-green-700" data-i18n="common.header_h1">Biochar Project Feasibility Calculator</h1>
-            <h2 class="text-lg font-medium text-gray-700 mt-1" data-i18n="common.header_h2">for Latin American Coffee & Cacao Supply Chains</h2>
-            <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider mt-4" data-i18n="common.cohort">Climatebase Fellowship Cohort 8 Capstone Project</p>
-            <p class="text-xs font-medium text-gray-500 mt-2" data-i18n="common.usd_note">(All values in USD)</p>
 
-            <div class="mt-4 mb-6">
-                <a href="https://chatgpt.com/g/g-691ea2b1c2888191b85e54e203c53b2f-biochar-feasibility-guide"
-                   target="_blank"
-                   class="inline-block bg-blue-50 text-blue-700 hover:text-blue-900 border border-blue-200 rounded-full px-4 py-1 text-sm font-medium transition"
-                   data-i18n="common.ai_link">
-                    Questions? Click here to ask the Biochar Feasibility Guide AI assistant ↗
-                </a>
-            </div>
-
-            <p class="text-lg font-medium text-green-800" data-i18n="tool3.tool_label">Tool 3: Logistics (Inbound)</p>
-        </header>
-
-        <div class="w-full mb-8">
-            <div class="flex justify-between text-sm font-medium text-gray-600 mb-1">
-                <span data-i18n="tool3.step_label">Step 3 of 7: Logistics</span>
-                <span data-i18n="tool3.step_next">(Next: Revenue Streams)</span>
-            </div>
-            <div class="progress-bar-container">
-                <div class="progress-bar" style="width: 42.8%"></div>
-            </div>
-        </div>
-
-        <div class="input-section step-group">
-            <h2 class="section-title" data-i18n="tool3.step1_title">Step 1: Set Your Logistics Target</h2>
+        <div class="section-card">
+            <h2 class="section-card-header" data-i18n="tool3.step1_title">Step 1: Set Your Logistics Target</h2>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 bg-white p-4 rounded-lg border border-gray-300">
                 <label class="block">
-                    <span class="label-text font-semibold text-gray-900" data-i18n="tool3.total_feedstock_label">Total Feedstock Required</span>
-                    <input type="number" id="inputTotalFeedstock" value="0" class="input-field" readonly>
+                    <span class="input-label font-semibold text-gray-900" data-i18n="tool3.total_feedstock_label">Total Feedstock Required</span>
+                    <input type="number" id="inputTotalFeedstock" value="0" class="input" readonly>
                     <p id="loadingIndicator" class="text-xs text-yellow-700 mt-1" data-i18n="tool3.loading_from_t2">Loading from Tool 2...</p>
                 </label>
                 <label class="block">
-                    <span class="label-text font-semibold text-gray-900" data-i18n="tool3.self_delivered_label">(-) Self-Delivered ($0 Cost)</span>
-                    <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool3.self_delivered_tooltip">Feedstock that arrives at the kiln with NO logistics cost to you.</span></div>
-                    <input type="number" id="inputSelfDelivered" value="0" min="0" class="input-field border-yellow-400" required>
+                    <span class="input-label font-semibold text-gray-900" data-i18n="tool3.self_delivered_label">(-) Self-Delivered ($0 Cost)</span>
+                    <div class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool3.self_delivered_tooltip">Feedstock that arrives at the kiln with NO logistics cost to you.</span></div>
+                    <input type="number" id="inputSelfDelivered" value="0" min="0" class="input border-yellow-400" required>
                 </label>
                 <div class="flex flex-col justify-center p-3 bg-yellow-100 rounded-lg border-2 border-yellow-300 text-center">
-                    <span class="label-text font-bold text-yellow-900 uppercase tracking-wider" data-i18n="tool3.logistics_target_label">Logistics Target</span>
+                    <span class="input-label font-bold text-yellow-900 uppercase tracking-wider" data-i18n="tool3.logistics_target_label">Logistics Target</span>
                     <span id="logisticsTarget" class="text-3xl font-extrabold text-yellow-800">0 t</span>
                 </div>
             </div>
 
             <div id="annualRainContainer" class="mb-4 hidden">
                 <label class="block">
-                    <span class="label-text" data-i18n="tool3.rainy_months_label">Annual Rainy Season Duration (Months/Year)</span>
-                    <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool3.rainy_months_tooltip">Used to weight the annual cost between Dry and Rainy season rates.</span></div>
+                    <span class="input-label" data-i18n="tool3.rainy_months_label">Annual Rainy Season Duration (Months/Year)</span>
+                    <div class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool3.rainy_months_tooltip">Used to weight the annual cost between Dry and Rainy season rates.</span></div>
                     <input type="range" id="inputRainyMonths" min="0" max="12" value="6" class="w-full h-2 bg-blue-200 rounded-lg appearance-none cursor-pointer mt-2">
                     <div class="flex justify-between text-xs text-gray-500 px-1 mt-1">
                         <span data-i18n="tool3.rainy_slider_left">0m (All Dry)</span><span id="rainyMonthsVal" class="font-bold text-blue-600">6 months</span><span data-i18n="tool3.rainy_slider_right">12m (All Rainy)</span>
@@ -158,8 +111,8 @@
             </div>
         </div>
 
-        <div class="input-section step-group">
-            <h2 class="section-title" data-i18n="tool3.step2_title">Step 2: Build Feedstock Transport Routes</h2>
+        <div class="section-card">
+            <h2 class="section-card-header" data-i18n="tool3.step2_title">Step 2: Build Feedstock Transport Routes</h2>
             <p class="text-sm text-gray-600 mb-4" data-i18n="tool3.step2_intro">Your remaining feedstock can arrive via regional transport. Allocate this volume to transportation routes below.</p>
 
             <div id="routesContainer"></div>
@@ -172,8 +125,8 @@
             </button>
         </div>
 
-        <div class="input-section step-group">
-            <h2 class="section-title" data-i18n="tool3.step3_title">Step 3: Final Logistics Summary</h2>
+        <div class="section-card">
+            <h2 class="section-card-header" data-i18n="tool3.step3_title">Step 3: Final Logistics Summary</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                 <div class="summary-box bg-blue-800 text-white">
                     <h3 class="text-sm uppercase tracking-wider opacity-80 mb-1 text-blue-200" data-i18n="tool3.target_status_label">Target Status</h3>
@@ -183,7 +136,7 @@
                 <div class="summary-box bg-green-700">
                     <h3 class="text-sm uppercase tracking-wider opacity-80 mb-1 text-green-100 flex items-center">
                         <span data-i18n="tool3.annual_cost_label">Total Annual Logistics Cost</span>
-                        <div class="tooltip-container">
+                        <div class="tooltip-wrap">
                             <span class="f-icon f-icon-light">f</span>
                             <span class="tooltip-text" data-i18n="tool3.annual_cost_tooltip">**Formula:**&#10;Sum of all route costs.&#10;&#10;Each route: (Trips/Year) × (Weighted Avg. Cost)</span>
                         </div>
@@ -193,7 +146,7 @@
                 <div class="summary-box bg-blue-600">
                     <h3 class="text-sm uppercase tracking-wider opacity-80 mb-1 text-blue-100 flex items-center">
                         <span data-i18n="tool3.cost_per_tonne_label">Logistics Cost per Tonne</span>
-                        <div class="tooltip-container">
+                        <div class="tooltip-wrap">
                             <span class="f-icon f-icon-light">f</span>
                             <span class="tooltip-text" data-i18n="tool3.cost_per_tonne_tooltip">**Formula:**&#10; (Total Logistics Cost) / (Total Feedstock Required)</span>
                         </div>
@@ -203,19 +156,19 @@
             </div>
         </div>
 
-        <div class="input-section bg-gray-50 border-l-4 border-gray-400 p-4">
+        <div class="section-card bg-gray-50 border-l-4 border-gray-400 p-4">
             <h3 class="font-bold text-gray-700 mb-2 uppercase text-sm tracking-wider" data-i18n="tool3.notes_title">Note Missing Info for Further Research</h3>
-            <textarea id="toolNotes" rows="3" class="input-field bg-white" data-i18n-placeholder="tool3.notes_placeholder" placeholder="Type here..."></textarea>
+            <textarea id="toolNotes" rows="3" class="input bg-white" data-i18n-placeholder="tool3.notes_placeholder" placeholder="Type here..."></textarea>
         </div>
 
         <div class="mt-8 mb-12 flex flex-col space-y-4">
-            <button id="saveToDbButton" class="nav-button nav-button-indigo w-full" data-i18n="tool3.save_btn">Save Logistics Data</button>
+            <button id="saveToDbButton" class="btn btn-primary w-full" data-i18n="tool3.save_btn">Save Logistics Data</button>
             <div id="unsavedWarning" class="text-red-600 font-medium text-center hidden" data-i18n="common.unsaved_warning">You have unsaved changes.</div>
 
             <div id="navigationButtons" class="nav-grid hidden">
-                <button onclick="navigate('tool2.html')" class="nav-button nav-button-blue md:col-span-1" data-i18n="tool3.back_btn">← Back to Tool 2</button>
-                <button onclick="navigate('index.html')" class="nav-button nav-button-white md:col-span-1" data-i18n="common.main_menu">Main Menu</button>
-                <button onclick="navigate('tool4.html')" id="nextToolButton" class="nav-button nav-button-green md:col-span-1" data-i18n="tool3.next_btn">Proceed to Tool 4 →</button>
+                <button onclick="navigate('tool2.html')" class="btn btn-primary md:col-span-1" data-i18n="tool3.back_btn">← Back to Tool 2</button>
+                <button onclick="navigate('index.html')" class="btn btn-secondary md:col-span-1" data-i18n="common.main_menu">Main Menu</button>
+                <button onclick="navigate('tool4.html')" id="nextToolButton" class="btn btn-primary md:col-span-1" data-i18n="tool3.next_btn">Proceed to Tool 4 →</button>
             </div>
             <div class="flex justify-between items-center pt-4">
                 <button onclick="resetForm()" class="text-sm text-red-500 hover:text-red-700 font-medium" data-i18n="common.reset_form">
@@ -234,34 +187,34 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="space-y-3">
                     <label class="block">
-                        <span class="label-text" data-i18n="tool3.route_name_label">Route Name</span>
-                        <input type="text" class="input-field route-name" data-i18n-placeholder="tool3.route_name_placeholder" placeholder="e.g., Farm A Weekly Run">
+                        <span class="input-label" data-i18n="tool3.route_name_label">Route Name</span>
+                        <input type="text" class="input route-name" data-i18n-placeholder="tool3.route_name_placeholder" placeholder="e.g., Farm A Weekly Run">
                     </label>
                     <div class="grid grid-cols-2 gap-3">
-                        <label class="block"><span class="label-text" data-i18n="tool3.route_vol_label">Annual Volume (t)</span><input type="number" class="input-field route-vol" value="0" min="0"></label>
-                        <label class="block"><span class="label-text" data-i18n="tool3.route_freq_label">Trips per Year</span><input type="number" class="input-field route-freq" value="52" min="1"></label>
+                        <label class="block"><span class="input-label" data-i18n="tool3.route_vol_label">Annual Volume (t)</span><input type="number" class="input route-vol" value="0" min="0"></label>
+                        <label class="block"><span class="input-label" data-i18n="tool3.route_freq_label">Trips per Year</span><input type="number" class="input route-freq" value="52" min="1"></label>
                     </div>
 
                     <p class="text-xs text-gray-500 italic">
                         <span data-i18n="tool3.route_avg_load_prefix">Avg Load:</span> <span class="route-avg-load font-bold">0</span> <span data-i18n="tool3.route_avg_load_unit">t/trip</span>
-                        <span class="tooltip-container ml-1"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool3.route_avg_load_tooltip">**Formula:** (Annual Volume) / (Trips per Year)</span></span>
+                        <span class="tooltip-wrap ml-1"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool3.route_avg_load_tooltip">**Formula:** (Annual Volume) / (Trips per Year)</span></span>
                         <span class="block mt-1 text-gray-400" data-i18n="tool3.route_note">Note: Ensure trip frequency is realistic within your collection window. Typical max weight for a rural truck is about 4-5 tonnes.</span>
                     </p>
 
                     <div class="seasonal-route-inputs hidden mt-3 p-3 bg-blue-50 rounded border border-blue-200">
                         <h4 class="text-xs font-bold text-blue-800 mb-2 uppercase tracking-wider" data-i18n="tool3.seasonal_window_section_title">Seasonal Window</h4>
                         <div class="grid grid-cols-2 gap-3">
-                            <label class="block"><span class="label-text text-xs" data-i18n="tool3.route_weeks_label">Duration (Weeks)</span><input type="number" class="input-field route-weeks" value="10" min="1"></label>
-                            <label class="block"><span class="label-text text-xs" data-i18n="tool3.route_rainy_weeks_label">Rainy Weeks</span><input type="number" class="input-field route-rainy-weeks" value="0" min="0"></label>
+                            <label class="block"><span class="input-label text-xs" data-i18n="tool3.route_weeks_label">Duration (Weeks)</span><input type="number" class="input route-weeks" value="10" min="1"></label>
+                            <label class="block"><span class="input-label text-xs" data-i18n="tool3.route_rainy_weeks_label">Rainy Weeks</span><input type="number" class="input route-rainy-weeks" value="0" min="0"></label>
                         </div>
                     </div>
                 </div>
 
                 <div class="space-y-3 bg-gray-100 p-4 rounded-lg border-2 border-gray-300">
                     <label class="block">
-                        <span class="label-text font-bold text-gray-800" data-i18n="tool3.truck_model_label">Truck Ownership Model</span>
-                        <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool3.truck_model_tooltip">Select 'Owned' if you pay a driver by the hour. Select 'Hired' if you pay a flat fee per trip.</span></div>
-                        <select class="input-field route-method font-medium text-gray-900">
+                        <span class="input-label font-bold text-gray-800" data-i18n="tool3.truck_model_label">Truck Ownership Model</span>
+                        <div class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool3.truck_model_tooltip">Select 'Owned' if you pay a driver by the hour. Select 'Hired' if you pay a flat fee per trip.</span></div>
+                        <select class="input route-method font-medium text-gray-900">
                             <option value="" disabled selected data-i18n="tool3.truck_model_placeholder">-- Select Ownership Model --</option>
                             <option value="time" data-i18n="tool3.truck_model_time">Owned Truck (Time-Based Calc)</option>
                             <option value="flat" data-i18n="tool3.truck_model_flat">Hired Truck (Flat Quote)</option>
@@ -270,13 +223,13 @@
 
                     <div class="time-inputs hidden space-y-5 mt-4">
                         <label class="block">
-                            <span class="label-text font-semibold" data-i18n="tool3.hourly_rate_label">All-In Hourly Cost ($/hr)</span>
-                            <div class="tooltip-container ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool3.hourly_rate_tooltip">Include operating expenses such as fuel, maintenance, repairs, insurance, and registration. Do not include driver wages (those should be entered in Tool 5 with salaries) or the cost of buying the vehicle (also in Tool 5). If unsure, ask the AI assistant: "Help me estimate my truck's hourly operating cost."</span></div>
-                            <input type="number" class="input-field route-rate border-2 border-gray-300" value="55" min="0">
+                            <span class="input-label font-semibold" data-i18n="tool3.hourly_rate_label">All-In Hourly Cost ($/hr)</span>
+                            <div class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool3.hourly_rate_tooltip">Include operating expenses such as fuel, maintenance, repairs, insurance, and registration. Do not include driver wages (those should be entered in Tool 5 with salaries) or the cost of buying the vehicle (also in Tool 5). If unsure, ask the AI assistant: "Help me estimate my truck's hourly operating cost."</span></div>
+                            <input type="number" class="input route-rate border-2 border-gray-300" value="55" min="0">
                         </label>
                         <div class="grid grid-cols-2 gap-4">
-                            <div class="bg-orange-100 rounded-lg border-2 border-orange-300 p-3"><label class="block"><span class="label-text text-orange-900 font-bold mb-2 block leading-tight" data-i18n="tool3.dry_hours_label">Dry Season Round-Trip (Hrs)</span><input type="number" class="input-field route-hours-dry border-orange-300" value="4" min="0.5" step="0.5"></label></div>
-                            <div class="bg-blue-100 rounded-lg border-2 border-blue-300 p-3"><label class="block"><span class="label-text text-blue-900 font-bold mb-2 block leading-tight" data-i18n="tool3.rainy_hours_label">Rainy Season Round-Trip (Hrs)</span><input type="number" class="input-field route-hours-rain border-blue-300" value="6" min="0.5" step="0.5"></label></div>
+                            <div class="bg-orange-100 rounded-lg border-2 border-orange-300 p-3"><label class="block"><span class="input-label text-orange-900 font-bold mb-2 block leading-tight" data-i18n="tool3.dry_hours_label">Dry Season Round-Trip (Hrs)</span><input type="number" class="input route-hours-dry border-orange-300" value="4" min="0.5" step="0.5"></label></div>
+                            <div class="bg-blue-100 rounded-lg border-2 border-blue-300 p-3"><label class="block"><span class="input-label text-blue-900 font-bold mb-2 block leading-tight" data-i18n="tool3.rainy_hours_label">Rainy Season Round-Trip (Hrs)</span><input type="number" class="input route-hours-rain border-blue-300" value="6" min="0.5" step="0.5"></label></div>
                         </div>
                     </div>
 
@@ -285,24 +238,39 @@
                             <strong>Note:</strong> Use the full price negotiated with the driver for a round trip.
                         </p>
                         <div class="grid grid-cols-2 gap-4">
-                            <div class="bg-orange-100 rounded-lg border-2 border-orange-300 p-3"><label class="block"><span class="label-text text-orange-900 font-bold mb-2 block" data-i18n="tool3.dry_quote_label">Dry Season Quote ($)</span><input type="number" class="input-field route-quote-dry border-orange-300" value="150" min="0"></label></div>
-                            <div class="bg-blue-100 rounded-lg border-2 border-blue-300 p-3"><label class="block"><span class="label-text text-blue-900 font-bold mb-2 block" data-i18n="tool3.rainy_quote_label">Rainy Season Quote ($)</span><input type="number" class="input-field route-quote-rain border-blue-300" value="175" min="0"></label></div>
+                            <div class="bg-orange-100 rounded-lg border-2 border-orange-300 p-3"><label class="block"><span class="input-label text-orange-900 font-bold mb-2 block" data-i18n="tool3.dry_quote_label">Dry Season Quote ($)</span><input type="number" class="input route-quote-dry border-orange-300" value="150" min="0"></label></div>
+                            <div class="bg-blue-100 rounded-lg border-2 border-blue-300 p-3"><label class="block"><span class="input-label text-blue-900 font-bold mb-2 block" data-i18n="tool3.rainy_quote_label">Rainy Season Quote ($)</span><input type="number" class="input route-quote-rain border-blue-300" value="175" min="0"></label></div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="mt-3 text-right text-sm font-bold text-green-700">
                 <span data-i18n="tool3.route_annual_cost_prefix">Est. Annual Cost:</span> <span class="route-annual-cost">$0</span>
-                <span class="tooltip-container ml-1"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool3.route_annual_cost_tooltip">**Formula:** (Trips) × (Weighted Avg Cost)</span></span>
+                <span class="tooltip-wrap ml-1"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool3.route_annual_cost_tooltip">**Formula:** (Trips) × (Weighted Avg Cost)</span></span>
             </div>
         </div>
     </template>
 
-    <footer class="disclaimer">
-        <p><strong data-i18n="tool3.footer_no_guarantee_label">No Guarantee:</strong> <em data-i18n="tool3.footer_no_guarantee">The projections provided by this calculator are based on the assumptions and data entered by the user. They are for illustrative purposes only and do not constitute a guarantee of actual costs, revenues, or profitability.</em></p>
-        <p><strong data-i18n="tool3.footer_not_advice_label">Not Financial Advice:</strong> <em data-i18n="tool3.footer_not_advice">The information provided is not intended to be a substitute for professional financial, legal, or agricultural advice. Users are solely responsible for any decisions made based on the output of this tool.</em></p>
-        <p><strong data-i18n="tool3.footer_verify_label">Verify All Data:</strong> <em data-i18n="tool3.footer_verify">Users should independently verify all local costs, market prices, and regulatory requirements before making any investment.</em></p>
-    </footer>
+</main>
+
+<!-- ── Footer ─────────────────────────────────────────────── -->
+<footer class="app-footer">
+  <div class="footer-disclaimer-grid">
+    <div class="footer-card">
+      <div class="footer-card-title" data-i18n="common.footer_no_guarantee_label">No Guarantee</div>
+      <p class="footer-card-text" data-i18n="common.footer_no_guarantee">Projections are based on user-entered data and are for illustrative purposes only.</p>
+    </div>
+    <div class="footer-card">
+      <div class="footer-card-title" data-i18n="common.footer_not_advice_label">Not Financial Advice</div>
+      <p class="footer-card-text" data-i18n="common.footer_not_advice">Not a substitute for professional financial, legal, or agricultural advice.</p>
+    </div>
+    <div class="footer-card">
+      <div class="footer-card-title" data-i18n="common.footer_verify_label">Verify All Data</div>
+      <p class="footer-card-text" data-i18n="common.footer_verify">Verify local costs, market prices, and regulations before investing.</p>
+    </div>
+  </div>
+  <p class="footer-attr" data-i18n="common.cohort">Climatebase Fellowship · Cohort 8 Capstone</p>
+</footer>
 
 <script>
         let projectData = {};
@@ -797,10 +765,9 @@
 
         window.navigate = function(url) {
             if (hasUnsavedChanges) {
-                alert(BiocharI18n.t('common.alert_unsaved'));
-            } else {
-                window.location.href = url;
+                if (!confirm(BiocharI18n.t('common.alert_unsaved_confirm'))) return;
             }
+            window.location.href = url;
         }
 
         window.resetForm = function() {

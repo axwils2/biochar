@@ -27,12 +27,37 @@ Biochar Project Feasibility Calculator for Latin American Coffee & Cacao Supply 
 6. **Tool 6** — Results dashboard: reads all tool keys to compute financial metrics
 7. **Tool 7** — Scenario planner: sensitivity sliders for stress-testing
 
+## Design System
+
+All shared visual styles live in **`styles.css`** — the single source of truth for component classes. Every HTML page loads it via `<link rel="stylesheet" href="styles.css">`. Never define button, input, card, or tooltip styles inside a page's own `<style>` block; page-level styles are reserved for truly page-specific components (e.g., accordion panels, kiln selection cards, scenario sliders).
+
+**CSS stack:** Tailwind v4 Browser CDN (`https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4`) for utility classes. No `@apply` — Tailwind v4 browser mode does not support it. Plain CSS component classes in `styles.css`. Inter font from Google Fonts.
+
+**Design tokens** (CSS custom properties in `:root`):
+- `--color-primary` (`#0d9488`), `--color-primary-dark`, `--color-primary-deepest`, `--color-primary-light`, `--color-primary-border`, `--color-primary-border-light`
+- `--color-warning-bg/border/text/strong`, `--color-danger-bg/border/text`
+- `--color-neutral-50` through `--color-neutral-900`
+- `--shadow-card`, `--shadow-card-hover`, `--radius-card`, `--radius-input`, `--radius-btn`, `--radius-pill`
+
+**Shared component classes:** `.app-header`, `.app-logo`, `.app-logo-mark`, `.app-logo-name`, `.app-step-badge`, `.app-step-name`, `.app-step-of`, `.app-lang-select`, `.app-progress-track`, `.app-progress-fill`, `.step-nav`, `.step-pill`, `.step-pill-done`, `.step-pill-active`, `.step-pill-future`, `.dep-alert`, `.dep-alert-icon`, `.dep-alert-text`, `.page-content`, `.section-card`, `.section-card-header`, `.kpi-grid`, `.kpi`, `.kpi-label`, `.kpi-value`, `.kpi-unit`, `.btn`, `.btn-primary`, `.btn-secondary`, `.btn-danger`, `.btn-ghost`, `.btn-sm`, `.input-label`, `.input`, `.input-group`, `.tooltip-wrap`, `.tooltip-icon`, `.tooltip-text`, `.tool-card`, `.tool-card-number`, `.tool-card-title`, `.tool-card-desc`, `.app-footer`, `.footer-disclaimer-grid`, `.footer-card`, `.footer-card-title`, `.footer-card-text`, `.footer-attr`, `.hidden`
+
+**Mobile-first:** All layout is single-column by default; `@media (min-width: 768px)` expands to multi-column. `.app-logo-name` and `.app-step-name` are hidden below 768px.
+
+**Page structure** (tool pages, in order):
+1. `<header class="app-header">` — logo, step badge, step name, "· N of 7", lang select
+2. `<div class="app-progress-track"><div class="app-progress-fill" style="width: X%"></div></div>` — progress widths: 14 / 29 / 43 / 57 / 71 / 86 / 100%
+3. `<nav class="step-nav">` — 7 step pills; active = `.step-pill-active`, others = `<button onclick="navigate(url)" class="step-pill step-pill-done/future">`
+4. Dep alert (tools 2, 3, 6, 7): `<div id="depAlert" class="dep-alert" style="display:none;">` — shown via JS when upstream data missing
+5. `<main class="page-content">` — page body
+6. `</main>`
+7. `<footer class="app-footer">` — standard 3-card disclaimer grid + attribution
+
 ## Key Patterns
 
-- **Save/unsaved guard:** Each tool tracks `hasUnsavedChanges`. Navigation is blocked until the user clicks Save. The `beforeunload` event warns on accidental close.
-- **Inline everything:** CSS and JS are embedded in each HTML file. There is no shared stylesheet or script bundle (except `engine.js`, `translations.js`, and `i18n.js`).
-- **Tailwind via CDN:** `<script src="https://cdn.tailwindcss.com">` — used alongside custom `@apply` rules in `<style>` blocks.
-- **Tooltips:** Custom CSS tooltip system (`.tooltip-container` / `.tooltip-text`) used across all tools.
+- **Save/unsaved guard:** Each tool tracks `hasUnsavedChanges`. `navigate(url)` calls `confirm(BiocharI18n.t('common.alert_unsaved_confirm'))` — user can choose to proceed or cancel. The `beforeunload` event warns on accidental close.
+- **Shared styles in `styles.css`, page-specific styles inline:** Inline `<style>` blocks are for page-specific components only (kiln cards, accordion, scenario sliders, etc.).
+- **Tailwind v4 via CDN:** `<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4">` — no `@apply`, utility classes only.
+- **Tooltips:** CSS tooltip system using `.tooltip-wrap` / `.tooltip-icon` / `.tooltip-text` from `styles.css` (old class names `.tooltip-container` / `.tooltip-text` no longer used).
 - **All monetary values are in USD.**
 
 ## Localization
@@ -62,8 +87,10 @@ BiocharI18n.t('tool7.npv_label', { n: projectLife })
 ```
 
 **Translation namespaces** in `translations.js`:
-- `common` — shared strings used across pages (alert_unsaved, confirm_reset, header text, ai_link)
+- `common` — shared strings used across pages: `alert_unsaved_confirm`, `confirm_reset`, header/footer text, `cohort`, footer disclaimer cards (`footer_no_guarantee_label`, `footer_not_advice_label`, `footer_verify_label`, and their body keys)
 - `index`, `tool1` through `tool7` — page-specific strings
+- Each tool namespace has a `step_name` key (e.g. `tool1.step_name`) used in the step nav pills
+- Tools 2, 3, 6, 7 have `dep_alert_title`, `dep_alert_msg`, `dep_alert_link` for the upstream-data dependency alert
 
 **When modifying UI text:**
 1. Update the string in all three language blocks (`en`, `es`, `pt`) in `translations.js`.
