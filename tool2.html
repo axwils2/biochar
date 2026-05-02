@@ -230,71 +230,9 @@
     </div>
 </div>
 
-<div id="diversifiedCalculator" class="theme-purple mb-8 hidden">
-    <div class="calc-box">
-        <div class="calc-header">
-            <span data-i18n="tool2.secondary_calc_header">2. Secondary Feedstock Calculator</span>
-            <span class="text-xs bg-purple-600 text-white px-2 py-1 rounded-full tracking-wide uppercase" data-i18n="tool2.secondary_badge">Secondary</span>
-        </div>
-        <ol class="calc-steps">
-            <li class="calc-step-full">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-                    <label class="block"><span class="input-label" data-i18n="tool2.f_name_label">Feedstock Name</span><input type="text" id="divF2_Name" class="input" data-i18n-placeholder="tool2.f2_name_placeholder"></label>
-                    <label class="block"><span class="input-label" data-i18n="tool2.f_price_label">Purchase Price ($/Tonne)</span><input type="number" id="divF2_Price" value="0" class="input border-purple-400" min="0"></label>
-                    <label class="block"><span class="input-label" data-i18n="tool2.f_competition_label">Competition Level</span><select id="divF2_Competition" class="input border-purple-300">
-                        <option value="own" data-i18n="tool2.f2_comp_own">None (We own it)</option>
-                        <option value="low" data-i18n="tool2.f2_comp_low">Low (No current market)</option>
-                        <option value="moderate" data-i18n="tool2.f2_comp_moderate">Moderate (Informal use)</option>
-                        <option value="high" data-i18n="tool2.f2_comp_high">High (High demand)</option>
-                    </select></label>
-                    <label class="block"><span class="input-label" data-i18n="tool2.f_contract_label">Feedstock Contract Obtained?</span><select id="divF2_Contract" class="input border-purple-300">
-                        <option value="own" data-i18n="tool2.f_contract_own">We Own It</option>
-                        <option value="verbal" data-i18n="tool2.f_contract_verbal">Verbal / Informal</option>
-                        <option value="written" data-i18n="tool2.f_contract_written">Written Contract</option>
-                        <option value="spot" data-i18n="tool2.f_contract_spot">Spot Market</option>
-                    </select></label>
-                    <label class="block flex items-center pt-5 space-x-2"><input type="checkbox" id="divF2_IsWood" class="h-5 w-5"><span class="text-sm font-semibold text-purple-900" data-i18n="tool2.f2_is_wood_label">Is this Woody Biomass?</span></label>
-                </div>
-            </li>
-            <li class="calc-step">
-                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">1</span><span class="input-label" data-i18n="tool2.f_volume_label">Annual Volume (Dry Tonnes)</span></span><span class="step-label-right"><div class="tooltip-wrap"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f2_volume_tooltip">Enter the total dry tonnes of this secondary feedstock available per year.</span></div></span></div><input type="number" id="divF2_Tonnes" value="0" class="input border-purple-300 font-semibold" min="0"></div>
-                <div class="step-connector">&rarr;</div>
-                <div class="step-output-area"><span class="step-output-label" data-i18n="tool2.starting_volume_label">Starting Volume</span><div id="divF2_StartingVolume" class="step-output-value">0 tonnes</div></div>
-            </li>
-            <li class="calc-step">
-                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">2</span><span class="input-label" data-i18n="tool2.f_ash_label">Ash Content (%)</span></span><span class="step-label-right">
-                    <div class="tooltip-wrap"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool2.f_ash_formula_tooltip">Calculates: [Step 1 Volume] * (1 - Ash %)</span></div>
-                    <div class="tooltip-wrap"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f2_ash_tooltip">Woody biomass typically has a lower ash content. 2% is a common default.</span></div>
-                </span></div><input type="number" id="divF2_Ash" value="2" class="input" min="0" step="0.1"></div>
-                <div class="step-connector">&rarr;</div>
-                <div class="step-output-area"><span class="step-output-label" data-i18n="tool2.dry_ash_label">Dry Ash-Free Matter</span><div id="divF2_DryAshFree" class="step-output-value">0 tonnes</div></div>
-            </li>
-            <li class="calc-step">
-                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">3</span><span class="input-label" data-i18n="tool2.f_yield_label">Biochar Yield (%)</span></span><span class="step-label-right">
-                    <div class="tooltip-wrap"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool2.f_yield_formula_tooltip">Calculates: [Step 2 Matter] * Yield %</span></div>
-                    <div class="tooltip-wrap"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f2_yield_tooltip">Woody biomass often has a higher yield. 30% is a common default.</span></div>
-                </span></div><input type="number" id="divF2_Yield" value="30" class="input" min="0" step="0.1"></div>
-                <div class="step-connector">&rarr;</div>
-                <div class="step-output-area"><span class="step-output-label" data-i18n="tool2.biochar_produced_label">Total Biochar Produced</span><div id="divF2_BiocharProduced" class="step-output-value">0 tonnes</div></div>
-            </li>
-            <li class="calc-step">
-                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">4</span><span class="input-label" data-i18n="tool2.f_carbon_label">Stable Carbon (%)</span></span><span class="step-label-right">
-                    <div class="tooltip-wrap"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool2.f_carbon_formula_tooltip">Calculates: [Step 3 Biochar] * Carbon %</span></div>
-                    <div class="tooltip-wrap"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f2_carbon_tooltip">Biochar from woody biomass often has very high carbon stability. 80% is a good default.</span></div>
-                </span></div><input type="number" id="divF2_Carbon" value="80" class="input" min="0" step="0.1"></div>
-                <div class="step-connector">&rarr;</div>
-                <div class="step-output-area"><span class="step-output-label" data-i18n="tool2.stable_carbon_label">Total Stable Carbon</span><div id="divF2_StableCarbon" class="step-output-value">0 tonnes</div></div>
-            </li>
-            <li class="calc-step">
-                <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">5</span><span class="input-label" data-i18n="tool2.f2_conv_label">CO2e Credit Factor</span></span><span class="step-label-right">
-                    <div class="tooltip-wrap"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool2.f_conv_formula_tooltip">Calculates: [Step 4 Carbon] * Factor</span></div>
-                    <div class="tooltip-wrap"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f2_conv_tooltip">This is a net crediting factor calibrated to practitioner outcomes. Default 2.63 corresponds to ~2.1 tCO2e per tonne of biochar at 80% stable carbon.</span></div>
-                </span></div><input type="number" id="divF2_Conv" value="2.63" class="input" min="0" step="0.1"></div>
-                <div class="step-connector">=</div>
-                <div class="step-output-area"><div class="final-output-box theme-purple"><span class="step-output-label" data-i18n="tool2.credits_label">Total Claimable Credits</span><div id="divF2_Credits" class="step-output-value">0 tCO2e</div></div></div>
-            </li>
-        </ol>
-    </div>
+<div id="secondaryFeedstocksSection" class="mb-8 hidden">
+    <div id="secondaryFeedstocksContainer"></div>
+    <button id="addFeedstockBtn" type="button" class="btn btn-secondary w-full mt-3"></button>
 </div>
 
 <div class="bg-green-50 p-4 rounded-xl border border-green-200 text-center mb-8 shadow-sm">
@@ -415,6 +353,122 @@
 </div>
 </main>
 
+<template id="secondaryCardTemplate">
+  <div class="secondary-feedstock-card theme-purple mb-6">
+    <div class="calc-box">
+      <div class="calc-header" style="display:flex;justify-content:space-between;align-items:center;">
+        <span class="card-header-label"></span>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="text-xs bg-purple-600 text-white px-2 py-1 rounded-full tracking-wide uppercase card-badge-label"></span>
+          <button type="button" class="remove-card-btn text-purple-700 hover:text-red-600 font-bold text-xl leading-none" style="background:none;border:none;cursor:pointer;" title="Remove">&times;</button>
+        </div>
+      </div>
+      <ol class="calc-steps">
+        <li class="calc-step-full">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+            <label class="block"><span class="input-label card-label-name"></span><input type="text" data-field="name" class="input" placeholder="e.g., Wood from Pruning"></label>
+            <label class="block"><span class="input-label card-label-price"></span><input type="number" data-field="price" value="0" class="input border-purple-400" min="0"></label>
+            <label class="block">
+              <span class="input-label card-label-competition"></span>
+              <select data-field="competition" class="input border-purple-300">
+                <option value="own" class="card-opt-comp-own"></option>
+                <option value="low" class="card-opt-comp-low"></option>
+                <option value="moderate" class="card-opt-comp-moderate"></option>
+                <option value="high" class="card-opt-comp-high"></option>
+              </select>
+            </label>
+            <label class="block">
+              <span class="input-label card-label-contract"></span>
+              <select data-field="contract" class="input border-purple-300">
+                <option value="own" class="card-opt-contract-own"></option>
+                <option value="verbal" class="card-opt-contract-verbal"></option>
+                <option value="written" class="card-opt-contract-written"></option>
+                <option value="spot" class="card-opt-contract-spot"></option>
+              </select>
+            </label>
+            <label class="block flex items-center pt-5 space-x-2">
+              <input type="checkbox" data-field="isWood" class="h-5 w-5">
+              <span class="text-sm font-semibold text-purple-900 card-label-is-wood"></span>
+            </label>
+          </div>
+        </li>
+        <li class="calc-step">
+          <div class="step-input-area">
+            <div class="step-number-container">
+              <span class="step-label-left"><span class="step-number">1</span><span class="input-label card-label-volume"></span></span>
+              <span class="step-label-right"><div class="tooltip-wrap"><span class="tooltip-icon">?</span><span class="tooltip-text card-tooltip-volume"></span></div></span>
+            </div>
+            <input type="number" data-field="tonnes" value="0" class="input border-purple-300 font-semibold" min="0">
+          </div>
+          <div class="step-connector">&rarr;</div>
+          <div class="step-output-area"><span class="step-output-label card-label-starting"></span><div data-output="startingVolume" class="step-output-value">0 tonnes</div></div>
+        </li>
+        <li class="calc-step">
+          <div class="step-input-area">
+            <div class="step-number-container">
+              <span class="step-label-left"><span class="step-number">2</span><span class="input-label card-label-ash"></span></span>
+              <span class="step-label-right">
+                <div class="tooltip-wrap"><span class="f-icon">f</span><span class="tooltip-text card-tooltip-ash-formula"></span></div>
+                <div class="tooltip-wrap"><span class="tooltip-icon">?</span><span class="tooltip-text card-tooltip-ash"></span></div>
+              </span>
+            </div>
+            <input type="number" data-field="ash" value="2" class="input" min="0" step="0.1">
+          </div>
+          <div class="step-connector">&rarr;</div>
+          <div class="step-output-area"><span class="step-output-label card-label-dry-ash"></span><div data-output="dryAshFree" class="step-output-value">0 tonnes</div></div>
+        </li>
+        <li class="calc-step">
+          <div class="step-input-area">
+            <div class="step-number-container">
+              <span class="step-label-left"><span class="step-number">3</span><span class="input-label card-label-yield"></span></span>
+              <span class="step-label-right">
+                <div class="tooltip-wrap"><span class="f-icon">f</span><span class="tooltip-text card-tooltip-yield-formula"></span></div>
+                <div class="tooltip-wrap"><span class="tooltip-icon">?</span><span class="tooltip-text card-tooltip-yield"></span></div>
+              </span>
+            </div>
+            <input type="number" data-field="yield" value="30" class="input" min="0" step="0.1">
+          </div>
+          <div class="step-connector">&rarr;</div>
+          <div class="step-output-area"><span class="step-output-label card-label-biochar"></span><div data-output="biocharProduced" class="step-output-value">0 tonnes</div></div>
+        </li>
+        <li class="calc-step">
+          <div class="step-input-area">
+            <div class="step-number-container">
+              <span class="step-label-left"><span class="step-number">4</span><span class="input-label card-label-carbon"></span></span>
+              <span class="step-label-right">
+                <div class="tooltip-wrap"><span class="f-icon">f</span><span class="tooltip-text card-tooltip-carbon-formula"></span></div>
+                <div class="tooltip-wrap"><span class="tooltip-icon">?</span><span class="tooltip-text card-tooltip-carbon"></span></div>
+              </span>
+            </div>
+            <input type="number" data-field="carbon" value="80" class="input" min="0" step="0.1">
+          </div>
+          <div class="step-connector">&rarr;</div>
+          <div class="step-output-area"><span class="step-output-label card-label-stable-carbon"></span><div data-output="stableCarbon" class="step-output-value">0 tonnes</div></div>
+        </li>
+        <li class="calc-step">
+          <div class="step-input-area">
+            <div class="step-number-container">
+              <span class="step-label-left"><span class="step-number">5</span><span class="input-label card-label-conv"></span></span>
+              <span class="step-label-right">
+                <div class="tooltip-wrap"><span class="f-icon">f</span><span class="tooltip-text card-tooltip-conv-formula"></span></div>
+                <div class="tooltip-wrap"><span class="tooltip-icon">?</span><span class="tooltip-text card-tooltip-conv"></span></div>
+              </span>
+            </div>
+            <input type="number" data-field="conv" value="2.63" class="input" min="0" step="0.1">
+          </div>
+          <div class="step-connector">=</div>
+          <div class="step-output-area">
+            <div class="final-output-box theme-purple">
+              <span class="step-output-label card-label-credits"></span>
+              <div data-output="credits" class="step-output-value">0 tCO2e</div>
+            </div>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+</template>
+
 <footer class="app-footer">
   <div class="footer-disclaimer-grid">
     <div class="footer-card">
@@ -440,8 +494,6 @@ let hasUnsavedChanges = false;
 const inputsToTrack = [
     'selectCarbonDataSource', 'divF1_Name', 'divF1_Price', 'divF1_Competition', 'divF1_Contract',
     'divF1_Ash', 'divF1_Yield', 'divF1_Carbon', 'divF1_Conv',
-    'divF2_Name', 'divF2_Price', 'divF2_Competition', 'divF2_Contract', 'divF2_IsWood',
-    'divF2_Tonnes', 'divF2_Ash', 'divF2_Yield', 'divF2_Carbon', 'divF2_Conv',
     'selectKiln', 'inputCustomKilnPrice', 'inputNumberOfKilns', 'selectCostBasis', 'inputShippingCost', 'toolNotes'
 ];
 
@@ -496,13 +548,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const safeListener = (id, event, func) => { const el = document.getElementById(id); if (el) el.addEventListener(event, func); };
 
-    ['divF1_Tonnes','divF1_Ash','divF1_Yield','divF1_Carbon','divF1_Conv','divF2_Tonnes','divF2_Ash','divF2_Yield','divF2_Carbon','divF2_Conv'].forEach(id => safeListener(id, 'input', calculateAll));
+    ['divF1_Tonnes','divF1_Ash','divF1_Yield','divF1_Carbon','divF1_Conv'].forEach(id => safeListener(id, 'input', calculateAll));
     safeListener('selectKiln', 'change', handleKilnSelectChange);
     safeListener('inputCustomKilnPrice', 'input', updateTotalCapex);
     safeListener('inputNumberOfKilns', 'input', updateTotalCapex);
     safeListener('inputShippingCost', 'input', updateTotalCapex);
 
     safeListener('saveToDbButton', 'click', saveProject);
+    safeListener('addFeedstockBtn', 'click', addSecondaryFeedstock);
 
     inputsToTrack.forEach(id => {
         const el = document.getElementById(id);
@@ -532,7 +585,7 @@ function loadProject() {
     const t1Input = document.getElementById('divF1_Tonnes');
     if (t1Input) t1Input.value = T1_Data.feedstockTonnes || 0;
 
-    handleSupplyModelChange();
+    const woodTonnes = T1_Data.woodTonnes || 0;
 
     if (projectData.tool2 && projectData.tool2.lastUpdated) {
         const t2 = projectData.tool2;
@@ -547,16 +600,36 @@ function loadProject() {
         document.getElementById('divF1_Carbon').value = (d.f1_carbon * 100) || 70;
         document.getElementById('divF1_Conv').value = d.f1_conv || 2.29;
 
-        document.getElementById('divF2_Name').value = d.f2_name || '';
-        document.getElementById('divF2_Price').value = d.f2_price || 0;
-        document.getElementById('divF2_Competition').value = d.f2_competition || 'own';
-        document.getElementById('divF2_Contract').value = d.f2_contract || 'own';
-        document.getElementById('divF2_IsWood').checked = d.f2_isWood || false;
-        document.getElementById('divF2_Tonnes').value = d.f2_tonnes || 0;
-        document.getElementById('divF2_Ash').value = (d.f2_ash * 100) || 2;
-        document.getElementById('divF2_Yield').value = (d.f2_yield * 100) || 30;
-        document.getElementById('divF2_Carbon').value = (d.f2_carbon * 100) || 80;
-        document.getElementById('divF2_Conv').value = d.f2_conv || 2.63;
+        // Migration shim: convert old flat f2_* keys to secondaryFeedstocks array
+        let secondaryFeedstocks = t2.secondaryFeedstocks;
+        if (!secondaryFeedstocks && (d.f2_name || d.f2_tonnes)) {
+            secondaryFeedstocks = [{
+                name: d.f2_name || '',
+                tonnes: d.f2_tonnes || 0,
+                ash: (d.f2_ash * 100) || 2,
+                yield: (d.f2_yield * 100) || 30,
+                carbon: (d.f2_carbon * 100) || 80,
+                price: d.f2_price || 0,
+                competition: d.f2_competition || 'own',
+                contract: d.f2_contract || 'own',
+                isWood: d.f2_isWood || false,
+                conv: d.f2_conv || 2.63,
+                fromTool1: false
+            }];
+        }
+        secondaryFeedstocks = secondaryFeedstocks || [];
+
+        // Sync or auto-populate wood entry from Tool 1
+        const existingWoodIdx = secondaryFeedstocks.findIndex(f => f.fromTool1);
+        if (woodTonnes > 0) {
+            if (existingWoodIdx === -1) {
+                secondaryFeedstocks.unshift({ name: '', tonnes: woodTonnes, ash: 2, yield: 30, carbon: 80, price: 0, competition: 'own', contract: 'own', isWood: true, conv: 2.63, fromTool1: true });
+            } else {
+                secondaryFeedstocks[existingWoodIdx].tonnes = woodTonnes;
+            }
+        }
+
+        secondaryFeedstocks.forEach(f => renderSecondaryCard(f));
 
         if (t2.kiln) {
             document.getElementById('selectCarbonDataSource').value = t2.kiln.carbonDataBasis || 'calculator_defaults';
@@ -576,15 +649,115 @@ function loadProject() {
         document.getElementById('divF1_Name').value = BiocharI18n.t('tool2.f1_default_name');
         document.getElementById('saveToDbButton').disabled = true;
         document.getElementById('navigationButtons').classList.add('hidden');
+
+        if (woodTonnes > 0) {
+            renderSecondaryCard({ name: '', tonnes: woodTonnes, ash: 2, yield: 30, carbon: 80, price: 0, competition: 'own', contract: 'own', isWood: true, conv: 2.63, fromTool1: true });
+        }
     }
 
+    updateSecondarySection();
     calculateAll();
 }
 
-function handleSupplyModelChange() {
-    const divCalc = document.getElementById('diversifiedCalculator');
-    if (T1_Data.seasonalityStrategy === 'diversify') divCalc.classList.remove('hidden');
-    else divCalc.classList.add('hidden');
+function renderSecondaryCard(feedstock) {
+    const tmpl = document.getElementById('secondaryCardTemplate');
+    const card = tmpl.content.cloneNode(true).querySelector('.secondary-feedstock-card');
+
+    card.querySelector('.card-header-label').textContent = BiocharI18n.t('tool2.secondary_card_label');
+    card.querySelector('.card-badge-label').textContent = BiocharI18n.t('tool2.secondary_card_label').toUpperCase();
+    card.querySelector('.card-label-name').textContent = BiocharI18n.t('tool2.f_name_label');
+    card.querySelector('.card-label-price').textContent = BiocharI18n.t('tool2.f_price_label');
+    card.querySelector('.card-label-competition').textContent = BiocharI18n.t('tool2.f_competition_label');
+    card.querySelector('.card-label-contract').textContent = BiocharI18n.t('tool2.f_contract_label');
+    card.querySelector('.card-label-is-wood').textContent = BiocharI18n.t('tool2.f2_is_wood_label');
+    card.querySelector('.card-label-volume').textContent = BiocharI18n.t('tool2.f_volume_label');
+    card.querySelector('.card-label-starting').textContent = BiocharI18n.t('tool2.starting_volume_label');
+    card.querySelector('.card-label-ash').textContent = BiocharI18n.t('tool2.f_ash_label');
+    card.querySelector('.card-label-dry-ash').textContent = BiocharI18n.t('tool2.dry_ash_label');
+    card.querySelector('.card-label-yield').textContent = BiocharI18n.t('tool2.f_yield_label');
+    card.querySelector('.card-label-biochar').textContent = BiocharI18n.t('tool2.biochar_produced_label');
+    card.querySelector('.card-label-carbon').textContent = BiocharI18n.t('tool2.f_carbon_label');
+    card.querySelector('.card-label-stable-carbon').textContent = BiocharI18n.t('tool2.stable_carbon_label');
+    card.querySelector('.card-label-conv').textContent = BiocharI18n.t('tool2.f2_conv_label');
+    card.querySelector('.card-label-credits').textContent = BiocharI18n.t('tool2.credits_label');
+    card.querySelector('.card-tooltip-volume').textContent = BiocharI18n.t('tool2.f2_volume_tooltip');
+    card.querySelector('.card-tooltip-ash-formula').textContent = BiocharI18n.t('tool2.f_ash_formula_tooltip');
+    card.querySelector('.card-tooltip-ash').textContent = BiocharI18n.t('tool2.f2_ash_tooltip');
+    card.querySelector('.card-tooltip-yield-formula').textContent = BiocharI18n.t('tool2.f_yield_formula_tooltip');
+    card.querySelector('.card-tooltip-yield').textContent = BiocharI18n.t('tool2.f2_yield_tooltip');
+    card.querySelector('.card-tooltip-carbon-formula').textContent = BiocharI18n.t('tool2.f_carbon_formula_tooltip');
+    card.querySelector('.card-tooltip-carbon').textContent = BiocharI18n.t('tool2.f2_carbon_tooltip');
+    card.querySelector('.card-tooltip-conv-formula').textContent = BiocharI18n.t('tool2.f_conv_formula_tooltip');
+    card.querySelector('.card-tooltip-conv').textContent = BiocharI18n.t('tool2.f2_conv_tooltip');
+    card.querySelector('.card-opt-comp-own').textContent = BiocharI18n.t('tool2.f2_comp_own');
+    card.querySelector('.card-opt-comp-low').textContent = BiocharI18n.t('tool2.f2_comp_low');
+    card.querySelector('.card-opt-comp-moderate').textContent = BiocharI18n.t('tool2.f2_comp_moderate');
+    card.querySelector('.card-opt-comp-high').textContent = BiocharI18n.t('tool2.f2_comp_high');
+    card.querySelector('.card-opt-contract-own').textContent = BiocharI18n.t('tool2.f_contract_own');
+    card.querySelector('.card-opt-contract-verbal').textContent = BiocharI18n.t('tool2.f_contract_verbal');
+    card.querySelector('.card-opt-contract-written').textContent = BiocharI18n.t('tool2.f_contract_written');
+    card.querySelector('.card-opt-contract-spot').textContent = BiocharI18n.t('tool2.f_contract_spot');
+
+    card.querySelector('[data-field="name"]').value = feedstock.name || '';
+    card.querySelector('[data-field="price"]').value = feedstock.price || 0;
+    card.querySelector('[data-field="competition"]').value = feedstock.competition || 'own';
+    card.querySelector('[data-field="contract"]').value = feedstock.contract || 'own';
+    card.querySelector('[data-field="isWood"]').checked = feedstock.isWood || false;
+    card.querySelector('[data-field="tonnes"]').value = feedstock.tonnes || 0;
+    card.querySelector('[data-field="ash"]').value = feedstock.ash !== undefined ? feedstock.ash : 2;
+    card.querySelector('[data-field="yield"]').value = feedstock.yield !== undefined ? feedstock.yield : 30;
+    card.querySelector('[data-field="carbon"]').value = feedstock.carbon !== undefined ? feedstock.carbon : 80;
+    card.querySelector('[data-field="conv"]').value = feedstock.conv || 2.63;
+
+    if (feedstock.fromTool1) card.dataset.fromTool1 = 'true';
+
+    card.querySelector('[data-field="isWood"]').addEventListener('change', function() {
+        if (this.checked) {
+            card.querySelector('[data-field="ash"]').value = 2;
+            card.querySelector('[data-field="yield"]').value = 30;
+            card.querySelector('[data-field="carbon"]').value = 80;
+        }
+        setUnsaved();
+        calculateAll();
+    });
+
+    ['tonnes', 'ash', 'yield', 'carbon', 'conv'].forEach(field => {
+        card.querySelector('[data-field="' + field + '"]').addEventListener('input', () => { setUnsaved(); calculateAll(); });
+    });
+    ['name', 'price', 'competition', 'contract'].forEach(field => {
+        const el = card.querySelector('[data-field="' + field + '"]');
+        el.addEventListener((el.tagName === 'SELECT') ? 'change' : 'input', setUnsaved);
+    });
+
+    card.querySelector('.remove-card-btn').addEventListener('click', () => {
+        card.remove();
+        setUnsaved();
+        calculateAll();
+        updateSecondarySection();
+    });
+
+    document.getElementById('secondaryFeedstocksContainer').appendChild(card);
+    return card;
+}
+
+function updateSecondarySection() {
+    const section = document.getElementById('secondaryFeedstocksSection');
+    const container = document.getElementById('secondaryFeedstocksContainer');
+    const hasWood = (T1_Data.woodTonnes || 0) > 0;
+    const hasDiversify = T1_Data.seasonalityStrategy === 'diversify';
+    const hasCards = container.children.length > 0;
+
+    if (hasWood || hasDiversify || hasCards) section.classList.remove('hidden');
+    else section.classList.add('hidden');
+
+    document.getElementById('addFeedstockBtn').textContent = BiocharI18n.t('tool2.add_feedstock_btn');
+}
+
+function addSecondaryFeedstock() {
+    renderSecondaryCard({ name: '', tonnes: 0, ash: 2, yield: 30, carbon: 80, price: 0, competition: 'own', contract: 'own', isWood: false, conv: 2.63, fromTool1: false });
+    document.getElementById('secondaryFeedstocksSection').classList.remove('hidden');
+    setUnsaved();
+    calculateAll();
 }
 
 function calculateAll() {
@@ -600,17 +773,23 @@ function calculateAll() {
     const stableCarbon1 = biocharProduced1 * c1; setVal('divF1_StableCarbon', formatTonnage(stableCarbon1, tonUnit));
     const credits1 = stableCarbon1 * conv1; setVal('divF1_Credits', formatTonnage(credits1, ' tCO2e'));
 
-    // --- F2 (Secondary) Calculations ---
-    const t2 = getNum('divF2_Tonnes');
-    const a2 = getNum('divF2_Ash') / 100, y2 = getNum('divF2_Yield') / 100, c2 = getNum('divF2_Carbon') / 100, conv2 = getNum('divF2_Conv');
-    setVal('divF2_StartingVolume', formatTonnage(t2, tonUnit));
-    const dryAshFree2 = t2 * (1 - a2); setVal('divF2_DryAshFree', formatTonnage(dryAshFree2, tonUnit));
-    const biocharProduced2 = dryAshFree2 * y2; setVal('divF2_BiocharProduced', formatTonnage(biocharProduced2, tonUnit));
-    const stableCarbon2 = biocharProduced2 * c2; setVal('divF2_StableCarbon', formatTonnage(stableCarbon2, tonUnit));
-    const credits2 = stableCarbon2 * conv2; setVal('divF2_Credits', formatTonnage(credits2, ' tCO2e'));
+    // --- Secondary Feedstock Calculations ---
+    let totalSecondary = 0;
+    document.querySelectorAll('.secondary-feedstock-card').forEach(card => {
+        const get = field => parseFloat(card.querySelector('[data-field="' + field + '"]')?.value) || 0;
+        const set = (output, val) => { const el = card.querySelector('[data-output="' + output + '"]'); if (el) el.textContent = val; };
+        const t = get('tonnes');
+        const a = get('ash') / 100, y = get('yield') / 100, c = get('carbon') / 100, conv = get('conv');
+        set('startingVolume', formatTonnage(t, tonUnit));
+        const dryAshFree = t * (1 - a); set('dryAshFree', formatTonnage(dryAshFree, tonUnit));
+        const biocharProduced = dryAshFree * y; set('biocharProduced', formatTonnage(biocharProduced, tonUnit));
+        const stableCarbon = biocharProduced * c; set('stableCarbon', formatTonnage(stableCarbon, tonUnit));
+        const credits = stableCarbon * conv; set('credits', formatTonnage(credits, ' tCO2e'));
+        totalSecondary += t;
+    });
 
     // --- Total Feedstock ---
-    const totalFeedstock = t1 + t2;
+    const totalFeedstock = t1 + totalSecondary;
     document.getElementById('displayTotalFeedstock').textContent =
         totalFeedstock.toLocaleString(undefined, {maximumFractionDigits: 1}) + ' ' + BiocharI18n.t('tool2.unit_total_tonnes');
 
@@ -620,7 +799,6 @@ function calculateAll() {
 function saveProject() {
     const getNum = id => parseFloat(document.getElementById(id)?.value) || 0;
     const getVal = id => document.getElementById(id)?.value;
-    const getCheck = id => document.getElementById(id)?.checked;
 
     const kilnSelect = document.getElementById('selectKiln');
     const selectedKiln = kilnSelect.options[kilnSelect.selectedIndex];
@@ -639,6 +817,24 @@ function saveProject() {
     const shippingCost = pyrolyzerCost * shippingPercent;
     const totalUpfrontCapex = pyrolyzerCost + shippingCost;
 
+    const secondaryFeedstocks = [];
+    document.querySelectorAll('.secondary-feedstock-card').forEach(card => {
+        const getF = field => card.querySelector('[data-field="' + field + '"]');
+        secondaryFeedstocks.push({
+            name: getF('name')?.value || '',
+            tonnes: parseFloat(getF('tonnes')?.value) || 0,
+            ash: parseFloat(getF('ash')?.value) || 0,
+            yield: parseFloat(getF('yield')?.value) || 0,
+            carbon: parseFloat(getF('carbon')?.value) || 0,
+            price: parseFloat(getF('price')?.value) || 0,
+            competition: getF('competition')?.value || 'own',
+            contract: getF('contract')?.value || 'own',
+            isWood: getF('isWood')?.checked || false,
+            conv: parseFloat(getF('conv')?.value) || 2.63,
+            fromTool1: card.dataset.fromTool1 === 'true'
+        });
+    });
+
     const dataToSave = {
         tool2: {
             supplyModel: T1_Data.supplyModel,
@@ -653,17 +849,8 @@ function saveProject() {
                 f1_conv: getNum('divF1_Conv'),
                 f1_competition: getVal('divF1_Competition'),
                 f1_contract: getVal('divF1_Contract'),
-                f2_name: getVal('divF2_Name'),
-                f2_tonnes: getNum('divF2_Tonnes'),
-                f2_price: getNum('divF2_Price'),
-                f2_ash: getNum('divF2_Ash') / 100,
-                f2_yield: getNum('divF2_Yield') / 100,
-                f2_carbon: getNum('divF2_Carbon') / 100,
-                f2_conv: getNum('divF2_Conv'),
-                f2_competition: getVal('divF2_Competition'),
-                f2_contract: getVal('divF2_Contract'),
-                f2_isWood: getCheck('divF2_IsWood')
             },
+            secondaryFeedstocks,
             kiln: {
                 carbonDataBasis: getVal('selectCarbonDataSource'),
                 selected_name: kilnPrice > 0 ? kilnName : 'None',

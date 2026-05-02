@@ -154,6 +154,19 @@
       </div>
     </div>
 
+    <hr class="border-neutral-200">
+
+    <div class="input-group">
+      <label class="input-label font-bold" style="color:var(--color-primary-deepest);">
+        <span data-i18n="tool1.wood_label">Annual Wood from Pruning Volume (Tonnes — dry feedstock assumed)</span>
+        <span class="tooltip-wrap ml-1">
+          <span class="tooltip-icon">?</span>
+          <span class="tooltip-text" data-i18n="tool1.wood_tooltip">Includes prunings from coffee trees and shade trees. Enter the total dry tonnes available per year.</span>
+        </span>
+      </label>
+      <input type="number" id="inputWoodTonnes" class="input" style="border-color:var(--color-primary);" min="0" placeholder="0.00">
+    </div>
+
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div class="input-group">
         <label class="input-label" data-i18n="tool1.project_type_label">Project Type</label>
@@ -322,7 +335,7 @@ function setUnsaved() {
 }
 
 [
-  "inputProjectId","inputFeedstockTonnes","selectProjectType","inputNumHubs",
+  "inputProjectId","inputFeedstockTonnes","inputWoodTonnes","selectProjectType","inputNumHubs",
   "selectCountry","selectCommunityBuyIn","toolNotes","selectSupplyModel",
   "selectSeasonalityStrategy"
 ].forEach(id => {
@@ -372,6 +385,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const d = projectData.tool1 || {};
   if (d.projectId) document.getElementById("inputProjectId").value = d.projectId;
   if (typeof d.feedstockTonnes !== "undefined") document.getElementById("inputFeedstockTonnes").value = d.feedstockTonnes;
+  if (typeof d.woodTonnes !== "undefined") document.getElementById("inputWoodTonnes").value = d.woodTonnes;
   if (d.projectType) document.getElementById("selectProjectType").value = d.projectType;
   if (typeof d.numHubs !== "undefined") document.getElementById("inputNumHubs").value = d.numHubs;
   if (d.country) document.getElementById("selectCountry").value = d.country;
@@ -475,7 +489,9 @@ saveButton?.addEventListener("click", () => {
   const supplyModel = document.getElementById("selectSupplyModel").value;
   const country = document.getElementById("selectCountry").value;
   const feedstock = document.getElementById("inputFeedstockTonnes").value;
-  if (!projectId || !projectType || !supplyModel || !country || !feedstock) {
+  const wood = document.getElementById("inputWoodTonnes").value;
+  const feedstockOk = (parseFloat(feedstock) > 0 || parseFloat(wood) > 0);
+  if (!projectId || !projectType || !supplyModel || !country || !feedstockOk) {
     alert(BiocharI18n.t('tool1.alert_required'));
     return;
   }
@@ -483,6 +499,7 @@ saveButton?.addEventListener("click", () => {
   projectData.tool1 = {
     projectId,
     feedstockTonnes: parseFloat(feedstock) || 0,
+    woodTonnes: parseFloat(wood) || 0,
     projectType,
     numHubs: parseInt(document.getElementById("inputNumHubs").value) || 1,
     country,

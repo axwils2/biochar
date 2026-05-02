@@ -178,6 +178,11 @@
             </div>
         </div>
 
+        <div id="mrvFlag" class="hidden mb-6" style="background:var(--color-danger-bg);border:1px solid var(--color-danger-border);border-radius:var(--radius-card);padding:1rem 1.25rem;">
+          <p class="font-bold" style="color:var(--color-danger-text);" id="mrvFlagTitle"></p>
+          <p class="text-sm mt-1" style="color:var(--color-danger-text);" id="mrvFlagMsg"></p>
+        </div>
+
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
 
             <div class="lg:col-span-2 space-y-6 print-me">
@@ -392,15 +397,38 @@ window.navigate = function(url) { window.location.href = url; };
 
                 // === 2. CALCULATE TOTALS (LOGIC SYNCED WITH TOOL 7) ===
 
+                // Migration shim: convert flat f2_* to secondaryFeedstocks[0] for old saved data
+                let secondaryFeedstocks = t2.secondaryFeedstocks;
+                if (!secondaryFeedstocks && (f_data.f2_name || f_data.f2_tonnes)) {
+                    secondaryFeedstocks = [{
+                        name: f_data.f2_name || '',
+                        tonnes: f_data.f2_tonnes || 0,
+                        ash: (f_data.f2_ash * 100) || 2,
+                        yield: (f_data.f2_yield * 100) || 30,
+                        carbon: (f_data.f2_carbon * 100) || 80,
+                        price: f_data.f2_price || 0,
+                        competition: f_data.f2_competition || 'own',
+                        contract: f_data.f2_contract || 'own',
+                        isWood: f_data.f2_isWood || false,
+                        conv: f_data.f2_conv || 2.63,
+                        fromTool1: false
+                    }];
+                }
+                secondaryFeedstocks = secondaryFeedstocks || [];
+
                 const biochar1 = (f_data.f1_tonnes || 0) * (1 - (f_data.f1_ash || 0)) * (f_data.f1_yield || 0);
-                const biochar2 = (f_data.f2_tonnes || 0) * (1 - (f_data.f2_ash || 0)) * (f_data.f2_yield || 0);
-                const totalBiochar = biochar1 + biochar2;
-
                 const credits1 = biochar1 * (f_data.f1_carbon || 0) * (f_data.f1_conv || 0);
-                const credits2 = biochar2 * (f_data.f2_carbon || 0) * (f_data.f2_conv || 0);
-                const totalCredits = credits1 + credits2;
+                let totalBiochar = biochar1;
+                let totalCredits = credits1;
+                let totalSecondaryFeedstock = 0;
+                secondaryFeedstocks.forEach(f => {
+                    const b = (f.tonnes || 0) * (1 - (f.ash / 100 || 0)) * (f.yield / 100 || 0);
+                    totalBiochar += b;
+                    totalCredits += b * (f.carbon / 100 || 0) * (f.conv || 0);
+                    totalSecondaryFeedstock += (f.tonnes || 0);
+                });
 
-                const totalFeedstock = (f_data.f1_tonnes || 0) + (f_data.f2_tonnes || 0);
+                const totalFeedstock = (f_data.f1_tonnes || 0) + totalSecondaryFeedstock;
 
                 const totalCapex = c_data.totalCapex || 0;
 
@@ -436,7 +464,8 @@ window.navigate = function(url) { window.location.href = url; };
 
                 const totalRevenue = rev_Credits + rev_Biochar + rev_Vinegar;
 
-                const opex_Feedstock = ((f_data.f1_tonnes || 0) * (f_data.f1_price || 0)) + ((f_data.f2_tonnes || 0) * (f_data.f2_price || 0));
+                const opex_Feedstock = ((f_data.f1_tonnes || 0) * (f_data.f1_price || 0)) +
+                    secondaryFeedstocks.reduce((sum, f) => sum + ((f.tonnes || 0) * (f.price || 0)), 0);
                 const opex_Logistics = t3.totalAnnualLogisticsCost || 0;
                 const opex_Marketing = t4.marketingBudget || 0;
                 const opex_RetailCompliance = t4.soilAmendmentAnnualCost || 0;
@@ -514,7 +543,8 @@ window.navigate = function(url) { window.location.href = url; };
                 setText('summTax', formatMoney(tax));
                 setText('summIncentives', formatMoney(incentives));
 
-                renderKPIs(t1, t2, t4, t5);
+                renderKPIs(t1, t2, t4, t5, secondaryFeedstocks);
+                renderMrvFlag(t1, secondaryFeedstocks);
                 renderActionPlan(projectData);
                 renderPrintSummary(projectData);
 
@@ -559,7 +589,23 @@ window.navigate = function(url) { window.location.href = url; };
             }
         }
 
-        function renderKPIs(t1, t2, t4, t5) {
+        function renderMrvFlag(t1, secondaryFeedstocks) {
+            let count = 0;
+            if ((t1.feedstockTonnes || 0) > 0) count++;
+            if ((t1.woodTonnes || 0) > 0) count++;
+            count += secondaryFeedstocks.filter(f => !f.fromTool1).length;
+
+            const banner = document.getElementById('mrvFlag');
+            if (count > 2) {
+                document.getElementById('mrvFlagTitle').textContent = BiocharI18n.t('tool6.mrv_flag_title');
+                document.getElementById('mrvFlagMsg').textContent = BiocharI18n.t('tool6.mrv_flag_msg');
+                banner.classList.remove('hidden');
+            } else {
+                banner.classList.add('hidden');
+            }
+        }
+
+        function renderKPIs(t1, t2, t4, t5, secondaryFeedstocks) {
             const kpiContainer = document.getElementById('kpiContainer');
             kpiContainer.innerHTML = '';
 
@@ -586,12 +632,10 @@ window.navigate = function(url) { window.location.href = url; };
             let isHighRisk = (f1_cont === 'spot');
             let isMedRisk = (f1_cont === 'written' || f1_cont === 'verbal' || f1_comp === 'high' || f1_comp === 'moderate');
 
-            if (t1.seasonalityStrategy === 'diversify') {
-                const f2_comp = t2.diversified?.f2_competition;
-                const f2_cont = t2.diversified?.f2_contract;
-                if (f2_cont === 'spot') isHighRisk = true;
-                if (f2_cont === 'written' || f2_cont === 'verbal' || f2_comp === 'high' || f2_comp === 'moderate') isMedRisk = true;
-            }
+            secondaryFeedstocks.forEach(f => {
+                if (f.contract === 'spot') isHighRisk = true;
+                if (f.contract === 'written' || f.contract === 'verbal' || f.competition === 'high' || f.competition === 'moderate') isMedRisk = true;
+            });
 
             if (isHighRisk) {
                 addKPI('red', BiocharI18n.t('tool6.kpi_feedstock_high_title'), BiocharI18n.t('tool6.kpi_feedstock_high_msg'));
@@ -636,7 +680,7 @@ window.navigate = function(url) { window.location.href = url; };
             }
 
             // 8. Deforestation Risk
-            if (t2.diversified?.f2_isWood) {
+            if (secondaryFeedstocks.some(f => f.isWood)) {
                 addKPI('red', BiocharI18n.t('tool6.kpi_deforestation_title'), BiocharI18n.t('tool6.kpi_deforestation_msg'));
             }
 
