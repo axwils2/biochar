@@ -257,7 +257,7 @@ body {
 .btn-sm       { padding: 6px 12px; font-size: 11px; min-height: 32px; border-radius: 6px; }
 
 /* ─── Form Inputs ────────────────────────────────────────── */
-.input-label { display: block; font-size: 12px; font-weight: 600; color: var(--color-neutral-700); margin-bottom: 4px; }
+.input-label { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; font-size: 12px; font-weight: 600; color: var(--color-neutral-700); margin-bottom: 4px; }
 .input {
   display: block;
   width: 100%;

@@ -54,8 +54,10 @@
             <h2 class="section-card-header section-title-orange" data-i18n="tool5.working_capital_section">Working Capital &amp; Feedstock Financing</h2>
             <div class="bg-white p-4 rounded-lg border border-orange-200 mb-4">
                 <label class="block">
-                    <span class="input-label font-bold text-gray-800" data-i18n="tool5.working_capital_label">Amount to Finance (Working Capital)</span>
-                    <div class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.working_capital_tooltip">Pre-filled with Feedstock Purchase Cost (Tool 2) + Logistics Cost (Tool 3). Adjust if you only need to finance a portion.</span></div>
+                    <span class="input-label font-bold text-gray-800">
+                        <span data-i18n="tool5.working_capital_label">Amount to Finance (Working Capital)</span>
+                        <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.working_capital_tooltip">Pre-filled with Feedstock Purchase Cost (Tool 2) + Logistics Cost (Tool 3). Adjust if you only need to finance a portion.</span></span>
+                    </span>
                     <div class="flex items-center mt-1">
                         <input type="number" id="inputFeedstockLoanAmount" class="input font-bold text-orange-800 border-2 border-orange-300" min="0" data-i18n-placeholder="tool5.working_capital_placeholder">
                     </div>
@@ -101,16 +103,20 @@
 
                 <div id="woodChipperContainer" class="hidden p-4 bg-purple-50 border-2 border-purple-300 rounded-lg">
                     <label class="block">
-                        <span class="input-label font-bold text-purple-900" data-i18n="tool5.wood_chipper_label">Wood Chipper / Grinder ($)</span>
-                        <div class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.wood_chipper_tooltip">Required for processing woody feedstocks (from Tool 2).</span></div>
+                        <span class="input-label font-bold text-purple-900">
+                            <span data-i18n="tool5.wood_chipper_label">Wood Chipper / Grinder ($)</span>
+                            <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.wood_chipper_tooltip">Required for processing woody feedstocks (from Tool 2).</span></span>
+                        </span>
                         <input type="number" id="inputWoodChipperCost" value="15000" class="input border-purple-300 font-bold text-purple-900" min="0">
                     </label>
                 </div>
 
                 <div id="storageInfraContainer" class="hidden p-4 bg-orange-50 border border-orange-200 rounded-lg">
                     <label class="block">
-                        <span class="input-label font-bold text-orange-900" data-i18n="tool5.storage_infra_label">Feedstock Storage Infrastructure ($)</span>
-                        <div class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.storage_infra_tooltip">Required for "Store" strategy. Includes sheds, tarps, and concrete pads.</span></div>
+                        <span class="input-label font-bold text-orange-900">
+                            <span data-i18n="tool5.storage_infra_label">Feedstock Storage Infrastructure ($)</span>
+                            <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.storage_infra_tooltip">Required for "Store" strategy. Includes sheds, tarps, and concrete pads.</span></span>
+                        </span>
                         <input type="number" id="inputStorageInfra" value="10000" class="input border-orange-300" min="0">
                     </label>
                 </div>
@@ -137,8 +143,10 @@
                     </div>
 
                     <label class="block">
-                        <span class="input-label" data-i18n="tool5.ancillary_label">Other Ancillary Equipment ($)</span>
-                        <div class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.ancillary_tooltip">Scales, forklifts, pallet jacks, etc.</span></div>
+                        <span class="input-label">
+                            <span data-i18n="tool5.ancillary_label">Other Ancillary Equipment ($)</span>
+                            <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.ancillary_tooltip">Scales, forklifts, pallet jacks, etc.</span></span>
+                        </span>
                         <input type="number" id="inputAncillaryCost" value="25000" min="0" class="input">
                     </label>
                 </div>
@@ -148,8 +156,10 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="p-3 bg-gray-50 rounded-lg border border-gray-200 space-y-2">
                             <label class="block">
-                                <span class="input-label" data-i18n="tool5.logistics_trucks_label">1. Logistics Trucks (CAPEX)</span>
-                                <div class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.logistics_trucks_tooltip">For Owned trucks, operating cost (OPEX) is captured in tool3 for logistics routes.</span></div>
+                                <span class="input-label">
+                                    <span data-i18n="tool5.logistics_trucks_label">1. Logistics Trucks (CAPEX)</span>
+                                    <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.logistics_trucks_tooltip">For Owned trucks, operating cost (OPEX) is captured in tool3 for logistics routes.</span></span>
+                                </span>
                                 <em class="text-xs text-gray-500 block" data-i18n="tool5.logistics_trucks_note">The "Owned Trucks" used for feedstock transport in Tool 3.</em>
                             </label>
                             <label class="block">
@@ -163,8 +173,10 @@
                         </div>
                         <div class="p-3 bg-gray-50 rounded-lg border border-gray-200 space-y-2">
                             <label class="block">
-                                <span class="input-label" data-i18n="tool5.pickups_label">2. Pickups (CAPEX &amp; OPEX)</span>
-                                <div class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.pickups_tooltip">Mobile kiln relocation costs are captured separately below.</span></div>
+                                <span class="input-label">
+                                    <span data-i18n="tool5.pickups_label">2. Pickups (CAPEX &amp; OPEX)</span>
+                                    <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.pickups_tooltip">Mobile kiln relocation costs are captured separately below.</span></span>
+                                </span>
                                 <em class="text-xs text-gray-500 block" data-i18n="tool5.pickups_note">For managers, agronomists, general site tasks, or towing mobile kilns.</em>
                             </label>
                             <label class="block">
@@ -176,8 +188,10 @@
                                 <input type="number" id="inputPickupCost" value="30000" min="0" class="input">
                             </label>
                             <label class="block pt-2 border-t border-gray-300">
-                                <span class="input-label text-xs font-semibold" data-i18n="tool5.pickups_opex_label">Pickups Annual OPEX ($/yr)</span>
-                                <div class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.pickups_opex_tooltip">Fuel, maintenance, and insurance for your general site vehicle(s).</span></div>
+                                <span class="input-label text-xs font-semibold">
+                                    <span data-i18n="tool5.pickups_opex_label">Pickups Annual OPEX ($/yr)</span>
+                                    <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.pickups_opex_tooltip">Fuel, maintenance, and insurance for your general site vehicle(s).</span></span>
+                                </span>
                                 <input type="number" id="inputPickupsOpex" value="3000" min="0" class="input">
                             </label>
                         </div>
@@ -201,8 +215,10 @@
                             <input type="number" id="inputTimePerRelocation" value="8" min="0" class="input">
                         </label>
                         <label class="block">
-                            <span class="input-label" data-i18n="tool5.cost_per_hour_label">Hourly Cost per Relocation Trip</span>
-                            <div class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.cost_per_hour_tooltip">All-in cost for the tow vehicle (driver, fuel, maint, etc.) for a ONE-WAY trip.</span></div>
+                            <span class="input-label">
+                                <span data-i18n="tool5.cost_per_hour_label">Hourly Cost per Relocation Trip</span>
+                                <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.cost_per_hour_tooltip">All-in cost for the tow vehicle (driver, fuel, maint, etc.) for a ONE-WAY trip.</span></span>
+                            </span>
                             <input type="number" id="inputCostPerHourRelocation" value="25" min="0" class="input">
                         </label>
                     </div>
@@ -223,8 +239,10 @@
                     </label>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <label class="block">
-                            <span class="input-label" data-i18n="tool5.permit_label">One-time Permit Application Fees ($)</span>
-                            <div class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.permit_tooltip">Air quality permit application fees, lab fees, and consulting fees.</span></div>
+                            <span class="input-label">
+                                <span data-i18n="tool5.permit_label">One-time Permit Application Fees ($)</span>
+                                <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.permit_tooltip">Air quality permit application fees, lab fees, and consulting fees.</span></span>
+                            </span>
                             <input type="number" id="inputPermitCapex" value="12000" min="0" class="input">
                         </label>
                         <div>
@@ -322,13 +340,17 @@
             <div id="lcaCostContainer" class="hidden mt-6 pt-4 border-t border-blue-200">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <label class="block">
-                        <span class="input-label font-bold text-blue-800" data-i18n="tool5.lca_cost_label">One-time LCA Cost (CAPEX $)</span>
-                        <div class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.lca_cost_tooltip">Cost to hire a 3rd-party consultant for your Life Cycle Assessment (LCA), often required for certification.</span></div>
+                        <span class="input-label font-bold text-blue-800">
+                            <span data-i18n="tool5.lca_cost_label">One-time LCA Cost (CAPEX $)</span>
+                            <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.lca_cost_tooltip">Cost to hire a 3rd-party consultant for your Life Cycle Assessment (LCA), often required for certification.</span></span>
+                        </span>
                         <input type="number" id="inputLcaCost" value="5000" min="0" class="input border-2 border-blue-300">
                     </label>
                     <label class="block">
-                        <span class="input-label font-bold text-blue-800" data-i18n="tool5.lca_annual_label">Annual LCA Renewal (OPEX $)</span>
-                        <div class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.lca_annual_tooltip">Cost to refurbish the LCA data with a new audit.</span></div>
+                        <span class="input-label font-bold text-blue-800">
+                            <span data-i18n="tool5.lca_annual_label">Annual LCA Renewal (OPEX $)</span>
+                            <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.lca_annual_tooltip">Cost to refurbish the LCA data with a new audit.</span></span>
+                        </span>
                         <input type="number" id="inputLcaAnnualCost" value="2000" min="0" class="input border-2 border-blue-300">
                     </label>
                 </div>
@@ -340,8 +362,10 @@
 
             <div id="seasonalOpsContainer" class="hidden mb-6 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
                 <label class="block">
-                    <span class="input-label font-bold text-yellow-900" data-i18n="tool5.months_operational_label">Months of Operation per Year</span>
-                    <div class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.months_operational_tooltip">You selected "Shut Down" in Tool 1. Labor and Utility costs will be prorated based on this number.</span></div>
+                    <span class="input-label font-bold text-yellow-900">
+                        <span data-i18n="tool5.months_operational_label">Months of Operation per Year</span>
+                        <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.months_operational_tooltip">You selected "Shut Down" in Tool 1. Labor and Utility costs will be prorated based on this number.</span></span>
+                    </span>
                     <input type="number" id="inputMonthsOperational" value="3" min="1" max="12" class="input border-yellow-300 w-24">
                 </label>
             </div>
@@ -375,9 +399,9 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <label class="block"><span class="input-label" data-i18n="tool5.insurance_label">Insurance ($/yr)</span><div class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.insurance_tooltip">Typically 1-2% of total CAPEX.</span></div><input type="number" id="inputInsurance" value="5000" min="0" class="input"></label>
-                    <label class="block"><span class="input-label" data-i18n="tool5.utilities_label">Utilities ($/yr)</span><div class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.utilities_tooltip">Electricity, water, and dryer fuel.</span></div><input type="number" id="inputUtilities" value="8000" min="0" class="input"></label>
-                    <label class="block"><span class="input-label" data-i18n="tool5.regulatory_label">Air Quality Compliance ($/yr)</span><div class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.regulatory_tooltip">Annual testing and reporting.</span></div><input type="number" id="inputRegulatory" value="8000" min="0" class="input"></label>
+                    <label class="block"><span class="input-label"><span data-i18n="tool5.insurance_label">Insurance ($/yr)</span><span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.insurance_tooltip">Typically 1-2% of total CAPEX.</span></span></span><input type="number" id="inputInsurance" value="5000" min="0" class="input"></label>
+                    <label class="block"><span class="input-label"><span data-i18n="tool5.utilities_label">Utilities ($/yr)</span><span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.utilities_tooltip">Electricity, water, and dryer fuel.</span></span></span><input type="number" id="inputUtilities" value="8000" min="0" class="input"></label>
+                    <label class="block"><span class="input-label"><span data-i18n="tool5.regulatory_label">Air Quality Compliance ($/yr)</span><span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.regulatory_tooltip">Annual testing and reporting.</span></span></span><input type="number" id="inputRegulatory" value="8000" min="0" class="input"></label>
                 </div>
             </div>
         </div>
@@ -392,8 +416,10 @@
                 </label>
                 <div id="forwardContractDetails" class="hidden mt-4 pl-4 border-l-2 border-green-300 space-y-4">
                     <label class="block">
-                        <span class="input-label font-semibold text-green-800" data-i18n="tool5.prepayment_label">Upfront Cash Prepayment ($)</span>
-                        <div class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.prepayment_tooltip">Cash received before delivery. Often used to cover initial equipment down payments or Year 1 operating costs.</span></div>
+                        <span class="input-label font-semibold text-green-800">
+                            <span data-i18n="tool5.prepayment_label">Upfront Cash Prepayment ($)</span>
+                            <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.prepayment_tooltip">Cash received before delivery. Often used to cover initial equipment down payments or Year 1 operating costs.</span></span>
+                        </span>
                         <input type="number" id="inputPrepayment" value="0" min="0" class="input border-green-300">
                     </label>
                     <p class="text-sm text-green-700 italic" data-i18n="tool5.prepayment_tip">Tip: A forward contract can often secure a lower interest rate from your bank.</p>
@@ -418,13 +444,17 @@
                     <input type="number" id="inputIncentives" value="0" min="0" class="input">
                 </label>
                 <label class="block">
-                    <span class="input-label" data-i18n="tool5.discount_rate_label">Discount Rate for NPV (%)</span>
-                    <div class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.discount_rate_tooltip">Used for Net Present Value (NPV). It's your 'hurdle rate' or the minimum return you expect, accounting for risk.</span></div>
+                    <span class="input-label">
+                        <span data-i18n="tool5.discount_rate_label">Discount Rate for NPV (%)</span>
+                        <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.discount_rate_tooltip">Used for Net Present Value (NPV). It's your 'hurdle rate' or the minimum return you expect, accounting for risk.</span></span>
+                    </span>
                     <input type="number" id="inputDiscountRate" value="10" min="0" class="input">
                 </label>
                 <label class="block">
-                    <span class="input-label" data-i18n="tool5.project_life_label">Project Lifetime (Years)</span>
-                    <div class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.project_life_tooltip">The number of years to model for your financial projections (e.g., 10 years).</span></div>
+                    <span class="input-label">
+                        <span data-i18n="tool5.project_life_label">Project Lifetime (Years)</span>
+                        <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.project_life_tooltip">The number of years to model for your financial projections (e.g., 10 years).</span></span>
+                    </span>
                     <input type="number" id="inputProjectLife" value="10" min="1" max="30" class="input">
                 </label>
             </div>

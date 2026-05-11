@@ -79,8 +79,10 @@
                     <p id="loadingIndicator" class="text-xs text-yellow-700 mt-1" data-i18n="tool3.loading_from_t2">Loading from Tool 2...</p>
                 </label>
                 <label class="block">
-                    <span class="input-label font-semibold text-gray-900" data-i18n="tool3.self_delivered_label">(-) Self-Delivered ($0 Cost)</span>
-                    <div class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool3.self_delivered_tooltip">Feedstock that arrives at the kiln with NO logistics cost to you.</span></div>
+                    <span class="input-label font-semibold text-gray-900">
+                        <span data-i18n="tool3.self_delivered_label">(-) Self-Delivered ($0 Cost)</span>
+                        <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool3.self_delivered_tooltip">Feedstock that arrives at the kiln with NO logistics cost to you.</span></span>
+                    </span>
                     <input type="number" id="inputSelfDelivered" value="0" min="0" class="input border-yellow-400" required>
                 </label>
                 <div class="flex flex-col justify-center p-3 bg-yellow-100 rounded-lg border-2 border-yellow-300 text-center">
@@ -91,8 +93,10 @@
 
             <div id="annualRainContainer" class="mb-4 hidden">
                 <label class="block">
-                    <span class="input-label" data-i18n="tool3.rainy_months_label">Annual Rainy Season Duration (Months/Year)</span>
-                    <div class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool3.rainy_months_tooltip">Used to weight the annual cost between Dry and Rainy season rates.</span></div>
+                    <span class="input-label">
+                        <span data-i18n="tool3.rainy_months_label">Annual Rainy Season Duration (Months/Year)</span>
+                        <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool3.rainy_months_tooltip">Used to weight the annual cost between Dry and Rainy season rates.</span></span>
+                    </span>
                     <input type="range" id="inputRainyMonths" min="0" max="12" value="6" class="w-full h-2 bg-blue-200 rounded-lg appearance-none cursor-pointer mt-2">
                     <div class="flex justify-between text-xs text-gray-500 px-1 mt-1">
                         <span data-i18n="tool3.rainy_slider_left">0m (All Dry)</span><span id="rainyMonthsVal" class="font-bold text-blue-600">6 months</span><span data-i18n="tool3.rainy_slider_right">12m (All Rainy)</span>
@@ -211,8 +215,10 @@
 
                 <div class="space-y-3 bg-gray-100 p-4 rounded-lg border-2 border-gray-300">
                     <label class="block">
-                        <span class="input-label font-bold text-gray-800" data-i18n="tool3.truck_model_label">Truck Ownership Model</span>
-                        <div class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool3.truck_model_tooltip">Select 'Owned' if you pay a driver by the hour. Select 'Hired' if you pay a flat fee per trip.</span></div>
+                        <span class="input-label font-bold text-gray-800">
+                            <span data-i18n="tool3.truck_model_label">Truck Ownership Model</span>
+                            <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool3.truck_model_tooltip">Select 'Owned' if you pay a driver by the hour. Select 'Hired' if you pay a flat fee per trip.</span></span>
+                        </span>
                         <select class="input route-method font-medium text-gray-900">
                             <option value="" disabled selected data-i18n="tool3.truck_model_placeholder">-- Select Ownership Model --</option>
                             <option value="time" data-i18n="tool3.truck_model_time">Owned Truck (Time-Based Calc)</option>
@@ -222,8 +228,10 @@
 
                     <div class="time-inputs hidden space-y-5 mt-4">
                         <label class="block">
-                            <span class="input-label font-semibold" data-i18n="tool3.hourly_rate_label">All-In Hourly Cost ($/hr)</span>
-                            <div class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool3.hourly_rate_tooltip">Include operating expenses such as fuel, maintenance, repairs, insurance, and registration. Do not include driver wages (those should be entered in Tool 5 with salaries) or the cost of buying the vehicle (also in Tool 5). If unsure, ask the AI assistant: "Help me estimate my truck's hourly operating cost."</span></div>
+                            <span class="input-label font-semibold">
+                                <span data-i18n="tool3.hourly_rate_label">All-In Hourly Cost ($/hr)</span>
+                                <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool3.hourly_rate_tooltip">Include operating expenses such as fuel, maintenance, repairs, insurance, and registration. Do not include driver wages (those should be entered in Tool 5 with salaries) or the cost of buying the vehicle (also in Tool 5). If unsure, ask the AI assistant: "Help me estimate my truck's hourly operating cost."</span></span>
+                            </span>
                             <input type="number" class="input route-rate border-2 border-gray-300" value="55" min="0">
                         </label>
                         <div class="grid grid-cols-2 gap-4">

@@ -152,8 +152,10 @@
 
 <div class="section-card bg-white border-gray-200">
     <label class="block">
-        <span class="input-label font-bold text-gray-800" data-i18n="tool2.carbon_source_label">My carbon &amp; yield values are based on:</span>
-        <div class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.carbon_source_tooltip">Using your own lab results is highly recommended for an accurate projection.</span></div>
+        <span class="input-label font-bold text-gray-800">
+            <span data-i18n="tool2.carbon_source_label">My carbon &amp; yield values are based on:</span>
+            <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.carbon_source_tooltip">Using your own lab results is highly recommended for an accurate projection.</span></span>
+        </span>
         <select id="selectCarbonDataSource" class="input border-2 border-blue-300">
             <option value="calculator_defaults" data-i18n="tool2.carbon_source_defaults">Calculator Defaults</option>
             <option value="lab_results" data-i18n="tool2.carbon_source_lab">My Own Lab Results</option>
@@ -280,8 +282,10 @@
 
             <div id="customKilnContainer" class="hidden mt-4 p-4 bg-gray-100 rounded-lg border border-gray-300">
                 <label class="block">
-                    <span class="input-label font-bold text-gray-800" data-i18n="tool2.kiln_custom_price_label">Custom Kiln Price ($)</span>
-                    <div class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.kiln_custom_price_tooltip">Enter the total price for ONE kiln/unit. The calculator will multiply this by the "Number of Kilns" below.</span></div>
+                    <span class="input-label font-bold text-gray-800">
+                        <span data-i18n="tool2.kiln_custom_price_label">Custom Kiln Price ($)</span>
+                        <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.kiln_custom_price_tooltip">Enter the total price for ONE kiln/unit. The calculator will multiply this by the "Number of Kilns" below.</span></span>
+                    </span>
                     <input type="number" id="inputCustomKilnPrice" class="input" value="0" min="0">
                 </label>
             </div>
