@@ -444,7 +444,7 @@
                 <div class="tooltip-wrap"><span class="tooltip-icon">?</span><span class="tooltip-text card-tooltip-carbon"></span></div>
               </span>
             </div>
-            <input type="number" data-field="carbon" value="80" class="input" min="0" step="0.1">
+            <input type="number" data-field="carbon" value="45" class="input" min="0" step="0.1">
           </div>
           <div class="step-connector">&rarr;</div>
           <div class="step-output-area"><span class="step-output-label card-label-stable-carbon"></span><div data-output="stableCarbon" class="step-output-value">0 tonnes</div></div>
@@ -627,7 +627,7 @@ function loadProject() {
         const existingWoodIdx = secondaryFeedstocks.findIndex(f => f.fromTool1);
         if (woodTonnes > 0) {
             if (existingWoodIdx === -1) {
-                secondaryFeedstocks.unshift({ name: '', tonnes: woodTonnes, ash: 2, yield: 30, carbon: 80, price: 0, competition: 'own', contract: 'own', isWood: true, conv: 2.63, fromTool1: true });
+                secondaryFeedstocks.unshift({ name: '', tonnes: woodTonnes, ash: 2, yield: 30, carbon: 70, price: 0, competition: 'own', contract: 'own', isWood: true, conv: 2.63, fromTool1: true });
             } else {
                 secondaryFeedstocks[existingWoodIdx].tonnes = woodTonnes;
             }
@@ -655,7 +655,7 @@ function loadProject() {
         document.getElementById('navigationButtons').classList.add('hidden');
 
         if (woodTonnes > 0) {
-            renderSecondaryCard({ name: '', tonnes: woodTonnes, ash: 2, yield: 30, carbon: 80, price: 0, competition: 'own', contract: 'own', isWood: true, conv: 2.63, fromTool1: true });
+            renderSecondaryCard({ name: '', tonnes: woodTonnes, ash: 2, yield: 30, carbon: 70, price: 0, competition: 'own', contract: 'own', isWood: true, conv: 2.63, fromTool1: true });
         }
     }
 
@@ -710,7 +710,7 @@ function renderSecondaryCard(feedstock) {
     card.querySelector('[data-field="tonnes"]').value = feedstock.tonnes || 0;
     card.querySelector('[data-field="ash"]').value = feedstock.ash !== undefined ? feedstock.ash : 2;
     card.querySelector('[data-field="yield"]').value = feedstock.yield !== undefined ? feedstock.yield : 30;
-    card.querySelector('[data-field="carbon"]').value = feedstock.carbon !== undefined ? feedstock.carbon : 80;
+    card.querySelector('[data-field="carbon"]').value = feedstock.carbon !== undefined ? feedstock.carbon : (feedstock.isWood ? 70 : 45);
     card.querySelector('[data-field="conv"]').value = feedstock.conv || 2.63;
 
     if (feedstock.fromTool1) card.dataset.fromTool1 = 'true';
@@ -719,7 +719,7 @@ function renderSecondaryCard(feedstock) {
         if (this.checked) {
             card.querySelector('[data-field="ash"]').value = 2;
             card.querySelector('[data-field="yield"]').value = 30;
-            card.querySelector('[data-field="carbon"]').value = 80;
+            card.querySelector('[data-field="carbon"]').value = 70;
         }
         setUnsaved();
         calculateAll();
@@ -758,7 +758,7 @@ function updateSecondarySection() {
 }
 
 function addSecondaryFeedstock() {
-    renderSecondaryCard({ name: '', tonnes: 0, ash: 2, yield: 30, carbon: 80, price: 0, competition: 'own', contract: 'own', isWood: false, conv: 2.63, fromTool1: false });
+    renderSecondaryCard({ name: '', tonnes: 0, ash: 2, yield: 30, carbon: 45, price: 0, competition: 'own', contract: 'own', isWood: false, conv: 2.63, fromTool1: false });
     document.getElementById('secondaryFeedstocksSection').classList.remove('hidden');
     setUnsaved();
     calculateAll();
