@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="admin.page_title">Admin — Biochar Calculator</title>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="engine.js"></script>
+<script src="translations.js"></script>
+<script src="i18n.js"></script>
+<script src="auth.js"></script>
+<link rel="stylesheet" href="styles.css">
+<style>
+.admin-section { max-width: 800px; margin: 0 auto 2rem; }
+.admin-section-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-primary-deepest);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-neutral-200);
+}
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+.data-table th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  background: var(--color-neutral-100);
+  color: var(--color-neutral-600);
+  font-weight: 600;
+  border-bottom: 1px solid var(--color-neutral-200);
+}
+.data-table td {
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--color-neutral-100);
+  color: var(--color-neutral-800);
+}
+.data-table tr:hover td { background: var(--color-neutral-50); }
+.role-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 1px 8px;
+  border-radius: var(--radius-pill);
+}
+.role-admin { background: var(--color-primary-light); color: var(--color-primary-dark); border: 1px solid var(--color-primary-border); }
+.role-user  { background: var(--color-neutral-100); color: var(--color-neutral-500); border: 1px solid var(--color-neutral-200); }
+.action-card {
+  background: #fff;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.action-card-text { flex: 1; }
+.action-card-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-neutral-900);
+  margin-bottom: 0.25rem;
+}
+.action-card-desc { font-size: 0.82rem; color: var(--color-neutral-500); }
+.action-result {
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  display: none;
+}
+.action-result.success {
+  display: block;
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  border: 1px solid var(--color-primary-border);
+}
+.action-result.error {
+  display: block;
+  background: var(--color-danger-bg);
+  color: var(--color-danger-text);
+  border: 1px solid var(--color-danger-border, #fca5a5);
+}
+#loadingScreen {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: var(--color-neutral-500);
+}
+#adminContent { display: none; }
+</style>
+</head>
+
+<body>
+
+<!-- ── App Header ─────────────────────────────────────────── -->
+<header class="app-header">
+  <a href="index.html" class="app-logo">
+    <div class="app-logo-mark"></div>
+    <span class="app-logo-name" data-i18n="common.header_h1">Biochar Calculator</span>
+  </a>
+  <div style="display:flex;align-items:center;gap:0.75rem;">
+    <a href="projects.html" class="btn btn-ghost btn-sm" data-i18n="common.my_projects">My Projects</a>
+    <button onclick="BiocharAuth.signOut()" class="btn btn-ghost btn-sm" data-i18n="common.sign_out">Sign out</button>
+  </div>
+</header>
+
+<!-- ── Page Content ───────────────────────────────────────── -->
+<main class="page-content">
+
+  <div id="loadingScreen" data-i18n="admin.loading">Verifying access…</div>
+
+  <div id="adminContent">
+
+    <!-- Page heading -->
+    <div class="admin-section" style="margin-bottom:1.5rem;">
+      <h1 style="font-size:1.5rem;font-weight:800;color:var(--color-primary-deepest);" data-i18n="admin.heading">
+        Admin Panel
+      </h1>
+    </div>
+
+    <!-- ── Actions ─────────────────────────────────────── -->
+    <div class="admin-section">
+      <div class="admin-section-title" data-i18n="admin.actions_heading">Actions</div>
+
+      <div class="action-card">
+        <div class="action-card-text">
+          <div class="action-card-title" data-i18n="admin.currency_title">Update Currency Rates</div>
+          <div class="action-card-desc" data-i18n="admin.currency_desc">
+            Fetches the latest USD exchange rates from an external API and writes them to the database.
+            These rates populate country-specific cost defaults in the calculator.
+          </div>
+          <div id="currencyResult" class="action-result"></div>
+        </div>
+        <button id="currencyBtn" class="btn btn-primary btn-sm" style="flex-shrink:0;"
+                data-i18n="admin.currency_btn">
+          Update Rates
+        </button>
+      </div>
+    </div>
+
+    <!-- ── Users ───────────────────────────────────────── -->
+    <div class="admin-section">
+      <div class="admin-section-title" data-i18n="admin.users_heading">Users</div>
+      <div class="section-card" style="padding:0;overflow:hidden;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th data-i18n="admin.users_col_email">Email</th>
+              <th data-i18n="admin.users_col_role">Role</th>
+              <th data-i18n="admin.users_col_joined">Joined</th>
+            </tr>
+          </thead>
+          <tbody id="usersTableBody">
+            <tr><td colspan="3" style="text-align:center;padding:1.5rem;color:var(--color-neutral-400);"
+                    data-i18n="admin.users_loading">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- /adminContent -->
+</main>
+
+<script>
+// Edge Function URL — update after deploying the Supabase Edge Function
+const EDGE_FUNCTION_URL = 'REPLACE_WITH_YOUR_SUPABASE_PROJECT_URL/functions/v1/update-currency-rates';
+
+function formatDate(isoString) {
+  return new Date(isoString).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+}
+
+async function loadUsers() {
+  const client = BiocharAuth.getClient();
+  const tbody = document.getElementById('usersTableBody');
+
+  const { data, error } = await client
+    .from('profiles')
+    .select('email, role, created_at')
+    .order('created_at', { ascending: false });
+
+  if (error || !data) {
+    tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;padding:1rem;color:var(--color-danger-text);">
+      ${BiocharI18n.t('admin.users_error')}</td></tr>`;
+    return;
+  }
+
+  if (data.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;padding:1rem;color:var(--color-neutral-400);">
+      ${BiocharI18n.t('admin.users_empty')}</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = data.map(u => `
+    <tr>
+      <td>${escHtml(u.email)}</td>
+      <td><span class="role-badge ${u.role === 'admin' ? 'role-admin' : 'role-user'}">${escHtml(u.role)}</span></td>
+      <td>${formatDate(u.created_at)}</td>
+    </tr>
+  `).join('');
+}
+
+async function updateCurrencyRates() {
+  const btn = document.getElementById('currencyBtn');
+  const result = document.getElementById('currencyResult');
+  result.className = 'action-result';
+  btn.disabled = true;
+  btn.textContent = BiocharI18n.t('admin.currency_updating');
+
+  const client = BiocharAuth.getClient();
+  const { data: { session } } = await client.auth.getSession();
+
+  try {
+    const res = await fetch(EDGE_FUNCTION_URL, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${session.access_token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    const json = await res.json();
+    if (!res.ok) throw new Error(json.error || res.statusText);
+    result.textContent = BiocharI18n.t('admin.currency_success', { n: json.updated ?? '?' });
+    result.className = 'action-result success';
+  } catch (e) {
+    result.textContent = e.message || BiocharI18n.t('admin.currency_error');
+    result.className = 'action-result error';
+  }
+
+  btn.disabled = false;
+  btn.textContent = BiocharI18n.t('admin.currency_btn');
+}
+
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const session = await BiocharAuth.requireAuth();
+  if (!session) return;
+
+  // Check admin role
+  const client = BiocharAuth.getClient();
+  const { data: profile } = await client
+    .from('profiles')
+    .select('role')
+    .eq('id', session.user.id)
+    .single();
+
+  if (!profile || profile.role !== 'admin') {
+    document.getElementById('loadingScreen').textContent = BiocharI18n.t('admin.access_denied');
+    return;
+  }
+
+  document.getElementById('loadingScreen').style.display = 'none';
+  document.getElementById('adminContent').style.display = 'block';
+
+  document.getElementById('currencyBtn').addEventListener('click', updateCurrencyRates);
+  await loadUsers();
+});
+</script>
+
+</body>
+</html>

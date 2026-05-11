@@ -74,11 +74,79 @@
     }
 
 
+    // ── Cloud sync (Supabase) ────────────────────────────────
+    // These methods are no-ops when no Supabase session exists,
+    // so calling them unconditionally from tool pages is safe.
+
+    /**
+     * Upserts the current in-memory project data to Supabase.
+     * @param {string} projectKey - The project_key slug (from tool1.projectId).
+     */
+    async function saveToCloud(projectKey) {
+        if (!projectKey) return;
+        const auth = window.BiocharAuth;
+        if (!auth) return;
+        const session = auth.getSession();
+        if (!session) return;
+
+        const client = auth.getClient();
+        if (!client) return;
+
+        const data = loadProjectData();
+        const { error } = await client.from('projects').upsert(
+            {
+                user_id:     session.user.id,
+                project_key: projectKey,
+                data:        data,
+                updated_at:  new Date().toISOString(),
+            },
+            { onConflict: 'user_id,project_key' }
+        );
+        if (error) console.error('BiocharEngine.saveToCloud error:', error.message);
+    }
+
+    /**
+     * Fetches a project from Supabase and writes it into localStorage.
+     * @param {string} projectKey - The project_key to load.
+     */
+    async function loadFromCloud(projectKey) {
+        const auth = window.BiocharAuth;
+        if (!auth) return;
+        const client = auth.getClient();
+        if (!client) return;
+
+        const { data, error } = await client
+            .from('projects')
+            .select('data')
+            .eq('project_key', projectKey)
+            .single();
+
+        if (error) {
+            console.error('BiocharEngine.loadFromCloud error:', error.message);
+            return;
+        }
+        if (data && data.data) {
+            _cachedData = null; // clear cache before writing
+            saveProjectData(data.data);
+        }
+    }
+
+    /**
+     * No-op stub kept for backwards compatibility; Supabase client is
+     * initialised in auth.js. Call this to ensure auth.js has run first.
+     */
+    function initSupabase() {
+        // auth.js initialises the client; nothing to do here.
+    }
+
     // Expose the public API on the window object
     window.BiocharEngine = {
-        loadProjectData: loadProjectData,
-        saveProjectData: saveProjectData,
-        clearProjectData: clearProjectData // *** NEW ***
+        loadProjectData:  loadProjectData,
+        saveProjectData:  saveProjectData,
+        clearProjectData: clearProjectData,
+        saveToCloud:      saveToCloud,
+        loadFromCloud:    loadFromCloud,
+        initSupabase:     initSupabase,
     };
 
 })(window);

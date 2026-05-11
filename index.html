@@ -5,9 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title data-i18n="index.page_title">Biochar Feasibility Platform</title>
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="engine.js"></script>
 <script src="translations.js"></script>
 <script src="i18n.js"></script>
+<script src="auth.js"></script>
 <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -19,6 +21,7 @@
     <div class="app-logo-mark"></div>
     <span class="app-logo-name" data-i18n="common.header_h1">Biochar Calculator</span>
   </a>
+  <a id="authHeaderLink" href="login.html" class="btn btn-ghost btn-sm hidden" style="font-size:0.8rem;" data-i18n="common.sign_in">Sign in →</a>
   <select id="lang-select" onchange="BiocharI18n.setLanguage(this.value)" class="app-lang-select">
     <option value="en">EN 🇺🇸</option>
     <option value="es">ES 🇪🇸</option>
@@ -146,6 +149,7 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+  BiocharAuth.updateHeaderLink();
   const currentId = localStorage.getItem("currentProjectId");
   const hasData = localStorage.getItem("biocharProjectData");
   if (currentId || hasData) {

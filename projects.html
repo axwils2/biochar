@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="projects.page_title">My Projects — Biochar Calculator</title>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="engine.js"></script>
+<script src="translations.js"></script>
+<script src="i18n.js"></script>
+<script src="auth.js"></script>
+<link rel="stylesheet" href="styles.css">
+<style>
+.project-list { max-width: 640px; margin: 0 auto; }
+.project-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+  gap: 1rem;
+}
+.project-meta { flex: 1; min-width: 0; }
+.project-key {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--color-neutral-900);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.project-updated {
+  font-size: 0.78rem;
+  color: var(--color-neutral-500);
+  margin-top: 2px;
+}
+.project-actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--color-neutral-500);
+}
+.empty-state-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+.empty-state-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-neutral-700);
+  margin-bottom: 0.35rem;
+}
+.page-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.page-heading {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--color-primary-deepest);
+}
+.user-email {
+  font-size: 0.8rem;
+  color: var(--color-neutral-500);
+  max-width: 640px;
+  margin: 0 auto 1.25rem;
+}
+#loadingState {
+  text-align: center;
+  padding: 2rem;
+  color: var(--color-neutral-500);
+  font-size: 0.9rem;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ── App Header ─────────────────────────────────────────── -->
+<header class="app-header">
+  <a href="index.html" class="app-logo">
+    <div class="app-logo-mark"></div>
+    <span class="app-logo-name" data-i18n="common.header_h1">Biochar Calculator</span>
+  </a>
+  <button onclick="BiocharAuth.signOut()" class="btn btn-ghost btn-sm" data-i18n="common.sign_out">
+    Sign out
+  </button>
+</header>
+
+<!-- ── Page Content ───────────────────────────────────────── -->
+<main class="page-content">
+
+  <p id="userEmailDisplay" class="user-email"></p>
+
+  <div class="page-title-row">
+    <h1 class="page-heading" data-i18n="projects.heading">My Projects</h1>
+    <button id="newProjectBtn" class="btn btn-primary btn-sm" data-i18n="projects.new_btn">
+      + New Project
+    </button>
+  </div>
+
+  <div id="loadingState" data-i18n="projects.loading">Loading your projects…</div>
+
+  <div id="projectList" class="project-list" style="display:none;"></div>
+
+  <div id="emptyState" class="project-list" style="display:none;">
+    <div class="empty-state">
+      <div class="empty-state-icon">🌱</div>
+      <p class="empty-state-title" data-i18n="projects.empty_title">No projects yet</p>
+      <p data-i18n="projects.empty_desc">Create your first project to get started.</p>
+    </div>
+  </div>
+
+</main>
+
+<script>
+let _user = null;
+
+function timeAgo(isoString) {
+  const diff = Date.now() - new Date(isoString).getTime();
+  const mins  = Math.floor(diff / 60000);
+  const hours = Math.floor(mins / 60);
+  const days  = Math.floor(hours / 24);
+  if (days  > 0) return BiocharI18n.t('projects.updated_days',  { n: days });
+  if (hours > 0) return BiocharI18n.t('projects.updated_hours', { n: hours });
+  if (mins  > 0) return BiocharI18n.t('projects.updated_mins',  { n: mins });
+  return BiocharI18n.t('projects.updated_now');
+}
+
+async function loadProjects() {
+  const client = BiocharAuth.getClient();
+  const { data, error } = await client
+    .from('projects')
+    .select('id, project_key, display_name, updated_at')
+    .order('updated_at', { ascending: false });
+
+  document.getElementById('loadingState').style.display = 'none';
+
+  if (error || !data || data.length === 0) {
+    document.getElementById('emptyState').style.display = 'block';
+    return;
+  }
+
+  const list = document.getElementById('projectList');
+  list.style.display = 'block';
+  list.innerHTML = '';
+
+  data.forEach(project => {
+    const row = document.createElement('div');
+    row.className = 'project-row';
+    row.innerHTML = `
+      <div class="project-meta">
+        <div class="project-key">${escHtml(project.display_name || project.project_key)}</div>
+        <div class="project-updated">${BiocharI18n.t('projects.updated_label')} ${timeAgo(project.updated_at)}</div>
+      </div>
+      <div class="project-actions">
+        <button class="btn btn-primary btn-sm" data-i18n="projects.open_btn"
+                onclick="openProject('${escHtml(project.project_key)}')">
+          Open
+        </button>
+        <button class="btn btn-danger btn-sm" data-i18n="projects.delete_btn"
+                onclick="deleteProject('${escHtml(project.project_key)}', '${escHtml(project.id)}', this.closest('.project-row'))">
+          Delete
+        </button>
+      </div>
+    `;
+    list.appendChild(row);
+  });
+}
+
+async function openProject(projectKey) {
+  await BiocharEngine.loadFromCloud(projectKey);
+  localStorage.setItem('currentProjectId', projectKey);
+  window.location.href = 'tool1.html';
+}
+
+async function deleteProject(projectKey, projectId, rowEl) {
+  const label = projectKey;
+  if (!confirm(BiocharI18n.t('projects.confirm_delete', { name: label }))) return;
+
+  const client = BiocharAuth.getClient();
+  const { error } = await client
+    .from('projects')
+    .delete()
+    .eq('id', projectId);
+
+  if (error) {
+    alert(BiocharI18n.t('projects.delete_error'));
+    return;
+  }
+  rowEl.remove();
+  const list = document.getElementById('projectList');
+  if (!list.querySelector('.project-row')) {
+    list.style.display = 'none';
+    document.getElementById('emptyState').style.display = 'block';
+  }
+}
+
+function startNewProject() {
+  BiocharEngine.clearProjectData();
+  window.location.href = 'tool1.html';
+}
+
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const session = await BiocharAuth.requireAuth();
+  if (!session) return;
+
+  _user = session.user;
+  const emailEl = document.getElementById('userEmailDisplay');
+  if (emailEl) emailEl.textContent = _user.email;
+
+  document.getElementById('newProjectBtn').addEventListener('click', startNewProject);
+
+  await BiocharEngine.initSupabase();
+  await loadProjects();
+});
+</script>
+
+</body>
+</html>

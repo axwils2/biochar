@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="tool3.page_title">Biochar Logistics Calc (Tool 3)</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="engine.js"></script>
     <script src="translations.js"></script>
     <script src="i18n.js"></script>
+<script src="auth.js"></script>
 <link rel="stylesheet" href="styles.css">
 
     <style>
@@ -39,6 +41,7 @@
   <span class="app-step-badge">3</span>
   <span class="app-step-name" data-i18n="tool3.step_name">Logistics</span>
   <span class="app-step-of">· 3 of 7</span>
+  <a id="authHeaderLink" href="login.html" class="btn btn-ghost btn-sm hidden" style="font-size:0.8rem;" data-i18n="common.sign_in">Sign in &rarr;</a>
   <select id="lang-select" onchange="BiocharI18n.setLanguage(this.value)" class="app-lang-select">
     <option value="en">EN 🇺🇸</option>
     <option value="es">ES 🇪🇸</option>
@@ -326,6 +329,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            BiocharAuth.updateHeaderLink();
             // 1. Load data
             if (window.BiocharEngine && BiocharEngine.loadProjectData) {
                 projectData = BiocharEngine.loadProjectData() || {};
@@ -554,6 +558,8 @@
                         ...(projectData || {}),
                         tool3: projectData.tool3
                     });
+                    const _pk3 = (projectData.tool1 || {}).projectId || localStorage.getItem('currentProjectId');
+                    if (_pk3) BiocharEngine.saveToCloud(_pk3);
                 } else {
                     const existing = JSON.parse(localStorage.getItem("biocharProjectData") || "{}");
                     const merged = {

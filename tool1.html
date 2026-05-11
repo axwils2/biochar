@@ -5,9 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title data-i18n="tool1.page_title">Biochar Project Setup (Tool 1)</title>
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="engine.js"></script>
 <script src="translations.js"></script>
 <script src="i18n.js"></script>
+<script src="auth.js"></script>
 <link rel="stylesheet" href="styles.css">
 <style>
 /* Accordion */
@@ -41,6 +43,7 @@
   <span class="app-step-badge">1</span>
   <span class="app-step-name" data-i18n="tool1.step_name">Project Info</span>
   <span class="app-step-of">· 1 of 7</span>
+  <a id="authHeaderLink" href="login.html" class="btn btn-ghost btn-sm hidden" style="font-size:0.8rem;" data-i18n="common.sign_in">Sign in &rarr;</a>
   <select id="lang-select" onchange="BiocharI18n.setLanguage(this.value)" class="app-lang-select">
     <option value="en">EN 🇺🇸</option>
     <option value="es">ES 🇪🇸</option>
@@ -374,6 +377,7 @@ document.getElementById("selectSupplyModel")?.addEventListener("change", updateS
 document.getElementById("selectSeasonalityStrategy")?.addEventListener("change", updateSeasonalityUI);
 
 document.addEventListener("DOMContentLoaded", () => {
+  BiocharAuth.updateHeaderLink();
   let stored = null;
   if (window.BiocharEngine && BiocharEngine.loadProjectData) {
     stored = BiocharEngine.loadProjectData();
@@ -516,6 +520,7 @@ saveButton?.addEventListener("click", () => {
     localStorage.setItem("biocharProjectData", JSON.stringify({ ...existing, tool1: projectData.tool1 }));
   }
   localStorage.setItem("currentProjectId", projectId);
+  if (window.BiocharEngine) BiocharEngine.saveToCloud(projectId);
   hasUnsavedChanges = false;
   if (unsavedWarning) unsavedWarning.classList.add("hidden");
   if (savedConfirmation) savedConfirmation.classList.remove("hidden");

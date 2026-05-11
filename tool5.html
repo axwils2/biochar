@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="tool5.page_title">Biochar Finance & Ops Calc (Tool 5)</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="engine.js"></script>
     <script src="translations.js"></script>
     <script src="i18n.js"></script>
+<script src="auth.js"></script>
 <link rel="stylesheet" href="styles.css">
     <style>
         .section-title-orange { color: #c2410c; border-color: #fed7aa; }
@@ -28,6 +30,7 @@
   <span class="app-step-badge">5</span>
   <span class="app-step-name" data-i18n="tool5.step_name">Finance</span>
   <span class="app-step-of">· 5 of 7</span>
+  <a id="authHeaderLink" href="login.html" class="btn btn-ghost btn-sm hidden" style="font-size:0.8rem;" data-i18n="common.sign_in">Sign in &rarr;</a>
   <select id="lang-select" onchange="BiocharI18n.setLanguage(this.value)" class="app-lang-select">
     <option value="en">EN 🇺🇸</option>
     <option value="es">ES 🇪🇸</option>
@@ -561,6 +564,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            BiocharAuth.updateHeaderLink();
             saveButton = document.getElementById('saveToDbButton');
             navigationButtons = document.getElementById('navigationButtons');
             saveStatus = document.getElementById('saveStatus');
@@ -845,6 +849,8 @@
 
                 if (window.BiocharEngine) {
                     BiocharEngine.saveProjectData(projectData);
+                    const _pk5 = (projectData.tool1 || {}).projectId || localStorage.getItem('currentProjectId');
+                    if (_pk5) BiocharEngine.saveToCloud(_pk5);
                 } else {
                     localStorage.setItem('biocharProjectData', JSON.stringify(projectData));
                 }
