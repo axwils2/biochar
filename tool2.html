@@ -843,7 +843,7 @@ function saveProject() {
     let kilnName = selectedKiln.text;
 
     if (selectedKiln.value === 'custom') {
-        kilnPrice = getNum('inputCustomKilnPrice');
+        kilnPrice = BiocharCurrency.toBase(getNum('inputCustomKilnPrice'), _fieldCurrencies.inputs['inputCustomKilnPrice'] || 'USD');
         kilnName = 'Custom';
     }
 
@@ -1041,7 +1041,10 @@ function updateTotalCapex() {
 
     let kilnPrice = 0;
     if (kilnSelect.value === 'custom') {
-        kilnPrice = parseFloat(document.getElementById('inputCustomKilnPrice').value) || 0;
+        kilnPrice = BiocharCurrency.toBase(
+            parseFloat(document.getElementById('inputCustomKilnPrice').value) || 0,
+            _fieldCurrencies.inputs['inputCustomKilnPrice'] || 'USD'
+        );
     } else {
         kilnPrice = parseFloat(kilnSelect.value) || 0;
     }

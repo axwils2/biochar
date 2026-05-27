@@ -968,7 +968,7 @@
             const numKilns = getNum('inputNumMobileKilns');
             const relocations = getNum('inputRelocationsPerKiln');
             const time = getNum('inputTimePerRelocation');
-            const cost = getNum('inputCostPerHourRelocation');
+            const cost = BiocharCurrency.toBase(getNum('inputCostPerHourRelocation'), _fieldCurrencies.inputs['inputCostPerHourRelocation'] || 'USD');
             const totalOpex = numKilns * relocations * time * cost;
             const mobileEl = document.getElementById('outputTotalMobileOpex');
             if (mobileEl) {
