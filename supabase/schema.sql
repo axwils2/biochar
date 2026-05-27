@@ -74,7 +74,21 @@ CREATE TABLE IF NOT EXISTS public.lookup_data (
 );
 
 
--- ── 4. Row Level Security ────────────────────────────────────
+-- ── 4. Admin helper — SECURITY DEFINER bypasses RLS ─────────
+-- Policies that query `profiles` from within a policy ON `profiles`
+-- cause infinite recursion. This function runs as the table owner
+-- (bypassing RLS) so it's safe to call from any policy.
+
+CREATE OR REPLACE FUNCTION public.is_admin()
+RETURNS BOOLEAN LANGUAGE sql SECURITY DEFINER STABLE AS $$
+  SELECT EXISTS (
+    SELECT 1 FROM public.profiles
+    WHERE id = auth.uid() AND role = 'admin'
+  )
+$$;
+
+
+-- ── 5. Row Level Security ────────────────────────────────────
 
 ALTER TABLE public.profiles    ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.projects    ENABLE ROW LEVEL SECURITY;
@@ -89,13 +103,10 @@ CREATE POLICY "profiles_update_own"
   ON public.profiles FOR UPDATE
   USING (auth.uid() = id);
 
--- profiles: admins can read all rows
+-- profiles: admins can read all rows (uses SECURITY DEFINER fn — no recursion)
 CREATE POLICY "profiles_select_admin"
   ON public.profiles FOR SELECT
-  USING (EXISTS (
-    SELECT 1 FROM public.profiles p
-    WHERE p.id = auth.uid() AND p.role = 'admin'
-  ));
+  USING (public.is_admin());
 
 -- projects: users can CRUD their own projects
 CREATE POLICY "projects_select_own"
@@ -117,10 +128,7 @@ CREATE POLICY "projects_delete_own"
 -- projects: admins can read all projects
 CREATE POLICY "projects_select_admin"
   ON public.projects FOR SELECT
-  USING (EXISTS (
-    SELECT 1 FROM public.profiles p
-    WHERE p.id = auth.uid() AND p.role = 'admin'
-  ));
+  USING (public.is_admin());
 
 -- lookup_data: all authenticated users can read
 CREATE POLICY "lookup_read_authenticated"
@@ -130,7 +138,4 @@ CREATE POLICY "lookup_read_authenticated"
 -- lookup_data: only admins can write
 CREATE POLICY "lookup_write_admin"
   ON public.lookup_data FOR ALL
-  USING (EXISTS (
-    SELECT 1 FROM public.profiles p
-    WHERE p.id = auth.uid() AND p.role = 'admin'
-  ));
+  USING (public.is_admin());

@@ -7,6 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="engine.js"></script>
+    <script src="currency.js"></script>
     <script src="translations.js"></script>
     <script src="i18n.js"></script>
 <script src="auth.js"></script>
@@ -509,6 +510,23 @@
         let projectData = {};
         let projectState = { scale: 'micro', type: 'centralized', hubs: 1, country: 'custom', totalCredits: 0, totalFeedstock: 0 };
         let hasUnsavedChanges = false;
+        let _fieldCurrencies = { inputs: {}, outputs: {} };
+
+        function onInputCurrencyChange(fieldId) {
+            _fieldCurrencies.inputs[fieldId] = document.getElementById(fieldId + '_currency').value;
+            setUnsaved();
+            calculateCapex();
+            calculateMobileOpex();
+        }
+        function onOutputCurrencyChange(fieldId) {
+            const el = document.getElementById(fieldId);
+            if (!el) return;
+            const baseUsd = parseFloat(el.dataset.baseUsd) || 0;
+            const code = document.getElementById(fieldId + '_currency').value;
+            _fieldCurrencies.outputs[fieldId] = code;
+            el.textContent = BiocharCurrency.format(baseUsd, code);
+            setUnsaved();
+        }
 
         let saveButton, navigationButtons, saveStatus, unsavedWarning;
 
@@ -766,6 +784,11 @@
                     navigationButtons.classList.remove('hidden');
                 }
 
+                // Restore currency selections
+                const savedCurr = (projectData.tool5 && projectData.tool5._currencies) || {};
+                _fieldCurrencies.inputs  = savedCurr.inputs  || {};
+                _fieldCurrencies.outputs = savedCurr.outputs || {};
+
                 toggleLandInputs(false);
                 toggleForwardContract();
                 toggleFeedstockLoan();
@@ -773,6 +796,26 @@
                 handleMRVChange();
                 calculateMobileOpex();
                 calculateCapex();
+
+                BiocharCurrency.getRates().then(() => {
+                    [
+                        'inputFeedstockLoanAmount', 'inputWoodChipperCost', 'inputStorageInfra',
+                        'inputDryerCost', 'inputAncillaryCost', 'inputLogisticsTruckCost',
+                        'inputPickupCost', 'inputPickupsOpex', 'inputInfrastructureCost',
+                        'inputPermitCapex', 'inputLandLease', 'inputLandPurchase',
+                        'inputCostPerHourRelocation',
+                        'outputRegistryCost', 'outputMRVSetup', 'outputMRVAnnual',
+                        'inputLcaCost', 'inputLcaAnnualCost',
+                        'inputGeneralSalary', 'inputManagementSalary',
+                        'inputInsurance', 'inputUtilities', 'inputRegulatory',
+                        'inputLoanAmount', 'inputPrepayment', 'inputIncentives',
+                    ].forEach(id => BiocharCurrency.wrapInput(id, _fieldCurrencies.inputs[id], 'onInputCurrencyChange'));
+                    ['outputTotalMobileOpex', 'outputSyngasCost', 'outputTotalCapex'].forEach(id =>
+                        BiocharCurrency.injectOutputSelect(id, _fieldCurrencies.outputs[id], 'onOutputCurrencyChange')
+                    );
+                    calculateCapex();
+                    calculateMobileOpex();
+                });
 
                 saveButton.disabled = true;
                 unsavedWarning.classList.add('hidden');
@@ -785,61 +828,64 @@
             saveButton.disabled = true;
             saveStatus.style.display = 'none';
 
+            const _toUSD = (id, fallback) => BiocharCurrency.toBase(parseFloat(document.getElementById(id)?.value) || fallback || 0, _fieldCurrencies.inputs[id] || 'USD');
+
             const dataToSave = {
                 certSource: document.getElementById('selectCertSource').value,
                 syngasDucting: document.getElementById('checkSyngasDucting').checked,
                 capex: {
                     totalKilns: parseFloat(document.getElementById('outputTotalKilnCost').value.replace(/[^0-9.]/g, '')) || 0,
-                    woodChipper: parseFloat(document.getElementById('inputWoodChipperCost')?.value) || 0,
-                    storageInfra: parseFloat(document.getElementById('inputStorageInfra')?.value) || 0,
-                    dryer: parseFloat(document.getElementById('inputDryerCost').value) || 0,
-                    ancillary: parseFloat(document.getElementById('inputAncillaryCost').value) || 0,
+                    woodChipper: _toUSD('inputWoodChipperCost'),
+                    storageInfra: _toUSD('inputStorageInfra'),
+                    dryer: _toUSD('inputDryerCost'),
+                    ancillary: _toUSD('inputAncillaryCost'),
                     logisticsTrucks: parseInt(document.getElementById('inputNumLogisticsTrucks').value) || 0,
-                    logisticsTruckCost: parseFloat(document.getElementById('inputLogisticsTruckCost').value) || 0,
+                    logisticsTruckCost: _toUSD('inputLogisticsTruckCost'),
                     pickups: parseInt(document.getElementById('inputNumPickups').value) || 0,
-                    pickupCost: parseFloat(document.getElementById('inputPickupCost').value) || 0,
-                    infrastructure: parseFloat(document.getElementById('inputInfrastructureCost').value) || 0,
-                    permitApplication: parseFloat(document.getElementById('inputPermitCapex').value) || 0,
-                    landPurchase: parseFloat(document.getElementById('inputLandPurchase').value) || 0,
-                    mrvSetup: parseFloat(document.getElementById('outputMRVSetup').value) || 0,
-                    lcaCost: parseFloat(document.getElementById('inputLcaCost').value) || 0,
-                    syngasCost: parseFloat(document.getElementById('outputSyngasCost').textContent.replace(/[^0-9.]/g, '')) || 0,
-                    totalCapex: parseFloat(document.getElementById('outputTotalCapex').textContent.replace(/[^0-9.]/g, '')) || 0
+                    pickupCost: _toUSD('inputPickupCost'),
+                    infrastructure: _toUSD('inputInfrastructureCost'),
+                    permitApplication: _toUSD('inputPermitCapex'),
+                    landPurchase: _toUSD('inputLandPurchase'),
+                    mrvSetup: _toUSD('outputMRVSetup'),
+                    lcaCost: _toUSD('inputLcaCost'),
+                    syngasCost: parseFloat(document.getElementById('outputSyngasCost').dataset.baseUsd) || 0,
+                    totalCapex: parseFloat(document.getElementById('outputTotalCapex').dataset.baseUsd) || 0
                 },
                 opex: {
                     generalStaffCount: parseFloat(document.getElementById('inputGeneralStaff').value) || 0,
-                    generalSalary: parseFloat(document.getElementById('inputGeneralSalary').value) || 0,
+                    generalSalary: _toUSD('inputGeneralSalary'),
                     mgmtStaffCount: parseFloat(document.getElementById('inputManagementStaff').value) || 0,
-                    mgmtSalary: parseFloat(document.getElementById('inputManagementSalary').value) || 0,
-                    landLease: parseFloat(document.getElementById('inputLandLease').value) || 0,
-                    insurance: parseFloat(document.getElementById('inputInsurance').value) || 0,
-                    utilities: parseFloat(document.getElementById('inputUtilities').value) || 0,
-                    pickupsAnnualOpex: parseFloat(document.getElementById('inputPickupsOpex').value) || 0,
-                    regulatory: parseFloat(document.getElementById('inputRegulatory').value) || 0,
+                    mgmtSalary: _toUSD('inputManagementSalary'),
+                    landLease: _toUSD('inputLandLease'),
+                    insurance: _toUSD('inputInsurance'),
+                    utilities: _toUSD('inputUtilities'),
+                    pickupsAnnualOpex: _toUSD('inputPickupsOpex'),
+                    regulatory: _toUSD('inputRegulatory'),
                     registryName: document.getElementById('selectRegistry').value,
-                    registryFees: parseFloat(document.getElementById('outputRegistryCost').value) || 0,
+                    registryFees: _toUSD('outputRegistryCost'),
                     mrvPartner: document.getElementById('selectMRVPartner').value,
-                    mrvAnnual: parseFloat(document.getElementById('outputMRVAnnual').value) || 0,
-                    lcaAnnual: parseFloat(document.getElementById('inputLcaAnnualCost').value) || 0,
+                    mrvAnnual: _toUSD('outputMRVAnnual'),
+                    lcaAnnual: _toUSD('inputLcaAnnualCost'),
                     monthsOperational: parseFloat(document.getElementById('inputMonthsOperational').value) || 12,
-                    feedstockWorkingCapital: parseFloat(document.getElementById('inputFeedstockLoanAmount').value) || 0,
+                    feedstockWorkingCapital: _toUSD('inputFeedstockLoanAmount'),
                     feedstockLoanInterestRate: parseFloat(document.getElementById('inputFeedstockInterest')?.value) || 0,
                     hasFeedstockLoan: document.getElementById('checkFeedstockLoan').checked,
                     mobileRelocationsPerKiln: parseFloat(document.getElementById('inputRelocationsPerKiln').value) || 0,
                     mobileTimePerRelocation: parseFloat(document.getElementById('inputTimePerRelocation').value) || 0,
-                    mobileCostPerHour: parseFloat(document.getElementById('inputCostPerHourRelocation').value) || 0,
-                    totalMobileRelocationOpex: parseFloat(document.getElementById('outputTotalMobileOpex').textContent.replace(/[^0-9.]/g, '')) || 0
+                    mobileCostPerHour: _toUSD('inputCostPerHourRelocation'),
+                    totalMobileRelocationOpex: parseFloat(document.getElementById('outputTotalMobileOpex').dataset.baseUsd) || 0
                 },
                 finance: {
-                    loanAmount: parseFloat(document.getElementById('inputLoanAmount').value) || 0,
+                    loanAmount: _toUSD('inputLoanAmount'),
                     interestRate: parseFloat(document.getElementById('inputInterestRate').value) || 0,
                     taxRate: parseFloat(document.getElementById('inputTaxRate').value) || 0,
-                    incentives: parseFloat(document.getElementById('inputIncentives').value) || 0,
+                    incentives: _toUSD('inputIncentives'),
                     discountRate: parseFloat(document.getElementById('inputDiscountRate').value) || 0,
                     projectLife: parseFloat(document.getElementById('inputProjectLife').value) || 10,
                     forwardContract: document.getElementById('checkForwardContract').checked,
-                    prepayment: parseFloat(document.getElementById('inputPrepayment').value) || 0
+                    prepayment: _toUSD('inputPrepayment')
                 },
+                _currencies: { inputs: _fieldCurrencies.inputs, outputs: _fieldCurrencies.outputs },
                 lastUpdated: new Date().toISOString()
             };
 
@@ -927,42 +973,56 @@
             const numKilns = getNum('inputNumMobileKilns');
             const relocations = getNum('inputRelocationsPerKiln');
             const time = getNum('inputTimePerRelocation');
-            const cost = getNum('inputCostPerHourRelocation');
+            const cost = BiocharCurrency.toBase(getNum('inputCostPerHourRelocation'), _fieldCurrencies.inputs['inputCostPerHourRelocation'] || 'USD');
             const totalOpex = numKilns * relocations * time * cost;
-            document.getElementById('outputTotalMobileOpex').textContent = `$${totalOpex.toLocaleString(undefined, {maximumFractionDigits: 0})}`;
+            const mobileEl = document.getElementById('outputTotalMobileOpex');
+            if (mobileEl) {
+                mobileEl.dataset.baseUsd = totalOpex;
+                mobileEl.textContent = BiocharCurrency.format(totalOpex, _fieldCurrencies.outputs['outputTotalMobileOpex'] || 'USD');
+            }
         }
 
         function calculateCapex() {
             let total = 0;
             const getNum = (id) => parseFloat(document.getElementById(id)?.value) || 0;
 
+            const _toUSD = (id) => BiocharCurrency.toBase(getNum(id), _fieldCurrencies.inputs[id] || 'USD');
+
             const kilnTotal = getNum('outputTotalKilnCost');
             total += kilnTotal;
-            if (projectState.needsChipper) total += getNum('inputWoodChipperCost');
-            if (projectState.strategy === 'store') total += getNum('inputStorageInfra');
-            total += getNum('inputDryerCost');
-            total += getNum('inputAncillaryCost');
-            total += getNum('inputNumLogisticsTrucks') * getNum('inputLogisticsTruckCost');
-            total += getNum('inputNumPickups') * getNum('inputPickupCost');
-            total += getNum('inputInfrastructureCost');
-            total += getNum('inputPermitCapex');
-            total += getNum('outputMRVSetup');
+            if (projectState.needsChipper) total += _toUSD('inputWoodChipperCost');
+            if (projectState.strategy === 'store') total += _toUSD('inputStorageInfra');
+            total += _toUSD('inputDryerCost');
+            total += _toUSD('inputAncillaryCost');
+            total += getNum('inputNumLogisticsTrucks') * _toUSD('inputLogisticsTruckCost');
+            total += getNum('inputNumPickups') * _toUSD('inputPickupCost');
+            total += _toUSD('inputInfrastructureCost');
+            total += _toUSD('inputPermitCapex');
+            total += _toUSD('outputMRVSetup');
 
             if (!document.getElementById('lcaCostContainer').classList.contains('hidden')) {
-                total += getNum('inputLcaCost');
+                total += _toUSD('inputLcaCost');
             }
             if (document.getElementById('selectLandModel').value === 'buy') {
-                total += getNum('inputLandPurchase');
+                total += _toUSD('inputLandPurchase');
             }
 
             let syngas = 0;
             if (document.getElementById('checkSyngasDucting').checked) {
                 syngas = kilnTotal * 0.10;
             }
-            document.getElementById('outputSyngasCost').textContent = `$${syngas.toLocaleString(undefined, {maximumFractionDigits: 0})}`;
+            const syngasEl = document.getElementById('outputSyngasCost');
+            if (syngasEl) {
+                syngasEl.dataset.baseUsd = syngas;
+                syngasEl.textContent = BiocharCurrency.format(syngas, _fieldCurrencies.outputs['outputSyngasCost'] || 'USD');
+            }
             total += syngas;
 
-            document.getElementById('outputTotalCapex').textContent = `$${total.toLocaleString(undefined, {maximumFractionDigits: 0})}`;
+            const capexEl = document.getElementById('outputTotalCapex');
+            if (capexEl) {
+                capexEl.dataset.baseUsd = total;
+                capexEl.textContent = BiocharCurrency.format(total, _fieldCurrencies.outputs['outputTotalCapex'] || 'USD');
+            }
         }
 
         function getProjectSize(volumePerHub) {

@@ -339,3 +339,39 @@ input[type="checkbox"] { accent-color: var(--color-primary); width: 18px; height
 
 /* ─── Utility ────────────────────────────────────────────── */
 .hidden { display: none !important; }
+
+/* ── Currency input/output controls ── */
+.currency-input-wrap {
+  display: flex;
+  border: 1px solid var(--color-neutral-300, #cbd5e1);
+  border-radius: var(--radius-input, 6px);
+  overflow: hidden;
+}
+.currency-input-wrap .currency-input {
+  flex: 1;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+.currency-prefix-select {
+  background: var(--color-neutral-50, #f8fafc);
+  border: none;
+  border-right: 1px solid var(--color-neutral-300, #cbd5e1);
+  padding: 0 8px;
+  font-size: 12px;
+  color: var(--color-neutral-700, #374151);
+  cursor: pointer;
+  flex-shrink: 0;
+  outline: none;
+}
+.currency-output-select {
+  font-size: 11px;
+  color: var(--color-neutral-400, #94a3b8);
+  background: transparent;
+  border: 1px solid var(--color-neutral-200, #e2e8f0);
+  border-radius: 4px;
+  padding: 2px 4px;
+  margin-left: 6px;
+  cursor: pointer;
+  vertical-align: middle;
+}

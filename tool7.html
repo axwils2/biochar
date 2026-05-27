@@ -7,6 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="engine.js"></script>
+    <script src="currency.js"></script>
     <script src="translations.js"></script>
     <script src="i18n.js"></script>
 <script src="auth.js"></script>
@@ -171,7 +172,23 @@
 
             <div class="lg:col-span-2">
                 <div class="dashboard-card">
-                    <h3 class="text-xl font-bold text-gray-800 mb-6" data-i18n="tool7.comparison_title">Base Case vs. Scenario</h3>
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-bold text-gray-800" data-i18n="tool7.comparison_title">Base Case vs. Scenario</h3>
+                        <div class="flex items-center gap-2">
+                            <label class="text-sm text-gray-500">Currency:</label>
+                            <select id="pageCurrency" onchange="onPageCurrencyChange(this.value)" class="text-sm border border-gray-200 rounded px-2 py-1 bg-white text-gray-700 cursor-pointer outline-none">
+                                <option value="USD">$ USD</option>
+                                <option value="MXN">$ MXN</option>
+                                <option value="COP">$ COP</option>
+                                <option value="BRL">R$ BRL</option>
+                                <option value="PEN">S/ PEN</option>
+                                <option value="GTQ">Q GTQ</option>
+                                <option value="HNL">L HNL</option>
+                                <option value="NIO">C$ NIO</option>
+                                <option value="CRC">₡ CRC</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-sm">
                             <thead>
@@ -261,6 +278,18 @@
         let projectData = {};
         window.BASE_DATA = {};
         let hasUnsavedChanges = false;
+        let _pageCurrency = 'USD';
+
+        window.onPageCurrencyChange = function(code) {
+            _pageCurrency = code;
+            localStorage.setItem('biocharTool7Currency', code);
+            ['Revenue', 'Capex', 'Profit', 'Npv'].forEach(suffix => {
+                const baseEl = document.getElementById('base' + suffix);
+                const scenEl = document.getElementById('scen' + suffix);
+                if (!baseEl || !scenEl) return;
+                updateRow(suffix, parseFloat(baseEl.dataset.baseUsd) || 0, parseFloat(scenEl.dataset.baseUsd) || 0, suffix === 'Capex');
+            });
+        };
 
         const loadingIndicator = document.getElementById('loadingIndicator');
         const saveButton = document.getElementById('saveNotesButton');
@@ -271,11 +300,9 @@
             const el = document.getElementById(id);
             if (el) el.textContent = txt;
         }
-        function formatMoney(n, prefix = '$') {
+        function formatMoney(n) {
             if (isNaN(n) || !isFinite(n)) n = 0;
-            if (Math.abs(n) >= 1000000) return prefix + (n / 1000000).toFixed(1) + 'M';
-            if (Math.abs(n) >= 1000) return prefix + (n / 1000).toFixed(0) + 'k';
-            return prefix + n.toFixed(0);
+            return BiocharCurrency.format(n, _pageCurrency);
         }
         function fmtPayback(n) {
             const unit = BiocharI18n.t('tool7.payback_unit');
@@ -310,7 +337,13 @@
             }
 
             if (projectData && projectData.tool1 && projectData.tool2 && projectData.tool3 && projectData.tool4 && projectData.tool5) {
-                loadBaseCase();
+                _pageCurrency = localStorage.getItem('biocharTool7Currency') || 'USD';
+                // Populate options immediately — doesn't need exchange rates
+                const sel = document.getElementById('pageCurrency');
+                if (sel) { sel.value = _pageCurrency; }
+                BiocharCurrency.getRates().then(() => {
+                    loadBaseCase();
+                });
             } else {
                 loadingIndicator.querySelector('span[data-i18n]').textContent = BiocharI18n.t('tool7.missing_data_error');
                 loadingIndicator.classList.remove('animate-pulse', 'text-blue-600');
@@ -580,16 +613,19 @@
         }
 
         function updateRow(idSuffix, baseVal, scenVal, invertColors = false) {
-            const prefix = '$';
-            document.getElementById(`base${idSuffix}`).textContent = formatMoney(baseVal, prefix);
-            document.getElementById(`scen${idSuffix}`).textContent = formatMoney(scenVal, prefix);
-            const diff = scenVal - baseVal;
+            const baseEl = document.getElementById(`base${idSuffix}`);
+            const scenEl = document.getElementById(`scen${idSuffix}`);
             const diffEl = document.getElementById(`diff${idSuffix}`);
-            diffEl.textContent = `${diff > 0 ? '+' : ''}${formatMoney(diff, prefix)}`;
-            let isGood = diff > 0;
-            if (invertColors) isGood = !isGood;
-            diffEl.className = `text-right px-2 ${isGood ? 'diff-positive' : 'diff-negative'}`;
-            if (Math.abs(diff) < 1) { diffEl.textContent = '--'; diffEl.className = 'text-right px-2 text-gray-400'; }
+            if (baseEl) { baseEl.dataset.baseUsd = baseVal; baseEl.textContent = formatMoney(baseVal); }
+            if (scenEl) { scenEl.dataset.baseUsd = scenVal; scenEl.textContent = formatMoney(scenVal); }
+            const diff = scenVal - baseVal;
+            if (diffEl) {
+                if (Math.abs(diff) < 1) { diffEl.textContent = '--'; diffEl.className = 'text-right px-2 text-gray-400'; return; }
+                diffEl.textContent = `${diff > 0 ? '+' : ''}${BiocharCurrency.format(diff, _pageCurrency)}`;
+                let isGood = diff > 0;
+                if (invertColors) isGood = !isGood;
+                diffEl.className = `text-right px-2 ${isGood ? 'diff-positive' : 'diff-negative'}`;
+            }
         }
 
         // *** Smart Navigation ***

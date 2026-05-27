@@ -7,6 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="engine.js"></script>
+    <script src="currency.js"></script>
     <script src="translations.js"></script>
     <script src="i18n.js"></script>
 <script src="auth.js"></script>
@@ -144,6 +145,21 @@
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
             <span data-i18n="tool6.loading_text">Calculating final results...</span>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 mb-3">
+            <label class="text-sm text-gray-500">Display currency:</label>
+            <select id="pageCurrency" onchange="onPageCurrencyChange(this.value)" class="text-sm border border-gray-200 rounded px-2 py-1 bg-white text-gray-700 cursor-pointer outline-none">
+                <option value="USD">$ USD</option>
+                <option value="MXN">$ MXN</option>
+                <option value="COP">$ COP</option>
+                <option value="BRL">R$ BRL</option>
+                <option value="PEN">S/ PEN</option>
+                <option value="GTQ">Q GTQ</option>
+                <option value="HNL">L HNL</option>
+                <option value="NIO">C$ NIO</option>
+                <option value="CRC">₡ CRC</option>
+            </select>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 print-me">
@@ -325,6 +341,16 @@ window.navigate = function(url) { window.location.href = url; };
 </script>
 <script type="module">
         let projectData = {};
+        let _pageCurrency = 'USD';
+
+        window.onPageCurrencyChange = function(code) {
+            _pageCurrency = code;
+            localStorage.setItem('biocharTool6Currency', code);
+            document.querySelectorAll('[data-base-usd]').forEach(el => {
+                const base = parseFloat(el.dataset.baseUsd) || 0;
+                el.textContent = BiocharCurrency.format(base, code);
+            });
+        };
 
         // --- Helper Functions ---
         function setText(id, txt) {
@@ -333,7 +359,11 @@ window.navigate = function(url) { window.location.href = url; };
         }
         function formatMoney(n) {
             if (isNaN(n) || !isFinite(n)) n = 0;
-            return "$" + Math.round(n).toLocaleString();
+            return BiocharCurrency.format(n, _pageCurrency);
+        }
+        function _setMoney(id, val) {
+            const el = document.getElementById(id);
+            if (el) { el.dataset.baseUsd = val; el.textContent = formatMoney(val); }
         }
         function formatTons(n) {
             if (isNaN(n) || !isFinite(n)) n = 0;
@@ -374,7 +404,13 @@ window.navigate = function(url) { window.location.href = url; };
             if (!projectData.tool5) missingTools.push(BiocharI18n.t('tool6.missing_t5'));
 
             if (missingTools.length === 0) {
-                loadAndCalculate();
+                _pageCurrency = localStorage.getItem('biocharTool6Currency') || 'USD';
+                // Populate options immediately — doesn't need exchange rates
+                const sel = document.getElementById('pageCurrency');
+                if (sel) { sel.value = _pageCurrency; }
+                BiocharCurrency.getRates().then(() => {
+                    loadAndCalculate();
+                });
             } else {
                 const indicator = document.getElementById('loadingIndicator');
                 indicator.querySelector('span[data-i18n]').textContent = BiocharI18n.t('tool6.missing_tools_error', { tools: missingTools.join(', ') });
@@ -517,13 +553,13 @@ window.navigate = function(url) { window.location.href = url; };
                 // === 3. RENDER ===
                 setText('npvYears', BiocharI18n.t('tool6.npv_years_label', { n: projectLife }));
                 colorHero('heroCapex', false, true);
-                setText('heroCapex', formatMoney(totalCapex));
+                _setMoney('heroCapex', totalCapex);
                 colorHero('heroProfit', netProfit >= 0, netProfit < 0);
-                setText('heroProfit', formatMoney(netProfit));
+                _setMoney('heroProfit', netProfit);
                 setText('heroPayback', !isFinite(paybackYears) ? BiocharI18n.t('tool6.never_text') : `${paybackYears.toFixed(1)}${BiocharI18n.t('tool6.years_suffix')}`);
                 colorHero('heroPayback', paybackYears <= 5, paybackYears > 10);
                 colorHero('heroNpv', npv >= 0, npv < 0);
-                setText('heroNpv', formatMoney(npv));
+                _setMoney('heroNpv', npv);
 
                 setText('valBiochar', formatTons(totalBiochar));
                 setText('valOffsets', formatTons(totalCredits));
@@ -531,21 +567,21 @@ window.navigate = function(url) { window.location.href = url; };
                 const deliveredCostPerTonne = totalFeedstock > 0 ? ((opex_Feedstock + opex_Logistics) / totalFeedstock) : 0;
                 renderFeasibility(deliveredCostPerTonne);
 
-                setText('summRevenue', formatMoney(totalRevenue));
-                setText('revBiochar', formatMoney(rev_Biochar));
-                setText('revCredits', formatMoney(rev_Credits));
-                setText('revVinegar', formatMoney(rev_Vinegar));
+                _setMoney('summRevenue', totalRevenue);
+                _setMoney('revBiochar', rev_Biochar);
+                _setMoney('revCredits', rev_Credits);
+                _setMoney('revVinegar', rev_Vinegar);
 
-                setText('summOpex', formatMoney(totalOpex));
-                setText('opexFeedstock', formatMoney(opex_Feedstock));
-                setText('opexLogistics', formatMoney(opex_Logistics));
-                setText('opexSiteOps', formatMoney(opex_SiteOps));
-                setText('opexRetailVinegar', formatMoney(opex_RetailCosts + opex_VinegarCosts + opex_Marketing + opex_RetailCompliance));
-                setText('opexFinance', formatMoney(opex_Finance));
+                _setMoney('summOpex', totalOpex);
+                _setMoney('opexFeedstock', opex_Feedstock);
+                _setMoney('opexLogistics', opex_Logistics);
+                _setMoney('opexSiteOps', opex_SiteOps);
+                _setMoney('opexRetailVinegar', opex_RetailCosts + opex_VinegarCosts + opex_Marketing + opex_RetailCompliance);
+                _setMoney('opexFinance', opex_Finance);
 
-                setText('summPreTax', formatMoney(preTaxProfit));
-                setText('summTax', formatMoney(tax));
-                setText('summIncentives', formatMoney(incentives));
+                _setMoney('summPreTax', preTaxProfit);
+                _setMoney('summTax', tax);
+                _setMoney('summIncentives', incentives);
 
                 renderKPIs(t1, t2, t4, t5, secondaryFeedstocks);
                 renderMrvFlag(t1, secondaryFeedstocks);
@@ -566,7 +602,7 @@ window.navigate = function(url) { window.location.href = url; };
         function renderFeasibility(perTonne) {
             if (isNaN(perTonne)) perTonne = 0;
 
-            document.getElementById('valDeliveredCost').textContent = formatMoney(perTonne);
+            _setMoney('valDeliveredCost', perTonne);
             const badge = document.getElementById('feasibilityBadge');
             const msg = document.getElementById('feasibilityMsg');
 

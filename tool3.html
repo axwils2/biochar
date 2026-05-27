@@ -7,6 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="engine.js"></script>
+    <script src="currency.js"></script>
     <script src="translations.js"></script>
     <script src="i18n.js"></script>
 <script src="auth.js"></script>
@@ -287,6 +288,8 @@
         let T1_Data = {};
         let routeCount = 0;
         let hasUnsavedChanges = false;
+        let _fieldCurrencies = { inputs: {}, outputs: {} };
+        let _routeCurrencies = [];
 
         // --- Static DOM references ---
         const saveButton = document.getElementById('saveToDbButton');
@@ -472,6 +475,18 @@
             }
 
             addUnsavedListeners(inputsToTrack.map(id => document.getElementById(id)).filter(Boolean));
+
+            // Restore currency selections and inject output selectors
+            const savedCurr = (projectData.tool3 && projectData.tool3._currencies) || {};
+            _fieldCurrencies.inputs  = savedCurr.inputs  || {};
+            _fieldCurrencies.outputs = savedCurr.outputs || {};
+            _routeCurrencies = savedCurr.routeCurrencies || [];
+
+            BiocharCurrency.getRates().then(() => {
+                BiocharCurrency.injectOutputSelect('outputAnnualCost', _fieldCurrencies.outputs['outputAnnualCost'], 'onOutputCurrencyChange');
+                BiocharCurrency.injectOutputSelect('outputCostPerTonne', _fieldCurrencies.outputs['outputCostPerTonne'], 'onOutputCurrencyChange');
+                calculateAll();
+            });
         });
 
         function toggleSeasonalWindow(isSeasonal, isMobile) {
@@ -540,10 +555,11 @@
                 rainySeasonMonths: parseFloat(document.getElementById('inputRainyMonths').value) || 0,
                 collectionWeeks: masterWindow,
                 routes: routes,
-                totalAnnualLogisticsCost: parseFloat(document.getElementById('outputAnnualCost').textContent.replace(/[^0-9.]/g, '')) || 0,
-                avgLogisticsCostPerTonne: parseFloat(document.getElementById('outputCostPerTonne').textContent.replace(/[^0-9.]/g, '')) || 0,
+                totalAnnualLogisticsCost: parseFloat(document.getElementById('outputAnnualCost').dataset.baseUsd) || 0,
+                avgLogisticsCostPerTonne: parseFloat(document.getElementById('outputCostPerTonne').dataset.baseUsd) || 0,
                 notes_T3: document.getElementById('toolNotes').value,
-                lastUpdated: new Date().toISOString()
+                lastUpdated: new Date().toISOString(),
+                _currencies: { inputs: _fieldCurrencies.inputs, outputs: _fieldCurrencies.outputs, routeCurrencies: _routeCurrencies }
             };
 
             if (projectData.tool4) {
@@ -587,6 +603,8 @@
         function calculateRouteCost(card, isSeasonal) {
             const trips = parseFloat(card.querySelector('.route-freq').value) || 0;
             const method = card.querySelector('.route-method').value;
+            const idx = Array.from(document.querySelectorAll('.route-card')).indexOf(card);
+            const rc = _routeCurrencies[idx] || {};
 
             let rainyRatio = 0;
             if (isSeasonal) {
@@ -601,18 +619,25 @@
 
             let avgCostPerTrip = 0;
             if (method === 'time') {
-                const rate = parseFloat(card.querySelector('.route-rate').value) || 0;
+                const rate = BiocharCurrency.toBase(parseFloat(card.querySelector('.route-rate').value) || 0, rc['route-rate'] || 'USD');
                 const dryHrs = parseFloat(card.querySelector('.route-hours-dry').value) || 0;
                 const rainHrs = parseFloat(card.querySelector('.route-hours-rain').value) || 0;
                 avgCostPerTrip = (dryHrs * rate * dryRatio) + (rainHrs * rate * rainyRatio);
             } else if (method === 'flat') {
-                const dryQuote = parseFloat(card.querySelector('.route-quote-dry').value) || 0;
-                const rainQuote = parseFloat(card.querySelector('.route-quote-rain').value) || 0;
+                const dryQuote = BiocharCurrency.toBase(parseFloat(card.querySelector('.route-quote-dry').value) || 0, rc['route-quote-dry'] || 'USD');
+                const rainQuote = BiocharCurrency.toBase(parseFloat(card.querySelector('.route-quote-rain').value) || 0, rc['route-quote-rain'] || 'USD');
                 avgCostPerTrip = (dryQuote * dryRatio) + (rainQuote * rainyRatio);
             }
 
             const annualCost = trips * avgCostPerTrip;
-            card.querySelector('.route-annual-cost').textContent = formatCurrency(annualCost);
+            const annualCostSpan = card.querySelector('.route-annual-cost');
+            annualCostSpan.dataset.baseUsd = annualCost;
+            // Display in the route's own input currency so the symbol matches what the user typed
+            const routeDisplayCode = method === 'time'
+                ? (rc['route-rate'] || 'USD')
+                : (rc['route-quote-dry'] || 'USD');
+            annualCostSpan.dataset.displayCode = routeDisplayCode;
+            annualCostSpan.textContent = BiocharCurrency.format(annualCost, routeDisplayCode);
             return annualCost;
         }
 
@@ -633,11 +658,16 @@
                 totalAnnualCost += calculateRouteCost(card, isSeasonal);
             });
 
-            document.getElementById('outputAnnualCost').textContent = formatCurrency(totalAnnualCost);
-            document.getElementById('outputCostPerTonne').textContent =
-                totalProjectFeedstockDisplay > 0
-                    ? formatCurrency(totalAnnualCost / totalProjectFeedstockDisplay, true)
-                    : '$--';
+            const annualEl = document.getElementById('outputAnnualCost');
+            annualEl.dataset.baseUsd = totalAnnualCost;
+            annualEl.textContent = formatCurrency(totalAnnualCost, false, 'outputAnnualCost');
+
+            const perTonneEl = document.getElementById('outputCostPerTonne');
+            const perTonne = totalProjectFeedstockDisplay > 0 ? totalAnnualCost / totalProjectFeedstockDisplay : 0;
+            perTonneEl.dataset.baseUsd = perTonne;
+            perTonneEl.textContent = totalProjectFeedstockDisplay > 0
+                ? formatCurrency(perTonne, true, 'outputCostPerTonne')
+                : '$--';
 
             const statusEl = document.getElementById('outputStatus');
             const statusSub = document.getElementById('outputStatusSub');
@@ -717,6 +747,20 @@
 
             document.getElementById('routesContainer').appendChild(clone);
             updateRemoveButtons();
+
+            // Wrap monetary route inputs with currency selectors.
+            // Must query from the DOM after appendChild — the DocumentFragment is empty after the append.
+            if (window.BiocharCurrency) {
+                const routeCards = document.querySelectorAll('.route-card');
+                const appendedCard = routeCards[routeCards.length - 1];
+                const idx = routeCards.length - 1;
+                if (!_routeCurrencies[idx]) _routeCurrencies[idx] = {};
+                const rc = _routeCurrencies[idx];
+                BiocharCurrency.wrapClassInput(appendedCard.querySelector('.route-rate'), 'route-rate', rc['route-rate'] || 'USD', 'onRouteCurrencyChange');
+                BiocharCurrency.wrapClassInput(appendedCard.querySelector('.route-quote-dry'), 'route-quote-dry', rc['route-quote-dry'] || 'USD', 'onRouteCurrencyChange');
+                BiocharCurrency.wrapClassInput(appendedCard.querySelector('.route-quote-rain'), 'route-quote-rain', rc['route-quote-rain'] || 'USD', 'onRouteCurrencyChange');
+            }
+
             if (!data) {
                 calculateAll();
             }
@@ -758,9 +802,26 @@
             }
         }
 
-        function formatCurrency(num, twoDecimals) {
-            const options = { style: 'currency', currency: 'USD', maximumFractionDigits: twoDecimals ? 2 : 0 };
-            return new Intl.NumberFormat('en-US', options).format(num);
+        function formatCurrency(num, twoDecimals, outputId) {
+            const code = (outputId && _fieldCurrencies.outputs[outputId]) || 'USD';
+            return BiocharCurrency.format(num, code, twoDecimals ? 2 : 0);
+        }
+        function onOutputCurrencyChange(fieldId) {
+            const el = document.getElementById(fieldId);
+            if (!el) return;
+            const baseUsd = parseFloat(el.dataset.baseUsd) || 0;
+            const code = document.getElementById(fieldId + '_currency').value;
+            _fieldCurrencies.outputs[fieldId] = code;
+            el.textContent = baseUsd > 0 ? BiocharCurrency.format(baseUsd, code, fieldId === 'outputCostPerTonne' ? 2 : 0) : '$--';
+        }
+        function onRouteCurrencyChange(fieldClass, cardEl) {
+            const select = cardEl.querySelector('.' + fieldClass + '_currency');
+            const idx = Array.from(document.querySelectorAll('.route-card')).indexOf(cardEl);
+            if (!_routeCurrencies[idx]) _routeCurrencies[idx] = {};
+            _routeCurrencies[idx][fieldClass] = select ? select.value : 'USD';
+            const isSeasonal = T1_Data.supplyModel === 'seasonal';
+            calculateRouteCost(cardEl, isSeasonal);
+            calculateAll();
         }
 
         function showError(msg) {
