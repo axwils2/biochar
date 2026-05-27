@@ -8,6 +8,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="engine.js"></script>
+<script src="currency.js"></script>
 <script src="translations.js"></script>
 <script src="i18n.js"></script>
 <script src="auth.js"></script>
@@ -497,6 +498,7 @@
 let projectData = {};
 let T1_Data = {};
 let hasUnsavedChanges = false;
+let _fieldCurrencies = { inputs: {}, outputs: {} };
 
 const inputsToTrack = [
     'selectCarbonDataSource', 'divF1_Name', 'divF1_Price', 'divF1_Competition', 'divF1_Contract',
@@ -665,6 +667,24 @@ function loadProject() {
 
     updateSecondarySection();
     calculateAll();
+
+    // Restore and wire currency selectors (async after rates load)
+    const savedCurr = (projectData.tool2 && projectData.tool2._currencies) || {};
+    _fieldCurrencies.inputs  = savedCurr.inputs  || {};
+    _fieldCurrencies.outputs = savedCurr.outputs || {};
+
+    BiocharCurrency.getRates().then(() => {
+        BiocharCurrency.wrapInput('divF1_Price', _fieldCurrencies.inputs['divF1_Price'], 'onInputCurrencyChange');
+        BiocharCurrency.wrapInput('inputCustomKilnPrice', _fieldCurrencies.inputs['inputCustomKilnPrice'], 'onInputCurrencyChange');
+        document.querySelectorAll('.secondary-feedstock-card').forEach((card, idx) => {
+            const priceEl = card.querySelector('[data-field="price"]');
+            if (priceEl) BiocharCurrency.wrapInput(priceEl.id || ('sf_price_input_' + idx), _fieldCurrencies.inputs['sf_price_' + idx], 'onInputCurrencyChange');
+        });
+        ['displayPyrolyzerCost', 'displayShippingCost', 'displayTotalUpfrontCapex'].forEach(id => {
+            BiocharCurrency.injectOutputSelect(id, _fieldCurrencies.outputs[id], 'onOutputCurrencyChange');
+        });
+        updateTotalCapex();
+    });
 }
 
 function renderSecondaryCard(feedstock) {
@@ -745,6 +765,15 @@ function renderSecondaryCard(feedstock) {
     });
 
     document.getElementById('secondaryFeedstocksContainer').appendChild(card);
+
+    // Wrap the price input with a currency selector for newly added cards
+    if (window.BiocharCurrency) {
+        const priceInput = card.querySelector('[data-field="price"]');
+        if (priceInput) {
+            const idx = document.querySelectorAll('.secondary-feedstock-card').length - 1;
+            BiocharCurrency.wrapInput(priceInput.id || ('sf_price_input_' + idx), 'USD', 'onInputCurrencyChange');
+        }
+    }
     return card;
 }
 
@@ -826,15 +855,16 @@ function saveProject() {
     const totalUpfrontCapex = pyrolyzerCost + shippingCost;
 
     const secondaryFeedstocks = [];
-    document.querySelectorAll('.secondary-feedstock-card').forEach(card => {
+    document.querySelectorAll('.secondary-feedstock-card').forEach((card, idx) => {
         const getF = field => card.querySelector('[data-field="' + field + '"]');
+        const sfPriceCurrKey = 'sf_price_' + idx;
         secondaryFeedstocks.push({
             name: getF('name')?.value || '',
             tonnes: parseFloat(getF('tonnes')?.value) || 0,
             ash: parseFloat(getF('ash')?.value) || 0,
             yield: parseFloat(getF('yield')?.value) || 0,
             carbon: parseFloat(getF('carbon')?.value) || 0,
-            price: parseFloat(getF('price')?.value) || 0,
+            price: BiocharCurrency.toBase(parseFloat(getF('price')?.value) || 0, _fieldCurrencies.inputs[sfPriceCurrKey] || 'USD'),
             competition: getF('competition')?.value || 'own',
             contract: getF('contract')?.value || 'own',
             isWood: getF('isWood')?.checked || false,
@@ -850,7 +880,7 @@ function saveProject() {
             diversified: {
                 f1_name: getVal('divF1_Name'),
                 f1_tonnes: getNum('divF1_Tonnes'),
-                f1_price: getNum('divF1_Price'),
+                f1_price: BiocharCurrency.toBase(getNum('divF1_Price'), _fieldCurrencies.inputs['divF1_Price'] || 'USD'),
                 f1_ash: getNum('divF1_Ash') / 100,
                 f1_yield: getNum('divF1_Yield') / 100,
                 f1_carbon: getNum('divF1_Carbon') / 100,
@@ -871,7 +901,8 @@ function saveProject() {
                 total_upfront_pyrolyzer_capex: totalUpfrontCapex
             },
             notes_T2: getVal('toolNotes'),
-            lastUpdated: new Date().toISOString()
+            lastUpdated: new Date().toISOString(),
+            _currencies: { inputs: _fieldCurrencies.inputs, outputs: _fieldCurrencies.outputs }
         }
     };
 
@@ -1022,9 +1053,13 @@ function updateTotalCapex() {
     const shippingCost = pyrolyzerCost * shippingPercent;
     const totalUpfrontCapex = pyrolyzerCost + shippingCost;
 
-    setVal('displayPyrolyzerCost', kilnPrice > 0 ? formatUSD(pyrolyzerCost) : '$--');
-    setVal('displayShippingCost', kilnPrice > 0 ? formatUSD(shippingCost) : '$--');
-    setVal('displayTotalUpfrontCapex', kilnPrice > 0 ? formatUSD(totalUpfrontCapex) : '$--');
+    ['displayPyrolyzerCost', 'displayShippingCost', 'displayTotalUpfrontCapex'].forEach((id, i) => {
+        const val = [pyrolyzerCost, shippingCost, totalUpfrontCapex][i];
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.dataset.baseUsd = kilnPrice > 0 ? val : 0;
+        el.textContent = kilnPrice > 0 ? BiocharCurrency.format(val, _fieldCurrencies.outputs[id] || 'USD') : '$--';
+    });
 }
 
 // =================================================================
@@ -1037,8 +1072,23 @@ function setVal(id, val) {
 function formatTonnage(n, u) {
     return (isNaN(n) ? '--' : n.toLocaleString(undefined, {maximumFractionDigits: 1})) + u;
 }
-function formatUSD(n) {
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n);
+function formatUSD(n, outputId) {
+    const code = (outputId && _fieldCurrencies.outputs[outputId]) || 'USD';
+    return BiocharCurrency.format(n, code);
+}
+function onInputCurrencyChange(fieldId) {
+    _fieldCurrencies.inputs[fieldId] = document.getElementById(fieldId + '_currency').value;
+    setUnsaved();
+    updateTotalCapex();
+}
+function onOutputCurrencyChange(fieldId) {
+    const el = document.getElementById(fieldId);
+    if (!el) return;
+    const baseUsd = parseFloat(el.dataset.baseUsd) || 0;
+    const code = document.getElementById(fieldId + '_currency').value;
+    _fieldCurrencies.outputs[fieldId] = code;
+    el.textContent = baseUsd > 0 ? BiocharCurrency.format(baseUsd, code) : '$--';
+    setUnsaved();
 }
 function showError(msg) {
     const s = document.getElementById('saveStatus');
