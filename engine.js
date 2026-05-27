@@ -86,7 +86,8 @@
         if (!projectKey) return;
         const auth = window.BiocharAuth;
         if (!auth) return;
-        const session = auth.getSession();
+        // Always await init() so we don't miss a valid session due to timing
+        const session = auth.getSession() || await auth.init();
         if (!session) return;
 
         const client = auth.getClient();

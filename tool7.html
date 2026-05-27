@@ -178,6 +178,14 @@
                             <label class="text-sm text-gray-500">Currency:</label>
                             <select id="pageCurrency" onchange="onPageCurrencyChange(this.value)" class="text-sm border border-gray-200 rounded px-2 py-1 bg-white text-gray-700 cursor-pointer outline-none">
                                 <option value="USD">$ USD</option>
+                                <option value="MXN">$ MXN</option>
+                                <option value="COP">$ COP</option>
+                                <option value="BRL">R$ BRL</option>
+                                <option value="PEN">S/ PEN</option>
+                                <option value="GTQ">Q GTQ</option>
+                                <option value="HNL">L HNL</option>
+                                <option value="NIO">C$ NIO</option>
+                                <option value="CRC">₡ CRC</option>
                             </select>
                         </div>
                     </div>
@@ -332,7 +340,7 @@
                 _pageCurrency = localStorage.getItem('biocharTool7Currency') || 'USD';
                 // Populate options immediately — doesn't need exchange rates
                 const sel = document.getElementById('pageCurrency');
-                if (sel) { sel.innerHTML = BiocharCurrency._optionsHtml(_pageCurrency, false); }
+                if (sel) { sel.value = _pageCurrency; }
                 BiocharCurrency.getRates().then(() => {
                     loadBaseCase();
                 });
