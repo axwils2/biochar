@@ -119,12 +119,16 @@
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<label class="block"><span class="input-label inline" data-i18n="tool4.sales_rate_label">Expected Sales Rate (%)</span>
-<select id="selectSalesRate" class="input">
-<option value="1.0" data-i18n="tool4.sales_rate_100">100% (Great Uptake)</option>
-<option value="0.75" selected data-i18n="tool4.sales_rate_75">75% (Good Uptake)</option>
-<option value="0.5" data-i18n="tool4.sales_rate_50">50% (Poor Uptake)</option>
-<option value="0.25" data-i18n="tool4.sales_rate_25">25% (Very Poor Uptake)</option>
+<label class="block">
+<span class="input-label">
+  <span data-i18n="tool4.uptake_label">Sales Uptake Scenario</span>
+  <span class="tooltip-wrap"><span class="tooltip-icon">?</span>
+  <span class="tooltip-text" data-i18n="tool4.uptake_tooltip">Models how long it takes to reach full sales. Revenue ramps linearly to 100% over the chosen number of years; OPEX stays at full from year 1 (production runs at capacity).</span></span>
+</span>
+<select id="selectUptakeScenario" class="input">
+<option value="strong" data-i18n="tool4.uptake_strong">Strong (full sales by Year 1)</option>
+<option value="average" selected data-i18n="tool4.uptake_average">Average (ramps to full over 2 years)</option>
+<option value="low" data-i18n="tool4.uptake_low">Low (ramps to full over 3 years)</option>
 </select>
 </label>
 <label class="block"><span class="input-label inline" data-i18n="tool4.marketing_plan_label">Marketing Plan</span>
@@ -226,7 +230,7 @@ function onInputCurrencyChange(fieldId) {
 const inputsToTrack = [
     'inputCreditPrice','selectBiocharModel','inputBiocharPercentInMix','inputCompostCost',
     'inputBagWeightKg','inputRetailPricePerBag','inputPackagingCostPerBag','inputDistributionCostPerBag',
-    'inputInitialComplianceCost','inputAnnualComplianceCost','inputBulkPrice','selectSalesRate',
+    'inputInitialComplianceCost','inputAnnualComplianceCost','inputBulkPrice','selectUptakeScenario',
     'selectMarketingPlan','inputMarketingBudget','checkSellWoodVinegar','selectWoodVinegarYield',
     'inputWoodVinegarPrice','inputWoodVinegarPackaging','inputWoodVinegarDistribution','toolNotes'
 ];
@@ -314,8 +318,8 @@ function loadProject() {
             const annualComplianceInput = document.getElementById('inputAnnualComplianceCost');
             if (annualComplianceInput) annualComplianceInput.value = data.soilAmendmentAnnualCost || 1000;
 
-            const salesRateSelect = document.getElementById('selectSalesRate');
-            if (salesRateSelect) salesRateSelect.value = data.salesRate || 0.75;
+            const uptakeSelect = document.getElementById('selectUptakeScenario');
+            if (uptakeSelect) uptakeSelect.value = data.uptakeScenario || 'average';
 
             const marketingPlanSelect = document.getElementById('selectMarketingPlan');
             if (marketingPlanSelect) marketingPlanSelect.value = data.marketingPlan || "";
@@ -390,7 +394,7 @@ function saveProject() {
             bulkPrice: _toUSD('inputBulkPrice'),
             soilAmendmentInitialCost: _toUSD('inputInitialComplianceCost'),
             soilAmendmentAnnualCost: _toUSD('inputAnnualComplianceCost'),
-            salesRate: parseFloat(document.getElementById('selectSalesRate')?.value) || 0.75,
+            uptakeScenario: document.getElementById('selectUptakeScenario')?.value || 'average',
             marketingPlan: document.getElementById('selectMarketingPlan')?.value || "",
             marketingBudget: _toUSD('inputMarketingBudget'),
             sellWoodVinegar: document.getElementById('checkSellWoodVinegar')?.checked || false,

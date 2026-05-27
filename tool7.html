@@ -308,13 +308,10 @@
             const unit = BiocharI18n.t('tool7.payback_unit');
             return !isFinite(n) || n > 50 ? BiocharI18n.t('tool7.never_text') : n.toFixed(1) + unit;
         }
-        function calculateNPV(invest, flow, rate, years) {
-            let npv = -invest;
-            if (rate <= -1) return -Infinity;
-            for (let t = 1; t <= years; t++) {
-                npv += flow / Math.pow(1 + rate, t);
-            }
-            return npv;
+        function rampYears(scenario) {
+            if (scenario === 'strong') return 1;
+            if (scenario === 'low') return 3;
+            return 2;
         }
 
         // --- Unsaved changes for notes ---
@@ -407,13 +404,12 @@
             } else if (D.revModel === 'bulk') {
                 rev_Biochar = D.biochar * scenario.priceBiochar;
             }
-            rev_Biochar = rev_Biochar * D.salesRate;
 
             let rev_Vinegar = 0;
             let opex_VinegarCosts = 0;
             if (D.sellVinegar) {
                 const totalLitres = D.vinegarTotalFeedstock * D.vinegarYield;
-                rev_Vinegar = totalLitres * D.vinegarPrice * D.salesRate;
+                rev_Vinegar = totalLitres * D.vinegarPrice;
                 opex_VinegarCosts = totalLitres * (D.vinegarPackaging + D.vinegarDistribution);
             }
             const totalRevenue = rev_Credits + rev_Biochar + rev_Vinegar;
@@ -431,13 +427,27 @@
 
             const totalOpex = opex_Feedstock + (otherBaseOpex * (1 + (scenario.opexOverun / 100))) + opex_Finance;
 
-            const preTaxProfit = totalRevenue - totalOpex;
-            const tax = Math.max(0, preTaxProfit * D.taxRate);
-            const netProfit = preTaxProfit - tax + D.incentives;
-            const payback = netProfit > 0 ? (capex / netProfit) : Infinity;
-            const npv = calculateNPV(capex, netProfit, D.discountRate, D.projectLife);
+            const N = rampYears(D.uptakeScenario);
+            let npv = -capex;
+            let cumulative = -capex;
+            let payback = Infinity;
+            let steadyNetProfit = 0;
+            for (let t = 1; t <= D.projectLife; t++) {
+                const factor = Math.min(1, t / N);
+                const yearRevenue = totalRevenue * factor;
+                const yearPreTax = yearRevenue - totalOpex;
+                const yearTax = Math.max(0, yearPreTax * D.taxRate);
+                const yearNet = yearPreTax - yearTax + D.incentives;
+                if (t >= N) steadyNetProfit = yearNet;
+                npv += yearNet / Math.pow(1 + D.discountRate, t);
+                const prevCumulative = cumulative;
+                cumulative += yearNet;
+                if (!isFinite(payback) && cumulative >= 0 && yearNet > 0) {
+                    payback = Math.max(1, (t - 1) + (-prevCumulative / yearNet));
+                }
+            }
 
-            return { revenue: totalRevenue, capex: capex, profit: netProfit, payback: payback, npv: npv };
+            return { revenue: totalRevenue, capex: capex, profit: steadyNetProfit, payback: payback, npv: npv };
         }
 
         function loadBaseCase() {
@@ -494,7 +504,7 @@
                     credits: totalCredits,
 
                     revModel: t4.salesModel || 'bulk',
-                    salesRate: t4.salesRate || 0.75,
+                    uptakeScenario: t4.uptakeScenario || 'average',
 
                     basePriceFeedstock: basePriceFeedstock,
                     basePriceBiochar: basePriceBiochar,
