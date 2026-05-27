@@ -7,6 +7,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="engine.js"></script>
+<script src="currency.js"></script>
 <script src="translations.js"></script>
 <script src="i18n.js"></script>
 <script src="auth.js"></script>
@@ -213,6 +214,14 @@ const unsavedWarning = document.getElementById('unsavedWarning');
 let projectData = {};
 let totalFeedstockForVinegar = 0;
 let hasUnsavedChanges = false;
+let _fieldCurrencies = { inputs: {}, outputs: {} };
+
+function onInputCurrencyChange(fieldId) {
+    _fieldCurrencies.inputs[fieldId] = document.getElementById(fieldId + '_currency').value;
+    hasUnsavedChanges = true;
+    const saveBtn = document.getElementById('saveButton');
+    if (saveBtn) saveBtn.classList.remove('hidden');
+}
 
 const inputsToTrack = [
     'inputCreditPrice','selectBiocharModel','inputBiocharPercentInMix','inputCompostCost',
@@ -336,6 +345,20 @@ function loadProject() {
             navigationButtons.classList.remove('hidden');
             unsavedWarning.classList.add('hidden');
         }
+        // Restore and wire currency selectors
+        const savedCurr = (projectData.tool4 && projectData.tool4._currencies) || {};
+        _fieldCurrencies.inputs  = savedCurr.inputs  || {};
+        _fieldCurrencies.outputs = savedCurr.outputs || {};
+        BiocharCurrency.getRates().then(() => {
+            [
+                'inputCreditPrice', 'inputCompostCost', 'inputRetailPricePerBag',
+                'inputPackagingCostPerBag', 'inputDistributionCostPerBag',
+                'inputInitialComplianceCost', 'inputAnnualComplianceCost',
+                'inputBulkPrice', 'inputWoodVinegarPrice', 'inputWoodVinegarPackaging',
+                'inputWoodVinegarDistribution', 'inputMarketingBudget',
+            ].forEach(id => BiocharCurrency.wrapInput(id, _fieldCurrencies.inputs[id], 'onInputCurrencyChange'));
+        });
+
         handleBiocharModelChange();
         if(document.getElementById('checkSellWoodVinegar').checked){ setupCheckboxToggle('checkSellWoodVinegar','woodVinegarFields',true); }
     } catch(e){ console.error(e); showError(BiocharI18n.t('tool4.error_load')); }
@@ -353,30 +376,32 @@ function saveProject() {
     saveButton.disabled = true;
     if (saveStatus) saveStatus.style.display = 'none';
 
+    const _toUSD = (id, fallback) => BiocharCurrency.toBase(parseFloat(document.getElementById(id)?.value) || fallback || 0, _fieldCurrencies.inputs[id] || 'USD');
     try {
         projectData.tool4 = {
-            carbonCreditPrice: parseFloat(creditPriceInput.value) || 0,
+            carbonCreditPrice: BiocharCurrency.toBase(parseFloat(creditPriceInput.value) || 0, _fieldCurrencies.inputs['inputCreditPrice'] || 'USD'),
             salesModel: document.getElementById('selectBiocharModel')?.value || "",
             retailMixPercent: parseFloat(document.getElementById('inputBiocharPercentInMix')?.value) || 0,
-            compostCost: parseFloat(document.getElementById('inputCompostCost')?.value) || 0,
+            compostCost: _toUSD('inputCompostCost'),
             retailBagWeightKg: parseFloat(document.getElementById('inputBagWeightKg')?.value) || 0,
-            retailPricePerBag: parseFloat(document.getElementById('inputRetailPricePerBag')?.value) || 0,
-            retailPackagingCostPerBag: parseFloat(document.getElementById('inputPackagingCostPerBag')?.value) || 0,
-            retailDistributionCostPerBag: parseFloat(document.getElementById('inputDistributionCostPerBag')?.value) || 0,
-            bulkPrice: parseFloat(document.getElementById('inputBulkPrice')?.value) || 0,
-            soilAmendmentInitialCost: parseFloat(document.getElementById('inputInitialComplianceCost')?.value) || 0,
-            soilAmendmentAnnualCost: parseFloat(document.getElementById('inputAnnualComplianceCost')?.value) || 0,
+            retailPricePerBag: _toUSD('inputRetailPricePerBag'),
+            retailPackagingCostPerBag: _toUSD('inputPackagingCostPerBag'),
+            retailDistributionCostPerBag: _toUSD('inputDistributionCostPerBag'),
+            bulkPrice: _toUSD('inputBulkPrice'),
+            soilAmendmentInitialCost: _toUSD('inputInitialComplianceCost'),
+            soilAmendmentAnnualCost: _toUSD('inputAnnualComplianceCost'),
             salesRate: parseFloat(document.getElementById('selectSalesRate')?.value) || 0.75,
             marketingPlan: document.getElementById('selectMarketingPlan')?.value || "",
-            marketingBudget: parseFloat(document.getElementById('inputMarketingBudget')?.value) || 0,
+            marketingBudget: _toUSD('inputMarketingBudget'),
             sellWoodVinegar: document.getElementById('checkSellWoodVinegar')?.checked || false,
             woodVinegarYield: parseFloat(document.getElementById('selectWoodVinegarYield')?.value) || 50,
-            woodVinegarPrice: parseFloat(document.getElementById('inputWoodVinegarPrice')?.value) || 1.00,
-            woodVinegarPackaging: parseFloat(document.getElementById('inputWoodVinegarPackaging')?.value) || 0.30,
-            woodVinegarDistribution: parseFloat(document.getElementById('inputWoodVinegarDistribution')?.value) || 0.05,
+            woodVinegarPrice: _toUSD('inputWoodVinegarPrice', 1.00),
+            woodVinegarPackaging: _toUSD('inputWoodVinegarPackaging', 0.30),
+            woodVinegarDistribution: _toUSD('inputWoodVinegarDistribution', 0.05),
             totalFeedstockForVinegar: totalFeedstockForVinegar || 0,
             notes_T4: document.getElementById('toolNotes')?.value || "",
-            lastUpdated: new Date().toISOString()
+            lastUpdated: new Date().toISOString(),
+            _currencies: { inputs: _fieldCurrencies.inputs, outputs: _fieldCurrencies.outputs }
         };
 
         if (projectData.tool3 && !projectData.tool3.routes) delete projectData.tool3;
