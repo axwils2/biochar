@@ -7,6 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="engine.js"></script>
+    <script src="currency.js"></script>
     <script src="translations.js"></script>
     <script src="i18n.js"></script>
 <script src="auth.js"></script>
@@ -261,6 +262,26 @@
         let projectData = {};
         window.BASE_DATA = {};
         let hasUnsavedChanges = false;
+        let _fieldCurrencies = { outputs: {} };
+        let _rowCurrencies = {};
+
+        // Expose handler globally so onchange attribute works from module scope
+        window.onRowCurrencyChange = function(idSuffix) {
+            const sel = document.getElementById('base' + idSuffix + '_currency');
+            if (!sel) return;
+            const code = sel.value;
+            _rowCurrencies[idSuffix] = code;
+            _fieldCurrencies.outputs['base' + idSuffix] = code;
+            _fieldCurrencies.outputs['scen' + idSuffix] = code;
+            localStorage.setItem('biocharTool7Currencies', JSON.stringify({ rowCurrencies: _rowCurrencies }));
+            // Re-render row from stored USD values
+            const baseEl = document.getElementById('base' + idSuffix);
+            const scenEl = document.getElementById('scen' + idSuffix);
+            if (!baseEl || !scenEl) return;
+            const baseUsd = parseFloat(baseEl.dataset.baseUsd) || 0;
+            const scenUsd = parseFloat(scenEl.dataset.baseUsd) || 0;
+            updateRow(idSuffix, baseUsd, scenUsd, idSuffix === 'Capex');
+        };
 
         const loadingIndicator = document.getElementById('loadingIndicator');
         const saveButton = document.getElementById('saveNotesButton');
@@ -271,11 +292,10 @@
             const el = document.getElementById(id);
             if (el) el.textContent = txt;
         }
-        function formatMoney(n, prefix = '$') {
+        function formatMoney(n, idSuffix) {
             if (isNaN(n) || !isFinite(n)) n = 0;
-            if (Math.abs(n) >= 1000000) return prefix + (n / 1000000).toFixed(1) + 'M';
-            if (Math.abs(n) >= 1000) return prefix + (n / 1000).toFixed(0) + 'k';
-            return prefix + n.toFixed(0);
+            const code = (idSuffix && _rowCurrencies[idSuffix]) || 'USD';
+            return BiocharCurrency.format(n, code);
         }
         function fmtPayback(n) {
             const unit = BiocharI18n.t('tool7.payback_unit');
@@ -310,7 +330,21 @@
             }
 
             if (projectData && projectData.tool1 && projectData.tool2 && projectData.tool3 && projectData.tool4 && projectData.tool5) {
-                loadBaseCase();
+                const savedT7 = JSON.parse(localStorage.getItem('biocharTool7Currencies') || '{}');
+                _rowCurrencies = savedT7.rowCurrencies || {};
+                BiocharCurrency.getRates().then(() => {
+                    loadBaseCase();
+                    ['Revenue', 'Capex', 'Profit', 'Npv'].forEach(suffix => {
+                        const baseEl = document.getElementById('base' + suffix);
+                        if (!baseEl || document.getElementById('base' + suffix + '_currency')) return;
+                        const sel = document.createElement('select');
+                        sel.id = 'base' + suffix + '_currency';
+                        sel.className = 'currency-output-select';
+                        sel.innerHTML = BiocharCurrency._optionsHtml(_rowCurrencies[suffix], true);
+                        sel.setAttribute('onchange', `onRowCurrencyChange('${suffix}')`);
+                        baseEl.insertAdjacentElement('afterend', sel);
+                    });
+                });
             } else {
                 loadingIndicator.querySelector('span[data-i18n]').textContent = BiocharI18n.t('tool7.missing_data_error');
                 loadingIndicator.classList.remove('animate-pulse', 'text-blue-600');
@@ -580,16 +614,20 @@
         }
 
         function updateRow(idSuffix, baseVal, scenVal, invertColors = false) {
-            const prefix = '$';
-            document.getElementById(`base${idSuffix}`).textContent = formatMoney(baseVal, prefix);
-            document.getElementById(`scen${idSuffix}`).textContent = formatMoney(scenVal, prefix);
-            const diff = scenVal - baseVal;
+            const baseEl = document.getElementById(`base${idSuffix}`);
+            const scenEl = document.getElementById(`scen${idSuffix}`);
             const diffEl = document.getElementById(`diff${idSuffix}`);
-            diffEl.textContent = `${diff > 0 ? '+' : ''}${formatMoney(diff, prefix)}`;
-            let isGood = diff > 0;
-            if (invertColors) isGood = !isGood;
-            diffEl.className = `text-right px-2 ${isGood ? 'diff-positive' : 'diff-negative'}`;
-            if (Math.abs(diff) < 1) { diffEl.textContent = '--'; diffEl.className = 'text-right px-2 text-gray-400'; }
+            if (baseEl) { baseEl.dataset.baseUsd = baseVal; baseEl.textContent = formatMoney(baseVal, idSuffix); }
+            if (scenEl) { scenEl.dataset.baseUsd = scenVal; scenEl.textContent = formatMoney(scenVal, idSuffix); }
+            const diff = scenVal - baseVal;
+            if (diffEl) {
+                if (Math.abs(diff) < 1) { diffEl.textContent = '--'; diffEl.className = 'text-right px-2 text-gray-400'; return; }
+                const code = _rowCurrencies[idSuffix] || 'USD';
+                diffEl.textContent = `${diff > 0 ? '+' : ''}${BiocharCurrency.format(diff, code)}`;
+                let isGood = diff > 0;
+                if (invertColors) isGood = !isGood;
+                diffEl.className = `text-right px-2 ${isGood ? 'diff-positive' : 'diff-negative'}`;
+            }
         }
 
         // *** Smart Navigation ***
