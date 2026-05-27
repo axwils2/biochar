@@ -15,7 +15,7 @@
       { code: 'CRC', symbol: '₡',  name: 'Costa Rican Colón' },
     ],
 
-    RATES_KEY: 'biocharExchangeRates',
+    RATES_KEY: 'biocharExchangeRates_v2',
     RATES_TTL: 86400000, // 24 hours in ms
     _rates: null,
 
@@ -29,17 +29,17 @@
         }
       } catch (_) {}
       try {
-        const codes = this.SUPPORTED.map(c => c.code).filter(c => c !== 'USD').join(',');
-        const resp = await fetch(`https://api.frankfurter.dev/latest?from=USD&to=${codes}`);
+        const resp = await fetch('https://open.er-api.com/v6/latest/USD');
         const data = await resp.json();
-        this._rates = { USD: 1, ...data.rates };
+        const needed = this.SUPPORTED.map(c => c.code);
+        this._rates = { USD: 1 };
+        needed.forEach(code => { if (data.rates[code]) this._rates[code] = data.rates[code]; });
         localStorage.setItem(this.RATES_KEY, JSON.stringify({
           rates: this._rates, timestamp: Date.now()
         }));
       } catch (_) {
         // Offline fallback — USD pass-through only
         this._rates = { USD: 1 };
-        this.SUPPORTED.forEach(c => { if (!this._rates[c.code]) this._rates[c.code] = null; });
       }
       return this._rates;
     },
