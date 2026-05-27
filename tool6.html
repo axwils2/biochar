@@ -397,10 +397,10 @@ window.navigate = function(url) { window.location.href = url; };
 
             if (missingTools.length === 0) {
                 _pageCurrency = localStorage.getItem('biocharTool6Currency') || 'USD';
+                // Populate options immediately — doesn't need exchange rates
+                const sel = document.getElementById('pageCurrency');
+                if (sel) { sel.innerHTML = BiocharCurrency._optionsHtml(_pageCurrency, false); }
                 BiocharCurrency.getRates().then(() => {
-                    // Set page currency selector value
-                    const sel = document.getElementById('pageCurrency');
-                    if (sel) { sel.innerHTML = BiocharCurrency._optionsHtml(_pageCurrency, false); }
                     loadAndCalculate();
                 });
             } else {

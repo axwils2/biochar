@@ -330,9 +330,10 @@
 
             if (projectData && projectData.tool1 && projectData.tool2 && projectData.tool3 && projectData.tool4 && projectData.tool5) {
                 _pageCurrency = localStorage.getItem('biocharTool7Currency') || 'USD';
+                // Populate options immediately — doesn't need exchange rates
+                const sel = document.getElementById('pageCurrency');
+                if (sel) { sel.innerHTML = BiocharCurrency._optionsHtml(_pageCurrency, false); }
                 BiocharCurrency.getRates().then(() => {
-                    const sel = document.getElementById('pageCurrency');
-                    if (sel) { sel.innerHTML = BiocharCurrency._optionsHtml(_pageCurrency, false); }
                     loadBaseCase();
                 });
             } else {
