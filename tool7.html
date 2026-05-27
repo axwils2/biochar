@@ -172,7 +172,15 @@
 
             <div class="lg:col-span-2">
                 <div class="dashboard-card">
-                    <h3 class="text-xl font-bold text-gray-800 mb-6" data-i18n="tool7.comparison_title">Base Case vs. Scenario</h3>
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-bold text-gray-800" data-i18n="tool7.comparison_title">Base Case vs. Scenario</h3>
+                        <div class="flex items-center gap-2">
+                            <label class="text-sm text-gray-500">Currency:</label>
+                            <select id="pageCurrency" onchange="onPageCurrencyChange(this.value)" class="text-sm border border-gray-200 rounded px-2 py-1 bg-white text-gray-700 cursor-pointer outline-none">
+                                <option value="USD">$ USD</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-sm">
                             <thead>
@@ -262,25 +270,17 @@
         let projectData = {};
         window.BASE_DATA = {};
         let hasUnsavedChanges = false;
-        let _fieldCurrencies = { outputs: {} };
-        let _rowCurrencies = {};
+        let _pageCurrency = 'USD';
 
-        // Expose handler globally so onchange attribute works from module scope
-        window.onRowCurrencyChange = function(idSuffix) {
-            const sel = document.getElementById('base' + idSuffix + '_currency');
-            if (!sel) return;
-            const code = sel.value;
-            _rowCurrencies[idSuffix] = code;
-            _fieldCurrencies.outputs['base' + idSuffix] = code;
-            _fieldCurrencies.outputs['scen' + idSuffix] = code;
-            localStorage.setItem('biocharTool7Currencies', JSON.stringify({ rowCurrencies: _rowCurrencies }));
-            // Re-render row from stored USD values
-            const baseEl = document.getElementById('base' + idSuffix);
-            const scenEl = document.getElementById('scen' + idSuffix);
-            if (!baseEl || !scenEl) return;
-            const baseUsd = parseFloat(baseEl.dataset.baseUsd) || 0;
-            const scenUsd = parseFloat(scenEl.dataset.baseUsd) || 0;
-            updateRow(idSuffix, baseUsd, scenUsd, idSuffix === 'Capex');
+        window.onPageCurrencyChange = function(code) {
+            _pageCurrency = code;
+            localStorage.setItem('biocharTool7Currency', code);
+            ['Revenue', 'Capex', 'Profit', 'Npv'].forEach(suffix => {
+                const baseEl = document.getElementById('base' + suffix);
+                const scenEl = document.getElementById('scen' + suffix);
+                if (!baseEl || !scenEl) return;
+                updateRow(suffix, parseFloat(baseEl.dataset.baseUsd) || 0, parseFloat(scenEl.dataset.baseUsd) || 0, suffix === 'Capex');
+            });
         };
 
         const loadingIndicator = document.getElementById('loadingIndicator');
@@ -292,10 +292,9 @@
             const el = document.getElementById(id);
             if (el) el.textContent = txt;
         }
-        function formatMoney(n, idSuffix) {
+        function formatMoney(n) {
             if (isNaN(n) || !isFinite(n)) n = 0;
-            const code = (idSuffix && _rowCurrencies[idSuffix]) || 'USD';
-            return BiocharCurrency.format(n, code);
+            return BiocharCurrency.format(n, _pageCurrency);
         }
         function fmtPayback(n) {
             const unit = BiocharI18n.t('tool7.payback_unit');
@@ -330,20 +329,11 @@
             }
 
             if (projectData && projectData.tool1 && projectData.tool2 && projectData.tool3 && projectData.tool4 && projectData.tool5) {
-                const savedT7 = JSON.parse(localStorage.getItem('biocharTool7Currencies') || '{}');
-                _rowCurrencies = savedT7.rowCurrencies || {};
+                _pageCurrency = localStorage.getItem('biocharTool7Currency') || 'USD';
                 BiocharCurrency.getRates().then(() => {
+                    const sel = document.getElementById('pageCurrency');
+                    if (sel) { sel.innerHTML = BiocharCurrency._optionsHtml(_pageCurrency, false); }
                     loadBaseCase();
-                    ['Revenue', 'Capex', 'Profit', 'Npv'].forEach(suffix => {
-                        const baseEl = document.getElementById('base' + suffix);
-                        if (!baseEl || document.getElementById('base' + suffix + '_currency')) return;
-                        const sel = document.createElement('select');
-                        sel.id = 'base' + suffix + '_currency';
-                        sel.className = 'currency-output-select';
-                        sel.innerHTML = BiocharCurrency._optionsHtml(_rowCurrencies[suffix], true);
-                        sel.setAttribute('onchange', `onRowCurrencyChange('${suffix}')`);
-                        baseEl.insertAdjacentElement('afterend', sel);
-                    });
                 });
             } else {
                 loadingIndicator.querySelector('span[data-i18n]').textContent = BiocharI18n.t('tool7.missing_data_error');
@@ -617,13 +607,12 @@
             const baseEl = document.getElementById(`base${idSuffix}`);
             const scenEl = document.getElementById(`scen${idSuffix}`);
             const diffEl = document.getElementById(`diff${idSuffix}`);
-            if (baseEl) { baseEl.dataset.baseUsd = baseVal; baseEl.textContent = formatMoney(baseVal, idSuffix); }
-            if (scenEl) { scenEl.dataset.baseUsd = scenVal; scenEl.textContent = formatMoney(scenVal, idSuffix); }
+            if (baseEl) { baseEl.dataset.baseUsd = baseVal; baseEl.textContent = formatMoney(baseVal); }
+            if (scenEl) { scenEl.dataset.baseUsd = scenVal; scenEl.textContent = formatMoney(scenVal); }
             const diff = scenVal - baseVal;
             if (diffEl) {
                 if (Math.abs(diff) < 1) { diffEl.textContent = '--'; diffEl.className = 'text-right px-2 text-gray-400'; return; }
-                const code = _rowCurrencies[idSuffix] || 'USD';
-                diffEl.textContent = `${diff > 0 ? '+' : ''}${BiocharCurrency.format(diff, code)}`;
+                diffEl.textContent = `${diff > 0 ? '+' : ''}${BiocharCurrency.format(diff, _pageCurrency)}`;
                 let isGood = diff > 0;
                 if (invertColors) isGood = !isGood;
                 diffEl.className = `text-right px-2 ${isGood ? 'diff-positive' : 'diff-negative'}`;

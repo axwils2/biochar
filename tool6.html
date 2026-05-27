@@ -147,6 +147,13 @@
             <span data-i18n="tool6.loading_text">Calculating final results...</span>
         </div>
 
+        <div class="flex items-center justify-end gap-2 mb-3">
+            <label class="text-sm text-gray-500">Display currency:</label>
+            <select id="pageCurrency" onchange="onPageCurrencyChange(this.value)" class="text-sm border border-gray-200 rounded px-2 py-1 bg-white text-gray-700 cursor-pointer outline-none">
+                <option value="USD">$ USD</option>
+            </select>
+        </div>
+
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 print-me">
             <div class="dashboard-card hero-metric">
                 <span class="hero-label" data-i18n="tool6.hero_capex_label">Upfront Cost (CAPEX)</span>
@@ -326,17 +333,15 @@ window.navigate = function(url) { window.location.href = url; };
 </script>
 <script type="module">
         let projectData = {};
-        let _fieldCurrencies = { outputs: {} };
+        let _pageCurrency = 'USD';
 
-        // Expose handler globally so onchange attribute works from module scope
-        window.onOutputCurrencyChange = function(fieldId) {
-            const el = document.getElementById(fieldId);
-            if (!el) return;
-            const baseUsd = parseFloat(el.dataset.baseUsd) || 0;
-            const code = document.getElementById(fieldId + '_currency').value;
-            _fieldCurrencies.outputs[fieldId] = code;
-            el.textContent = BiocharCurrency.format(baseUsd, code);
-            localStorage.setItem('biocharTool6Currencies', JSON.stringify(_fieldCurrencies.outputs));
+        window.onPageCurrencyChange = function(code) {
+            _pageCurrency = code;
+            localStorage.setItem('biocharTool6Currency', code);
+            document.querySelectorAll('[data-base-usd]').forEach(el => {
+                const base = parseFloat(el.dataset.baseUsd) || 0;
+                el.textContent = BiocharCurrency.format(base, code);
+            });
         };
 
         // --- Helper Functions ---
@@ -344,15 +349,13 @@ window.navigate = function(url) { window.location.href = url; };
             const el = document.getElementById(id);
             if (el) el.textContent = txt;
         }
-        function formatMoney(n, outputId) {
+        function formatMoney(n) {
             if (isNaN(n) || !isFinite(n)) n = 0;
-            const code = (outputId && _fieldCurrencies.outputs[outputId]) || 'USD';
-            return BiocharCurrency.format(n, code);
+            return BiocharCurrency.format(n, _pageCurrency);
         }
         function _setMoney(id, val) {
             const el = document.getElementById(id);
-            if (el) el.dataset.baseUsd = val;
-            setText(id, formatMoney(val, id));
+            if (el) { el.dataset.baseUsd = val; el.textContent = formatMoney(val); }
         }
         function formatTons(n) {
             if (isNaN(n) || !isFinite(n)) n = 0;
@@ -393,18 +396,12 @@ window.navigate = function(url) { window.location.href = url; };
             if (!projectData.tool5) missingTools.push(BiocharI18n.t('tool6.missing_t5'));
 
             if (missingTools.length === 0) {
-                _fieldCurrencies.outputs = JSON.parse(localStorage.getItem('biocharTool6Currencies') || '{}');
+                _pageCurrency = localStorage.getItem('biocharTool6Currency') || 'USD';
                 BiocharCurrency.getRates().then(() => {
+                    // Set page currency selector value
+                    const sel = document.getElementById('pageCurrency');
+                    if (sel) { sel.innerHTML = BiocharCurrency._optionsHtml(_pageCurrency, false); }
                     loadAndCalculate();
-                    const OUTPUT_IDS = [
-                        'heroCapex', 'heroProfit', 'heroNpv',
-                        'summRevenue', 'revBiochar', 'revCredits', 'revVinegar',
-                        'summOpex', 'opexFeedstock', 'opexLogistics',
-                        'summPreTax', 'summTax', 'summIncentives',
-                    ];
-                    OUTPUT_IDS.forEach(id =>
-                        BiocharCurrency.injectOutputSelect(id, _fieldCurrencies.outputs[id], 'onOutputCurrencyChange')
-                    );
                 });
             } else {
                 const indicator = document.getElementById('loadingIndicator');
@@ -570,9 +567,9 @@ window.navigate = function(url) { window.location.href = url; };
                 _setMoney('summOpex', totalOpex);
                 _setMoney('opexFeedstock', opex_Feedstock);
                 _setMoney('opexLogistics', opex_Logistics);
-                setText('opexSiteOps', formatMoney(opex_SiteOps));
-                setText('opexRetailVinegar', formatMoney(opex_RetailCosts + opex_VinegarCosts + opex_Marketing + opex_RetailCompliance));
-                setText('opexFinance', formatMoney(opex_Finance));
+                _setMoney('opexSiteOps', opex_SiteOps);
+                _setMoney('opexRetailVinegar', opex_RetailCosts + opex_VinegarCosts + opex_Marketing + opex_RetailCompliance);
+                _setMoney('opexFinance', opex_Finance);
 
                 _setMoney('summPreTax', preTaxProfit);
                 _setMoney('summTax', tax);
@@ -597,7 +594,7 @@ window.navigate = function(url) { window.location.href = url; };
         function renderFeasibility(perTonne) {
             if (isNaN(perTonne)) perTonne = 0;
 
-            document.getElementById('valDeliveredCost').textContent = formatMoney(perTonne);
+            _setMoney('valDeliveredCost', perTonne);
             const badge = document.getElementById('feasibilityBadge');
             const msg = document.getElementById('feasibilityMsg');
 

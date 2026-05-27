@@ -632,7 +632,7 @@
             const annualCost = trips * avgCostPerTrip;
             const annualCostSpan = card.querySelector('.route-annual-cost');
             annualCostSpan.dataset.baseUsd = annualCost;
-            annualCostSpan.textContent = formatCurrency(annualCost);
+            annualCostSpan.textContent = formatCurrency(annualCost, false, 'outputAnnualCost');
             return annualCost;
         }
 
@@ -805,6 +805,13 @@
             const code = document.getElementById(fieldId + '_currency').value;
             _fieldCurrencies.outputs[fieldId] = code;
             el.textContent = baseUsd > 0 ? BiocharCurrency.format(baseUsd, code, fieldId === 'outputCostPerTonne' ? 2 : 0) : '$--';
+            // Per-route annual costs follow the outputAnnualCost currency
+            if (fieldId === 'outputAnnualCost') {
+                document.querySelectorAll('.route-annual-cost').forEach(span => {
+                    const base = parseFloat(span.dataset.baseUsd) || 0;
+                    span.textContent = formatCurrency(base, false, 'outputAnnualCost');
+                });
+            }
         }
         function onRouteCurrencyChange(fieldClass, cardEl) {
             const select = cardEl.querySelector('.' + fieldClass + '_currency');

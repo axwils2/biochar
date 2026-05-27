@@ -804,6 +804,11 @@
                         'inputPickupCost', 'inputPickupsOpex', 'inputInfrastructureCost',
                         'inputPermitCapex', 'inputLandLease', 'inputLandPurchase',
                         'inputCostPerHourRelocation',
+                        'outputRegistryCost', 'outputMRVSetup', 'outputMRVAnnual',
+                        'inputLcaCost', 'inputLcaAnnualCost',
+                        'inputGeneralSalary', 'inputManagementSalary',
+                        'inputInsurance', 'inputUtilities', 'inputRegulatory',
+                        'inputLoanAmount', 'inputPrepayment', 'inputIncentives',
                     ].forEach(id => BiocharCurrency.wrapInput(id, _fieldCurrencies.inputs[id], 'onInputCurrencyChange'));
                     ['outputTotalMobileOpex', 'outputSyngasCost', 'outputTotalCapex'].forEach(id =>
                         BiocharCurrency.injectOutputSelect(id, _fieldCurrencies.outputs[id], 'onOutputCurrencyChange')
@@ -841,26 +846,26 @@
                     infrastructure: _toUSD('inputInfrastructureCost'),
                     permitApplication: _toUSD('inputPermitCapex'),
                     landPurchase: _toUSD('inputLandPurchase'),
-                    mrvSetup: parseFloat(document.getElementById('outputMRVSetup').value) || 0,
+                    mrvSetup: _toUSD('outputMRVSetup'),
                     lcaCost: _toUSD('inputLcaCost'),
                     syngasCost: parseFloat(document.getElementById('outputSyngasCost').dataset.baseUsd) || 0,
                     totalCapex: parseFloat(document.getElementById('outputTotalCapex').dataset.baseUsd) || 0
                 },
                 opex: {
                     generalStaffCount: parseFloat(document.getElementById('inputGeneralStaff').value) || 0,
-                    generalSalary: parseFloat(document.getElementById('inputGeneralSalary').value) || 0,
+                    generalSalary: _toUSD('inputGeneralSalary'),
                     mgmtStaffCount: parseFloat(document.getElementById('inputManagementStaff').value) || 0,
-                    mgmtSalary: parseFloat(document.getElementById('inputManagementSalary').value) || 0,
+                    mgmtSalary: _toUSD('inputManagementSalary'),
                     landLease: _toUSD('inputLandLease'),
-                    insurance: parseFloat(document.getElementById('inputInsurance').value) || 0,
-                    utilities: parseFloat(document.getElementById('inputUtilities').value) || 0,
+                    insurance: _toUSD('inputInsurance'),
+                    utilities: _toUSD('inputUtilities'),
                     pickupsAnnualOpex: _toUSD('inputPickupsOpex'),
-                    regulatory: parseFloat(document.getElementById('inputRegulatory').value) || 0,
+                    regulatory: _toUSD('inputRegulatory'),
                     registryName: document.getElementById('selectRegistry').value,
-                    registryFees: parseFloat(document.getElementById('outputRegistryCost').value) || 0,
+                    registryFees: _toUSD('outputRegistryCost'),
                     mrvPartner: document.getElementById('selectMRVPartner').value,
-                    mrvAnnual: parseFloat(document.getElementById('outputMRVAnnual').value) || 0,
-                    lcaAnnual: parseFloat(document.getElementById('inputLcaAnnualCost').value) || 0,
+                    mrvAnnual: _toUSD('outputMRVAnnual'),
+                    lcaAnnual: _toUSD('inputLcaAnnualCost'),
                     monthsOperational: parseFloat(document.getElementById('inputMonthsOperational').value) || 12,
                     feedstockWorkingCapital: _toUSD('inputFeedstockLoanAmount'),
                     feedstockLoanInterestRate: parseFloat(document.getElementById('inputFeedstockInterest')?.value) || 0,
@@ -871,14 +876,14 @@
                     totalMobileRelocationOpex: parseFloat(document.getElementById('outputTotalMobileOpex').dataset.baseUsd) || 0
                 },
                 finance: {
-                    loanAmount: parseFloat(document.getElementById('inputLoanAmount').value) || 0,
+                    loanAmount: _toUSD('inputLoanAmount'),
                     interestRate: parseFloat(document.getElementById('inputInterestRate').value) || 0,
                     taxRate: parseFloat(document.getElementById('inputTaxRate').value) || 0,
-                    incentives: parseFloat(document.getElementById('inputIncentives').value) || 0,
+                    incentives: _toUSD('inputIncentives'),
                     discountRate: parseFloat(document.getElementById('inputDiscountRate').value) || 0,
                     projectLife: parseFloat(document.getElementById('inputProjectLife').value) || 10,
                     forwardContract: document.getElementById('checkForwardContract').checked,
-                    prepayment: parseFloat(document.getElementById('inputPrepayment').value) || 0
+                    prepayment: _toUSD('inputPrepayment')
                 },
                 _currencies: { inputs: _fieldCurrencies.inputs, outputs: _fieldCurrencies.outputs },
                 lastUpdated: new Date().toISOString()
@@ -993,7 +998,7 @@
             total += getNum('inputNumPickups') * _toUSD('inputPickupCost');
             total += _toUSD('inputInfrastructureCost');
             total += _toUSD('inputPermitCapex');
-            total += getNum('outputMRVSetup');
+            total += _toUSD('outputMRVSetup');
 
             if (!document.getElementById('lcaCostContainer').classList.contains('hidden')) {
                 total += _toUSD('inputLcaCost');
