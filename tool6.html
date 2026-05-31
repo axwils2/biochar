@@ -166,11 +166,13 @@
             <div class="dashboard-card hero-metric">
                 <span class="hero-label" data-i18n="tool6.hero_capex_label">Upfront Cost (CAPEX)</span>
                 <span id="heroCapex" class="hero-value">$0</span>
+                <span class="hero-currency-badge currency-badge" id="heroCapexCurrency">USD</span>
                 <span class="hero-sub text-gray-500" data-i18n="tool6.hero_capex_sub">Day 1 Cash Need</span>
             </div>
             <div class="dashboard-card hero-metric">
                 <span class="hero-label" data-i18n="tool6.hero_profit_label">Annual Net Profit</span>
                 <span id="heroProfit" class="hero-value">$0</span>
+                <span class="hero-currency-badge currency-badge" id="heroProfitCurrency">USD</span>
                 <span class="hero-sub text-gray-500" data-i18n="tool6.hero_profit_sub">After Tax & OPEX</span>
             </div>
             <div class="dashboard-card hero-metric">
@@ -193,6 +195,7 @@
                     </div>
                 </span>
                 <span id="heroNpv" class="hero-value">$0</span>
+                <span class="hero-currency-badge currency-badge" id="heroNpvCurrency">USD</span>
                 <span class="hero-sub text-gray-500" data-i18n="tool6.hero_npv_sub">Net Present Value</span>
             </div>
         </div>
@@ -246,7 +249,10 @@
                 </div>
 
                 <div class="dashboard-card">
-                    <h3 class="section-card-header section-title-gray" data-i18n="tool6.financial_summary_section">Annual Financial Summary</h3>
+                    <h3 class="section-card-header section-title-gray">
+                        <span data-i18n="tool6.financial_summary_section">Annual Financial Summary</span>
+                        <span class="currency-badge" id="summaryTableCurrency">USD</span>
+                    </h3>
                     <div class="overflow-x-auto">
                         <table class="w-full text-sm">
                             <tbody class="divide-y divide-gray-100">
@@ -369,6 +375,10 @@ window.navigate = function(url) { window.location.href = url; };
                 const base = parseFloat(el.dataset.baseUsd) || 0;
                 el.textContent = BiocharCurrency.format(base, code);
             });
+            ['heroCapexCurrency', 'heroProfitCurrency', 'heroNpvCurrency', 'summaryTableCurrency'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = code;
+            });
         };
 
         // --- Helper Functions ---
@@ -442,6 +452,10 @@ window.navigate = function(url) { window.location.href = url; };
                 // Populate options immediately — doesn't need exchange rates
                 const sel = document.getElementById('pageCurrency');
                 if (sel) { sel.value = _pageCurrency; }
+                ['heroCapexCurrency', 'heroProfitCurrency', 'heroNpvCurrency', 'summaryTableCurrency'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.textContent = _pageCurrency;
+                });
                 BiocharCurrency.getRates().then(() => {
                     loadAndCalculate();
                 });

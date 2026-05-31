@@ -100,7 +100,10 @@
                             <span class="input-label font-semibold text-gray-700" data-i18n="tool5.kiln_cost_label">Total Pyrolyzer Upfront Cost (from Tool 2)</span>
                             <div class="tooltip-wrap"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool5.kiln_cost_tooltip">This value is loaded automatically from your kiln and shipping selections in Tool 2.</span></div>
                         </div>
-                        <input type="number" id="outputTotalKilnCost" value="0" class="input font-bold text-gray-800 text-lg border-2 border-blue-300" readonly>
+                        <div class="flex items-center gap-2">
+                            <input type="number" id="outputTotalKilnCost" value="0" class="input font-bold text-gray-800 text-lg border-2 border-blue-300" readonly>
+                            <span class="text-sm font-mono font-semibold text-gray-500 bg-gray-100 border border-gray-200 px-2 py-1 rounded shrink-0">USD</span>
+                        </div>
                         <p id="kilnCostWarning" class="text-xs text-gray-500 mt-1 italic"></p>
                     </label>
                 </div>

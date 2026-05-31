@@ -194,8 +194,8 @@
                             <thead>
                                 <tr class="text-xs uppercase text-gray-500 border-b-2 border-gray-100">
                                     <th class="text-left py-3" data-i18n="tool7.metric_header">Metric</th>
-                                    <th class="text-right py-3 px-4" data-i18n="tool7.base_header">Base Case</th>
-                                    <th class="text-right py-3 px-4 bg-blue-50 text-blue-900" data-i18n="tool7.scenario_header">Scenario</th>
+                                    <th class="text-right py-3 px-4"><span data-i18n="tool7.base_header">Base Case</span> <span id="baseColCurrency" class="currency-badge normal-case">USD</span></th>
+                                    <th class="text-right py-3 px-4 bg-blue-50 text-blue-900"><span data-i18n="tool7.scenario_header">Scenario</span> <span id="scenColCurrency" class="currency-badge normal-case">USD</span></th>
                                     <th class="text-right py-3" data-i18n="tool7.impact_header">Impact</th>
                                 </tr>
                             </thead>
@@ -289,6 +289,10 @@
                 if (!baseEl || !scenEl) return;
                 updateRow(suffix, parseFloat(baseEl.dataset.baseUsd) || 0, parseFloat(scenEl.dataset.baseUsd) || 0, suffix === 'Capex');
             });
+            ['baseColCurrency', 'scenColCurrency'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = code;
+            });
         };
 
         const loadingIndicator = document.getElementById('loadingIndicator');
@@ -338,6 +342,10 @@
                 // Populate options immediately — doesn't need exchange rates
                 const sel = document.getElementById('pageCurrency');
                 if (sel) { sel.value = _pageCurrency; }
+                ['baseColCurrency', 'scenColCurrency'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.textContent = _pageCurrency;
+                });
                 BiocharCurrency.getRates().then(() => {
                     loadBaseCase();
                 });
