@@ -8,6 +8,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="engine.js"></script>
     <script src="currency.js"></script>
+    <script src="project-currency.js"></script>
     <script src="translations.js"></script>
     <script src="i18n.js"></script>
 <script src="auth.js"></script>
@@ -177,15 +178,6 @@
                         <div class="flex items-center gap-2">
                             <label class="text-sm text-gray-500">Currency:</label>
                             <select id="pageCurrency" onchange="onPageCurrencyChange(this.value)" class="text-sm border border-gray-200 rounded px-2 py-1 bg-white text-gray-700 cursor-pointer outline-none">
-                                <option value="USD">$ USD</option>
-                                <option value="MXN">$ MXN</option>
-                                <option value="COP">$ COP</option>
-                                <option value="BRL">R$ BRL</option>
-                                <option value="PEN">S/ PEN</option>
-                                <option value="GTQ">Q GTQ</option>
-                                <option value="HNL">L HNL</option>
-                                <option value="NIO">C$ NIO</option>
-                                <option value="CRC">₡ CRC</option>
                             </select>
                         </div>
                     </div>
@@ -338,15 +330,17 @@
             }
 
             if (projectData && projectData.tool1 && projectData.tool2 && projectData.tool3 && projectData.tool4 && projectData.tool5) {
-                _pageCurrency = localStorage.getItem('biocharTool7Currency') || 'USD';
-                // Populate options immediately — doesn't need exchange rates
+                _pageCurrency = localStorage.getItem('biocharTool7Currency')
+                    || (window.BiocharProjectCurrency && BiocharProjectCurrency.getProjectCurrency())
+                    || 'USD';
                 const sel = document.getElementById('pageCurrency');
-                if (sel) { sel.value = _pageCurrency; }
+                if (sel) BiocharCurrency.populateSelect(sel, _pageCurrency, false);
                 ['baseColCurrency', 'scenColCurrency'].forEach(id => {
                     const el = document.getElementById(id);
                     if (el) el.textContent = _pageCurrency;
                 });
                 BiocharCurrency.getRates().then(() => {
+                    if (sel) BiocharCurrency.populateSelect(sel, _pageCurrency, false);
                     loadBaseCase();
                 });
             } else {

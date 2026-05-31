@@ -7,6 +7,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="engine.js"></script>
+<script src="project-currency.js"></script>
 <script src="translations.js"></script>
 <script src="i18n.js"></script>
 <script src="auth.js"></script>
@@ -191,20 +192,6 @@
         <label class="input-label" data-i18n="tool1.country_label">Country</label>
         <select id="selectCountry" class="input" required>
           <option value="" disabled selected data-i18n="tool1.country_placeholder">Select Country</option>
-          <option value="bolivia" data-i18n="tool1.country_bolivia">Bolivia</option>
-          <option value="brazil" data-i18n="tool1.country_brazil">Brazil</option>
-          <option value="colombia" data-i18n="tool1.country_colombia">Colombia</option>
-          <option value="costa_rica" data-i18n="tool1.country_costa_rica">Costa Rica</option>
-          <option value="dominican_republic" data-i18n="tool1.country_dominican_republic">Dominican Republic</option>
-          <option value="ecuador" data-i18n="tool1.country_ecuador">Ecuador</option>
-          <option value="el_salvador" data-i18n="tool1.country_el_salvador">El Salvador</option>
-          <option value="guatemala" data-i18n="tool1.country_guatemala">Guatemala</option>
-          <option value="honduras" data-i18n="tool1.country_honduras">Honduras</option>
-          <option value="mexico" data-i18n="tool1.country_mexico">Mexico</option>
-          <option value="nicaragua" data-i18n="tool1.country_nicaragua">Nicaragua</option>
-          <option value="panama" data-i18n="tool1.country_panama">Panama</option>
-          <option value="peru" data-i18n="tool1.country_peru">Peru</option>
-          <option value="custom" data-i18n="tool1.country_custom">Custom / Other</option>
         </select>
       </div>
       <div class="input-group">
@@ -376,6 +363,40 @@ function updateSeasonalityUI() {
 document.getElementById("selectSupplyModel")?.addEventListener("change", updateSeasonalityUI);
 document.getElementById("selectSeasonalityStrategy")?.addEventListener("change", updateSeasonalityUI);
 
+function populateCountryDropdown(selected) {
+  const sel = document.getElementById("selectCountry");
+  if (!sel) return;
+  const lang = (window.BiocharI18n && BiocharI18n.getCurrentLang()) || "en";
+  let dn = null;
+  try { dn = new Intl.DisplayNames([lang], { type: "region" }); } catch (_) {}
+  const codes = (window.BiocharProjectCurrency && BiocharProjectCurrency.COUNTRY_CODES) || [];
+  const items = codes.map(code => ({
+    code,
+    name: (dn && dn.of(code)) || code
+  })).sort((a, b) => a.name.localeCompare(b.name, lang));
+  // Keep the existing placeholder option, then append countries + custom.
+  const frag = document.createDocumentFragment();
+  items.forEach(({ code, name }) => {
+    const opt = document.createElement("option");
+    opt.value = code;
+    opt.textContent = name;
+    frag.appendChild(opt);
+  });
+  const customOpt = document.createElement("option");
+  customOpt.value = "custom";
+  customOpt.textContent = BiocharI18n.t("tool1.country_custom");
+  frag.appendChild(customOpt);
+  // Preserve the placeholder, drop everything else.
+  while (sel.options.length > 1) sel.remove(1);
+  sel.appendChild(frag);
+  if (selected) {
+    const normalized = (window.BiocharProjectCurrency
+      ? BiocharProjectCurrency.normalizeCountryCode(selected)
+      : selected);
+    sel.value = normalized;
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   BiocharAuth.updateHeaderLink();
   let stored = null;
@@ -392,7 +413,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (typeof d.woodTonnes !== "undefined") document.getElementById("inputWoodTonnes").value = d.woodTonnes;
   if (d.projectType) document.getElementById("selectProjectType").value = d.projectType;
   if (typeof d.numHubs !== "undefined") document.getElementById("inputNumHubs").value = d.numHubs;
-  if (d.country) document.getElementById("selectCountry").value = d.country;
+  populateCountryDropdown(d.country);
   if (d.communityBuyIn) document.getElementById("selectCommunityBuyIn").value = d.communityBuyIn;
   if (d.notes_T1) document.getElementById("toolNotes").value = d.notes_T1;
   if (d.supplyModel) document.getElementById("selectSupplyModel").value = d.supplyModel;

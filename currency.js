@@ -2,18 +2,38 @@
 (function () {
   'use strict';
 
+  // Used as the offline fallback list when the FX API is unreachable,
+  // and as the seed list for currency selectors before rates have loaded.
+  // Once rates are fetched, selectors are populated from the full rates table.
+  const FALLBACK_LIST = [
+    { code: 'USD', symbol: '$',  name: 'US Dollar' },
+    { code: 'MXN', symbol: '$',  name: 'Mexican Peso' },
+    { code: 'COP', symbol: '$',  name: 'Colombian Peso' },
+    { code: 'BRL', symbol: 'R$', name: 'Brazilian Real' },
+    { code: 'PEN', symbol: 'S/', name: 'Peruvian Sol' },
+    { code: 'GTQ', symbol: 'Q',  name: 'Guatemalan Quetzal' },
+    { code: 'HNL', symbol: 'L',  name: 'Honduran Lempira' },
+    { code: 'NIO', symbol: 'C$', name: 'Nicaraguan Córdoba' },
+    { code: 'CRC', symbol: '₡',  name: 'Costa Rican Colón' },
+  ];
+
+  function deriveSymbol(code) {
+    try {
+      const parts = new Intl.NumberFormat('en-US', { style: 'currency', currency: code })
+        .formatToParts(0);
+      const sym = parts.find(p => p.type === 'currency');
+      return sym ? sym.value : code;
+    } catch (_) { return code; }
+  }
+
+  function projectDefaultCode() {
+    try {
+      return (window.BiocharProjectCurrency && window.BiocharProjectCurrency.getProjectCurrency()) || 'USD';
+    } catch (_) { return 'USD'; }
+  }
+
   window.BiocharCurrency = {
-    SUPPORTED: [
-      { code: 'USD', symbol: '$',  name: 'US Dollar' },
-      { code: 'MXN', symbol: '$',  name: 'Mexican Peso' },
-      { code: 'COP', symbol: '$',  name: 'Colombian Peso' },
-      { code: 'BRL', symbol: 'R$', name: 'Brazilian Real' },
-      { code: 'PEN', symbol: 'S/', name: 'Peruvian Sol' },
-      { code: 'GTQ', symbol: 'Q',  name: 'Guatemalan Quetzal' },
-      { code: 'HNL', symbol: 'L',  name: 'Honduran Lempira' },
-      { code: 'NIO', symbol: 'C$', name: 'Nicaraguan Córdoba' },
-      { code: 'CRC', symbol: '₡',  name: 'Costa Rican Colón' },
-    ],
+    SUPPORTED: FALLBACK_LIST,
 
     RATES_KEY: 'biocharExchangeRates_v2',
     RATES_TTL: 86400000, // 24 hours in ms
@@ -31,9 +51,7 @@
       try {
         const resp = await fetch('https://open.er-api.com/v6/latest/USD');
         const data = await resp.json();
-        const needed = this.SUPPORTED.map(c => c.code);
-        this._rates = { USD: 1 };
-        needed.forEach(code => { if (data.rates[code]) this._rates[code] = data.rates[code]; });
+        this._rates = Object.assign({ USD: 1 }, data.rates || {});
         localStorage.setItem(this.RATES_KEY, JSON.stringify({
           rates: this._rates, timestamp: Date.now()
         }));
@@ -71,12 +89,32 @@
       }
     },
 
+    // Returns the list of currency codes to show in selectors. After rates
+    // load, this is the full world list (alphabetical). Before rates are
+    // ready, falls back to the curated short list.
+    getOptionCodes() {
+      if (this._rates) {
+        return Object.keys(this._rates).sort();
+      }
+      return FALLBACK_LIST.map(c => c.code);
+    },
+
     _optionsHtml(selectedCode, short) {
-      return this.SUPPORTED.map(c => {
-        const sel = c.code === (selectedCode || 'USD') ? ' selected' : '';
-        const label = short ? c.code : `${c.symbol} ${c.code}`;
-        return `<option value="${c.code}"${sel}>${label}</option>`;
+      const codes = this.getOptionCodes();
+      const sel = selectedCode || projectDefaultCode();
+      return codes.map(code => {
+        const isSel = code === sel ? ' selected' : '';
+        const label = short ? code : `${deriveSymbol(code)} ${code}`;
+        return `<option value="${code}"${isSel}>${label}</option>`;
       }).join('');
+    },
+
+    // Populate an existing <select> with the current options list.
+    populateSelect(selectEl, selectedCode, short) {
+      if (!selectEl) return;
+      const current = selectedCode || selectEl.value || projectDefaultCode();
+      selectEl.innerHTML = this._optionsHtml(current, short);
+      selectEl.value = current;
     },
 
     wrapInput(fieldId, selectedCode, onchangeFn) {

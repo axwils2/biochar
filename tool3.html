@@ -8,6 +8,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="engine.js"></script>
     <script src="currency.js"></script>
+    <script src="project-currency.js"></script>
     <script src="translations.js"></script>
     <script src="i18n.js"></script>
 <script src="auth.js"></script>
@@ -236,7 +237,7 @@
                                 <span data-i18n="tool3.hourly_rate_label">All-In Hourly Cost ($/hr)</span>
                                 <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool3.hourly_rate_tooltip">Include operating expenses such as fuel, maintenance, repairs, insurance, and registration. Do not include driver wages (those should be entered in Tool 5 with salaries) or the cost of buying the vehicle (also in Tool 5). If unsure, ask the AI assistant: "Help me estimate my truck's hourly operating cost."</span></span>
                             </span>
-                            <input type="number" class="input route-rate border-2 border-gray-300" value="55" min="0">
+                            <input type="number" class="input route-rate border-2 border-gray-300" value="55" data-usd-default="55" min="0">
                         </label>
                         <div class="grid grid-cols-2 gap-4">
                             <div class="bg-orange-100 rounded-lg border-2 border-orange-300 p-3"><label class="block"><span class="input-label text-orange-900 font-bold mb-2 block leading-tight" data-i18n="tool3.dry_hours_label">Dry Season Round-Trip (Hrs)</span><input type="number" class="input route-hours-dry border-orange-300" value="4" min="0.5" step="0.5"></label></div>
@@ -249,8 +250,8 @@
                             <strong>Note:</strong> Use the full price negotiated with the driver for a round trip.
                         </p>
                         <div class="grid grid-cols-2 gap-4">
-                            <div class="bg-orange-100 rounded-lg border-2 border-orange-300 p-3"><label class="block"><span class="input-label text-orange-900 font-bold mb-2 block" data-i18n="tool3.dry_quote_label">Dry Season Quote ($)</span><input type="number" class="input route-quote-dry border-orange-300" value="150" min="0"></label></div>
-                            <div class="bg-blue-100 rounded-lg border-2 border-blue-300 p-3"><label class="block"><span class="input-label text-blue-900 font-bold mb-2 block" data-i18n="tool3.rainy_quote_label">Rainy Season Quote ($)</span><input type="number" class="input route-quote-rain border-blue-300" value="175" min="0"></label></div>
+                            <div class="bg-orange-100 rounded-lg border-2 border-orange-300 p-3"><label class="block"><span class="input-label text-orange-900 font-bold mb-2 block" data-i18n="tool3.dry_quote_label">Dry Season Quote ($)</span><input type="number" class="input route-quote-dry border-orange-300" value="150" data-usd-default="150" min="0"></label></div>
+                            <div class="bg-blue-100 rounded-lg border-2 border-blue-300 p-3"><label class="block"><span class="input-label text-blue-900 font-bold mb-2 block" data-i18n="tool3.rainy_quote_label">Rainy Season Quote ($)</span><input type="number" class="input route-quote-rain border-blue-300" value="175" data-usd-default="175" min="0"></label></div>
                         </div>
                     </div>
                 </div>
@@ -483,8 +484,29 @@
             _routeCurrencies = savedCurr.routeCurrencies || [];
 
             BiocharCurrency.getRates().then(() => {
-                BiocharCurrency.injectOutputSelect('outputAnnualCost', _fieldCurrencies.outputs['outputAnnualCost'], 'onOutputCurrencyChange');
-                BiocharCurrency.injectOutputSelect('outputCostPerTonne', _fieldCurrencies.outputs['outputCostPerTonne'], 'onOutputCurrencyChange');
+                const projCode = (window.BiocharProjectCurrency && BiocharProjectCurrency.getProjectCurrency()) || 'USD';
+                const isNewForT3 = !(projectData.tool3 && projectData.tool3.lastUpdated);
+                if (isNewForT3 && window.BiocharProjectCurrency) {
+                    BiocharProjectCurrency.applyHtmlDefaults();
+                }
+                const fallback = isNewForT3 ? projCode : 'USD';
+                BiocharCurrency.injectOutputSelect('outputAnnualCost', _fieldCurrencies.outputs['outputAnnualCost'] || fallback, 'onOutputCurrencyChange');
+                BiocharCurrency.injectOutputSelect('outputCostPerTonne', _fieldCurrencies.outputs['outputCostPerTonne'] || fallback, 'onOutputCurrencyChange');
+                // Re-populate route currency selectors so the full world list is available.
+                // For new projects, switch unset slots to the project currency.
+                document.querySelectorAll('.route-card').forEach((card, idx) => {
+                    if (!_routeCurrencies[idx]) _routeCurrencies[idx] = {};
+                    ['route-rate', 'route-quote-dry', 'route-quote-rain'].forEach(cls => {
+                        const sel = card.querySelector('.' + cls + '_currency');
+                        if (!sel) return;
+                        if (isNewForT3 && !_routeCurrencies[idx][cls]) {
+                            _routeCurrencies[idx][cls] = projCode;
+                            BiocharCurrency.populateSelect(sel, projCode, false);
+                        } else {
+                            BiocharCurrency.populateSelect(sel, _routeCurrencies[idx][cls] || 'USD', false);
+                        }
+                    });
+                });
                 calculateAll();
             });
         });
@@ -756,9 +778,20 @@
                 const idx = routeCards.length - 1;
                 if (!_routeCurrencies[idx]) _routeCurrencies[idx] = {};
                 const rc = _routeCurrencies[idx];
-                BiocharCurrency.wrapClassInput(appendedCard.querySelector('.route-rate'), 'route-rate', rc['route-rate'] || 'USD', 'onRouteCurrencyChange');
-                BiocharCurrency.wrapClassInput(appendedCard.querySelector('.route-quote-dry'), 'route-quote-dry', rc['route-quote-dry'] || 'USD', 'onRouteCurrencyChange');
-                BiocharCurrency.wrapClassInput(appendedCard.querySelector('.route-quote-rain'), 'route-quote-rain', rc['route-quote-rain'] || 'USD', 'onRouteCurrencyChange');
+                const projCode = (window.BiocharProjectCurrency && BiocharProjectCurrency.getProjectCurrency()) || 'USD';
+                // Newly-added routes default to the project currency. (For routes restored
+                // from saved data, the rc slots may already be populated from savedCurr.)
+                const seedCode = data ? 'USD' : projCode;
+                ['route-rate', 'route-quote-dry', 'route-quote-rain'].forEach(cls => {
+                    if (!rc[cls]) rc[cls] = seedCode;
+                });
+                BiocharCurrency.wrapClassInput(appendedCard.querySelector('.route-rate'), 'route-rate', rc['route-rate'], 'onRouteCurrencyChange');
+                BiocharCurrency.wrapClassInput(appendedCard.querySelector('.route-quote-dry'), 'route-quote-dry', rc['route-quote-dry'], 'onRouteCurrencyChange');
+                BiocharCurrency.wrapClassInput(appendedCard.querySelector('.route-quote-rain'), 'route-quote-rain', rc['route-quote-rain'], 'onRouteCurrencyChange');
+                // Convert this card's USD template defaults to the project currency.
+                if (!data && window.BiocharProjectCurrency) {
+                    BiocharProjectCurrency.applyHtmlDefaults(appendedCard);
+                }
             }
 
             if (!data) {

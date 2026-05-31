@@ -8,6 +8,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="engine.js"></script>
     <script src="currency.js"></script>
+    <script src="project-currency.js"></script>
     <script src="translations.js"></script>
     <script src="i18n.js"></script>
 <script src="auth.js"></script>
@@ -114,7 +115,7 @@
                             <span data-i18n="tool5.wood_chipper_label">Wood Chipper / Grinder ($)</span>
                             <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.wood_chipper_tooltip">Required for processing woody feedstocks (from Tool 2).</span></span>
                         </span>
-                        <input type="number" id="inputWoodChipperCost" value="15000" class="input border-purple-300 font-bold text-purple-900" min="0">
+                        <input type="number" id="inputWoodChipperCost" value="15000" data-usd-default="15000" class="input border-purple-300 font-bold text-purple-900" min="0">
                     </label>
                 </div>
 
@@ -124,7 +125,7 @@
                             <span data-i18n="tool5.storage_infra_label">Feedstock Storage Infrastructure ($)</span>
                             <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.storage_infra_tooltip">Required for "Store" strategy. Includes sheds, tarps, and concrete pads.</span></span>
                         </span>
-                        <input type="number" id="inputStorageInfra" value="10000" class="input border-orange-300" min="0">
+                        <input type="number" id="inputStorageInfra" value="10000" data-usd-default="10000" class="input border-orange-300" min="0">
                     </label>
                 </div>
 
@@ -132,7 +133,7 @@
                     <h4 class="font-semibold text-gray-700" data-i18n="tool5.drying_section">Drying &amp; Ancillary Equipment</h4>
                     <label class="block">
                         <span class="input-label" data-i18n="tool5.dryer_label">Mechanical Dryer(s) ($)</span>
-                        <input type="number" id="inputDryerCost" value="50000" min="0" class="input">
+                        <input type="number" id="inputDryerCost" value="50000" data-usd-default="50000" min="0" class="input">
                     </label>
 
                     <div class="flex items-center justify-between p-3 bg-green-50 rounded border border-green-200">
@@ -154,7 +155,7 @@
                             <span data-i18n="tool5.ancillary_label">Other Ancillary Equipment ($)</span>
                             <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.ancillary_tooltip">Scales, forklifts, pallet jacks, etc.</span></span>
                         </span>
-                        <input type="number" id="inputAncillaryCost" value="25000" min="0" class="input">
+                        <input type="number" id="inputAncillaryCost" value="25000" data-usd-default="25000" min="0" class="input">
                     </label>
                 </div>
 
@@ -175,7 +176,7 @@
                             </label>
                             <label class="block">
                                 <span class="input-label text-xs" data-i18n="tool5.truck_cost_label">Avg. Cost per Truck ($)</span>
-                                <input type="number" id="inputLogisticsTruckCost" value="40000" min="0" class="input">
+                                <input type="number" id="inputLogisticsTruckCost" value="40000" data-usd-default="40000" min="0" class="input">
                             </label>
                         </div>
                         <div class="p-3 bg-gray-50 rounded-lg border border-gray-200 space-y-2">
@@ -192,14 +193,14 @@
                             </label>
                             <label class="block">
                                 <span class="input-label text-xs" data-i18n="tool5.pickup_cost_label">Avg. Cost per Pickup ($)</span>
-                                <input type="number" id="inputPickupCost" value="30000" min="0" class="input">
+                                <input type="number" id="inputPickupCost" value="30000" data-usd-default="30000" min="0" class="input">
                             </label>
                             <label class="block pt-2 border-t border-gray-300">
                                 <span class="input-label text-xs font-semibold">
                                     <span data-i18n="tool5.pickups_opex_label">Pickups Annual OPEX ($/yr)</span>
                                     <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.pickups_opex_tooltip">Fuel, maintenance, and insurance for your general site vehicle(s).</span></span>
                                 </span>
-                                <input type="number" id="inputPickupsOpex" value="3000" min="0" class="input">
+                                <input type="number" id="inputPickupsOpex" value="3000" data-usd-default="3000" min="0" class="input">
                             </label>
                         </div>
                     </div>
@@ -226,7 +227,7 @@
                                 <span data-i18n="tool5.cost_per_hour_label">Hourly Cost per Relocation Trip</span>
                                 <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.cost_per_hour_tooltip">All-in cost for the tow vehicle (driver, fuel, maint, etc.) for a ONE-WAY trip.</span></span>
                             </span>
-                            <input type="number" id="inputCostPerHourRelocation" value="25" min="0" class="input">
+                            <input type="number" id="inputCostPerHourRelocation" value="25" data-usd-default="25" min="0" class="input">
                         </label>
                     </div>
                     <div class="bg-blue-50 p-3 rounded-lg border border-blue-200 text-right">
@@ -239,7 +240,7 @@
                     <h4 class="font-semibold text-gray-700" data-i18n="tool5.site_infra_section">Site Infrastructure &amp; Permitting</h4>
                     <label class="block">
                         <span class="input-label" data-i18n="tool5.buildings_label">Buildings, Ventilation &amp; Concrete Pads ($)</span>
-                        <input type="number" id="inputInfrastructureCost" value="75000" min="0" class="input">
+                        <input type="number" id="inputInfrastructureCost" value="75000" data-usd-default="75000" min="0" class="input">
                         <p class="text-[0.65rem] text-gray-500 mt-1 leading-tight" data-i18n="tool5.buildings_note">
                             This value is assumed to include relevant civil, structural, mechanical, and electrical components, as well as basic site services required for biochar operations.
                         </p>
@@ -264,7 +265,7 @@
                         <div class="space-y-4">
                             <label class="block" id="landLeaseContainer">
                                 <span class="input-label" data-i18n="tool5.land_lease_label">Land Lease ($/yr)</span>
-                                <input type="number" id="inputLandLease" value="12000" min="0" class="input">
+                                <input type="number" id="inputLandLease" value="12000" data-usd-default="12000" min="0" class="input">
                             </label>
                             <label class="block hidden" id="landPurchaseContainer">
                                 <span class="input-label" data-i18n="tool5.land_purchase_label">Land Purchase (CAPEX - $)</span>
@@ -351,14 +352,14 @@
                             <span data-i18n="tool5.lca_cost_label">One-time LCA Cost (CAPEX $)</span>
                             <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.lca_cost_tooltip">Cost to hire a 3rd-party consultant for your Life Cycle Assessment (LCA), often required for certification.</span></span>
                         </span>
-                        <input type="number" id="inputLcaCost" value="5000" min="0" class="input border-2 border-blue-300">
+                        <input type="number" id="inputLcaCost" value="5000" data-usd-default="5000" min="0" class="input border-2 border-blue-300">
                     </label>
                     <label class="block">
                         <span class="input-label font-bold text-blue-800">
                             <span data-i18n="tool5.lca_annual_label">Annual LCA Renewal (OPEX $)</span>
                             <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.lca_annual_tooltip">Cost to refurbish the LCA data with a new audit.</span></span>
                         </span>
-                        <input type="number" id="inputLcaAnnualCost" value="2000" min="0" class="input border-2 border-blue-300">
+                        <input type="number" id="inputLcaAnnualCost" value="2000" data-usd-default="2000" min="0" class="input border-2 border-blue-300">
                     </label>
                 </div>
             </div>
@@ -406,9 +407,9 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <label class="block"><span class="input-label"><span data-i18n="tool5.insurance_label">Insurance ($/yr)</span><span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.insurance_tooltip">Typically 1-2% of total CAPEX.</span></span></span><input type="number" id="inputInsurance" value="5000" min="0" class="input"></label>
-                    <label class="block"><span class="input-label"><span data-i18n="tool5.utilities_label">Utilities ($/yr)</span><span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.utilities_tooltip">Electricity, water, and dryer fuel.</span></span></span><input type="number" id="inputUtilities" value="8000" min="0" class="input"></label>
-                    <label class="block"><span class="input-label"><span data-i18n="tool5.regulatory_label">Air Quality Compliance ($/yr)</span><span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.regulatory_tooltip">Annual testing and reporting.</span></span></span><input type="number" id="inputRegulatory" value="8000" min="0" class="input"></label>
+                    <label class="block"><span class="input-label"><span data-i18n="tool5.insurance_label">Insurance ($/yr)</span><span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.insurance_tooltip">Typically 1-2% of total CAPEX.</span></span></span><input type="number" id="inputInsurance" value="5000" data-usd-default="5000" min="0" class="input"></label>
+                    <label class="block"><span class="input-label"><span data-i18n="tool5.utilities_label">Utilities ($/yr)</span><span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.utilities_tooltip">Electricity, water, and dryer fuel.</span></span></span><input type="number" id="inputUtilities" value="8000" data-usd-default="8000" min="0" class="input"></label>
+                    <label class="block"><span class="input-label"><span data-i18n="tool5.regulatory_label">Air Quality Compliance ($/yr)</span><span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool5.regulatory_tooltip">Annual testing and reporting.</span></span></span><input type="number" id="inputRegulatory" value="8000" data-usd-default="8000" min="0" class="input"></label>
                 </div>
             </div>
         </div>
@@ -533,20 +534,23 @@
 
         let saveButton, navigationButtons, saveStatus, unsavedWarning;
 
+        // Keyed by ISO 3166-1 alpha-2 (with "custom" as the generic fallback).
+        // Salaries and permit fees are USD; conversion to project currency happens
+        // at write-time in updateCountryDefaults.
         const COUNTRY_DATA = {
-            "bolivia": { general: 5500, management: 20000, tax: 25, interest: 12, permit: { micro: 150, small: 150, medium: 500, large: 1500 } },
-            "brazil": { general: 6500, management: 28000, tax: 34, interest: 26, permit: { micro: 1000, small: 1000, medium: 2000, large: 3500 } },
-            "colombia": { general: 5000, management: 21000, tax: 35, interest: 18, permit: { micro: 1000, small: 1000, medium: 1500, large: 2000 } },
-            "costa_rica": { general: 7000, management: 25000, tax: 30, interest: 14, permit: { micro: 500, small: 500, medium: 1500, large: 3000 } },
-            "dominican_republic": { general: 7500, management: 26000, tax: 27, interest: 15, permit: { micro: 150, small: 150, medium: 300, large: 900 } },
-            "ecuador": { general: 9500, management: 24000, tax: 25, interest: 13, permit: { micro: 200, small: 200, medium: 500, large: 1500 } },
-            "el_salvador": { general: 5000, management: 19000, tax: 30, interest: 12, permit: { micro: 100, small: 100, medium: 300, large: 1000 } },
-            "guatemala": { general: 5500, management: 20000, tax: 25, interest: 13, permit: { micro: 100, small: 100, medium: 500, large: 1500 } },
-            "honduras": { general: 4800, management: 19000, tax: 25, interest: 17, permit: { micro: 300, small: 300, medium: 1000, large: 2000 } },
-            "mexico": { general: 7500, management: 26000, tax: 30, interest: 16, permit: { micro: 150, small: 150, medium: 300, large: 900 } },
-            "nicaragua": { general: 4500, management: 18000, tax: 30, interest: 16, permit: { micro: 100, small: 100, medium: 300, large: 1000 } },
-            "panama": { general: 14000, management: 35000, tax: 25, interest: 9, permit: { micro: 500, small: 500, medium: 1500, large: 3000 } },
-            "peru": { general: 6000, management: 22000, tax: 29.5, interest: 14, permit: { micro: 150, small: 150, medium: 500, large: 1500 } },
+            "BO": { general: 5500, management: 20000, tax: 25, interest: 12, permit: { micro: 150, small: 150, medium: 500, large: 1500 } },
+            "BR": { general: 6500, management: 28000, tax: 34, interest: 26, permit: { micro: 1000, small: 1000, medium: 2000, large: 3500 } },
+            "CO": { general: 5000, management: 21000, tax: 35, interest: 18, permit: { micro: 1000, small: 1000, medium: 1500, large: 2000 } },
+            "CR": { general: 7000, management: 25000, tax: 30, interest: 14, permit: { micro: 500, small: 500, medium: 1500, large: 3000 } },
+            "DO": { general: 7500, management: 26000, tax: 27, interest: 15, permit: { micro: 150, small: 150, medium: 300, large: 900 } },
+            "EC": { general: 9500, management: 24000, tax: 25, interest: 13, permit: { micro: 200, small: 200, medium: 500, large: 1500 } },
+            "SV": { general: 5000, management: 19000, tax: 30, interest: 12, permit: { micro: 100, small: 100, medium: 300, large: 1000 } },
+            "GT": { general: 5500, management: 20000, tax: 25, interest: 13, permit: { micro: 100, small: 100, medium: 500, large: 1500 } },
+            "HN": { general: 4800, management: 19000, tax: 25, interest: 17, permit: { micro: 300, small: 300, medium: 1000, large: 2000 } },
+            "MX": { general: 7500, management: 26000, tax: 30, interest: 16, permit: { micro: 150, small: 150, medium: 300, large: 900 } },
+            "NI": { general: 4500, management: 18000, tax: 30, interest: 16, permit: { micro: 100, small: 100, medium: 300, large: 1000 } },
+            "PA": { general: 14000, management: 35000, tax: 25, interest: 9, permit: { micro: 500, small: 500, medium: 1500, large: 3000 } },
+            "PE": { general: 6000, management: 22000, tax: 29.5, interest: 14, permit: { micro: 150, small: 150, medium: 500, large: 1500 } },
             "custom": { general: 5000, management: 20000, tax: 25, interest: 10, permit: { micro: 200, small: 200, medium: 500, large: 1000 } }
         };
 
@@ -689,7 +693,9 @@
 
                 projectState.totalFeedstock = (t2.diversified.f1_tonnes || 0) + (t2.diversified.f2_tonnes || 0);
                 projectState.scale = getProjectSize(projectState.totalFeedstock / (t1.numHubs || 1));
-                projectState.country = t1.country || 'custom';
+                projectState.country = (window.BiocharProjectCurrency
+                    ? BiocharProjectCurrency.normalizeCountryCode(t1.country)
+                    : (t1.country || 'custom')) || 'custom';
                 projectState.hubs = t1.numHubs || 1;
                 projectState.type = t1.projectType || 'centralized';
 
@@ -700,7 +706,15 @@
                 projectState.strategy = t1.seasonalityStrategy || 'year_round';
 
                 document.getElementById('displayScale').textContent = `${projectState.scale.toUpperCase()} (${projectState.totalFeedstock.toLocaleString()}t/yr)`;
-                document.getElementById('displayCountry').textContent = projectState.country.toUpperCase();
+                {
+                    const lang = (window.BiocharI18n && BiocharI18n.getCurrentLang()) || 'en';
+                    const name = (window.BiocharProjectCurrency
+                        && BiocharProjectCurrency.getCountryDisplayName(projectState.country, lang))
+                        || (projectState.country === 'custom'
+                            ? BiocharI18n.t('tool1.country_custom')
+                            : projectState.country);
+                    document.getElementById('displayCountry').textContent = name;
+                }
                 document.getElementById('displayProjectType').textContent = projectState.type.charAt(0).toUpperCase() + projectState.type.slice(1);
                 document.getElementById('displayHubs').textContent = projectState.hubs;
 
@@ -721,6 +735,7 @@
                 }
 
                 const savedData = projectData.tool5;
+                projectState.isNewProject = !savedData;
                 if (!savedData) {
                     const f1_cost = (t2.diversified.f1_tonnes || 0) * (t2.diversified.f1_price || 0);
                     const f2_cost = (t2.diversified.f2_tonnes || 0) * (t2.diversified.f2_price || 0);
@@ -801,6 +816,15 @@
                 calculateCapex();
 
                 BiocharCurrency.getRates().then(() => {
+                    const projCode = (window.BiocharProjectCurrency && BiocharProjectCurrency.getProjectCurrency()) || 'USD';
+                    if (projectState.isNewProject) {
+                        // Re-run with rates loaded so USD country defaults get converted.
+                        updateCountryDefaults(true);
+                        if (window.BiocharProjectCurrency) {
+                            BiocharProjectCurrency.applyHtmlDefaults();
+                        }
+                    }
+                    const fallback = projectState.isNewProject ? projCode : 'USD';
                     [
                         'inputFeedstockLoanAmount', 'inputWoodChipperCost', 'inputStorageInfra',
                         'inputDryerCost', 'inputAncillaryCost', 'inputLogisticsTruckCost',
@@ -812,9 +836,9 @@
                         'inputGeneralSalary', 'inputManagementSalary',
                         'inputInsurance', 'inputUtilities', 'inputRegulatory',
                         'inputLoanAmount', 'inputPrepayment', 'inputIncentives',
-                    ].forEach(id => BiocharCurrency.wrapInput(id, _fieldCurrencies.inputs[id], 'onInputCurrencyChange'));
+                    ].forEach(id => BiocharCurrency.wrapInput(id, _fieldCurrencies.inputs[id] || fallback, 'onInputCurrencyChange'));
                     ['outputTotalMobileOpex', 'outputSyngasCost', 'outputTotalCapex'].forEach(id =>
-                        BiocharCurrency.injectOutputSelect(id, _fieldCurrencies.outputs[id], 'onOutputCurrencyChange')
+                        BiocharCurrency.injectOutputSelect(id, _fieldCurrencies.outputs[id] || fallback, 'onOutputCurrencyChange')
                     );
                     calculateCapex();
                     calculateMobileOpex();
@@ -946,28 +970,42 @@
         function updateCountryDefaults(isNewProject) {
             const country = projectState.country;
             const scale = projectState.scale;
-            if (isNewProject) {
-                const data = COUNTRY_DATA[country] || COUNTRY_DATA['custom'];
-                const labor = LABOR_MATRIX[scale] || LABOR_MATRIX['micro'];
-                if (labor) {
-                    document.getElementById('inputGeneralStaff').value = labor.general;
-                    document.getElementById('inputManagementStaff').value = labor.management;
+            if (!isNewProject) return;
+            const data = COUNTRY_DATA[country] || COUNTRY_DATA['custom'];
+            const labor = LABOR_MATRIX[scale] || LABOR_MATRIX['micro'];
+            if (labor) {
+                document.getElementById('inputGeneralStaff').value = labor.general;
+                document.getElementById('inputManagementStaff').value = labor.management;
+            }
+            if (!data) return;
+
+            // Convert USD-denominated defaults to the project currency if rates have loaded.
+            const projCode = (window.BiocharProjectCurrency && BiocharProjectCurrency.getProjectCurrency()) || 'USD';
+            const ratesReady = !!(window.BiocharCurrency && BiocharCurrency._rates);
+            const conv = (usd) => (ratesReady && projCode !== 'USD')
+                ? BiocharCurrency.fromBase(usd, projCode).toFixed(0)
+                : usd;
+            const setMoney = (id, usd) => {
+                document.getElementById(id).value = conv(usd);
+                if (ratesReady && projCode !== 'USD') {
+                    _fieldCurrencies.inputs[id] = projCode;
+                    const sel = document.getElementById(id + '_currency');
+                    if (sel) sel.value = projCode;
                 }
-                if (data) {
-                    document.getElementById('inputGeneralSalary').value = data.general;
-                    document.getElementById('inputManagementSalary').value = data.management;
-                    document.getElementById('inputTaxRate').value = data.tax;
-                    document.getElementById('inputInterestRate').value = data.interest;
-                    if (typeof data.permit === 'object') {
-                        document.getElementById('inputPermitCapex').value = data.permit[scale] || data.permit['micro'];
-                    } else {
-                        document.getElementById('inputPermitCapex').value = data.permit || 8000;
-                    }
-                }
-                if (projectState.type === 'mobile') {
-                    document.getElementById('inputInfrastructureCost').value = 5000;
-                    document.getElementById('inputLandLease').value = 0;
-                }
+            };
+
+            setMoney('inputGeneralSalary', data.general);
+            setMoney('inputManagementSalary', data.management);
+            document.getElementById('inputTaxRate').value = data.tax;
+            document.getElementById('inputInterestRate').value = data.interest;
+            const permitUsd = typeof data.permit === 'object'
+                ? (data.permit[scale] || data.permit['micro'])
+                : (data.permit || 8000);
+            setMoney('inputPermitCapex', permitUsd);
+
+            if (projectState.type === 'mobile') {
+                setMoney('inputInfrastructureCost', 5000);
+                document.getElementById('inputLandLease').value = 0;
             }
         }
 

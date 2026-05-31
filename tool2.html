@@ -9,6 +9,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="engine.js"></script>
 <script src="currency.js"></script>
+<script src="project-currency.js"></script>
 <script src="translations.js"></script>
 <script src="i18n.js"></script>
 <script src="auth.js"></script>
@@ -674,14 +675,17 @@ function loadProject() {
     _fieldCurrencies.outputs = savedCurr.outputs || {};
 
     BiocharCurrency.getRates().then(() => {
-        BiocharCurrency.wrapInput('divF1_Price', _fieldCurrencies.inputs['divF1_Price'], 'onInputCurrencyChange');
-        BiocharCurrency.wrapInput('inputCustomKilnPrice', _fieldCurrencies.inputs['inputCustomKilnPrice'], 'onInputCurrencyChange');
+        const projCode = (window.BiocharProjectCurrency && BiocharProjectCurrency.getProjectCurrency()) || 'USD';
+        const isNewForT2 = !(projectData.tool2 && projectData.tool2.lastUpdated);
+        const fallback = isNewForT2 ? projCode : 'USD';
+        BiocharCurrency.wrapInput('divF1_Price', _fieldCurrencies.inputs['divF1_Price'] || fallback, 'onInputCurrencyChange');
+        BiocharCurrency.wrapInput('inputCustomKilnPrice', _fieldCurrencies.inputs['inputCustomKilnPrice'] || fallback, 'onInputCurrencyChange');
         document.querySelectorAll('.secondary-feedstock-card').forEach((card, idx) => {
             const priceEl = card.querySelector('[data-field="price"]');
-            if (priceEl) BiocharCurrency.wrapInput(priceEl.id || ('sf_price_input_' + idx), _fieldCurrencies.inputs['sf_price_' + idx], 'onInputCurrencyChange');
+            if (priceEl) BiocharCurrency.wrapInput(priceEl.id || ('sf_price_input_' + idx), _fieldCurrencies.inputs['sf_price_' + idx] || fallback, 'onInputCurrencyChange');
         });
         ['displayPyrolyzerCost', 'displayShippingCost', 'displayTotalUpfrontCapex'].forEach(id => {
-            BiocharCurrency.injectOutputSelect(id, _fieldCurrencies.outputs[id], 'onOutputCurrencyChange');
+            BiocharCurrency.injectOutputSelect(id, _fieldCurrencies.outputs[id] || fallback, 'onOutputCurrencyChange');
         });
         updateTotalCapex();
     });

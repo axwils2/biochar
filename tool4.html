@@ -8,6 +8,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="engine.js"></script>
 <script src="currency.js"></script>
+<script src="project-currency.js"></script>
 <script src="translations.js"></script>
 <script src="i18n.js"></script>
 <script src="auth.js"></script>
@@ -59,7 +60,7 @@
 <label class="block"><span class="input-label font-semibold text-gray-800" data-i18n="tool4.total_credits_label">Total Claimable Credits (tCO2e)</span>
 <input type="number" id="inputTotalCredits" value="0" class="input" readonly></label>
 <label class="block"><span class="input-label font-semibold text-green-800" data-i18n="tool4.credit_price_label">Carbon Credit Price ($/tCO2e)</span>
-<input type="number" id="inputCreditPrice" value="100" min="0" class="input border-2 border-green-500"></label>
+<input type="number" id="inputCreditPrice" value="100" data-usd-default="100" min="0" class="input border-2 border-green-500"></label>
 </div>
 <p id="loadingIndicatorCredits" class="text-xs text-yellow-700" data-i18n="tool4.loading_from_t2">Loading from Tool 2...</p>
 </div>
@@ -94,28 +95,28 @@
 <label class="block"><span class="input-label" data-i18n="tool4.biochar_pct_label">Biochar % in Mix</span>
 <input type="number" id="inputBiocharPercentInMix" value="30" min="0" max="100" class="input"></label>
 <label class="block"><span class="input-label" data-i18n="tool4.compost_cost_label">Compost Cost ($/Tonne)</span>
-<input type="number" id="inputCompostCost" value="50" min="0" class="input"></label>
+<input type="number" id="inputCompostCost" value="50" data-usd-default="50" min="0" class="input"></label>
 <label class="block"><span class="input-label" data-i18n="tool4.bag_weight_label">Weight per Bag (kg)</span>
 <input type="number" id="inputBagWeightKg" value="20" min="0" class="input"></label>
 <label class="block"><span class="input-label font-semibold text-green-800" data-i18n="tool4.retail_price_label">Retail Price ($ / bag)</span>
-<input type="number" id="inputRetailPricePerBag" value="25" min="0" step="0.01" class="input border-2 border-green-500"></label>
+<input type="number" id="inputRetailPricePerBag" value="25" data-usd-default="25" min="0" step="0.01" class="input border-2 border-green-500"></label>
 <label class="block"><span class="input-label" data-i18n="tool4.packaging_cost_label">Packaging Cost ($ / bag)</span>
-<input type="number" id="inputPackagingCostPerBag" value="1.50" min="0" step="0.01" class="input"></label>
+<input type="number" id="inputPackagingCostPerBag" value="1.50" data-usd-default="1.50" min="0" step="0.01" class="input"></label>
 <label class="block"><span class="input-label" data-i18n="tool4.distribution_cost_label">Distribution Cost ($ / bag)</span>
-<input type="number" id="inputDistributionCostPerBag" value="2.00" min="0" step="0.01" class="input"></label>
+<input type="number" id="inputDistributionCostPerBag" value="2.00" data-usd-default="2.00" min="0" step="0.01" class="input"></label>
 </div>
 
 <div class="pt-4 border-t border-gray-300 space-y-4">
 <label class="block"><span class="input-label font-semibold text-blue-800" data-i18n="tool4.initial_compliance_label">Initial Product Registration &amp; Lab Fees (CAPEX)</span>
 <input type="number" id="inputInitialComplianceCost" value="0" min="0" class="input border-2 border-blue-300"></label>
 <label class="block"><span class="input-label font-semibold text-blue-800" data-i18n="tool4.annual_compliance_label">Annual Product Compliance (OPEX)</span>
-<input type="number" id="inputAnnualComplianceCost" value="1000" min="0" class="input border-2 border-blue-300"></label>
+<input type="number" id="inputAnnualComplianceCost" value="1000" data-usd-default="1000" min="0" class="input border-2 border-blue-300"></label>
 </div>
 </div>
 
 <div id="bulkFields" class="p-4 bg-white rounded-lg border border-gray-200 space-y-2" style="display: none;">
 <label class="block"><span class="input-label font-semibold text-green-800" data-i18n="tool4.bulk_price_label">Bulk Biochar Sale Price ($/Tonne)</span>
-<input type="number" id="inputBulkPrice" value="500" min="0" class="input border-2 border-green-500"></label>
+<input type="number" id="inputBulkPrice" value="500" data-usd-default="500" min="0" class="input border-2 border-green-500"></label>
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -142,7 +143,7 @@
 </div>
 
 <label class="block"><span class="input-label" data-i18n="tool4.marketing_budget_label">Annual Sales &amp; Marketing Budget ($)</span>
-<input type="number" id="inputMarketingBudget" value="5000" min="0" class="input"></label>
+<input type="number" id="inputMarketingBudget" value="5000" data-usd-default="5000" min="0" class="input"></label>
 </div>
 
 <div class="section-card">
@@ -155,11 +156,11 @@
 <div id="woodVinegarFields" class="space-y-3 transition-all duration-300" style="max-height: 0; opacity: 0; overflow: hidden;">
 <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
 <label class="block"><span class="input-label" data-i18n="tool4.wv_price_label">Sale Price ($/L)</span>
-<input type="number" id="inputWoodVinegarPrice" value="1.00" min="0" class="input border-blue-300"></label>
+<input type="number" id="inputWoodVinegarPrice" value="1.00" data-usd-default="1.00" min="0" class="input border-blue-300"></label>
 <label class="block"><span class="input-label" data-i18n="tool4.wv_packaging_label">Packaging Cost ($/L)</span>
-<input type="number" id="inputWoodVinegarPackaging" value="0.30" min="0" class="input"></label>
+<input type="number" id="inputWoodVinegarPackaging" value="0.30" data-usd-default="0.30" min="0" class="input"></label>
 <label class="block"><span class="input-label" data-i18n="tool4.wv_distribution_label">Distribution Cost ($/L)</span>
-<input type="number" id="inputWoodVinegarDistribution" value="0.05" min="0" class="input"></label>
+<input type="number" id="inputWoodVinegarDistribution" value="0.05" data-usd-default="0.05" min="0" class="input"></label>
 </div>
 </div>
 </div>
@@ -354,13 +355,22 @@ function loadProject() {
         _fieldCurrencies.inputs  = savedCurr.inputs  || {};
         _fieldCurrencies.outputs = savedCurr.outputs || {};
         BiocharCurrency.getRates().then(() => {
+            const projCode = (window.BiocharProjectCurrency && BiocharProjectCurrency.getProjectCurrency()) || 'USD';
+            const isNewForT4 = !(projectData.tool4 && projectData.tool4.lastUpdated);
+            if (isNewForT4 && window.BiocharProjectCurrency) {
+                BiocharProjectCurrency.applyHtmlDefaults();
+            }
+            // For new projects, unset field currencies default to the project currency.
+            // For saved projects without an explicit per-field currency, stay on USD so
+            // we don't mis-label already-stored USD-numeric values.
+            const fallback = isNewForT4 ? projCode : 'USD';
             [
                 'inputCreditPrice', 'inputCompostCost', 'inputRetailPricePerBag',
                 'inputPackagingCostPerBag', 'inputDistributionCostPerBag',
                 'inputInitialComplianceCost', 'inputAnnualComplianceCost',
                 'inputBulkPrice', 'inputWoodVinegarPrice', 'inputWoodVinegarPackaging',
                 'inputWoodVinegarDistribution', 'inputMarketingBudget',
-            ].forEach(id => BiocharCurrency.wrapInput(id, _fieldCurrencies.inputs[id], 'onInputCurrencyChange'));
+            ].forEach(id => BiocharCurrency.wrapInput(id, _fieldCurrencies.inputs[id] || fallback, 'onInputCurrencyChange'));
         });
 
         handleBiocharModelChange();
