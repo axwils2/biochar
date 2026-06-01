@@ -1,5 +1,4 @@
 window.BiocharTranslations = {
-
   /* ─── ENGLISH ─────────────────────────────────────────── */
   en: {
     common: {
@@ -8,20 +7,27 @@ window.BiocharTranslations = {
       saved_confirmation: "All changes saved.",
       main_menu: "← Main Menu",
       reset_form: "Reset Form",
-      alert_unsaved: "You have unsaved changes. Please click the 'Save' button before continuing.",
-      confirm_reset: "This will clear ALL project data from all tools. Are you sure?",
+      alert_unsaved:
+        "You have unsaved changes. Please click the 'Save' button before continuing.",
+      confirm_reset:
+        "This will clear ALL project data from all tools. Are you sure?",
       usd_note: "(Values shown in selected currency)",
       cohort: "Climatebase Fellowship Cohort 8 Capstone Project",
-      ai_link: "Questions? Click here to ask the Biochar Feasibility Guide AI assistant ↗",
+      ai_link:
+        "Questions? Click here to ask the Biochar Feasibility Guide AI assistant ↗",
       header_h1: "Biochar Project Feasibility Calculator",
       header_h2: "for Latin American Coffee & Cacao Supply Chains",
-      alert_unsaved_confirm: "You have unsaved changes that will be lost. Navigate anyway?",
+      alert_unsaved_confirm:
+        "You have unsaved changes that will be lost. Navigate anyway?",
       footer_no_guarantee_label: "No Guarantee",
-      footer_no_guarantee: "The projections provided by this calculator are based on the assumptions and data entered by the user. They are for illustrative purposes only and do not constitute a guarantee of actual costs, revenues, or profitability.",
+      footer_no_guarantee:
+        "The projections provided by this calculator are based on the assumptions and data entered by the user. They are for illustrative purposes only and do not constitute a guarantee of actual costs, revenues, or profitability.",
       footer_not_advice_label: "Not Financial Advice",
-      footer_not_advice: "The information provided is not intended to be a substitute for professional financial, legal, or agricultural advice. Users are solely responsible for any decisions made based on the output of this tool.",
+      footer_not_advice:
+        "The information provided is not intended to be a substitute for professional financial, legal, or agricultural advice. Users are solely responsible for any decisions made based on the output of this tool.",
       footer_verify_label: "Verify All Data",
-      footer_verify: "Users should independently verify all local costs, market prices, and regulatory requirements before making any investment.",
+      footer_verify:
+        "Users should independently verify all local costs, market prices, and regulatory requirements before making any investment.",
       sign_in: "Sign in →",
       my_projects: "My Projects →",
       sign_out: "Sign out",
@@ -29,7 +35,8 @@ window.BiocharTranslations = {
     login: {
       page_title: "Sign In — Biochar Calculator",
       title: "Sign in to your account",
-      subtitle: "Enter your email and we'll send you a one-click sign-in link. No password needed.",
+      subtitle:
+        "Enter your email and we'll send you a one-click sign-in link. No password needed.",
       email_label: "Email address",
       email_placeholder: "you@example.com",
       send_btn: "Send sign-in link",
@@ -37,7 +44,8 @@ window.BiocharTranslations = {
       error_generic: "Something went wrong. Please try again.",
       error_invalid_email: "Please enter a valid email address.",
       sent_title: "Check your email",
-      sent_desc: "We sent a sign-in link to your email. Click it to continue — the link expires in 1 hour.",
+      sent_desc:
+        "We sent a sign-in link to your email. Click it to continue — the link expires in 1 hour.",
       back_link: "← Continue without an account",
     },
     projects: {
@@ -54,7 +62,7 @@ window.BiocharTranslations = {
       updated_now: "Just now",
       open_btn: "Open",
       delete_btn: "Delete",
-      confirm_delete: "Delete project \"{name}\"? This cannot be undone.",
+      confirm_delete: 'Delete project "{name}"? This cannot be undone.',
       delete_error: "Failed to delete project. Please try again.",
     },
     admin: {
@@ -64,7 +72,8 @@ window.BiocharTranslations = {
       access_denied: "Access denied. Admin role required.",
       actions_heading: "Actions",
       currency_title: "Update Currency Rates",
-      currency_desc: "Fetches the latest USD exchange rates from an external API and writes them to the database.",
+      currency_desc:
+        "Fetches the latest USD exchange rates from an external API and writes them to the database.",
       currency_btn: "Update Rates",
       currency_updating: "Updating…",
       currency_success: "Updated {n} exchange rates successfully.",
@@ -85,30 +94,36 @@ window.BiocharTranslations = {
     index: {
       page_title: "Biochar Feasibility Platform",
       h1: "Biochar Project Feasibility Calculator",
-      h2: "for Latin American Coffee & Cacao Supply Chains",
-      cohort: "Climatebase Fellowship Cohort 8 Capstone Project",
-      ai_link: "Questions? Click here to ask the Biochar Feasibility Guide AI assistant ↗",
+      h2: "for Coffee & Cacao Supply Chains",
+      cohort: "Climatebase Fellowship Capstone Project",
+      ai_link:
+        "Questions? Click here to ask the Biochar Feasibility Guide AI assistant ↗",
       welcome_heading: "You have a project in progress.",
       welcome_continue: "Continue working on project:",
       welcome_default_name: "Unsaved Draft",
       start_new: "Start New Project",
       resume: "Resume Project →",
-      confirm_new: "Are you sure you want to start a new project? This will erase your current project data.",
+      confirm_new:
+        "Are you sure you want to start a new project? This will erase your current project data.",
       step1_num: "Step 1",
       step1_title: "Project Information & Scale",
-      step1_desc: "Define your project ID, location, and total feedstock volume.",
+      step1_desc:
+        "Define your project ID, location, and total feedstock volume.",
       step1_btn: "Open Tool 1 →",
       step2_num: "Step 2",
       step2_title: "Production Calculator",
-      step2_desc: "Select kiln tech and estimate biochar & carbon credit yields.",
+      step2_desc:
+        "Select kiln tech and estimate biochar & carbon credit yields.",
       step2_btn: "Open Tool 2 →",
       step3_num: "Step 3",
       step3_title: "Logistics Planner",
-      step3_desc: "Build transport routes and seasonality-based cost estimates.",
+      step3_desc:
+        "Build transport routes and seasonality-based cost estimates.",
       step3_btn: "Open Tool 3 →",
       step4_num: "Step 4",
       step4_title: "Revenue Streams",
-      step4_desc: "Set pricing for biochar sales, carbon credits, and wood vinegar.",
+      step4_desc:
+        "Set pricing for biochar sales, carbon credits, and wood vinegar.",
       step4_btn: "Open Tool 4 →",
       step5_num: "Step 5",
       step5_title: "Site, Ops & Finance",
@@ -118,7 +133,7 @@ window.BiocharTranslations = {
       analysis_title: "Results & Scenarios",
       analysis_desc: "Executive dashboard + stress-testing.",
       dashboard_btn: "Dashboard",
-      scenarios_btn: "Scenarios"
+      scenarios_btn: "Scenarios",
     },
     tool1: {
       page_title: "Biochar Project Setup (Tool 1)",
@@ -129,10 +144,13 @@ window.BiocharTranslations = {
       section_project_info: "Project Information",
       project_id_label: "Project ID (Unique Name)",
       project_id_placeholder: "e.g., coop-santa-ana-1",
-      feedstock_label: "Annual Coffee/Cocoa Feedstock Volume (Tonnes - dry feedstock assumed)",
+      feedstock_label:
+        "Annual Coffee/Cocoa Feedstock Volume (Tonnes - dry feedstock assumed)",
       feedstock_tooltip: "1 tonne = 1,000 kg = ~2,204.6 lbs",
-      wood_label: "Annual Wood from Pruning Volume (Tonnes — dry feedstock assumed)",
-      wood_tooltip: "Includes prunings from coffee trees and shade trees. Enter the total dry tonnes available per year.",
+      wood_label:
+        "Annual Wood from Pruning Volume (Tonnes — dry feedstock assumed)",
+      wood_tooltip:
+        "Includes prunings from coffee trees and shade trees. Enter the total dry tonnes available per year.",
       or_separator: "- OR -",
       toggle_calc_btn: "Calculate Volume from Coffee Export Containers",
       calc_title: "Container Calculator",
@@ -144,8 +162,10 @@ window.BiocharTranslations = {
       num_containers_label: "# of Containers/Year",
       feedstock_type_label: "Feedstock Type",
       feedstock_type_washed_pulp: "Washed or Pulped Natural (Dried Pulp Only)",
-      feedstock_type_washed_parchment: "Washed or Pulped Natural (Parchment Only)",
-      feedstock_type_washed_both: "Washed or Pulped Natural (Dried Pulp & Parchment)",
+      feedstock_type_washed_parchment:
+        "Washed or Pulped Natural (Parchment Only)",
+      feedstock_type_washed_both:
+        "Washed or Pulped Natural (Dried Pulp & Parchment)",
       feedstock_type_natural: "Natural Coffee (Husk/Pods)",
       feedstock_type_cacao: "Cacao Pods",
       add_batch_btn: "Calculate & Add to List",
@@ -186,34 +206,45 @@ window.BiocharTranslations = {
       supply_question: "How is your primary feedstock available?",
       supply_placeholder: "-- Select one --",
       supply_year_round: "[A] My primary feedstock is available year-round.",
-      supply_seasonal: "[B] My primary feedstock is only available during a harvest season.",
-      strategy_question: "If your primary feedstock is seasonal, how will you run your facility?",
+      supply_seasonal:
+        "[B] My primary feedstock is only available during a harvest season.",
+      strategy_question:
+        "If your primary feedstock is seasonal, how will you run your facility?",
       strategy_placeholder: "-- Select one --",
       strategy_store: "[1] Buy and stockpile feedstock",
       strategy_diversify: "[2] Use other feedstocks the rest of the year",
       strategy_shutdown: "[3] Process during harvest only, then shutdown",
-      strategy_default_desc: "Choose the option that best matches how you plan to operate.",
+      strategy_default_desc:
+        "Choose the option that best matches how you plan to operate.",
       notes_title: "Note Missing Info for Further Research",
       notes_placeholder: "Type here...",
       next_tool_btn: "Proceed to Tool 2 →",
       supply_desc_default: "Select an option above to describe your situation.",
-      supply_desc_year_round: "My primary feedstock is available 12 months a year.",
-      supply_desc_seasonal: "My primary feedstock is clustered into a harvest season.",
-      strategy_desc_store: "I will buy most/all feedstock during harvest and stockpile it to process year-round.",
-      strategy_desc_diversify: "I will process my primary feedstock during harvest and use other feedstocks the rest of the year.",
-      strategy_desc_shutdown: "I will process during harvest and shut down for the rest of the year.",
+      supply_desc_year_round:
+        "My primary feedstock is available 12 months a year.",
+      supply_desc_seasonal:
+        "My primary feedstock is clustered into a harvest season.",
+      strategy_desc_store:
+        "I will buy most/all feedstock during harvest and stockpile it to process year-round.",
+      strategy_desc_diversify:
+        "I will process my primary feedstock during harvest and use other feedstocks the rest of the year.",
+      strategy_desc_shutdown:
+        "I will process during harvest and shut down for the rest of the year.",
       batch_text: "Coffee Type {n} ({type}): {tonnes} tonnes",
-      alert_no_containers: "Please enter a number of containers for this batch.",
+      alert_no_containers:
+        "Please enter a number of containers for this batch.",
       alert_no_project_id: "Please enter a Project ID.",
-      alert_required: "Please fill out all required fields: Project ID, at least one feedstock volume (coffee/cocoa or wood from pruning), Project Type, Country, and Supply Model.",
+      alert_required:
+        "Please fill out all required fields: Project ID, at least one feedstock volume (coffee/cocoa or wood from pruning), Project Type, Country, and Supply Model.",
       hub_label_decentralized: "Number of Processing Locations",
-      hub_label_mobile: "Number of Mobile Kilns"
+      hub_label_mobile: "Number of Mobile Kilns",
     },
     tool2: {
       page_title: "Biochar Production Calc (Tool 2)",
       step_name: "Production",
       dep_alert_title: "Tool 1 data not saved.",
-      dep_alert_msg: " Production calculations use feedstock data from Tool 1. Showing defaults.",
+      dep_alert_msg:
+        " Production calculations use feedstock data from Tool 1. Showing defaults.",
       dep_alert_link: "Complete Tool 1 →",
       tool_label: "Tool 2: Production Calculator",
       step_label: "Step 2 of 7: Production",
@@ -223,7 +254,8 @@ window.BiocharTranslations = {
       loading: "Loading...",
       seasonal_strategy_title: "Seasonal Strategy (from Tool 1)",
       carbon_source_label: "My carbon & yield values are based on:",
-      carbon_source_tooltip: "Using your own lab results is highly recommended for an accurate projection.",
+      carbon_source_tooltip:
+        "Using your own lab results is highly recommended for an accurate projection.",
       carbon_source_defaults: "Calculator Defaults",
       carbon_source_lab: "My Own Lab Results",
       primary_calc_header: "1. Primary Feedstock Calculator",
@@ -252,48 +284,63 @@ window.BiocharTranslations = {
       f_contract_written: "Written Contract",
       f_contract_spot: "Spot Market",
       f_volume_label: "Annual Volume (Dry Tonnes)",
-      f1_volume_tooltip: "This value is pulled from Tool 1. It is the total dry tonnes of this feedstock available per year.",
-      f2_volume_tooltip: "Enter the total dry tonnes of this secondary feedstock available per year.",
+      f1_volume_tooltip:
+        "This value is pulled from Tool 1. It is the total dry tonnes of this feedstock available per year.",
+      f2_volume_tooltip:
+        "Enter the total dry tonnes of this secondary feedstock available per year.",
       starting_volume_label: "Starting Volume",
       f_ash_label: "Ash Content (%)",
       f_ash_formula_tooltip: "Calculates: [Step 1 Volume] * (1 - Ash %)",
-      f1_ash_tooltip: "The non-organic, mineral content of feedstock. Ash content varies depending on feedstock type, contamination, and whether the biomass has been pretreated. A default value of 10% is used to represent mixed, non-pretreated coffee pulp and husk commonly available at origin. Users may adjust this value based on known feedstock composition and handling practices.",
-      f2_ash_tooltip: "Woody biomass typically has a lower ash content. 2% is a common default.",
+      f1_ash_tooltip:
+        "The non-organic, mineral content of feedstock. Ash content varies depending on feedstock type, contamination, and whether the biomass has been pretreated. A default value of 10% is used to represent mixed, non-pretreated coffee pulp and husk commonly available at origin. Users may adjust this value based on known feedstock composition and handling practices.",
+      f2_ash_tooltip:
+        "Woody biomass typically has a lower ash content. 2% is a common default.",
       dry_ash_label: "Dry Ash-Free Matter",
       f_yield_label: "Biochar Yield (%)",
       f_yield_formula_tooltip: "Calculates: [Step 2 Matter] * Yield %",
-      f1_yield_tooltip: "The percentage of mass converted to biochar. 25% is a conservative estimate.",
-      f2_yield_tooltip: "Woody biomass often has a higher yield. 30% is a common default.",
+      f1_yield_tooltip:
+        "The percentage of mass converted to biochar. 25% is a conservative estimate.",
+      f2_yield_tooltip:
+        "Woody biomass often has a higher yield. 30% is a common default.",
       biochar_produced_label: "Total Biochar Produced",
       f_carbon_label: "Stable Carbon (%)",
       f_carbon_formula_tooltip: "Calculates: [Step 3 Biochar] * Carbon %",
-      f1_carbon_tooltip: "The percentage of the final biochar's mass that is stable carbon. 70% is a good starting point.",
-      f2_carbon_tooltip: "Biochar from woody biomass often has very high carbon stability. 80% is a good default.",
+      f1_carbon_tooltip:
+        "The percentage of the final biochar's mass that is stable carbon. 70% is a good starting point.",
+      f2_carbon_tooltip:
+        "Biochar from woody biomass often has very high carbon stability. 80% is a good default.",
       stable_carbon_label: "Total Stable Carbon",
       f1_conv_label: "Net Crediting Factor (calibrated)",
       f2_conv_label: "CO2e Credit Factor",
       f_conv_formula_tooltip: "Calculates: [Step 4 Carbon] * Factor",
-      f1_conv_tooltip: "This is a net crediting factor (not the 3.67 chemistry ratio). It is calibrated to practitioner outcomes. Default 2.29 corresponds to ~1.6 tCO2e per tonne of biochar at 70% stable carbon.",
-      f2_conv_tooltip: "This is a net crediting factor calibrated to practitioner outcomes. Default 2.63 corresponds to ~2.1 tCO2e per tonne of biochar at 80% stable carbon.",
+      f1_conv_tooltip:
+        "This is a net crediting factor (not the 3.67 chemistry ratio). It is calibrated to practitioner outcomes. Default 2.29 corresponds to ~1.6 tCO2e per tonne of biochar at 70% stable carbon.",
+      f2_conv_tooltip:
+        "This is a net crediting factor calibrated to practitioner outcomes. Default 2.63 corresponds to ~2.1 tCO2e per tonne of biochar at 80% stable carbon.",
       credits_label: "Total Claimable Credits",
       f2_is_wood_label: "Is this Woody Biomass?",
       total_feedstock_heading: "Total Project Feedstock",
       total_feedstock_note: "This volume determines your machine size below.",
       tech_note_title: "Technology Note:",
-      tech_note_text: "Fine, low-density feedstocks (like coffee pulp/parchment) are <strong>not suitable</strong> for low-cost batch kilns (e.g., Flame Cap or Kon-Tiki). These materials require a continuous-feed pyrolyzer.",
+      tech_note_text:
+        "Fine, low-density feedstocks (like coffee pulp/parchment) are <strong>not suitable</strong> for low-cost batch kilns (e.g., Flame Cap or Kon-Tiki). These materials require a continuous-feed pyrolyzer.",
       kiln_section_title: "Kiln Selection & CAPEX",
       kiln_total_feedstock_label: "Total Feedstock",
       kiln_volume_per_hub_label: "Volume per Hub",
-      kiln_volume_per_hub_tooltip: "Total Feedstock / Number of Hubs. This value determines the required kiln size.",
+      kiln_volume_per_hub_tooltip:
+        "Total Feedstock / Number of Hubs. This value determines the required kiln size.",
       kiln_size_label: "Determined Size",
       kiln_select_label: "Select Your Kiln",
       kiln_select_placeholder: "-- Select a matching kiln --",
       kiln_na_option: "Not Applicable",
       kiln_custom_option: "Custom / Enter Price Below",
-      kiln_warning_below_min: "Volume per hub is below the 100 t/y minimum. No kilns available. Please enter a custom price below.",
-      kiln_warning_no_match: "No pre-loaded kilns match your criteria (Size: {size}, Model: {model}). Please enter a custom price below.",
+      kiln_warning_below_min:
+        "Volume per hub is below the 100 t/y minimum. No kilns available. Please enter a custom price below.",
+      kiln_warning_no_match:
+        "No pre-loaded kilns match your criteria (Size: {size}, Model: {model}). Please enter a custom price below.",
       kiln_custom_price_label: "Custom Kiln Price ($)",
-      kiln_custom_price_tooltip: "Enter the total price for ONE kiln/unit. The calculator will multiply this by the \"Number of Kilns\" below.",
+      kiln_custom_price_tooltip:
+        'Enter the total price for ONE kiln/unit. The calculator will multiply this by the "Number of Kilns" below.',
       num_kilns_label: "Number of Kilns",
       hubs_warning_min: "Minimum {n} required (from Tool 1)",
       cost_basis_label: "Pyrolyzer Cost Basis",
@@ -303,7 +350,8 @@ window.BiocharTranslations = {
       pyrolyzer_cost_label: "Pyrolyzer Cost",
       shipping_cost_label: "Shipping & Installation",
       total_capex_label: "Total Upfront Pyrolyzer CAPEX",
-      total_capex_tooltip: "(Pyrolyzer Cost) + (Shipping & Installation). This is a primary component of your project's CAPEX.",
+      total_capex_tooltip:
+        "(Pyrolyzer Cost) + (Shipping & Installation). This is a primary component of your project's CAPEX.",
       notes_title: "Note Missing Info for Further Research",
       notes_placeholder: "Type here...",
       save_btn: "Save Production Data",
@@ -312,7 +360,8 @@ window.BiocharTranslations = {
       next_btn: "Proceed to Tool 3 →",
       saved_status: "Data Saved!",
       error_missing_tool1: "Tool 1 data missing. Please complete Tool 1 first.",
-      error_incomplete_tool1: "Tool 1 data is incomplete (missing Project Type or Hubs). Kiln logic may be incorrect. Please re-save Tool 1.",
+      error_incomplete_tool1:
+        "Tool 1 data is incomplete (missing Project Type or Hubs). Kiln logic may be incorrect. Please re-save Tool 1.",
       unit_tonnes: "tonnes",
       unit_total_tonnes: "tonnes",
       unit_ty: "t/y",
@@ -321,7 +370,8 @@ window.BiocharTranslations = {
       page_title: "Biochar Logistics Calc (Tool 3)",
       step_name: "Logistics",
       dep_alert_title: "Tool 1 data not saved.",
-      dep_alert_msg: " Logistics uses project and feedstock data from Tool 1. Showing defaults.",
+      dep_alert_msg:
+        " Logistics uses project and feedstock data from Tool 1. Showing defaults.",
       dep_alert_link: "Complete Tool 1 →",
       tool_label: "Tool 3: Logistics (Inbound)",
       step_label: "Step 3 of 7: Logistics",
@@ -330,25 +380,32 @@ window.BiocharTranslations = {
       total_feedstock_label: "Total Feedstock Required",
       loading_from_t2: "Loading from Tool 2...",
       self_delivered_label: "(-) Self-Delivered ($0 Cost)",
-      self_delivered_tooltip: "Feedstock that arrives at the kiln with NO logistics cost to you.",
+      self_delivered_tooltip:
+        "Feedstock that arrives at the kiln with NO logistics cost to you.",
       logistics_target_label: "Logistics Target",
       rainy_months_label: "Annual Rainy Season Duration (Months/Year)",
-      rainy_months_tooltip: "Used to weight the annual cost between Dry and Rainy season rates.",
+      rainy_months_tooltip:
+        "Used to weight the annual cost between Dry and Rainy season rates.",
       rainy_slider_left: "0m (All Dry)",
       rainy_slider_right: "12m (All Rainy)",
       seasonal_window_title: "Seasonal Collection Logic",
-      seasonal_window_text: "Your project is seasonal. Please define the specific weather window for each route you build below.",
-      mobile_info_text: "Note: Mobile kiln relocation costs are found in Tool 5.",
+      seasonal_window_text:
+        "Your project is seasonal. Please define the specific weather window for each route you build below.",
+      mobile_info_text:
+        "Note: Mobile kiln relocation costs are found in Tool 5.",
       step2_title: "Step 2: Build Feedstock Transport Routes",
-      step2_intro: "Your remaining feedstock can arrive via regional transport. Allocate this volume to transportation routes below.",
+      step2_intro:
+        "Your remaining feedstock can arrive via regional transport. Allocate this volume to transportation routes below.",
       add_route_btn: "Add Transport Route",
       step3_title: "Step 3: Final Logistics Summary",
       target_status_label: "Target Status",
       target_status_sub: "Volume Moved vs. Target",
       annual_cost_label: "Total Annual Logistics Cost",
-      annual_cost_tooltip: "**Formula:**\nSum of all route costs.\n\nEach route: (Trips/Year) × (Weighted Avg. Cost)",
+      annual_cost_tooltip:
+        "**Formula:**\nSum of all route costs.\n\nEach route: (Trips/Year) × (Weighted Avg. Cost)",
       cost_per_tonne_label: "Logistics Cost per Tonne",
-      cost_per_tonne_tooltip: "**Formula:**\n (Total Logistics Cost) / (Total Feedstock Required)",
+      cost_per_tonne_tooltip:
+        "**Formula:**\n (Total Logistics Cost) / (Total Feedstock Required)",
       notes_title: "Note Missing Info for Further Research",
       notes_placeholder: "Type here...",
       save_btn: "Save Logistics Data",
@@ -359,7 +416,8 @@ window.BiocharTranslations = {
       loaded_from_t3: "Loaded from Tool 3",
       saving: "Saving...",
       saved_status: "Data Saved!",
-      error_self_delivered: "Please enter a value for 'Self-Delivered ($0 Cost)'. You can enter 0.",
+      error_self_delivered:
+        "Please enter a value for 'Self-Delivered ($0 Cost)'. You can enter 0.",
       error_save_failed: "Failed to save.",
       error_missing_tool1: "Tool 1 data missing. Please complete Tool 1 first.",
       status_not_met: "Target not met",
@@ -374,20 +432,24 @@ window.BiocharTranslations = {
       route_avg_load_prefix: "Avg Load:",
       route_avg_load_unit: "t/trip",
       route_avg_load_tooltip: "**Formula:** (Annual Volume) / (Trips per Year)",
-      route_note: "Note: Ensure trip frequency is realistic within your collection window. Typical max weight for a rural truck is about 4-5 tonnes.",
+      route_note:
+        "Note: Ensure trip frequency is realistic within your collection window. Typical max weight for a rural truck is about 4-5 tonnes.",
       seasonal_window_section_title: "Seasonal Window",
       route_weeks_label: "Duration (Weeks)",
       route_rainy_weeks_label: "Rainy Weeks",
       truck_model_label: "Truck Ownership Model",
-      truck_model_tooltip: "Select 'Owned' if you pay a driver by the hour. Select 'Hired' if you pay a flat fee per trip.",
+      truck_model_tooltip:
+        "Select 'Owned' if you pay a driver by the hour. Select 'Hired' if you pay a flat fee per trip.",
       truck_model_placeholder: "-- Select Ownership Model --",
       truck_model_time: "Owned Truck (Time-Based Calc)",
       truck_model_flat: "Hired Truck (Flat Quote)",
       hourly_rate_label: "All-In Hourly Cost ($/hr)",
-      hourly_rate_tooltip: "Include operating expenses such as fuel, maintenance, repairs, insurance, and registration. Do not include driver wages (those should be entered in Tool 5 with salaries) or the cost of buying the vehicle (also in Tool 5). If unsure, ask the AI assistant: \"Help me estimate my truck's hourly operating cost.\"",
+      hourly_rate_tooltip:
+        'Include operating expenses such as fuel, maintenance, repairs, insurance, and registration. Do not include driver wages (those should be entered in Tool 5 with salaries) or the cost of buying the vehicle (also in Tool 5). If unsure, ask the AI assistant: "Help me estimate my truck\'s hourly operating cost."',
       dry_hours_label: "Dry Season Round-Trip (Hrs)",
       rainy_hours_label: "Rainy Season Round-Trip (Hrs)",
-      flat_note: "<strong>Note:</strong> Use the full price negotiated with the driver for a round trip.",
+      flat_note:
+        "<strong>Note:</strong> Use the full price negotiated with the driver for a round trip.",
       dry_quote_label: "Dry Season Quote ($)",
       rainy_quote_label: "Rainy Season Quote ($)",
       route_annual_cost_prefix: "Est. Annual Cost:",
@@ -417,14 +479,16 @@ window.BiocharTranslations = {
       retail_price_label: "Retail Price ($ / bag)",
       packaging_cost_label: "Packaging Cost ($ / bag)",
       distribution_cost_label: "Distribution Cost ($ / bag)",
-      initial_compliance_label: "Initial Product Registration & Lab Fees (CAPEX)",
+      initial_compliance_label:
+        "Initial Product Registration & Lab Fees (CAPEX)",
       annual_compliance_label: "Annual Product Compliance (OPEX)",
       bulk_price_label: "Bulk Biochar Sale Price ($/Tonne)",
       uptake_label: "Sales Uptake Scenario",
       uptake_strong: "Strong (full sales by Year 1)",
       uptake_average: "Average (ramps to full over 2 years)",
       uptake_low: "Low (ramps to full over 3 years)",
-      uptake_tooltip: "Models how long it takes to reach full sales. Revenue ramps linearly to 100% over the chosen number of years; OPEX stays at full from year 1 (production runs at capacity). This replaces the old single-percentage workaround so payback reflects multi-year cash flow.",
+      uptake_tooltip:
+        "Models how long it takes to reach full sales. Revenue ramps linearly to 100% over the chosen number of years; OPEX stays at full from year 1 (production runs at capacity). This replaces the old single-percentage workaround so payback reflects multi-year cash flow.",
       marketing_plan_label: "Marketing Plan",
       marketing_plan_placeholder: "Select Marketing Plan",
       marketing_plan_coop: "Coop/Built-in Distribution",
@@ -455,7 +519,8 @@ window.BiocharTranslations = {
       step_next: "(Next: Dashboard)",
       working_capital_section: "Working Capital & Feedstock Financing",
       working_capital_label: "Amount to Finance (Working Capital)",
-      working_capital_tooltip: "Pre-filled with Feedstock Purchase Cost (Tool 2) + Logistics Cost (Tool 3). Adjust if you only need to finance a portion.",
+      working_capital_tooltip:
+        "Pre-filled with Feedstock Purchase Cost (Tool 2) + Logistics Cost (Tool 3). Adjust if you only need to finance a portion.",
       working_capital_placeholder: "Calculating...",
       feedstock_loan_checkbox: "Do you need a Line of Credit for this amount?",
       feedstock_interest_label: "Annual Interest Rate for Line of Credit (%)",
@@ -467,12 +532,16 @@ window.BiocharTranslations = {
       hubs_suffix: "hubs",
       loading_text: "Loading...",
       kiln_cost_label: "Total Pyrolyzer Upfront Cost (from Tool 2)",
-      kiln_cost_tooltip: "This value is loaded automatically from your kiln and shipping selections in Tool 2.",
-      no_kiln_warning: "No kiln cost found in Tool 2. You can enter a value manually.",
+      kiln_cost_tooltip:
+        "This value is loaded automatically from your kiln and shipping selections in Tool 2.",
+      no_kiln_warning:
+        "No kiln cost found in Tool 2. You can enter a value manually.",
       wood_chipper_label: "Wood Chipper / Grinder ($)",
-      wood_chipper_tooltip: "Required for processing woody feedstocks (from Tool 2).",
+      wood_chipper_tooltip:
+        "Required for processing woody feedstocks (from Tool 2).",
       storage_infra_label: "Feedstock Storage Infrastructure ($)",
-      storage_infra_tooltip: "Required for \"Store\" strategy. Includes sheds, tarps, and concrete pads.",
+      storage_infra_tooltip:
+        'Required for "Store" strategy. Includes sheds, tarps, and concrete pads.',
       drying_section: "Drying & Ancillary Equipment",
       dryer_label: "Mechanical Dryer(s) ($)",
       syngas_ducting_label: "Use syngas waste heat for dryer?",
@@ -481,30 +550,39 @@ window.BiocharTranslations = {
       ancillary_tooltip: "Scales, forklifts, pallet jacks, etc.",
       vehicles_section: "Vehicles (CAPEX & OPEX)",
       logistics_trucks_label: "1. Logistics Trucks (CAPEX)",
-      logistics_trucks_tooltip: "For Owned trucks, operating cost (OPEX) is captured in tool3 for logistics routes.",
-      logistics_trucks_note: "The \"Owned Trucks\" used for feedstock transport in Tool 3.",
+      logistics_trucks_tooltip:
+        "For Owned trucks, operating cost (OPEX) is captured in tool3 for logistics routes.",
+      logistics_trucks_note:
+        'The "Owned Trucks" used for feedstock transport in Tool 3.',
       num_trucks_label: "Number of Logistics Trucks",
       truck_cost_label: "Avg. Cost per Truck ($)",
       pickups_label: "2. Pickups (CAPEX & OPEX)",
-      pickups_tooltip: "Mobile kiln relocation costs are captured separately below.",
-      pickups_note: "For managers, agronomists, general site tasks, or towing mobile kilns.",
+      pickups_tooltip:
+        "Mobile kiln relocation costs are captured separately below.",
+      pickups_note:
+        "For managers, agronomists, general site tasks, or towing mobile kilns.",
       num_pickups_label: "Number of Pickups",
       pickup_cost_label: "Avg. Cost per Pickup ($)",
       pickups_opex_label: "Pickups Annual OPEX ($/yr)",
-      pickups_opex_tooltip: "Fuel, maintenance, and insurance for your general site vehicle(s).",
+      pickups_opex_tooltip:
+        "Fuel, maintenance, and insurance for your general site vehicle(s).",
       mobile_relocation_section: "Mobile Kiln Relocation (OPEX)",
-      mobile_relocation_note: "Costs for moving your mobile kiln(s) between sites. Number of kilns is loaded from Tool 2.",
+      mobile_relocation_note:
+        "Costs for moving your mobile kiln(s) between sites. Number of kilns is loaded from Tool 2.",
       num_mobile_kilns_label: "Number of Mobile Kilns",
       relocations_per_kiln_label: "Relocations per Kiln per Year",
       time_per_relocation_label: "Avg. Time per Relocation (Hours)",
       cost_per_hour_label: "Hourly Cost per Relocation Trip",
-      cost_per_hour_tooltip: "All-in cost for the tow vehicle (driver, fuel, maint, etc.) for a ONE-WAY trip.",
+      cost_per_hour_tooltip:
+        "All-in cost for the tow vehicle (driver, fuel, maint, etc.) for a ONE-WAY trip.",
       total_mobile_opex_label: "Total Mobile Relocation OPEX:",
       site_infra_section: "Site Infrastructure & Permitting",
       buildings_label: "Buildings, Ventilation & Concrete Pads ($)",
-      buildings_note: "This value is assumed to include relevant civil, structural, mechanical, and electrical components, as well as basic site services required for biochar operations (e.g. foundations, ventilation, safety infrastructure, and auxiliary systems). Local requirements and permitting standards may significantly affect total cost. Mobile projects may require significantly less site costs.",
+      buildings_note:
+        "This value is assumed to include relevant civil, structural, mechanical, and electrical components, as well as basic site services required for biochar operations (e.g. foundations, ventilation, safety infrastructure, and auxiliary systems). Local requirements and permitting standards may significantly affect total cost. Mobile projects may require significantly less site costs.",
       permit_label: "One-time Permit Application Fees ($)",
-      permit_tooltip: "Air quality permit application fees, lab fees, and consulting fees.",
+      permit_tooltip:
+        "Air quality permit application fees, lab fees, and consulting fees.",
       land_model_label: "Land Model",
       land_lease_option: "Annual Lease (OPEX)",
       land_buy_option: "Purchase Outright (CAPEX)",
@@ -513,7 +591,8 @@ window.BiocharTranslations = {
       total_capex_label: "Total Estimated CAPEX:",
       total_capex_tooltip: "Sum of all CAPEX items above.",
       cert_section: "Certification & MRV",
-      cert_source_label: "Source of your cost estimate for Certification and MRV",
+      cert_source_label:
+        "Source of your cost estimate for Certification and MRV",
       cert_source_placeholder: "Choose a cost basis",
       cert_source_estimate: "Calculator estimate",
       cert_source_quote: "Quote from provider",
@@ -522,27 +601,34 @@ window.BiocharTranslations = {
       registry_placeholder: "-- Select Registry --",
       registry_other: "Other / Custom",
       registry_fees_label: "Estimated Fees ($/yr)",
-      registry_fees_tooltip: "Calculated based on your CORC volume and hub count.",
+      registry_fees_tooltip:
+        "Calculated based on your CORC volume and hub count.",
       mrv_part_label: "Part B: MRV Partner",
       mrv_label: "Select MRV Partner",
       mrv_placeholder: "-- Select Partner --",
       mrv_custom: "Custom / Other",
-      mrv_warning_text: "Warning: Your volume is too low (<1000t). This partner may reject you.",
-      planboo_info: "Note: Planboo's fee includes the cost of a full LCA (Life Cycle Assessment).",
+      mrv_warning_text:
+        "Warning: Your volume is too low (<1000t). This partner may reject you.",
+      planboo_info:
+        "Note: Planboo's fee includes the cost of a full LCA (Life Cycle Assessment).",
       mrv_setup_label: "Setup (CAPEX $)",
       mrv_setup_tooltip: "Fixed Setup Fee",
       mrv_annual_label: "Annual (OPEX $)",
       mrv_annual_tooltip: "Credits × Per-Credit Fee",
       lca_cost_label: "One-time LCA Cost (CAPEX $)",
-      lca_cost_tooltip: "Cost to hire a 3rd-party consultant for your Life Cycle Assessment (LCA), often required for certification.",
+      lca_cost_tooltip:
+        "Cost to hire a 3rd-party consultant for your Life Cycle Assessment (LCA), often required for certification.",
       lca_annual_label: "Annual LCA Renewal (OPEX $)",
       lca_annual_tooltip: "Cost to refurbish the LCA data with a new audit.",
       opex_section: "Operating Expenses (Annual OPEX)",
       months_operational_label: "Months of Operation per Year",
-      months_operational_tooltip: "You selected \"Shut Down\" in Tool 1. Labor and Utility costs will be prorated based on this number.",
-      store_note: "Note: You are storing feedstock. Ensure your Labor and Utilities estimates below account for the extra work of re-handling and re-drying material.",
+      months_operational_tooltip:
+        'You selected "Shut Down" in Tool 1. Labor and Utility costs will be prorated based on this number.',
+      store_note:
+        "Note: You are storing feedstock. Ensure your Labor and Utilities estimates below account for the extra work of re-handling and re-drying material.",
       labor_section: "Labor Expenses",
-      labor_note: "Enter annual salaries for all full-time or seasonal staff. This includes drivers, operators, maintenance staff, management, and site labor.",
+      labor_note:
+        "Enter annual salaries for all full-time or seasonal staff. This includes drivers, operators, maintenance staff, management, and site labor.",
       general_staff_label: "General Staff Count",
       general_salary_label: "Avg Salary (General) ($/yr)",
       mgmt_staff_label: "Management Staff Count",
@@ -554,18 +640,23 @@ window.BiocharTranslations = {
       regulatory_label: "Air Quality Compliance ($/yr)",
       regulatory_tooltip: "Annual testing and reporting.",
       finance_section: "Financial Assumptions",
-      forward_contract_label: "Have you secured a Forward Purchase Agreement (pre-sale of credits)?",
+      forward_contract_label:
+        "Have you secured a Forward Purchase Agreement (pre-sale of credits)?",
       prepayment_label: "Upfront Cash Prepayment ($)",
-      prepayment_tooltip: "Cash received before delivery. Often used to cover initial equipment down payments or Year 1 operating costs.",
-      prepayment_tip: "Tip: A forward contract can often secure a lower interest rate from your bank.",
+      prepayment_tooltip:
+        "Cash received before delivery. Often used to cover initial equipment down payments or Year 1 operating costs.",
+      prepayment_tip:
+        "Tip: A forward contract can often secure a lower interest rate from your bank.",
       loan_amount_label: "Loan Amount ($)",
       interest_rate_label: "Loan Interest Rate (%)",
       tax_rate_label: "Corporate Tax Rate (%)",
       incentives_label: "Annual Tax Incentives/Grants ($)",
       discount_rate_label: "Discount Rate for NPV (%)",
-      discount_rate_tooltip: "Used for Net Present Value (NPV). It's your 'hurdle rate' or the minimum return you expect, accounting for risk.",
+      discount_rate_tooltip:
+        "Used for Net Present Value (NPV). It's your 'hurdle rate' or the minimum return you expect, accounting for risk.",
       project_life_label: "Project Lifetime (Years)",
-      project_life_tooltip: "The number of years to model for your financial projections (e.g., 10 years).",
+      project_life_tooltip:
+        "The number of years to model for your financial projections (e.g., 10 years).",
       notes_title: "Note Missing Info for Further Research",
       notes_placeholder: "Type here...",
       save_btn: "Save Finance & Ops Data",
@@ -581,14 +672,16 @@ window.BiocharTranslations = {
       page_title: "Project Dashboard (Tool 6)",
       step_name: "Results",
       yearly_table_title: "Yearly Cash Flow",
-      yearly_table_desc: "Revenue ramps from low to full based on the uptake scenario chosen in Tool 4. OPEX is held flat at the steady-state value.",
+      yearly_table_desc:
+        "Revenue ramps from low to full based on the uptake scenario chosen in Tool 4. OPEX is held flat at the steady-state value.",
       yearly_col_year: "Year",
       yearly_col_revenue: "Revenue",
       yearly_col_opex: "OPEX",
       yearly_col_net: "Net Cash Flow",
       yearly_col_cumulative: "Cumulative",
       dep_alert_title: "Upstream data missing.",
-      dep_alert_msg: " Results use data from Tools 1–5. Some values may be defaults.",
+      dep_alert_msg:
+        " Results use data from Tools 1–5. Some values may be defaults.",
       dep_alert_link: "Start from Tool 1 →",
       tool_label: "Tool 6: Executive Dashboard",
       step_label: "Step 6 of 7: Dashboard",
@@ -599,11 +692,13 @@ window.BiocharTranslations = {
       hero_profit_label: "Annual Net Profit",
       hero_profit_sub: "After Tax & OPEX",
       hero_payback_label: "Payback Period",
-      hero_payback_tooltip: "**Formula:**<br>Year when cumulative cash flow first turns positive, with fractional interpolation.<br><br>Uses the multi-year revenue ramp from your chosen uptake scenario in Tool 4 — not the single-year profit.",
+      hero_payback_tooltip:
+        "**Formula:**<br>Year when cumulative cash flow first turns positive, with fractional interpolation.<br><br>Uses the multi-year revenue ramp from your chosen uptake scenario in Tool 4 — not the single-year profit.",
       hero_payback_sub: "Years to break even",
       hero_npv_label: "NPV",
       hero_npv_sub: "Net Present Value",
-      hero_npv_tooltip: "**Net Present Value:**<br>The total value of all future profits in today's dollars, minus your initial investment.",
+      hero_npv_tooltip:
+        "**Net Present Value:**<br>The total value of all future profits in today's dollars, minus your initial investment.",
       npv_years_label: "{n}-Year",
       never_text: "Never",
       years_suffix: " Years",
@@ -616,9 +711,11 @@ window.BiocharTranslations = {
       input_cost_section: "Input Cost Position",
       delivered_cost_desc: "Total Delivered Cost (Purchase + Logistics)",
       per_tonne: "per tonne",
-      delivered_cost_tooltip: "**Formula:**<br>(Total Feedstock Spend + Logistics Spend) / Total Tonnes",
+      delivered_cost_tooltip:
+        "**Formula:**<br>(Total Feedstock Spend + Logistics Spend) / Total Tonnes",
       calculating: "Calculating...",
-      feasibility_comparing: "Comparing your costs against industry benchmarks...",
+      feasibility_comparing:
+        "Comparing your costs against industry benchmarks...",
       financial_summary_section: "Annual Financial Summary",
       total_revenue_label: "Total Revenue",
       total_revenue_tooltip: "Biochar + Credits + Vinegar",
@@ -645,66 +742,105 @@ window.BiocharTranslations = {
       print_btn: "🖨️ Print / Save as PDF",
       next_btn: "Proceed to Scenarios →",
       main_menu_link: "← Return to Main Menu",
-      missing_tools_error: "Data from the following tools is missing: {tools}. Please go back and save data for these tools.",
+      missing_tools_error:
+        "Data from the following tools is missing: {tools}. Please go back and save data for these tools.",
       kpi_no_data: "No data found.",
-      calc_error: "An error occurred during calculation. Please check all previous tools for missing data.",
-      missing_t1: "Tool 1", missing_t2: "Tool 2", missing_t3: "Tool 3", missing_t4: "Tool 4", missing_t5: "Tool 5",
+      calc_error:
+        "An error occurred during calculation. Please check all previous tools for missing data.",
+      missing_t1: "Tool 1",
+      missing_t2: "Tool 2",
+      missing_t3: "Tool 3",
+      missing_t4: "Tool 4",
+      missing_t5: "Tool 5",
       feasibility_0_badge: "Highly Favorable",
-      feasibility_0_msg: "Your feedstock is free ($0/t). This gives you a strong competitive advantage.",
+      feasibility_0_msg:
+        "Your feedstock is free ($0/t). This gives you a strong competitive advantage.",
       feasibility_low_badge: "Highly Favorable",
-      feasibility_low_msg: "Your delivered cost is excellent (<$20/t). This gives you a strong competitive advantage.",
+      feasibility_low_msg:
+        "Your delivered cost is excellent (<$20/t). This gives you a strong competitive advantage.",
       feasibility_mid_badge: "Favorable",
-      feasibility_mid_msg: "Your delivered cost is standard ($20-$40/t). Profitability will depend on your sales model.",
+      feasibility_mid_msg:
+        "Your delivered cost is standard ($20-$40/t). Profitability will depend on your sales model.",
       feasibility_high_badge: "Marginal",
-      feasibility_high_msg: "Your delivered cost is high ($40-$60/t). You are sensitive to biochar price drops.",
+      feasibility_high_msg:
+        "Your delivered cost is high ($40-$60/t). You are sensitive to biochar price drops.",
       feasibility_vhigh_badge: "Less Favorable",
-      feasibility_vhigh_msg: "Your delivered cost is >$60/t. Transport and feedstock costs may pinch your profit.",
+      feasibility_vhigh_msg:
+        "Your delivered cost is >$60/t. Transport and feedstock costs may pinch your profit.",
       permit_title: "Permit Timeline: {time}",
-      permit_msg: "Based on typical air quality permitting timelines for {country}. Plan your launch accordingly.",
+      permit_msg:
+        "Based on typical air quality permitting timelines for {country}. Plan your launch accordingly.",
       permit_unknown: "Unknown",
-      permit_BO: "4–8 months", permit_BR: "6-9 months", permit_CO: "6 months",
-      permit_CR: "6–12 months", permit_DO: "3–6 months", permit_EC: "6–12 months",
-      permit_SV: "3–6 months", permit_GT: "6–12 months", permit_HN: "6–12 months",
-      permit_MX: "3–6 months", permit_NI: "4–8 months", permit_PA: "6–12 months",
-      permit_PE: "4–8 months", permit_custom: "Unknown",
+      permit_BO: "4–8 months",
+      permit_BR: "6-9 months",
+      permit_CO: "6 months",
+      permit_CR: "6–12 months",
+      permit_DO: "3–6 months",
+      permit_EC: "6–12 months",
+      permit_SV: "3–6 months",
+      permit_GT: "6–12 months",
+      permit_HN: "6–12 months",
+      permit_MX: "3–6 months",
+      permit_NI: "4–8 months",
+      permit_PA: "6–12 months",
+      permit_PE: "4–8 months",
+      permit_custom: "Unknown",
       kpi_buyin_secured_title: "Community Buy-In: Secured",
-      kpi_buyin_secured_msg: "Excellent. A strong foundation for a successful project.",
+      kpi_buyin_secured_msg:
+        "Excellent. A strong foundation for a successful project.",
       kpi_buyin_process_title: "Community Buy-In: In Progress",
-      kpi_buyin_process_msg: "Key risk. Continue building local relationships to ensure long-term project viability.",
+      kpi_buyin_process_msg:
+        "Key risk. Continue building local relationships to ensure long-term project viability.",
       kpi_buyin_none_title: "Community Buy-In: Not Secured",
-      kpi_buyin_none_msg: "High risk. Projects without community support often fail. Prioritize engagement immediately.",
+      kpi_buyin_none_msg:
+        "High risk. Projects without community support often fail. Prioritize engagement immediately.",
       kpi_feedstock_high_title: "CRITICAL RISK: Feedstock Supply",
-      kpi_feedstock_high_msg: "Relying on spot markets is a critical financial risk. Securing feedstock is the #1 challenge for biochar projects. This is a potential failure point.",
+      kpi_feedstock_high_msg:
+        "Relying on spot markets is a critical financial risk. Securing feedstock is the #1 challenge for biochar projects. This is a potential failure point.",
       kpi_feedstock_med_title: "Feedstock Risk: Moderate",
-      kpi_feedstock_med_msg: "Competition is moderate or contracts are informal. Your feedstock costs may be unpredictable or increase over time. Secure written agreements.",
+      kpi_feedstock_med_msg:
+        "Competition is moderate or contracts are informal. Your feedstock costs may be unpredictable or increase over time. Secure written agreements.",
       kpi_feedstock_low_title: "Feedstock Risk: Low",
-      kpi_feedstock_low_msg: "Feedstock is secured via ownership or a low-competition written contract.",
+      kpi_feedstock_low_msg:
+        "Feedstock is secured via ownership or a low-competition written contract.",
       kpi_sales_secured_title: "Sales Plan: Secured",
-      kpi_sales_secured_msg: "A built-in distribution (like a co-op) is the lowest-risk sales model.",
+      kpi_sales_secured_msg:
+        "A built-in distribution (like a co-op) is the lowest-risk sales model.",
       kpi_sales_moderate_title: "Sales Plan: Moderate Risk",
-      kpi_sales_moderate_msg: "A regional contract is good, but revenue depends on your partner's performance.",
+      kpi_sales_moderate_msg:
+        "A regional contract is good, but revenue depends on your partner's performance.",
       kpi_sales_high_title: "Sales Plan: High Risk",
-      kpi_sales_high_msg: "No marketing plan in process. This is a critical gap that threatens all revenue projections.",
+      kpi_sales_high_msg:
+        "No marketing plan in process. This is a critical gap that threatens all revenue projections.",
       kpi_kiln_confirmed_title: "Pyrolyzer Cost: Confirmed",
-      kpi_kiln_confirmed_msg: "Costs are based on a manufacturer quote, making your CAPEX estimate reliable.",
+      kpi_kiln_confirmed_msg:
+        "Costs are based on a manufacturer quote, making your CAPEX estimate reliable.",
       kpi_kiln_estimate_title: "Pyrolyzer Cost: Estimate",
-      kpi_kiln_estimate_msg: "Your CAPEX is based on an estimate. Get an official quote to confirm project costs.",
+      kpi_kiln_estimate_msg:
+        "Your CAPEX is based on an estimate. Get an official quote to confirm project costs.",
       kpi_mrv_confirmed_title: "MRV Cost: Confirmed",
-      kpi_mrv_confirmed_msg: "Costs are based on a provider quote, making your OPEX estimate reliable.",
+      kpi_mrv_confirmed_msg:
+        "Costs are based on a provider quote, making your OPEX estimate reliable.",
       kpi_mrv_estimate_title: "MRV Cost: Estimate",
-      kpi_mrv_estimate_msg: "Your MRV costs are estimates. Get an official quote to confirm this cost.",
+      kpi_mrv_estimate_msg:
+        "Your MRV costs are estimates. Get an official quote to confirm this cost.",
       kpi_lab_confirmed_title: "Carbon Data: Confirmed",
       kpi_lab_confirmed_msg: "Projections are based on reliable lab results.",
       kpi_lab_risk_title: "Carbon Data: High Risk",
-      kpi_lab_risk_msg: "Projections are based on generic defaults. Get lab results for your specific feedstock and kiln to confirm profitability.",
+      kpi_lab_risk_msg:
+        "Projections are based on generic defaults. Get lab results for your specific feedstock and kiln to confirm profitability.",
       kpi_deforestation_title: "Deforestation Risk",
-      kpi_deforestation_msg: "Using woody biomass requires a strict audit trail to prove it is waste, not deforestation. Mitigation: Contracts must include Traceability Clauses.",
+      kpi_deforestation_msg:
+        "Using woody biomass requires a strict audit trail to prove it is waste, not deforestation. Mitigation: Contracts must include Traceability Clauses.",
       kpi_shutdown_title: "Strategy Risk: High",
-      kpi_shutdown_msg: "Seasonal shutdowns are often economically unviable due to low equipment utilization.",
+      kpi_shutdown_msg:
+        "Seasonal shutdowns are often economically unviable due to low equipment utilization.",
       kpi_store_title: "Strategy Risk: Moderate",
-      kpi_store_msg: "Storing feedstock requires significant working capital and risk of material loss. Ensure your financing plan covers this.",
+      kpi_store_msg:
+        "Storing feedstock requires significant working capital and risk of material loss. Ensure your financing plan covers this.",
       mrv_flag_title: "MRV Complexity Warning",
-      mrv_flag_msg: "Your project uses more than 2 feedstock types. Each feedstock type requires its own Monitoring, Reporting & Verification (MRV) documentation to qualify for carbon credits. Projects with many feedstock types face significantly higher certification complexity and cost.",
+      mrv_flag_msg:
+        "Your project uses more than 2 feedstock types. Each feedstock type requires its own Monitoring, Reporting & Verification (MRV) documentation to qualify for carbon credits. Projects with many feedstock types face significantly higher certification complexity and cost.",
       action_tool_t1: "Tool 1: Project Scale",
       action_tool_t2: "Tool 2: Production",
       action_tool_t3: "Tool 3: Logistics",
@@ -727,7 +863,8 @@ window.BiocharTranslations = {
       page_title: "Scenario Planner (Tool 7)",
       step_name: "Scenarios",
       dep_alert_title: "Upstream data missing.",
-      dep_alert_msg: " Scenarios use financial data from Tools 1–5. Some values may be defaults.",
+      dep_alert_msg:
+        " Scenarios use financial data from Tools 1–5. Some values may be defaults.",
       dep_alert_link: "Complete earlier tools →",
       tool_label: "Tool 7: Scenario Planner",
       step_label: "Step 7 of 7: Scenario Planner",
@@ -756,7 +893,8 @@ window.BiocharTranslations = {
       npv_row: "{n}-Year NPV",
       npv_tooltip: "Total present value of all profits minus CAPEX.",
       notes_section: "Scenario Notes & Observations",
-      notes_placeholder: "E.g., 'Project only viable if Carbon Price stays above $80'",
+      notes_placeholder:
+        "E.g., 'Project only viable if Carbon Price stays above $80'",
       save_btn: "Save Scenario Notes",
       back_btn: "← Back to Dashboard",
       print_btn: "🖨️ Print / Save as PDF",
@@ -766,12 +904,13 @@ window.BiocharTranslations = {
       npv_label: "{n}-Year NPV",
       never_text: "Never",
       payback_unit: " yrs",
-      missing_data_error: "Data from Tools 1-5 is missing. Please complete all previous steps.",
+      missing_data_error:
+        "Data from Tools 1-5 is missing. Please complete all previous steps.",
       error_loading: "Error loading base case.",
       saving_text: "Saving...",
       saved_status: "Notes Saved!",
       save_failed: "Save Failed",
-    }
+    },
   },
 
   /* ─── SPANISH ──────────────────────────────────────────── */
@@ -782,20 +921,27 @@ window.BiocharTranslations = {
       saved_confirmation: "Todos los cambios guardados.",
       main_menu: "← Menú Principal",
       reset_form: "Reiniciar Formulario",
-      alert_unsaved: "Tienes cambios sin guardar. Haz clic en 'Guardar' antes de continuar.",
-      confirm_reset: "Esto borrará TODOS los datos del proyecto. ¿Estás seguro?",
+      alert_unsaved:
+        "Tienes cambios sin guardar. Haz clic en 'Guardar' antes de continuar.",
+      confirm_reset:
+        "Esto borrará TODOS los datos del proyecto. ¿Estás seguro?",
       usd_note: "(Valores en la moneda seleccionada)",
       cohort: "Climatebase Fellowship Cohort 8 - Proyecto Capstone",
-      ai_link: "¿Preguntas? Haz clic aquí para consultar al Asistente IA de Biochar ↗",
+      ai_link:
+        "¿Preguntas? Haz clic aquí para consultar al Asistente IA de Biochar ↗",
       header_h1: "Calculadora de Viabilidad de Biochar",
       header_h2: "para Cadenas de Suministro de Café y Cacao en América Latina",
-      alert_unsaved_confirm: "Tiene cambios sin guardar que se perderán. ¿Navegar de todas formas?",
+      alert_unsaved_confirm:
+        "Tiene cambios sin guardar que se perderán. ¿Navegar de todas formas?",
       footer_no_guarantee_label: "Sin Garantía",
-      footer_no_guarantee: "Las proyecciones proporcionadas por esta calculadora se basan en las suposiciones y datos ingresados por el usuario. Son solo para fines ilustrativos y no constituyen una garantía de costos reales, ingresos o rentabilidad.",
+      footer_no_guarantee:
+        "Las proyecciones proporcionadas por esta calculadora se basan en las suposiciones y datos ingresados por el usuario. Son solo para fines ilustrativos y no constituyen una garantía de costos reales, ingresos o rentabilidad.",
       footer_not_advice_label: "No es Asesoramiento Financiero",
-      footer_not_advice: "La información proporcionada no pretende sustituir el asesoramiento profesional financiero, legal o agrícola. Los usuarios son los únicos responsables de las decisiones tomadas en base a los resultados de esta herramienta.",
+      footer_not_advice:
+        "La información proporcionada no pretende sustituir el asesoramiento profesional financiero, legal o agrícola. Los usuarios son los únicos responsables de las decisiones tomadas en base a los resultados de esta herramienta.",
       footer_verify_label: "Verificar Todos los Datos",
-      footer_verify: "Los usuarios deben verificar independientemente todos los costos locales, precios de mercado y requisitos regulatorios antes de realizar cualquier inversión.",
+      footer_verify:
+        "Los usuarios deben verificar independientemente todos los costos locales, precios de mercado y requisitos regulatorios antes de realizar cualquier inversión.",
       sign_in: "Iniciar sesión →",
       my_projects: "Mis Proyectos →",
       sign_out: "Cerrar sesión",
@@ -803,7 +949,8 @@ window.BiocharTranslations = {
     login: {
       page_title: "Iniciar Sesión — Calculadora de Biochar",
       title: "Inicia sesión en tu cuenta",
-      subtitle: "Ingresa tu correo electrónico y te enviaremos un enlace de acceso de un clic. Sin contraseña.",
+      subtitle:
+        "Ingresa tu correo electrónico y te enviaremos un enlace de acceso de un clic. Sin contraseña.",
       email_label: "Correo electrónico",
       email_placeholder: "tu@ejemplo.com",
       send_btn: "Enviar enlace de acceso",
@@ -811,7 +958,8 @@ window.BiocharTranslations = {
       error_generic: "Algo salió mal. Por favor intenta de nuevo.",
       error_invalid_email: "Por favor ingresa un correo electrónico válido.",
       sent_title: "Revisa tu correo",
-      sent_desc: "Enviamos un enlace de acceso a tu correo. Haz clic para continuar — el enlace expira en 1 hora.",
+      sent_desc:
+        "Enviamos un enlace de acceso a tu correo. Haz clic para continuar — el enlace expira en 1 hora.",
       back_link: "← Continuar sin una cuenta",
     },
     projects: {
@@ -828,8 +976,10 @@ window.BiocharTranslations = {
       updated_now: "Ahora mismo",
       open_btn: "Abrir",
       delete_btn: "Eliminar",
-      confirm_delete: "¿Eliminar proyecto \"{name}\"? Esta acción no se puede deshacer.",
-      delete_error: "No se pudo eliminar el proyecto. Por favor intenta de nuevo.",
+      confirm_delete:
+        '¿Eliminar proyecto "{name}"? Esta acción no se puede deshacer.',
+      delete_error:
+        "No se pudo eliminar el proyecto. Por favor intenta de nuevo.",
     },
     admin: {
       page_title: "Admin — Calculadora de Biochar",
@@ -838,11 +988,13 @@ window.BiocharTranslations = {
       access_denied: "Acceso denegado. Se requiere rol de administrador.",
       actions_heading: "Acciones",
       currency_title: "Actualizar Tasas de Cambio",
-      currency_desc: "Obtiene las últimas tasas de cambio USD de una API externa y las escribe en la base de datos.",
+      currency_desc:
+        "Obtiene las últimas tasas de cambio USD de una API externa y las escribe en la base de datos.",
       currency_btn: "Actualizar Tasas",
       currency_updating: "Actualizando…",
       currency_success: "Se actualizaron {n} tasas de cambio correctamente.",
-      currency_error: "No se pudieron actualizar las tasas. Revisa la consola para más detalles.",
+      currency_error:
+        "No se pudieron actualizar las tasas. Revisa la consola para más detalles.",
       users_heading: "Usuarios",
       users_col_email: "Correo",
       users_col_role: "Rol",
@@ -859,40 +1011,47 @@ window.BiocharTranslations = {
     index: {
       page_title: "Plataforma de Viabilidad de Biochar",
       h1: "Calculadora de Viabilidad de Proyectos de Biochar",
-      h2: "para Cadenas de Suministro de Café y Cacao en América Latina",
-      cohort: "Climatebase Fellowship Cohort 8 - Proyecto Capstone",
-      ai_link: "¿Preguntas? Haz clic aquí para consultar al Asistente IA de Biochar ↗",
+      h2: "para Cadenas de Suministro de Café y Cacao",
+      cohort: "Climatebase Fellowship - Proyecto Capstone",
+      ai_link:
+        "¿Preguntas? Haz clic aquí para consultar al Asistente IA de Biochar ↗",
       welcome_heading: "Tienes un proyecto en curso.",
       welcome_continue: "Continuar trabajando en:",
       welcome_default_name: "Borrador",
       start_new: "Empezar Nuevo",
       resume: "Reanudar Proyecto →",
-      confirm_new: "¿Estás seguro de que quieres iniciar un nuevo proyecto? Esto borrará los datos actuales.",
+      confirm_new:
+        "¿Estás seguro de que quieres iniciar un nuevo proyecto? Esto borrará los datos actuales.",
       step1_num: "Paso 1",
       step1_title: "Información y Escala del Proyecto",
-      step1_desc: "Define el ID del proyecto, la ubicación y el volumen total de materia prima.",
+      step1_desc:
+        "Define el ID del proyecto, la ubicación y el volumen total de materia prima.",
       step1_btn: "Abrir Herramienta 1 →",
       step2_num: "Paso 2",
       step2_title: "Calculadora de Producción",
-      step2_desc: "Selecciona la tecnología del horno y estima rendimientos de biochar y créditos de carbono.",
+      step2_desc:
+        "Selecciona la tecnología del horno y estima rendimientos de biochar y créditos de carbono.",
       step2_btn: "Abrir Herramienta 2 →",
       step3_num: "Paso 3",
       step3_title: "Planificador Logístico",
-      step3_desc: "Diseña rutas de transporte y estima costos basados en la estacionalidad.",
+      step3_desc:
+        "Diseña rutas de transporte y estima costos basados en la estacionalidad.",
       step3_btn: "Abrir Herramienta 3 →",
       step4_num: "Paso 4",
       step4_title: "Flujos de Ingresos",
-      step4_desc: "Establece precios para ventas de biochar, créditos de carbono y vinagre de madera.",
+      step4_desc:
+        "Establece precios para ventas de biochar, créditos de carbono y vinagre de madera.",
       step4_btn: "Abrir Herramienta 4 →",
       step5_num: "Paso 5",
       step5_title: "Sitio, Operaciones y Finanzas",
-      step5_desc: "Supuestos de CAPEX, OPEX y préstamos para la viabilidad completa.",
+      step5_desc:
+        "Supuestos de CAPEX, OPEX y préstamos para la viabilidad completa.",
       step5_btn: "Abrir Herramienta 5 →",
       analysis_num: "Análisis",
       analysis_title: "Resultados y Escenarios",
       analysis_desc: "Panel ejecutivo + pruebas de estrés financiero.",
       dashboard_btn: "Panel",
-      scenarios_btn: "Escenarios"
+      scenarios_btn: "Escenarios",
     },
     tool1: {
       page_title: "Configuración del Proyecto (Herramienta 1)",
@@ -906,7 +1065,8 @@ window.BiocharTranslations = {
       feedstock_label: "Volumen Anual de Café/Cacao (Toneladas - materia seca)",
       feedstock_tooltip: "1 tonelada = 1,000 kg",
       wood_label: "Volumen Anual de Madera de Poda (Toneladas — materia seca)",
-      wood_tooltip: "Incluye podas de árboles de café y árboles de sombra. Ingrese las toneladas secas disponibles por año.",
+      wood_tooltip:
+        "Incluye podas de árboles de café y árboles de sombra. Ingrese las toneladas secas disponibles por año.",
       or_separator: "- O -",
       toggle_calc_btn: "Calcular Volumen desde Contenedores de Exportación",
       calc_title: "Calculadora de Contenedores",
@@ -966,28 +1126,36 @@ window.BiocharTranslations = {
       strategy_store: "[1] Almacenar y procesar todo el año",
       strategy_diversify: "[2] Usar otras materias primas el resto del año",
       strategy_shutdown: "[3] Procesar solo en cosecha y cerrar después",
-      strategy_default_desc: "Elija la opción que mejor describa su plan operativo.",
+      strategy_default_desc:
+        "Elija la opción que mejor describa su plan operativo.",
       notes_title: "Notas para Investigación Futura",
       notes_placeholder: "Escriba aquí...",
       next_tool_btn: "Ir a Herramienta 2 →",
       supply_desc_default: "Seleccione una opción para describir su situación.",
-      supply_desc_year_round: "Mi materia prima está disponible los 12 meses del año.",
-      supply_desc_seasonal: "Mi materia prima se concentra en una temporada de cosecha.",
-      strategy_desc_store: "Compraré la mayoría durante la cosecha y almacenaré para procesar todo el año.",
-      strategy_desc_diversify: "Procesaré mi materia prima durante la cosecha y usaré otras biomasas el resto del año.",
-      strategy_desc_shutdown: "Procesaré durante la cosecha y cerraré operaciones el resto del año.",
+      supply_desc_year_round:
+        "Mi materia prima está disponible los 12 meses del año.",
+      supply_desc_seasonal:
+        "Mi materia prima se concentra en una temporada de cosecha.",
+      strategy_desc_store:
+        "Compraré la mayoría durante la cosecha y almacenaré para procesar todo el año.",
+      strategy_desc_diversify:
+        "Procesaré mi materia prima durante la cosecha y usaré otras biomasas el resto del año.",
+      strategy_desc_shutdown:
+        "Procesaré durante la cosecha y cerraré operaciones el resto del año.",
       batch_text: "Lote {n} ({type}): {tonnes} ton",
       alert_no_containers: "Por favor ingrese un número de contenedores.",
       alert_no_project_id: "Por favor ingrese un ID de Proyecto.",
-      alert_required: "Por favor complete todos los campos requeridos: ID del Proyecto, al menos un volumen de biomasa (café/cacao o madera de poda), Tipo de Proyecto, País y Modelo de Abastecimiento.",
+      alert_required:
+        "Por favor complete todos los campos requeridos: ID del Proyecto, al menos un volumen de biomasa (café/cacao o madera de poda), Tipo de Proyecto, País y Modelo de Abastecimiento.",
       hub_label_decentralized: "Número de Centros de Procesamiento",
-      hub_label_mobile: "Número de Hornos Móviles"
+      hub_label_mobile: "Número de Hornos Móviles",
     },
     tool2: {
       page_title: "Calculadora de Producción de Biochar (Herramienta 2)",
       step_name: "Producción",
       dep_alert_title: "Datos de Tool 1 no guardados.",
-      dep_alert_msg: " Los cálculos de producción usan datos de feedstock de Tool 1. Mostrando valores predeterminados.",
+      dep_alert_msg:
+        " Los cálculos de producción usan datos de feedstock de Tool 1. Mostrando valores predeterminados.",
       dep_alert_link: "Completar Tool 1 →",
       tool_label: "Herramienta 2: Calculadora de Producción",
       step_label: "Paso 2 de 7: Producción",
@@ -997,7 +1165,8 @@ window.BiocharTranslations = {
       loading: "Cargando...",
       seasonal_strategy_title: "Estrategia Estacional (de Herramienta 1)",
       carbon_source_label: "Mis valores de carbono y rendimiento se basan en:",
-      carbon_source_tooltip: "Se recomienda usar sus propios resultados de laboratorio para una proyección precisa.",
+      carbon_source_tooltip:
+        "Se recomienda usar sus propios resultados de laboratorio para una proyección precisa.",
       carbon_source_defaults: "Valores Predeterminados",
       carbon_source_lab: "Mis Propios Resultados de Laboratorio",
       primary_calc_header: "1. Calculadora de Materia Prima Primaria",
@@ -1026,48 +1195,64 @@ window.BiocharTranslations = {
       f_contract_written: "Contrato Escrito",
       f_contract_spot: "Mercado Spot",
       f_volume_label: "Volumen Anual (Ton Secas)",
-      f1_volume_tooltip: "Este valor proviene de la Herramienta 1. Es el total de toneladas secas disponibles por año.",
-      f2_volume_tooltip: "Ingrese el total de toneladas secas de esta materia prima secundaria disponibles por año.",
+      f1_volume_tooltip:
+        "Este valor proviene de la Herramienta 1. Es el total de toneladas secas disponibles por año.",
+      f2_volume_tooltip:
+        "Ingrese el total de toneladas secas de esta materia prima secundaria disponibles por año.",
       starting_volume_label: "Volumen Inicial",
       f_ash_label: "Contenido de Cenizas (%)",
       f_ash_formula_tooltip: "Calcula: [Paso 1 Volumen] * (1 - Cenizas %)",
-      f1_ash_tooltip: "El contenido mineral no orgánico. Varía según el tipo de materia prima y la contaminación. Un valor predeterminado del 10% representa pulpa y cáscara de café mixta y sin tratamiento previo. Ajuste según su análisis.",
-      f2_ash_tooltip: "La biomasa leñosa típicamente tiene menor contenido de cenizas. 2% es un valor común.",
+      f1_ash_tooltip:
+        "El contenido mineral no orgánico. Varía según el tipo de materia prima y la contaminación. Un valor predeterminado del 10% representa pulpa y cáscara de café mixta y sin tratamiento previo. Ajuste según su análisis.",
+      f2_ash_tooltip:
+        "La biomasa leñosa típicamente tiene menor contenido de cenizas. 2% es un valor común.",
       dry_ash_label: "Materia Seca Libre de Cenizas",
       f_yield_label: "Rendimiento de Biochar (%)",
       f_yield_formula_tooltip: "Calcula: [Paso 2 Materia] * Rendimiento %",
-      f1_yield_tooltip: "El porcentaje de masa convertido en biochar. 25% es una estimación conservadora.",
-      f2_yield_tooltip: "La biomasa leñosa a menudo tiene un mayor rendimiento. 30% es un valor común.",
+      f1_yield_tooltip:
+        "El porcentaje de masa convertido en biochar. 25% es una estimación conservadora.",
+      f2_yield_tooltip:
+        "La biomasa leñosa a menudo tiene un mayor rendimiento. 30% es un valor común.",
       biochar_produced_label: "Total Biochar Producido",
       f_carbon_label: "Carbono Estable (%)",
       f_carbon_formula_tooltip: "Calcula: [Paso 3 Biochar] * Carbono %",
-      f1_carbon_tooltip: "El porcentaje de la masa del biochar final que es carbono estable. 70% es un buen punto de partida.",
-      f2_carbon_tooltip: "El biochar de biomasa leñosa a menudo tiene una estabilidad de carbono muy alta. 80% es un buen valor predeterminado.",
+      f1_carbon_tooltip:
+        "El porcentaje de la masa del biochar final que es carbono estable. 70% es un buen punto de partida.",
+      f2_carbon_tooltip:
+        "El biochar de biomasa leñosa a menudo tiene una estabilidad de carbono muy alta. 80% es un buen valor predeterminado.",
       stable_carbon_label: "Total Carbono Estable",
       f1_conv_label: "Factor neto de acreditación (calibrado)",
       f2_conv_label: "Factor neto de acreditación (calibrado)",
       f_conv_formula_tooltip: "Calcula: [Paso 4 Carbono] * Factor",
-      f1_conv_tooltip: "Este es un factor neto de acreditación (no la relación química 3,67). Está calibrado según resultados observados por profesionales del sector. El valor predeterminado de 2,29 corresponde a ~1,6 tCO₂e por tonelada de biochar con 70% de carbono estable.",
-      f2_conv_tooltip: "Este es un factor neto de acreditación (no es la relación química 3.67). Está calibrado a resultados de proyectos reales. El valor por defecto 2.63 equivale a ~2.1 tCO2e por tonelada de biochar con 80% de carbono estable.",
+      f1_conv_tooltip:
+        "Este es un factor neto de acreditación (no la relación química 3,67). Está calibrado según resultados observados por profesionales del sector. El valor predeterminado de 2,29 corresponde a ~1,6 tCO₂e por tonelada de biochar con 70% de carbono estable.",
+      f2_conv_tooltip:
+        "Este es un factor neto de acreditación (no es la relación química 3.67). Está calibrado a resultados de proyectos reales. El valor por defecto 2.63 equivale a ~2.1 tCO2e por tonelada de biochar con 80% de carbono estable.",
       credits_label: "Total Créditos Reclamables",
       f2_is_wood_label: "¿Es Biomasa Leñosa?",
       total_feedstock_heading: "Materia Prima Total del Proyecto",
-      total_feedstock_note: "Este volumen determina el tamaño de su máquina a continuación.",
+      total_feedstock_note:
+        "Este volumen determina el tamaño de su máquina a continuación.",
       tech_note_title: "Nota Técnica:",
-      tech_note_text: "Los materiales finos y de baja densidad (como pulpa/pergamino de café) <strong>no son adecuados</strong> para hornos por lotes de bajo costo (ej. Flame Cap o Kon-Tiki). Estos materiales requieren un pirolizador de alimentación continua.",
+      tech_note_text:
+        "Los materiales finos y de baja densidad (como pulpa/pergamino de café) <strong>no son adecuados</strong> para hornos por lotes de bajo costo (ej. Flame Cap o Kon-Tiki). Estos materiales requieren un pirolizador de alimentación continua.",
       kiln_section_title: "Selección de Horno y CAPEX",
       kiln_total_feedstock_label: "Materia Prima Total",
       kiln_volume_per_hub_label: "Volumen por Centro",
-      kiln_volume_per_hub_tooltip: "Materia Prima Total / Número de Centros. Este valor determina el tamaño de horno requerido.",
+      kiln_volume_per_hub_tooltip:
+        "Materia Prima Total / Número de Centros. Este valor determina el tamaño de horno requerido.",
       kiln_size_label: "Tamaño Determinado",
       kiln_select_label: "Seleccione su Horno",
       kiln_select_placeholder: "-- Seleccionar horno compatible --",
       kiln_na_option: "No Aplicable",
       kiln_custom_option: "Personalizado / Ingresar Precio",
-      kiln_warning_below_min: "El volumen por centro es inferior al mínimo de 100 t/año. No hay hornos disponibles.",
-      kiln_warning_no_match: "No hay hornos precargados para sus criterios (Tamaño: {size}, Modelo: {model}).",
+      kiln_warning_below_min:
+        "El volumen por centro es inferior al mínimo de 100 t/año. No hay hornos disponibles.",
+      kiln_warning_no_match:
+        "No hay hornos precargados para sus criterios (Tamaño: {size}, Modelo: {model}).",
       kiln_custom_price_label: "Precio de Horno Personalizado ($)",
-      kiln_custom_price_tooltip: "Ingrese el precio total de UN horno/unidad. La calculadora multiplicará esto por el \"Número de Hornos\" a continuación.",
+      kiln_custom_price_tooltip:
+        'Ingrese el precio total de UN horno/unidad. La calculadora multiplicará esto por el "Número de Hornos" a continuación.',
       num_kilns_label: "Número de Hornos",
       hubs_warning_min: "Mínimo {n} requerido (de Herramienta 1)",
       cost_basis_label: "Base de Costos del Pirolizador",
@@ -1077,7 +1262,8 @@ window.BiocharTranslations = {
       pyrolyzer_cost_label: "Costo del Pirolizador",
       shipping_cost_label: "Envío e Instalación",
       total_capex_label: "CAPEX Total Inicial del Pirolizador",
-      total_capex_tooltip: "(Costo Pirolizador) + (Envío e Instalación). Este es un componente principal del CAPEX de su proyecto.",
+      total_capex_tooltip:
+        "(Costo Pirolizador) + (Envío e Instalación). Este es un componente principal del CAPEX de su proyecto.",
       notes_title: "Notas para Investigación Futura",
       notes_placeholder: "Escriba aquí...",
       save_btn: "Guardar Datos de Producción",
@@ -1085,8 +1271,10 @@ window.BiocharTranslations = {
       back_btn: "← Volver a Herramienta 1",
       next_btn: "Ir a Herramienta 3 →",
       saved_status: "Datos Guardados!",
-      error_missing_tool1: "Faltan datos de la Herramienta 1. Por favor complete la Herramienta 1 primero.",
-      error_incomplete_tool1: "Datos de Herramienta 1 incompletos. La lógica del horno puede ser incorrecta. Guarde nuevamente la Herramienta 1.",
+      error_missing_tool1:
+        "Faltan datos de la Herramienta 1. Por favor complete la Herramienta 1 primero.",
+      error_incomplete_tool1:
+        "Datos de Herramienta 1 incompletos. La lógica del horno puede ser incorrecta. Guarde nuevamente la Herramienta 1.",
       unit_tonnes: "ton",
       unit_total_tonnes: "toneladas",
       unit_ty: "t/año",
@@ -1095,7 +1283,8 @@ window.BiocharTranslations = {
       page_title: "Calculadora de Logística (Herramienta 3)",
       step_name: "Logística",
       dep_alert_title: "Datos de Tool 1 no guardados.",
-      dep_alert_msg: " La logística usa datos del proyecto y feedstock de Tool 1. Mostrando valores predeterminados.",
+      dep_alert_msg:
+        " La logística usa datos del proyecto y feedstock de Tool 1. Mostrando valores predeterminados.",
       dep_alert_link: "Completar Tool 1 →",
       tool_label: "Herramienta 3: Logística (Entrante)",
       step_label: "Paso 3 de 7: Logística",
@@ -1104,25 +1293,32 @@ window.BiocharTranslations = {
       total_feedstock_label: "Total Materia Prima Requerida",
       loading_from_t2: "Cargando desde Herramienta 2...",
       self_delivered_label: "(-) Entrega por el Proveedor (Costo $0)",
-      self_delivered_tooltip: "Materia prima que llega al horno SIN costo logístico para usted.",
+      self_delivered_tooltip:
+        "Materia prima que llega al horno SIN costo logístico para usted.",
       logistics_target_label: "Objetivo Logístico",
       rainy_months_label: "Duración de Temporada de Lluvias (Meses/Año)",
-      rainy_months_tooltip: "Se usa para ponderar el costo anual entre tarifas de temporada Seca y Lluviosa.",
+      rainy_months_tooltip:
+        "Se usa para ponderar el costo anual entre tarifas de temporada Seca y Lluviosa.",
       rainy_slider_left: "0m (Todo Seco)",
       rainy_slider_right: "12m (Todo Lluvia)",
       seasonal_window_title: "Lógica de Recolección Estacional",
-      seasonal_window_text: "Su proyecto es estacional. Defina la ventana específica para cada ruta abajo.",
-      mobile_info_text: "Nota: Los costos de reubicación del horno móvil están en la Herramienta 5.",
+      seasonal_window_text:
+        "Su proyecto es estacional. Defina la ventana específica para cada ruta abajo.",
+      mobile_info_text:
+        "Nota: Los costos de reubicación del horno móvil están en la Herramienta 5.",
       step2_title: "Paso 2: Crear Rutas de Transporte",
-      step2_intro: "Su materia prima restante puede llegar vía transporte regional. Asigne este volumen a las rutas abajo.",
+      step2_intro:
+        "Su materia prima restante puede llegar vía transporte regional. Asigne este volumen a las rutas abajo.",
       add_route_btn: "Agregar Ruta",
       step3_title: "Paso 3: Resumen Logístico Final",
       target_status_label: "Estado del Objetivo",
       target_status_sub: "Volumen Movido vs. Objetivo",
       annual_cost_label: "Costo Logístico Anual Total",
-      annual_cost_tooltip: "**Fórmula:**\nSuma de costos de rutas.\n\nCada ruta: (Viajes/Año) × (Costo Promedio Ponderado)",
+      annual_cost_tooltip:
+        "**Fórmula:**\nSuma de costos de rutas.\n\nCada ruta: (Viajes/Año) × (Costo Promedio Ponderado)",
       cost_per_tonne_label: "Costo por Tonelada",
-      cost_per_tonne_tooltip: "**Fórmula:**\n (Costo Total Logística) / (Total Materia Prima)",
+      cost_per_tonne_tooltip:
+        "**Fórmula:**\n (Costo Total Logística) / (Total Materia Prima)",
       notes_title: "Notas para Investigación Futura",
       notes_placeholder: "Escriba aquí...",
       save_btn: "Guardar Datos Logísticos",
@@ -1133,9 +1329,11 @@ window.BiocharTranslations = {
       loaded_from_t3: "Cargado desde Herramienta 3",
       saving: "Guardando...",
       saved_status: "Datos Guardados!",
-      error_self_delivered: "Por favor ingrese un valor para 'Entrega por el Proveedor'. Puede ingresar 0.",
+      error_self_delivered:
+        "Por favor ingrese un valor para 'Entrega por el Proveedor'. Puede ingresar 0.",
       error_save_failed: "Error al guardar.",
-      error_missing_tool1: "Faltan datos de la Herramienta 1. Por favor complete la Herramienta 1 primero.",
+      error_missing_tool1:
+        "Faltan datos de la Herramienta 1. Por favor complete la Herramienta 1 primero.",
       status_not_met: "Objetivo no alcanzado",
       status_over_capacity: "Sobrecapacidad",
       status_met: "Objetivo cumplido",
@@ -1148,24 +1346,29 @@ window.BiocharTranslations = {
       route_avg_load_prefix: "Carga Promedio:",
       route_avg_load_unit: "t/viaje",
       route_avg_load_tooltip: "**Fórmula:** (Volumen Anual) / (Viajes por Año)",
-      route_note: "Nota: Asegure que la frecuencia es realista. Un camión rural típico carga 4-5 toneladas.",
+      route_note:
+        "Nota: Asegure que la frecuencia es realista. Un camión rural típico carga 4-5 toneladas.",
       seasonal_window_section_title: "Ventana Estacional",
       route_weeks_label: "Duración (Semanas)",
       route_rainy_weeks_label: "Semanas Lluviosas",
       truck_model_label: "Modelo de Propiedad del Camión",
-      truck_model_tooltip: "Seleccione 'Propio' si paga al conductor por hora. Seleccione 'Flete' si paga una tarifa fija por viaje.",
+      truck_model_tooltip:
+        "Seleccione 'Propio' si paga al conductor por hora. Seleccione 'Flete' si paga una tarifa fija por viaje.",
       truck_model_placeholder: "-- Seleccionar Modelo --",
       truck_model_time: "Camión Propio (Cálculo por Tiempo)",
       truck_model_flat: "Flete / Servicio Contratado (Tarifa Fija)",
       hourly_rate_label: "Costo Total por Hora ($/hr)",
-      hourly_rate_tooltip: "Incluya gastos operativos como combustible, mantenimiento, reparaciones, seguro y registro. No incluya salarios del conductor (esos van en la Herramienta 5) ni el costo de compra del vehículo (también en Herramienta 5). Si no está seguro, pregunte a la IA: \"Ayúdame a estimar el costo operativo de mi camión\".",
+      hourly_rate_tooltip:
+        'Incluya gastos operativos como combustible, mantenimiento, reparaciones, seguro y registro. No incluya salarios del conductor (esos van en la Herramienta 5) ni el costo de compra del vehículo (también en Herramienta 5). Si no está seguro, pregunte a la IA: "Ayúdame a estimar el costo operativo de mi camión".',
       dry_hours_label: "Horas Viaje Redondo (Seca)",
       rainy_hours_label: "Horas Viaje Redondo (Lluvia)",
-      flat_note: "<strong>Nota:</strong> Use el precio total negociado con el conductor por el viaje redondo.",
+      flat_note:
+        "<strong>Nota:</strong> Use el precio total negociado con el conductor por el viaje redondo.",
       dry_quote_label: "Cotización Seca ($)",
       rainy_quote_label: "Cotización Lluvia ($)",
       route_annual_cost_prefix: "Est. Costo Anual:",
-      route_annual_cost_tooltip: "**Fórmula:** (Viajes) × (Costo Promedio Ponderado)",
+      route_annual_cost_tooltip:
+        "**Fórmula:** (Viajes) × (Costo Promedio Ponderado)",
     },
     tool4: {
       page_title: "Calculadora de Ingresos de Biochar (Herramienta 4)",
@@ -1191,14 +1394,16 @@ window.BiocharTranslations = {
       retail_price_label: "Precio de Venta al Público ($/saco)",
       packaging_cost_label: "Costo de Empaque ($/saco)",
       distribution_cost_label: "Costo de Distribución ($/saco)",
-      initial_compliance_label: "Registro Inicial de Producto y Laboratorio (CAPEX)",
+      initial_compliance_label:
+        "Registro Inicial de Producto y Laboratorio (CAPEX)",
       annual_compliance_label: "Cumplimiento Anual del Producto (OPEX)",
       bulk_price_label: "Precio de Venta de Biochar a Granel ($/Tonelada)",
       uptake_label: "Escenario de Adopción de Ventas",
       uptake_strong: "Fuerte (ventas completas en el Año 1)",
       uptake_average: "Promedio (crece al 100% durante 2 años)",
       uptake_low: "Baja (crece al 100% durante 3 años)",
-      uptake_tooltip: "Modela cuánto tiempo toma alcanzar las ventas plenas. Los ingresos crecen linealmente hasta el 100% durante los años seleccionados; el OPEX permanece pleno desde el año 1 (la producción funciona a plena capacidad). Reemplaza el antiguo descuento porcentual único, por lo que la recuperación refleja un flujo de caja plurianual.",
+      uptake_tooltip:
+        "Modela cuánto tiempo toma alcanzar las ventas plenas. Los ingresos crecen linealmente hasta el 100% durante los años seleccionados; el OPEX permanece pleno desde el año 1 (la producción funciona a plena capacidad). Reemplaza el antiguo descuento porcentual único, por lo que la recuperación refleja un flujo de caja plurianual.",
       marketing_plan_label: "Plan de Marketing",
       marketing_plan_placeholder: "Seleccionar Plan",
       marketing_plan_coop: "Cooperativa / Distribución integrada",
@@ -1229,7 +1434,8 @@ window.BiocharTranslations = {
       step_next: "(Siguiente: Panel)",
       working_capital_section: "Capital de Trabajo y Financiamiento",
       working_capital_label: "Monto a Financiar (Capital de Trabajo)",
-      working_capital_tooltip: "Precargado con Costo de Compra de Materia Prima (Herramienta 2) + Logística (Herramienta 3). Ajuste si solo necesita financiar una parte.",
+      working_capital_tooltip:
+        "Precargado con Costo de Compra de Materia Prima (Herramienta 2) + Logística (Herramienta 3). Ajuste si solo necesita financiar una parte.",
       working_capital_placeholder: "Calculando...",
       feedstock_loan_checkbox: "¿Necesita una Línea de Crédito para esto?",
       feedstock_interest_label: "Tasa de Interés Anual (Línea de Crédito %)",
@@ -1241,12 +1447,16 @@ window.BiocharTranslations = {
       hubs_suffix: "centros",
       loading_text: "Cargando...",
       kiln_cost_label: "Costo Inicial Total del Pirolizador (de Herr. 2)",
-      kiln_cost_tooltip: "Este valor se carga automáticamente de sus selecciones de horno y envío en la Herramienta 2.",
-      no_kiln_warning: "No se encontró costo de horno en la Herramienta 2. Puede ingresar un valor manualmente.",
+      kiln_cost_tooltip:
+        "Este valor se carga automáticamente de sus selecciones de horno y envío en la Herramienta 2.",
+      no_kiln_warning:
+        "No se encontró costo de horno en la Herramienta 2. Puede ingresar un valor manualmente.",
       wood_chipper_label: "Astilladora / Trituradora ($)",
-      wood_chipper_tooltip: "Requerido para procesar materias primas leñosas (de Herramienta 2).",
+      wood_chipper_tooltip:
+        "Requerido para procesar materias primas leñosas (de Herramienta 2).",
       storage_infra_label: "Infraestructura de Almacenamiento ($)",
-      storage_infra_tooltip: "Requerido para la estrategia de \"Almacenamiento\". Incluye cobertizos, lonas y plataformas.",
+      storage_infra_tooltip:
+        'Requerido para la estrategia de "Almacenamiento". Incluye cobertizos, lonas y plataformas.',
       drying_section: "Secado y Equipos Auxiliares",
       dryer_label: "Secadora Mecánica ($)",
       syngas_ducting_label: "¿Usar calor residual de syngas para secadora?",
@@ -1255,30 +1465,39 @@ window.BiocharTranslations = {
       ancillary_tooltip: "Balanzas, montacargas, transpaletas, etc.",
       vehicles_section: "Vehículos (CAPEX y OPEX)",
       logistics_trucks_label: "1. Camiones Logísticos (CAPEX)",
-      logistics_trucks_tooltip: "Para camiones propios, el costo operativo (OPEX) se captura en la Herramienta 3.",
-      logistics_trucks_note: "Los \"Camiones Propios\" usados en la Herramienta 3.",
+      logistics_trucks_tooltip:
+        "Para camiones propios, el costo operativo (OPEX) se captura en la Herramienta 3.",
+      logistics_trucks_note:
+        'Los "Camiones Propios" usados en la Herramienta 3.',
       num_trucks_label: "Número de Camiones",
       truck_cost_label: "Costo Prom. por Camión ($)",
       pickups_label: "2. Camionetas Pickups (CAPEX y OPEX)",
-      pickups_tooltip: "Los costos de reubicación de hornos móviles se capturan por separado abajo.",
-      pickups_note: "Para gerentes, agrónomos, tareas generales o remolque de hornos móviles.",
+      pickups_tooltip:
+        "Los costos de reubicación de hornos móviles se capturan por separado abajo.",
+      pickups_note:
+        "Para gerentes, agrónomos, tareas generales o remolque de hornos móviles.",
       num_pickups_label: "Número de Pickups",
       pickup_cost_label: "Costo Prom. por Pickup ($)",
       pickups_opex_label: "OPEX Anual de Pickups ($/año)",
-      pickups_opex_tooltip: "Combustible, mantenimiento y seguro para vehículos generales del sitio.",
+      pickups_opex_tooltip:
+        "Combustible, mantenimiento y seguro para vehículos generales del sitio.",
       mobile_relocation_section: "Reubicación de Hornos Móviles (OPEX)",
-      mobile_relocation_note: "Costos por mover su(s) horno(s) móvil(es) entre sitios. El número de hornos se carga de la Herramienta 2.",
+      mobile_relocation_note:
+        "Costos por mover su(s) horno(s) móvil(es) entre sitios. El número de hornos se carga de la Herramienta 2.",
       num_mobile_kilns_label: "Número de Hornos Móviles",
       relocations_per_kiln_label: "Reubicaciones por Horno al Año",
       time_per_relocation_label: "Tiempo Prom. por Reubicación (Horas)",
       cost_per_hour_label: "Costo por Hora de Viaje",
-      cost_per_hour_tooltip: "Costo total del vehículo de remolque (conductor, combustible, mant., etc.) por viaje de IDA.",
+      cost_per_hour_tooltip:
+        "Costo total del vehículo de remolque (conductor, combustible, mant., etc.) por viaje de IDA.",
       total_mobile_opex_label: "Total OPEX Reubicación Móvil:",
       site_infra_section: "Infraestructura del Sitio y Permisos",
       buildings_label: "Edificios, Ventilación y Plataformas de Concreto ($)",
-      buildings_note: "Este valor asume incluir componentes civiles, estructurales, mecánicos y eléctricos relevantes, así como servicios básicos requeridos (ej. cimientos, ventilación, seguridad). Los requisitos locales pueden afectar significativamente el costo. Proyectos móviles requieren menos costo de sitio.",
+      buildings_note:
+        "Este valor asume incluir componentes civiles, estructurales, mecánicos y eléctricos relevantes, así como servicios básicos requeridos (ej. cimientos, ventilación, seguridad). Los requisitos locales pueden afectar significativamente el costo. Proyectos móviles requieren menos costo de sitio.",
       permit_label: "Tarifas de Solicitud de Permisos (Pago Único)",
-      permit_tooltip: "Tarifas de solicitud de permisos de calidad del aire, laboratorio y consultoría.",
+      permit_tooltip:
+        "Tarifas de solicitud de permisos de calidad del aire, laboratorio y consultoría.",
       land_model_label: "Modelo de Terreno",
       land_lease_option: "Arrendamiento Anual (OPEX)",
       land_buy_option: "Compra Directa (CAPEX)",
@@ -1287,7 +1506,8 @@ window.BiocharTranslations = {
       total_capex_label: "Total Estimado CAPEX:",
       total_capex_tooltip: "Suma de todos los ítems de CAPEX anteriores.",
       cert_section: "Certificación y MRV",
-      cert_source_label: "Fuente de su estimación de costos para Certificación y MRV",
+      cert_source_label:
+        "Fuente de su estimación de costos para Certificación y MRV",
       cert_source_placeholder: "Elija una base de costos",
       cert_source_estimate: "Estimación de la calculadora",
       cert_source_quote: "Cotización del proveedor",
@@ -1296,27 +1516,35 @@ window.BiocharTranslations = {
       registry_placeholder: "-- Seleccionar Registro --",
       registry_other: "Otro / Personalizado",
       registry_fees_label: "Tarifas Estimadas ($/año)",
-      registry_fees_tooltip: "Calculado en base a su volumen de CORC y número de centros.",
+      registry_fees_tooltip:
+        "Calculado en base a su volumen de CORC y número de centros.",
       mrv_part_label: "Parte B: Socio MRV",
       mrv_label: "Seleccionar Socio MRV",
       mrv_placeholder: "-- Seleccionar Socio --",
       mrv_custom: "Personalizado / Otro",
-      mrv_warning_text: "Advertencia: Su volumen es muy bajo (<1000t). Este socio podría rechazarlo.",
-      planboo_info: "Nota: La tarifa de Planboo incluye el costo de una evaluación completa del ciclo de vida (ACV).",
+      mrv_warning_text:
+        "Advertencia: Su volumen es muy bajo (<1000t). Este socio podría rechazarlo.",
+      planboo_info:
+        "Nota: La tarifa de Planboo incluye el costo de una evaluación completa del ciclo de vida (ACV).",
       mrv_setup_label: "Configuración (CAPEX $)",
       mrv_setup_tooltip: "Tarifa fija de configuración",
       mrv_annual_label: "Anual (OPEX $)",
       mrv_annual_tooltip: "Créditos × Tarifa por crédito",
       lca_cost_label: "Costo Único de ACV (CAPEX $)",
-      lca_cost_tooltip: "Costo de contratar un consultor externo para su Evaluación de Ciclo de Vida (ACV), a menudo requerido para certificación.",
+      lca_cost_tooltip:
+        "Costo de contratar un consultor externo para su Evaluación de Ciclo de Vida (ACV), a menudo requerido para certificación.",
       lca_annual_label: "Renovación Anual ACV (OPEX $)",
-      lca_annual_tooltip: "Costo de actualizar los datos de ACV con una nueva auditoría.",
+      lca_annual_tooltip:
+        "Costo de actualizar los datos de ACV con una nueva auditoría.",
       opex_section: "Gastos Operativos (OPEX Anual)",
       months_operational_label: "Meses de Operación por Año",
-      months_operational_tooltip: "Seleccionó \"Cerrar\" en Herramienta 1. Los costos de mano de obra y servicios se prorratearán según este número.",
-      store_note: "Nota: Está almacenando materia prima. Asegúrese de que sus estimaciones de mano de obra y servicios a continuación cubran el trabajo extra de re-manejo y re-secado del material.",
+      months_operational_tooltip:
+        'Seleccionó "Cerrar" en Herramienta 1. Los costos de mano de obra y servicios se prorratearán según este número.',
+      store_note:
+        "Nota: Está almacenando materia prima. Asegúrese de que sus estimaciones de mano de obra y servicios a continuación cubran el trabajo extra de re-manejo y re-secado del material.",
       labor_section: "Gastos Laborales",
-      labor_note: "Ingrese salarios anuales para todo el personal a tiempo completo o estacional. Esto incluye conductores, operadores, mantenimiento, gerencia y mano de obra del sitio.",
+      labor_note:
+        "Ingrese salarios anuales para todo el personal a tiempo completo o estacional. Esto incluye conductores, operadores, mantenimiento, gerencia y mano de obra del sitio.",
       general_staff_label: "Cantidad Personal General",
       general_salary_label: "Salario Prom. (General) ($/año)",
       mgmt_staff_label: "Cantidad Personal Gerencial",
@@ -1328,18 +1556,23 @@ window.BiocharTranslations = {
       regulatory_label: "Cumplimiento Calidad Aire ($/año)",
       regulatory_tooltip: "Pruebas anuales e informes.",
       finance_section: "Supuestos Financieros",
-      forward_contract_label: "¿Ha asegurado un Acuerdo de Compra Futura (preventa de créditos)?",
+      forward_contract_label:
+        "¿Ha asegurado un Acuerdo de Compra Futura (preventa de créditos)?",
       prepayment_label: "Pago Anticipado en Efectivo ($)",
-      prepayment_tooltip: "Efectivo recibido antes de la entrega. A menudo usado para cubrir pagos iniciales de equipos o costos operativos del Año 1.",
-      prepayment_tip: "Consejo: Un contrato futuro a menudo puede asegurar una tasa de interés más baja de su banco.",
+      prepayment_tooltip:
+        "Efectivo recibido antes de la entrega. A menudo usado para cubrir pagos iniciales de equipos o costos operativos del Año 1.",
+      prepayment_tip:
+        "Consejo: Un contrato futuro a menudo puede asegurar una tasa de interés más baja de su banco.",
       loan_amount_label: "Monto del Préstamo ($)",
       interest_rate_label: "Tasa de Interés del Préstamo (%)",
       tax_rate_label: "Tasa de Impuesto Corporativo (%)",
       incentives_label: "Incentivos Fiscales Anuales ($)",
       discount_rate_label: "Tasa de Descuento para VPN (%)",
-      discount_rate_tooltip: "Usado para Valor Presente Neto (VPN). Es su tasa mínima de retorno esperada, considerando el riesgo.",
+      discount_rate_tooltip:
+        "Usado para Valor Presente Neto (VPN). Es su tasa mínima de retorno esperada, considerando el riesgo.",
       project_life_label: "Vida Útil del Proyecto (Años)",
-      project_life_tooltip: "El número de años para modelar sus proyecciones financieras (ej. 10 años).",
+      project_life_tooltip:
+        "El número de años para modelar sus proyecciones financieras (ej. 10 años).",
       notes_title: "Notas para Investigación Futura",
       notes_placeholder: "Escriba aquí...",
       save_btn: "Guardar Datos Financieros",
@@ -1347,7 +1580,8 @@ window.BiocharTranslations = {
       next_btn: "Ir a Panel →",
       saving: "Guardando...",
       saved_status: "Datos Guardados!",
-      error_t1_t2: "Faltan datos de Herramienta 1 o 2. Completa los pasos anteriores.",
+      error_t1_t2:
+        "Faltan datos de Herramienta 1 o 2. Completa los pasos anteriores.",
       error_load: "Error al cargar datos de herramientas previas.",
       error_save: "Error al Guardar",
     },
@@ -1355,14 +1589,16 @@ window.BiocharTranslations = {
       page_title: "Panel Ejecutivo (Herramienta 6)",
       step_name: "Resultados",
       yearly_table_title: "Flujo de Caja Anual",
-      yearly_table_desc: "Los ingresos crecen de bajo a pleno según el escenario de adopción elegido en la Herramienta 4. El OPEX permanece fijo en el valor de régimen permanente.",
+      yearly_table_desc:
+        "Los ingresos crecen de bajo a pleno según el escenario de adopción elegido en la Herramienta 4. El OPEX permanece fijo en el valor de régimen permanente.",
       yearly_col_year: "Año",
       yearly_col_revenue: "Ingresos",
       yearly_col_opex: "OPEX",
       yearly_col_net: "Flujo Neto",
       yearly_col_cumulative: "Acumulado",
       dep_alert_title: "Faltan datos anteriores.",
-      dep_alert_msg: " Los resultados usan datos de Tools 1–5. Algunos valores pueden ser predeterminados.",
+      dep_alert_msg:
+        " Los resultados usan datos de Tools 1–5. Algunos valores pueden ser predeterminados.",
       dep_alert_link: "Comenzar desde Tool 1 →",
       tool_label: "Herramienta 6: Panel Ejecutivo",
       step_label: "Paso 6 de 7: Panel",
@@ -1373,11 +1609,13 @@ window.BiocharTranslations = {
       hero_profit_label: "Beneficio Neto Anual",
       hero_profit_sub: "Post Impuestos y OPEX",
       hero_payback_label: "Período de Recuperación",
-      hero_payback_tooltip: "**Fórmula:**<br>Año en que el flujo de caja acumulado se vuelve positivo, con interpolación fraccional.<br><br>Usa el crecimiento plurianual de ingresos según el escenario de adopción elegido en la Herramienta 4 — no la utilidad de un solo año.",
+      hero_payback_tooltip:
+        "**Fórmula:**<br>Año en que el flujo de caja acumulado se vuelve positivo, con interpolación fraccional.<br><br>Usa el crecimiento plurianual de ingresos según el escenario de adopción elegido en la Herramienta 4 — no la utilidad de un solo año.",
       hero_payback_sub: "Años para punto de equilibrio",
       hero_npv_label: "VPN",
       hero_npv_sub: "Valor Presente Neto",
-      hero_npv_tooltip: "**Valor Presente Neto:**<br>Valor total de beneficios futuros en dólares de hoy, menos inversión inicial.",
+      hero_npv_tooltip:
+        "**Valor Presente Neto:**<br>Valor total de beneficios futuros en dólares de hoy, menos inversión inicial.",
       npv_years_label: "{n}-Años",
       never_text: "Nunca",
       years_suffix: " Años",
@@ -1390,9 +1628,11 @@ window.BiocharTranslations = {
       input_cost_section: "Posición de Costos de Entrada",
       delivered_cost_desc: "Costo Total Entregado (Compra + Logística)",
       per_tonne: "por tonelada",
-      delivered_cost_tooltip: "**Fórmula:**<br>(Gasto Total Materia Prima + Logística) / Total Toneladas",
+      delivered_cost_tooltip:
+        "**Fórmula:**<br>(Gasto Total Materia Prima + Logística) / Total Toneladas",
       calculating: "Calculando...",
-      feasibility_comparing: "Comparando sus costos con referencias de la industria...",
+      feasibility_comparing:
+        "Comparando sus costos con referencias de la industria...",
       financial_summary_section: "Resumen Financiero Anual",
       total_revenue_label: "Ingresos Totales",
       total_revenue_tooltip: "Biochar + Créditos + Vinagre",
@@ -1414,71 +1654,110 @@ window.BiocharTranslations = {
       risk_section_title: "Indicadores Clave de Riesgo",
       risk_loading: "Cargando evaluación de riesgos...",
       action_plan_section: "Plan de Acción del Proyecto (Notas Consolidadas)",
-      action_plan_empty: "No hay elementos de acción marcados en herramientas anteriores.",
+      action_plan_empty:
+        "No hay elementos de acción marcados en herramientas anteriores.",
       back_btn: "← Volver a Herramienta 5",
       print_btn: "🖨️ Imprimir / Guardar como PDF",
       next_btn: "Ir a Escenarios →",
       main_menu_link: "← Volver al Menú Principal",
-      missing_tools_error: "Faltan datos de las siguientes herramientas: {tools}. Por favor regrese y guarde los datos.",
+      missing_tools_error:
+        "Faltan datos de las siguientes herramientas: {tools}. Por favor regrese y guarde los datos.",
       kpi_no_data: "No se encontraron datos.",
-      calc_error: "Ocurrió un error durante el cálculo. Por favor verifique las herramientas anteriores.",
-      missing_t1: "Herramienta 1", missing_t2: "Herramienta 2", missing_t3: "Herramienta 3", missing_t4: "Herramienta 4", missing_t5: "Herramienta 5",
+      calc_error:
+        "Ocurrió un error durante el cálculo. Por favor verifique las herramientas anteriores.",
+      missing_t1: "Herramienta 1",
+      missing_t2: "Herramienta 2",
+      missing_t3: "Herramienta 3",
+      missing_t4: "Herramienta 4",
+      missing_t5: "Herramienta 5",
       feasibility_0_badge: "Altamente Favorable",
-      feasibility_0_msg: "Su materia prima es gratis ($0/t). Esto le da una fuerte ventaja competitiva.",
+      feasibility_0_msg:
+        "Su materia prima es gratis ($0/t). Esto le da una fuerte ventaja competitiva.",
       feasibility_low_badge: "Altamente Favorable",
-      feasibility_low_msg: "Su costo de entrega es excelente (<$20/t). Fuerte ventaja competitiva.",
+      feasibility_low_msg:
+        "Su costo de entrega es excelente (<$20/t). Fuerte ventaja competitiva.",
       feasibility_mid_badge: "Favorable",
-      feasibility_mid_msg: "Su costo de entrega es estándar ($20-$40/t). La rentabilidad dependerá de su modelo de ventas.",
+      feasibility_mid_msg:
+        "Su costo de entrega es estándar ($20-$40/t). La rentabilidad dependerá de su modelo de ventas.",
       feasibility_high_badge: "Marginal",
-      feasibility_high_msg: "Su costo de entrega es alto ($40-$60/t). Es sensible a caídas de precio del biochar.",
+      feasibility_high_msg:
+        "Su costo de entrega es alto ($40-$60/t). Es sensible a caídas de precio del biochar.",
       feasibility_vhigh_badge: "Menos Favorable",
-      feasibility_vhigh_msg: "Su costo de entrega es >$60/t. El transporte y la materia prima pueden reducir su ganancia.",
+      feasibility_vhigh_msg:
+        "Su costo de entrega es >$60/t. El transporte y la materia prima pueden reducir su ganancia.",
       permit_title: "Cronograma de Permisos: {time}",
-      permit_msg: "Basado en tiempos típicos de permisos de aire para {country}. Planifique su lanzamiento acorde.",
+      permit_msg:
+        "Basado en tiempos típicos de permisos de aire para {country}. Planifique su lanzamiento acorde.",
       permit_unknown: "Desconocido",
-      permit_BO: "4–8 meses", permit_BR: "6-9 meses", permit_CO: "6 meses",
-      permit_CR: "6–12 meses", permit_DO: "3–6 meses", permit_EC: "6–12 meses",
-      permit_SV: "3–6 meses", permit_GT: "6–12 meses", permit_HN: "6–12 meses",
-      permit_MX: "3–6 meses", permit_NI: "4–8 meses", permit_PA: "6–12 meses",
-      permit_PE: "4–8 meses", permit_custom: "Desconocido",
+      permit_BO: "4–8 meses",
+      permit_BR: "6-9 meses",
+      permit_CO: "6 meses",
+      permit_CR: "6–12 meses",
+      permit_DO: "3–6 meses",
+      permit_EC: "6–12 meses",
+      permit_SV: "3–6 meses",
+      permit_GT: "6–12 meses",
+      permit_HN: "6–12 meses",
+      permit_MX: "3–6 meses",
+      permit_NI: "4–8 meses",
+      permit_PA: "6–12 meses",
+      permit_PE: "4–8 meses",
+      permit_custom: "Desconocido",
       kpi_buyin_secured_title: "Apoyo Comunitario: Asegurado",
       kpi_buyin_secured_msg: "Excelente. Una base sólida para el éxito.",
       kpi_buyin_process_title: "Apoyo Comunitario: En Proceso",
-      kpi_buyin_process_msg: "Riesgo clave. Continúe construyendo relaciones locales.",
+      kpi_buyin_process_msg:
+        "Riesgo clave. Continúe construyendo relaciones locales.",
       kpi_buyin_none_title: "Apoyo Comunitario: No Asegurado",
-      kpi_buyin_none_msg: "Alto riesgo. Los proyectos sin apoyo comunitario a menudo fallan.",
+      kpi_buyin_none_msg:
+        "Alto riesgo. Los proyectos sin apoyo comunitario a menudo fallan.",
       kpi_feedstock_high_title: "RIESGO CRÍTICO: Suministro",
-      kpi_feedstock_high_msg: "Depender del mercado spot es un riesgo crítico. Asegurar la materia prima es el desafío #1.",
+      kpi_feedstock_high_msg:
+        "Depender del mercado spot es un riesgo crítico. Asegurar la materia prima es el desafío #1.",
       kpi_feedstock_med_title: "Riesgo Suministro: Moderado",
-      kpi_feedstock_med_msg: "Competencia moderada o contratos informales. Sus costos pueden ser impredecibles.",
+      kpi_feedstock_med_msg:
+        "Competencia moderada o contratos informales. Sus costos pueden ser impredecibles.",
       kpi_feedstock_low_title: "Riesgo Suministro: Bajo",
-      kpi_feedstock_low_msg: "Materia prima asegurada por propiedad o contrato escrito.",
+      kpi_feedstock_low_msg:
+        "Materia prima asegurada por propiedad o contrato escrito.",
       kpi_sales_secured_title: "Plan Ventas: Asegurado",
-      kpi_sales_secured_msg: "Distribución integrada (como una cooperativa) es el modelo de menor riesgo.",
+      kpi_sales_secured_msg:
+        "Distribución integrada (como una cooperativa) es el modelo de menor riesgo.",
       kpi_sales_moderate_title: "Plan Ventas: Riesgo Moderado",
-      kpi_sales_moderate_msg: "Contrato regional es bueno, pero depende del desempeño de su socio.",
+      kpi_sales_moderate_msg:
+        "Contrato regional es bueno, pero depende del desempeño de su socio.",
       kpi_sales_high_title: "Plan Ventas: Alto Riesgo",
       kpi_sales_high_msg: "Sin plan de marketing. Esta es una brecha crítica.",
       kpi_kiln_confirmed_title: "Costo Pirolizador: Confirmado",
-      kpi_kiln_confirmed_msg: "Costos basados en cotización, haciendo su CAPEX confiable.",
+      kpi_kiln_confirmed_msg:
+        "Costos basados en cotización, haciendo su CAPEX confiable.",
       kpi_kiln_estimate_title: "Costo Pirolizador: Estimado",
-      kpi_kiln_estimate_msg: "Su CAPEX es una estimación. Obtenga una cotización oficial.",
+      kpi_kiln_estimate_msg:
+        "Su CAPEX es una estimación. Obtenga una cotización oficial.",
       kpi_mrv_confirmed_title: "Costo MRV: Confirmado",
-      kpi_mrv_confirmed_msg: "Costos basados en cotización, haciendo su OPEX confiable.",
+      kpi_mrv_confirmed_msg:
+        "Costos basados en cotización, haciendo su OPEX confiable.",
       kpi_mrv_estimate_title: "Costo MRV: Estimado",
-      kpi_mrv_estimate_msg: "Sus costos MRV son estimados. Confirme este costo.",
+      kpi_mrv_estimate_msg:
+        "Sus costos MRV son estimados. Confirme este costo.",
       kpi_lab_confirmed_title: "Datos de Carbono: Confirmados",
-      kpi_lab_confirmed_msg: "Proyecciones basadas en resultados de laboratorio confiables.",
+      kpi_lab_confirmed_msg:
+        "Proyecciones basadas en resultados de laboratorio confiables.",
       kpi_lab_risk_title: "Datos de Carbono: Alto Riesgo",
-      kpi_lab_risk_msg: "Proyecciones basadas en valores genéricos. Obtenga pruebas de laboratorio para confirmar rentabilidad.",
+      kpi_lab_risk_msg:
+        "Proyecciones basadas en valores genéricos. Obtenga pruebas de laboratorio para confirmar rentabilidad.",
       kpi_deforestation_title: "Riesgo Deforestación",
-      kpi_deforestation_msg: "Usar biomasa leñosa requiere auditoría estricta para probar que es residuo. Mitigación: Cláusulas de trazabilidad.",
+      kpi_deforestation_msg:
+        "Usar biomasa leñosa requiere auditoría estricta para probar que es residuo. Mitigación: Cláusulas de trazabilidad.",
       kpi_shutdown_title: "Riesgo Estrategia: Alto",
-      kpi_shutdown_msg: "Cierres estacionales suelen ser inviables por baja utilización del equipo.",
+      kpi_shutdown_msg:
+        "Cierres estacionales suelen ser inviables por baja utilización del equipo.",
       kpi_store_title: "Riesgo Estrategia: Moderado",
-      kpi_store_msg: "Almacenar requiere capital de trabajo significativo y riesgo de pérdida de material.",
+      kpi_store_msg:
+        "Almacenar requiere capital de trabajo significativo y riesgo de pérdida de material.",
       mrv_flag_title: "Advertencia: Complejidad MRV",
-      mrv_flag_msg: "Su proyecto usa más de 2 tipos de biomasa. Cada tipo requiere su propia documentación de Monitoreo, Reporte y Verificación (MRV) para calificar para créditos de carbono. Los proyectos con muchos tipos de biomasa enfrentan una complejidad y un costo de certificación significativamente mayores.",
+      mrv_flag_msg:
+        "Su proyecto usa más de 2 tipos de biomasa. Cada tipo requiere su propia documentación de Monitoreo, Reporte y Verificación (MRV) para calificar para créditos de carbono. Los proyectos con muchos tipos de biomasa enfrentan una complejidad y un costo de certificación significativamente mayores.",
       action_tool_t1: "Herr 1: Escala",
       action_tool_t2: "Herr 2: Producción",
       action_tool_t3: "Herr 3: Logística",
@@ -1501,7 +1780,8 @@ window.BiocharTranslations = {
       page_title: "Planificador de Escenarios (Herramienta 7)",
       step_name: "Escenarios",
       dep_alert_title: "Faltan datos anteriores.",
-      dep_alert_msg: " Los escenarios usan datos financieros de Tools 1–5. Algunos valores pueden ser predeterminados.",
+      dep_alert_msg:
+        " Los escenarios usan datos financieros de Tools 1–5. Algunos valores pueden ser predeterminados.",
       dep_alert_link: "Completar herramientas anteriores →",
       tool_label: "Herramienta 7: Planificador de Escenarios",
       step_label: "Paso 7 de 7: Escenarios",
@@ -1530,7 +1810,8 @@ window.BiocharTranslations = {
       npv_row: "VPN {n} Años",
       npv_tooltip: "Valor presente total de beneficios menos CAPEX.",
       notes_section: "Notas y Observaciones",
-      notes_placeholder: "Ej: 'El proyecto solo es viable si el carbono supera los $80'",
+      notes_placeholder:
+        "Ej: 'El proyecto solo es viable si el carbono supera los $80'",
       save_btn: "Guardar Notas de Escenario",
       back_btn: "← Volver al Panel",
       print_btn: "🖨️ Imprimir / Guardar como PDF",
@@ -1540,12 +1821,13 @@ window.BiocharTranslations = {
       npv_label: "VPN {n} Años",
       never_text: "Nunca",
       payback_unit: " años",
-      missing_data_error: "Faltan datos de las Herramientas 1-5. Por favor complete todos los pasos anteriores.",
+      missing_data_error:
+        "Faltan datos de las Herramientas 1-5. Por favor complete todos los pasos anteriores.",
       error_loading: "Error cargando el caso base.",
       saving_text: "Guardando...",
       saved_status: "¡Notas Guardadas!",
       save_failed: "Error al Guardar",
-    }
+    },
   },
 
   /* ─── PORTUGUESE ───────────────────────────────────────── */
@@ -1556,20 +1838,26 @@ window.BiocharTranslations = {
       saved_confirmation: "Todas as alterações salvas.",
       main_menu: "← Menu Principal",
       reset_form: "Reiniciar Formulário",
-      alert_unsaved: "Você tem alterações não salvas. Clique em 'Salvar' antes de continuar.",
+      alert_unsaved:
+        "Você tem alterações não salvas. Clique em 'Salvar' antes de continuar.",
       confirm_reset: "Isso apagará TODOS os dados do projeto. Tem certeza?",
       usd_note: "(Valores na moeda selecionada)",
       cohort: "Climatebase Fellowship Cohort 8 - Projeto Capstone",
-      ai_link: "Perguntas? Clique aqui para consultar o Assistente de IA de Biochar ↗",
+      ai_link:
+        "Perguntas? Clique aqui para consultar o Assistente de IA de Biochar ↗",
       header_h1: "Calculadora de Viabilidade de Biochar",
       header_h2: "para Cadeias de Suprimento de Café e Cacau na América Latina",
-      alert_unsaved_confirm: "Você tem alterações não salvas que serão perdidas. Navegar mesmo assim?",
+      alert_unsaved_confirm:
+        "Você tem alterações não salvas que serão perdidas. Navegar mesmo assim?",
       footer_no_guarantee_label: "Sem Garantia",
-      footer_no_guarantee: "As projeções fornecidas por esta calculadora são baseadas nas suposições e dados inseridos pelo usuário. São apenas para fins ilustrativos e não constituem uma garantia de custos reais, receitas ou lucratividade.",
+      footer_no_guarantee:
+        "As projeções fornecidas por esta calculadora são baseadas nas suposições e dados inseridos pelo usuário. São apenas para fins ilustrativos e não constituem uma garantia de custos reais, receitas ou lucratividade.",
       footer_not_advice_label: "Não é Consultoria Financeira",
-      footer_not_advice: "As informações fornecidas não substituem o aconselhamento profissional financeiro, legal ou agrícola. Os usuários são os únicos responsáveis pelas decisões tomadas com base nos resultados desta ferramenta.",
+      footer_not_advice:
+        "As informações fornecidas não substituem o aconselhamento profissional financeiro, legal ou agrícola. Os usuários são os únicos responsáveis pelas decisões tomadas com base nos resultados desta ferramenta.",
       footer_verify_label: "Verificar Todos os Dados",
-      footer_verify: "Os usuários devem verificar independentemente todos os custos locais, preços de mercado e requisitos regulatórios antes de fazer qualquer investimento.",
+      footer_verify:
+        "Os usuários devem verificar independentemente todos os custos locais, preços de mercado e requisitos regulatórios antes de fazer qualquer investimento.",
       sign_in: "Entrar →",
       my_projects: "Meus Projetos →",
       sign_out: "Sair",
@@ -1577,7 +1865,8 @@ window.BiocharTranslations = {
     login: {
       page_title: "Entrar — Calculadora de Biochar",
       title: "Entre na sua conta",
-      subtitle: "Insira seu e-mail e enviaremos um link de acesso com um clique. Sem senha necessária.",
+      subtitle:
+        "Insira seu e-mail e enviaremos um link de acesso com um clique. Sem senha necessária.",
       email_label: "Endereço de e-mail",
       email_placeholder: "voce@exemplo.com",
       send_btn: "Enviar link de acesso",
@@ -1585,7 +1874,8 @@ window.BiocharTranslations = {
       error_generic: "Algo deu errado. Por favor tente novamente.",
       error_invalid_email: "Por favor insira um endereço de e-mail válido.",
       sent_title: "Verifique seu e-mail",
-      sent_desc: "Enviamos um link de acesso para seu e-mail. Clique nele para continuar — o link expira em 1 hora.",
+      sent_desc:
+        "Enviamos um link de acesso para seu e-mail. Clique nele para continuar — o link expira em 1 hora.",
       back_link: "← Continuar sem uma conta",
     },
     projects: {
@@ -1602,7 +1892,8 @@ window.BiocharTranslations = {
       updated_now: "Agora mesmo",
       open_btn: "Abrir",
       delete_btn: "Excluir",
-      confirm_delete: "Excluir projeto \"{name}\"? Esta ação não pode ser desfeita.",
+      confirm_delete:
+        'Excluir projeto "{name}"? Esta ação não pode ser desfeita.',
       delete_error: "Falha ao excluir o projeto. Por favor tente novamente.",
     },
     admin: {
@@ -1612,11 +1903,13 @@ window.BiocharTranslations = {
       access_denied: "Acesso negado. Função de administrador necessária.",
       actions_heading: "Ações",
       currency_title: "Atualizar Taxas de Câmbio",
-      currency_desc: "Busca as taxas de câmbio USD mais recentes de uma API externa e as grava no banco de dados.",
+      currency_desc:
+        "Busca as taxas de câmbio USD mais recentes de uma API externa e as grava no banco de dados.",
       currency_btn: "Atualizar Taxas",
       currency_updating: "Atualizando…",
       currency_success: "Atualizadas {n} taxas de câmbio com sucesso.",
-      currency_error: "Falha ao atualizar as taxas. Verifique o console para mais detalhes.",
+      currency_error:
+        "Falha ao atualizar as taxas. Verifique o console para mais detalhes.",
       users_heading: "Usuários",
       users_col_email: "E-mail",
       users_col_role: "Função",
@@ -1633,40 +1926,46 @@ window.BiocharTranslations = {
     index: {
       page_title: "Plataforma de Viabilidade de Biochar",
       h1: "Calculadora de Viabilidade de Projetos de Biochar",
-      h2: "para Cadeias de Suprimento de Café e Cacau na América Latina",
-      cohort: "Climatebase Fellowship Cohort 8 - Projeto Capstone",
+      h2: "para Cadeias de Suprimento de Café e Cacau",
+      cohort: "Climatebase Fellowship - Projeto Capstone",
       ai_link: "Perguntas? Clique aqui para consultar o Assistente de IA ↗",
       welcome_heading: "Você tem um projeto em andamento.",
       welcome_continue: "Continuar trabalhando em:",
       welcome_default_name: "Rascunho",
       start_new: "Iniciar Novo",
       resume: "Retomar Projeto →",
-      confirm_new: "Tem certeza de que deseja iniciar um novo projeto? Isso apagará os dados atuais.",
+      confirm_new:
+        "Tem certeza de que deseja iniciar um novo projeto? Isso apagará os dados atuais.",
       step1_num: "Passo 1",
       step1_title: "Informações e Escala do Projeto",
-      step1_desc: "Defina o ID do projeto, localização e volume total de matéria-prima.",
+      step1_desc:
+        "Defina o ID do projeto, localização e volume total de matéria-prima.",
       step1_btn: "Abrir Ferramenta 1 →",
       step2_num: "Passo 2",
       step2_title: "Calculadora de Produção",
-      step2_desc: "Selecione a tecnologia do forno e estime rendimentos de biochar e créditos de carbono.",
+      step2_desc:
+        "Selecione a tecnologia do forno e estime rendimentos de biochar e créditos de carbono.",
       step2_btn: "Abrir Ferramenta 2 →",
       step3_num: "Passo 3",
       step3_title: "Planejador Logístico",
-      step3_desc: "Crie rotas de transporte e estime custos com base na sazonalidade.",
+      step3_desc:
+        "Crie rotas de transporte e estime custos com base na sazonalidade.",
       step3_btn: "Abrir Ferramenta 3 →",
       step4_num: "Passo 4",
       step4_title: "Fluxos de Receita",
-      step4_desc: "Defina preços para vendas de biochar, créditos de carbono e extrato pirolenhoso.",
+      step4_desc:
+        "Defina preços para vendas de biochar, créditos de carbono e extrato pirolenhoso.",
       step4_btn: "Abrir Ferramenta 4 →",
       step5_num: "Passo 5",
       step5_title: "Local, Operações e Finanças",
-      step5_desc: "Premissas de CAPEX, OPEX e empréstimos para viabilidade completa.",
+      step5_desc:
+        "Premissas de CAPEX, OPEX e empréstimos para viabilidade completa.",
       step5_btn: "Abrir Ferramenta 5 →",
       analysis_num: "Análise",
       analysis_title: "Resultados e Cenários",
       analysis_desc: "Painel executivo + testes de estresse financeiro.",
       dashboard_btn: "Painel",
-      scenarios_btn: "Cenários"
+      scenarios_btn: "Cenários",
     },
     tool1: {
       page_title: "Configuração do Projeto (Ferramenta 1)",
@@ -1680,7 +1979,8 @@ window.BiocharTranslations = {
       feedstock_label: "Volume Anual de Café/Cacau (Toneladas - peso seco)",
       feedstock_tooltip: "1 tonelada = 1.000 kg",
       wood_label: "Volume Anual de Madeira de Poda (Toneladas — peso seco)",
-      wood_tooltip: "Inclui podas de árvores de café e árvores de sombra. Insira as toneladas secas disponíveis por ano.",
+      wood_tooltip:
+        "Inclui podas de árvores de café e árvores de sombra. Insira as toneladas secas disponíveis por ano.",
       or_separator: "- OU -",
       toggle_calc_btn: "Calcular Volume de Contêineres de Exportação",
       calc_title: "Calculadora de Contêineres",
@@ -1740,28 +2040,36 @@ window.BiocharTranslations = {
       strategy_store: "[1] Armazenar e processar o ano todo",
       strategy_diversify: "[2] Usar outras biomassas no restante do ano",
       strategy_shutdown: "[3] Processar apenas na safra e fechar depois",
-      strategy_default_desc: "Escolha a opção que melhor descreve seu plano operacional.",
+      strategy_default_desc:
+        "Escolha a opção que melhor descreve seu plano operacional.",
       notes_title: "Notas para Pesquisa Futura",
       notes_placeholder: "Escreva aqui...",
       next_tool_btn: "Ir para Ferramenta 2 →",
       supply_desc_default: "Selecione uma opção para descrever sua situação.",
-      supply_desc_year_round: "Minha matéria-prima está disponível 12 meses por ano.",
-      supply_desc_seasonal: "Minha matéria-prima está concentrada em uma safra.",
-      strategy_desc_store: "Comprarei a maioria na safra e estocarei para processar o ano todo.",
-      strategy_desc_diversify: "Processarei minha matéria-prima na safra e usarei outras biomassas no resto do ano.",
-      strategy_desc_shutdown: "Processarei durante a safra e encerrarei operações no resto do ano.",
+      supply_desc_year_round:
+        "Minha matéria-prima está disponível 12 meses por ano.",
+      supply_desc_seasonal:
+        "Minha matéria-prima está concentrada em uma safra.",
+      strategy_desc_store:
+        "Comprarei a maioria na safra e estocarei para processar o ano todo.",
+      strategy_desc_diversify:
+        "Processarei minha matéria-prima na safra e usarei outras biomassas no resto do ano.",
+      strategy_desc_shutdown:
+        "Processarei durante a safra e encerrarei operações no resto do ano.",
       batch_text: "Lote {n} ({type}): {tonnes} ton",
       alert_no_containers: "Por favor, insira um número de contêineres.",
       alert_no_project_id: "Por favor, insira um ID do Projeto.",
-      alert_required: "Por favor, preencha todos os campos obrigatórios: ID do Projeto, pelo menos um volume de biomassa (café/cacau ou madeira de poda), Tipo de Projeto, País e Modelo de Abastecimento.",
+      alert_required:
+        "Por favor, preencha todos os campos obrigatórios: ID do Projeto, pelo menos um volume de biomassa (café/cacau ou madeira de poda), Tipo de Projeto, País e Modelo de Abastecimento.",
       hub_label_decentralized: "Número de Centros de Processamento",
-      hub_label_mobile: "Número de Fornos Móveis"
+      hub_label_mobile: "Número de Fornos Móveis",
     },
     tool2: {
       page_title: "Calculadora de Produção de Biochar (Ferramenta 2)",
       step_name: "Produção",
       dep_alert_title: "Dados da Tool 1 não salvos.",
-      dep_alert_msg: " Os cálculos de produção usam dados de feedstock da Tool 1. Mostrando valores padrão.",
+      dep_alert_msg:
+        " Os cálculos de produção usam dados de feedstock da Tool 1. Mostrando valores padrão.",
       dep_alert_link: "Completar Tool 1 →",
       tool_label: "Ferramenta 2: Calculadora de Produção",
       step_label: "Passo 2 de 7: Produção",
@@ -1770,8 +2078,10 @@ window.BiocharTranslations = {
       supply_model_label: "Modelo de Fornecimento Anual (da Ferramenta 1)",
       loading: "Carregando...",
       seasonal_strategy_title: "Estratégia Sazonal (da Ferramenta 1)",
-      carbon_source_label: "Meus valores de carbono e rendimento baseiam-se em:",
-      carbon_source_tooltip: "Recomenda-se usar seus próprios resultados de laboratório para uma projeção precisa.",
+      carbon_source_label:
+        "Meus valores de carbono e rendimento baseiam-se em:",
+      carbon_source_tooltip:
+        "Recomenda-se usar seus próprios resultados de laboratório para uma projeção precisa.",
       carbon_source_defaults: "Valores Padrão da Calculadora",
       carbon_source_lab: "Meus Próprios Resultados de Laboratório",
       primary_calc_header: "1. Calculadora de Matéria-Prima Primária",
@@ -1787,7 +2097,8 @@ window.BiocharTranslations = {
       f_price_label: "Preço de Compra ($/Tonelada)",
       f_competition_label: "Nível de Concorrência",
       f1_comp_own: "Nenhum (Somos donos da matéria-prima)",
-      f1_comp_low: "Baixo (Sem compradores concorrentes / Não amplamente usado)",
+      f1_comp_low:
+        "Baixo (Sem compradores concorrentes / Não amplamente usado)",
       f1_comp_moderate: "Moderado (Alguma utilização local)",
       f1_comp_high: "Alto (Alta demanda / Forte concorrência)",
       f2_comp_own: "Nenhum (Somos donos)",
@@ -1800,48 +2111,64 @@ window.BiocharTranslations = {
       f_contract_written: "Contrato Escrito",
       f_contract_spot: "Mercado Spot",
       f_volume_label: "Volume Anual (Ton Secas)",
-      f1_volume_tooltip: "Este valor vem da Ferramenta 1. É o total de toneladas secas disponíveis por ano.",
-      f2_volume_tooltip: "Insira o total de toneladas secas desta matéria-prima secundária disponíveis por ano.",
+      f1_volume_tooltip:
+        "Este valor vem da Ferramenta 1. É o total de toneladas secas disponíveis por ano.",
+      f2_volume_tooltip:
+        "Insira o total de toneladas secas desta matéria-prima secundária disponíveis por ano.",
       starting_volume_label: "Volume Inicial",
       f_ash_label: "Teor de Cinzas (%)",
       f_ash_formula_tooltip: "Calcula: [Passo 1 Volume] * (1 - Cinzas %)",
-      f1_ash_tooltip: "O conteúdo mineral não orgânico. Varia conforme o tipo de matéria-prima e contaminação. Um valor padrão de 10% representa polpa e casca de café mista e sem pré-tratamento. Ajuste conforme sua análise.",
-      f2_ash_tooltip: "Biomassa lenhosa tipicamente tem menor teor de cinzas. 2% é um valor comum.",
+      f1_ash_tooltip:
+        "O conteúdo mineral não orgânico. Varia conforme o tipo de matéria-prima e contaminação. Um valor padrão de 10% representa polpa e casca de café mista e sem pré-tratamento. Ajuste conforme sua análise.",
+      f2_ash_tooltip:
+        "Biomassa lenhosa tipicamente tem menor teor de cinzas. 2% é um valor comum.",
       dry_ash_label: "Matéria Seca Livre de Cinzas",
       f_yield_label: "Rendimento de Biochar (%)",
       f_yield_formula_tooltip: "Calcula: [Passo 2 Matéria] * Rendimento %",
-      f1_yield_tooltip: "A porcentagem de massa convertida em biochar. 25% é uma estimativa conservadora.",
-      f2_yield_tooltip: "Biomassa lenhosa frequentemente tem um rendimento maior. 30% é um valor comum.",
+      f1_yield_tooltip:
+        "A porcentagem de massa convertida em biochar. 25% é uma estimativa conservadora.",
+      f2_yield_tooltip:
+        "Biomassa lenhosa frequentemente tem um rendimento maior. 30% é um valor comum.",
       biochar_produced_label: "Total Biochar Produzido",
       f_carbon_label: "Carbono Estável (%)",
       f_carbon_formula_tooltip: "Calcula: [Passo 3 Biochar] * Carbono %",
-      f1_carbon_tooltip: "A porcentagem da massa do biochar final que é carbono estável. 70% é um bom ponto de partida.",
-      f2_carbon_tooltip: "Biochar de biomassa lenhosa frequentemente tem uma estabilidade de carbono muito alta. 80% é um bom valor padrão.",
+      f1_carbon_tooltip:
+        "A porcentagem da massa do biochar final que é carbono estável. 70% é um bom ponto de partida.",
+      f2_carbon_tooltip:
+        "Biochar de biomassa lenhosa frequentemente tem uma estabilidade de carbono muito alta. 80% é um bom valor padrão.",
       stable_carbon_label: "Total Carbono Estável",
       f1_conv_label: "Fator líquido de creditação (calibrado)",
       f2_conv_label: "Fator líquido de creditação (calibrado)",
       f_conv_formula_tooltip: "Calcula: [Passo 4 Carbono] * Fator",
-      f1_conv_tooltip: "Este é um fator líquido de creditação (não é a relação química 3.67). Ele é calibrado com base em resultados de projetos reais. O valor padrão 2.29 equivale a ~1.6 tCO2e por tonelada de biochar com 70% de carbono estável.",
-      f2_conv_tooltip: "Este é um fator líquido de creditação (não é a relação química 3.67). Ele é calibrado com base em resultados de projetos reais. O valor padrão 2.63 equivale a ~2.1 tCO2e por tonelada de biochar com 80% de carbono estável.",
+      f1_conv_tooltip:
+        "Este é um fator líquido de creditação (não é a relação química 3.67). Ele é calibrado com base em resultados de projetos reais. O valor padrão 2.29 equivale a ~1.6 tCO2e por tonelada de biochar com 70% de carbono estável.",
+      f2_conv_tooltip:
+        "Este é um fator líquido de creditação (não é a relação química 3.67). Ele é calibrado com base em resultados de projetos reais. O valor padrão 2.63 equivale a ~2.1 tCO2e por tonelada de biochar com 80% de carbono estável.",
       credits_label: "Total Créditos Reclamáveis",
       f2_is_wood_label: "É Biomassa Lenhosa?",
       total_feedstock_heading: "Matéria-Prima Total do Projeto",
-      total_feedstock_note: "Este volume determina o tamanho da sua máquina abaixo.",
+      total_feedstock_note:
+        "Este volume determina o tamanho da sua máquina abaixo.",
       tech_note_title: "Nota Técnica:",
-      tech_note_text: "Materiais finos e de baixa densidade (como polpa/pergaminho de café) <strong>não são adequados</strong> para fornos em lote de baixo custo (ex. Flame Cap ou Kon-Tiki). Estes materiais requerem um pirolisador de alimentação contínua.",
+      tech_note_text:
+        "Materiais finos e de baixa densidade (como polpa/pergaminho de café) <strong>não são adequados</strong> para fornos em lote de baixo custo (ex. Flame Cap ou Kon-Tiki). Estes materiais requerem um pirolisador de alimentação contínua.",
       kiln_section_title: "Seleção de Forno e CAPEX",
       kiln_total_feedstock_label: "Matéria-Prima Total",
       kiln_volume_per_hub_label: "Volume por Centro",
-      kiln_volume_per_hub_tooltip: "Matéria-Prima Total / Número de Centros. Este valor determina o tamanho de forno necessário.",
+      kiln_volume_per_hub_tooltip:
+        "Matéria-Prima Total / Número de Centros. Este valor determina o tamanho de forno necessário.",
       kiln_size_label: "Tamanho Determinado",
       kiln_select_label: "Selecione seu Forno",
       kiln_select_placeholder: "-- Selecionar forno compatível --",
       kiln_na_option: "Não Aplicável",
       kiln_custom_option: "Personalizado / Inserir Preço",
-      kiln_warning_below_min: "O volume por centro é inferior ao mínimo de 100 t/ano. Não há fornos disponíveis.",
-      kiln_warning_no_match: "Não há fornos pré-carregados para seus critérios (Tamanho: {size}, Modelo: {model}).",
+      kiln_warning_below_min:
+        "O volume por centro é inferior ao mínimo de 100 t/ano. Não há fornos disponíveis.",
+      kiln_warning_no_match:
+        "Não há fornos pré-carregados para seus critérios (Tamanho: {size}, Modelo: {model}).",
       kiln_custom_price_label: "Preço de Forno Personalizado ($)",
-      kiln_custom_price_tooltip: "Insira o preço total de UM forno/unidade. A calculadora multiplicará isso pelo \"Número de Fornos\" abaixo.",
+      kiln_custom_price_tooltip:
+        'Insira o preço total de UM forno/unidade. A calculadora multiplicará isso pelo "Número de Fornos" abaixo.',
       num_kilns_label: "Número de Fornos",
       hubs_warning_min: "Mínimo {n} necessário (da Ferramenta 1)",
       cost_basis_label: "Base de Custos do Pirolisador",
@@ -1851,7 +2178,8 @@ window.BiocharTranslations = {
       pyrolyzer_cost_label: "Custo do Pirolisador",
       shipping_cost_label: "Envio e Instalação",
       total_capex_label: "CAPEX Total Inicial do Pirolisador",
-      total_capex_tooltip: "(Custo Pirolisador) + (Envio e Instalação). Este é um componente principal do CAPEX do seu projeto.",
+      total_capex_tooltip:
+        "(Custo Pirolisador) + (Envio e Instalação). Este é um componente principal do CAPEX do seu projeto.",
       notes_title: "Notas para Pesquisa Futura",
       notes_placeholder: "Escreva aqui...",
       save_btn: "Salvar Dados de Produção",
@@ -1859,8 +2187,10 @@ window.BiocharTranslations = {
       back_btn: "← Voltar para Ferramenta 1",
       next_btn: "Ir para Ferramenta 3 →",
       saved_status: "Dados Salvos!",
-      error_missing_tool1: "Faltam dados da Ferramenta 1. Por favor complete a Ferramenta 1 primeiro.",
-      error_incomplete_tool1: "Dados da Ferramenta 1 incompletos. A lógica do forno pode estar incorreta. Salve novamente a Ferramenta 1.",
+      error_missing_tool1:
+        "Faltam dados da Ferramenta 1. Por favor complete a Ferramenta 1 primeiro.",
+      error_incomplete_tool1:
+        "Dados da Ferramenta 1 incompletos. A lógica do forno pode estar incorreta. Salve novamente a Ferramenta 1.",
       unit_tonnes: "ton",
       unit_total_tonnes: "toneladas",
       unit_ty: "t/ano",
@@ -1869,7 +2199,8 @@ window.BiocharTranslations = {
       page_title: "Calculadora de Logística (Ferramenta 3)",
       step_name: "Logística",
       dep_alert_title: "Dados da Tool 1 não salvos.",
-      dep_alert_msg: " A logística usa dados do projeto e feedstock da Tool 1. Mostrando valores padrão.",
+      dep_alert_msg:
+        " A logística usa dados do projeto e feedstock da Tool 1. Mostrando valores padrão.",
       dep_alert_link: "Completar Tool 1 →",
       tool_label: "Ferramenta 3: Logística (Entrada)",
       step_label: "Passo 3 de 7: Logística",
@@ -1878,25 +2209,32 @@ window.BiocharTranslations = {
       total_feedstock_label: "Matéria-Prima Total Necessária",
       loading_from_t2: "Carregando da Ferramenta 2...",
       self_delivered_label: "(-) Entrega pelo Fornecedor (Custo $0)",
-      self_delivered_tooltip: "Matéria-prima que chega ao forno SEM custo logístico para você.",
+      self_delivered_tooltip:
+        "Matéria-prima que chega ao forno SEM custo logístico para você.",
       logistics_target_label: "Meta Logística",
       rainy_months_label: "Duração da Estação Chuvosa (Meses/Ano)",
-      rainy_months_tooltip: "Usado para ponderar o custo anual entre tarifas de estação Seca e Chuvosa.",
+      rainy_months_tooltip:
+        "Usado para ponderar o custo anual entre tarifas de estação Seca e Chuvosa.",
       rainy_slider_left: "0m (Todo Seco)",
       rainy_slider_right: "12m (Todo Chuva)",
       seasonal_window_title: "Lógica de Coleta Sazonal",
-      seasonal_window_text: "Seu projeto é sazonal. Defina a janela específica para cada rota abaixo.",
-      mobile_info_text: "Nota: Os custos de realocação do forno móvel estão na Ferramenta 5.",
+      seasonal_window_text:
+        "Seu projeto é sazonal. Defina a janela específica para cada rota abaixo.",
+      mobile_info_text:
+        "Nota: Os custos de realocação do forno móvel estão na Ferramenta 5.",
       step2_title: "Passo 2: Criar Rotas de Transporte",
-      step2_intro: "Sua matéria-prima restante pode chegar via transporte regional. Aloque este volume às rotas abaixo.",
+      step2_intro:
+        "Sua matéria-prima restante pode chegar via transporte regional. Aloque este volume às rotas abaixo.",
       add_route_btn: "Adicionar Rota",
       step3_title: "Passo 3: Resumo Logístico Final",
       target_status_label: "Status da Meta",
       target_status_sub: "Volume Movido vs. Meta",
       annual_cost_label: "Custo Logístico Anual Total",
-      annual_cost_tooltip: "**Fórmula:**\nSoma de custos das rotas.\n\nCada rota: (Viagens/Ano) × (Custo Médio Ponderado)",
+      annual_cost_tooltip:
+        "**Fórmula:**\nSoma de custos das rotas.\n\nCada rota: (Viagens/Ano) × (Custo Médio Ponderado)",
       cost_per_tonne_label: "Custo por Tonelada",
-      cost_per_tonne_tooltip: "**Fórmula:**\n (Custo Total Logística) / (Total Matéria-Prima)",
+      cost_per_tonne_tooltip:
+        "**Fórmula:**\n (Custo Total Logística) / (Total Matéria-Prima)",
       notes_title: "Notas para Pesquisa Futura",
       notes_placeholder: "Escreva aqui...",
       save_btn: "Salvar Dados Logísticos",
@@ -1907,9 +2245,11 @@ window.BiocharTranslations = {
       loaded_from_t3: "Carregado da Ferramenta 3",
       saving: "Salvando...",
       saved_status: "Dados Salvos!",
-      error_self_delivered: "Por favor, insira um valor para 'Entrega pelo Fornecedor'. Você pode inserir 0.",
+      error_self_delivered:
+        "Por favor, insira um valor para 'Entrega pelo Fornecedor'. Você pode inserir 0.",
       error_save_failed: "Falha ao salvar.",
-      error_missing_tool1: "Faltam dados da Ferramenta 1. Por favor complete a Ferramenta 1 primeiro.",
+      error_missing_tool1:
+        "Faltam dados da Ferramenta 1. Por favor complete a Ferramenta 1 primeiro.",
       status_not_met: "Meta não atingida",
       status_over_capacity: "Excesso de capacidade",
       status_met: "Meta atingida",
@@ -1922,24 +2262,29 @@ window.BiocharTranslations = {
       route_avg_load_prefix: "Carga Média:",
       route_avg_load_unit: "t/viagem",
       route_avg_load_tooltip: "**Fórmula:** (Volume Anual) / (Viagens por Ano)",
-      route_note: "Nota: Garanta que a frequência é realista. Um caminhão rural típico carrega 4-5 toneladas.",
+      route_note:
+        "Nota: Garanta que a frequência é realista. Um caminhão rural típico carrega 4-5 toneladas.",
       seasonal_window_section_title: "Janela Sazonal",
       route_weeks_label: "Duração (Semanas)",
       route_rainy_weeks_label: "Semanas Chuvosas",
       truck_model_label: "Modelo de Propriedade do Caminhão",
-      truck_model_tooltip: "Selecione 'Próprio' se pagar ao motorista por hora. Selecione 'Terceirizado' se pagar uma tarifa fixa por viagem.",
+      truck_model_tooltip:
+        "Selecione 'Próprio' se pagar ao motorista por hora. Selecione 'Terceirizado' se pagar uma tarifa fixa por viagem.",
       truck_model_placeholder: "-- Selecionar Modelo --",
       truck_model_time: "Caminhão Próprio (Cálculo por Tempo)",
       truck_model_flat: "Frete Terceirizado (Tarifa Fixa)",
       hourly_rate_label: "Custo Total por Hora ($/hr)",
-      hourly_rate_tooltip: "Inclua despesas operacionais como combustível, manutenção, reparos, seguro e registro. Não inclua salários do motorista (vão na Ferramenta 5) nem o custo de compra do veículo (também na Ferramenta 5). Se não tiver certeza, pergunte à IA: \"Ajude-me a estimar o custo operacional do meu caminhão\".",
+      hourly_rate_tooltip:
+        'Inclua despesas operacionais como combustível, manutenção, reparos, seguro e registro. Não inclua salários do motorista (vão na Ferramenta 5) nem o custo de compra do veículo (também na Ferramenta 5). Se não tiver certeza, pergunte à IA: "Ajude-me a estimar o custo operacional do meu caminhão".',
       dry_hours_label: "Horas Ida/Volta (Seca)",
       rainy_hours_label: "Horas Ida/Volta (Chuva)",
-      flat_note: "<strong>Nota:</strong> Use o preço total negociado com o motorista para ida e volta.",
+      flat_note:
+        "<strong>Nota:</strong> Use o preço total negociado com o motorista para ida e volta.",
       dry_quote_label: "Cotação Seca ($)",
       rainy_quote_label: "Cotação Chuva ($)",
       route_annual_cost_prefix: "Est. Custo Anual:",
-      route_annual_cost_tooltip: "**Fórmula:** (Viagens) × (Custo Médio Ponderado)",
+      route_annual_cost_tooltip:
+        "**Fórmula:** (Viagens) × (Custo Médio Ponderado)",
     },
     tool4: {
       page_title: "Calculadora de Receita de Biochar (Ferramenta 4)",
@@ -1965,14 +2310,16 @@ window.BiocharTranslations = {
       retail_price_label: "Preço de Venda ($/saco)",
       packaging_cost_label: "Custo de Embalagem ($/saco)",
       distribution_cost_label: "Custo de Distribuição ($/saco)",
-      initial_compliance_label: "Registro Inicial de Produto e Laboratório (CAPEX)",
+      initial_compliance_label:
+        "Registro Inicial de Produto e Laboratório (CAPEX)",
       annual_compliance_label: "Conformidade Anual do Produto (OPEX)",
       bulk_price_label: "Preço de Venda de Biochar a Granel ($/Tonelada)",
       uptake_label: "Cenário de Adoção de Vendas",
       uptake_strong: "Forte (vendas plenas no Ano 1)",
       uptake_average: "Média (cresce até 100% em 2 anos)",
       uptake_low: "Baixa (cresce até 100% em 3 anos)",
-      uptake_tooltip: "Modela quanto tempo leva para atingir vendas plenas. A receita cresce linearmente até 100% ao longo dos anos escolhidos; o OPEX permanece pleno a partir do ano 1 (a produção funciona a plena capacidade). Substitui o antigo desconto percentual único, então o payback reflete o fluxo de caixa plurianual.",
+      uptake_tooltip:
+        "Modela quanto tempo leva para atingir vendas plenas. A receita cresce linearmente até 100% ao longo dos anos escolhidos; o OPEX permanece pleno a partir do ano 1 (a produção funciona a plena capacidade). Substitui o antigo desconto percentual único, então o payback reflete o fluxo de caixa plurianual.",
       marketing_plan_label: "Plano de Marketing",
       marketing_plan_placeholder: "Selecionar Plano",
       marketing_plan_coop: "Cooperativa / Distribuição Integrada",
@@ -2003,9 +2350,11 @@ window.BiocharTranslations = {
       step_next: "(Próximo: Painel)",
       working_capital_section: "Capital de Giro e Financiamento",
       working_capital_label: "Montante a Financiar (Capital de Giro)",
-      working_capital_tooltip: "Pré-preenchido com Custo de Compra (Ferr. 2) + Logística (Ferr. 3). Ajuste se precisar financiar apenas uma parte.",
+      working_capital_tooltip:
+        "Pré-preenchido com Custo de Compra (Ferr. 2) + Logística (Ferr. 3). Ajuste se precisar financiar apenas uma parte.",
       working_capital_placeholder: "Calculando...",
-      feedstock_loan_checkbox: "Você precisa de uma Linha de Crédito para isso?",
+      feedstock_loan_checkbox:
+        "Você precisa de uma Linha de Crédito para isso?",
       feedstock_interest_label: "Taxa de Juros Anual (Linha de Crédito %)",
       feedstock_interest_note: "Os juros serão adicionados ao seu OPEX anual.",
       capex_section: "Despesas de Capital Físico (CAPEX)",
@@ -2015,12 +2364,16 @@ window.BiocharTranslations = {
       hubs_suffix: "centros",
       loading_text: "Carregando...",
       kiln_cost_label: "Custo Inicial Total do Pirolisador (da Ferr. 2)",
-      kiln_cost_tooltip: "Este valor é carregado automaticamente das suas seleções de forno e envio na Ferramenta 2.",
-      no_kiln_warning: "Nenhum custo de forno encontrado na Ferramenta 2. Você pode inserir um valor manualmente.",
+      kiln_cost_tooltip:
+        "Este valor é carregado automaticamente das suas seleções de forno e envio na Ferramenta 2.",
+      no_kiln_warning:
+        "Nenhum custo de forno encontrado na Ferramenta 2. Você pode inserir um valor manualmente.",
       wood_chipper_label: "Triturador de Madeira ($)",
-      wood_chipper_tooltip: "Necessário para processar biomassas lenhosas (da Ferr. 2).",
+      wood_chipper_tooltip:
+        "Necessário para processar biomassas lenhosas (da Ferr. 2).",
       storage_infra_label: "Infraestrutura de Armazenamento ($)",
-      storage_infra_tooltip: "Necessário para a estratégia de \"Estocagem\". Inclui galpões, lonas e plataformas.",
+      storage_infra_tooltip:
+        'Necessário para a estratégia de "Estocagem". Inclui galpões, lonas e plataformas.',
       drying_section: "Secagem e Equipamentos Auxiliares",
       dryer_label: "Secador Mecânico ($)",
       syngas_ducting_label: "Usar calor residual do syngas para secador?",
@@ -2029,30 +2382,38 @@ window.BiocharTranslations = {
       ancillary_tooltip: "Balanças, empilhadeiras, paleteiras, etc.",
       vehicles_section: "Veículos (CAPEX e OPEX)",
       logistics_trucks_label: "1. Caminhões Logísticos (CAPEX)",
-      logistics_trucks_tooltip: "Para caminhões próprios, o custo operacional (OPEX) é capturado na Ferramenta 3.",
-      logistics_trucks_note: "Os \"Caminhões Próprios\" usados na Ferramenta 3.",
+      logistics_trucks_tooltip:
+        "Para caminhões próprios, o custo operacional (OPEX) é capturado na Ferramenta 3.",
+      logistics_trucks_note: 'Os "Caminhões Próprios" usados na Ferramenta 3.',
       num_trucks_label: "Número de Caminhões",
       truck_cost_label: "Custo Médio por Caminhão ($)",
       pickups_label: "2. Caminhonetes / Pickups (CAPEX e OPEX)",
-      pickups_tooltip: "Custos de realocação de fornos móveis são capturados separadamente abaixo.",
-      pickups_note: "Para gerentes, agrônomos, tarefas gerais ou reboque de fornos móveis.",
+      pickups_tooltip:
+        "Custos de realocação de fornos móveis são capturados separadamente abaixo.",
+      pickups_note:
+        "Para gerentes, agrônomos, tarefas gerais ou reboque de fornos móveis.",
       num_pickups_label: "Número de Pickups",
       pickup_cost_label: "Custo Médio por Pickup ($)",
       pickups_opex_label: "OPEX Anual de Pickups ($/ano)",
-      pickups_opex_tooltip: "Combustível, manutenção e seguro para veículos gerais do local.",
+      pickups_opex_tooltip:
+        "Combustível, manutenção e seguro para veículos gerais do local.",
       mobile_relocation_section: "Realocação de Fornos Móveis (OPEX)",
-      mobile_relocation_note: "Custos para mover seu(s) forno(s) móvel(is) entre locais. O número de fornos é carregado da Ferr. 2.",
+      mobile_relocation_note:
+        "Custos para mover seu(s) forno(s) móvel(is) entre locais. O número de fornos é carregado da Ferr. 2.",
       num_mobile_kilns_label: "Número de Fornos Móveis",
       relocations_per_kiln_label: "Realocações por Forno ao Ano",
       time_per_relocation_label: "Tempo Médio por Realocação (Horas)",
       cost_per_hour_label: "Custo por Hora de Viagem",
-      cost_per_hour_tooltip: "Custo total do veículo de reboque (motorista, combustível, manut., etc.) por viagem de IDA.",
+      cost_per_hour_tooltip:
+        "Custo total do veículo de reboque (motorista, combustível, manut., etc.) por viagem de IDA.",
       total_mobile_opex_label: "Total OPEX Realocação Móvel:",
       site_infra_section: "Infraestrutura do Local e Licenças",
       buildings_label: "Edifícios, Ventilação e Plataformas de Concreto ($)",
-      buildings_note: "Este valor assume incluir componentes civis, estruturais, mecânicos e elétricos relevantes, bem como serviços básicos necessários (ex: fundações, ventilação, segurança). Requisitos locais podem afetar significativamente o custo. Projetos móveis requerem menos custo de local.",
+      buildings_note:
+        "Este valor assume incluir componentes civis, estruturais, mecânicos e elétricos relevantes, bem como serviços básicos necessários (ex: fundações, ventilação, segurança). Requisitos locais podem afetar significativamente o custo. Projetos móveis requerem menos custo de local.",
       permit_label: "Taxas de Solicitação de Licenças (Pagamento Único)",
-      permit_tooltip: "Taxas de solicitação de licenças de qualidade do ar, laboratório e consultoria.",
+      permit_tooltip:
+        "Taxas de solicitação de licenças de qualidade do ar, laboratório e consultoria.",
       land_model_label: "Modelo de Terreno",
       land_lease_option: "Arrendamento Anual (OPEX)",
       land_buy_option: "Compra Direta (CAPEX)",
@@ -2061,7 +2422,8 @@ window.BiocharTranslations = {
       total_capex_label: "Total Estimado CAPEX:",
       total_capex_tooltip: "Soma de todos os itens de CAPEX acima.",
       cert_section: "Certificação e MRV",
-      cert_source_label: "Fonte da sua estimativa de custos para Certificação e MRV",
+      cert_source_label:
+        "Fonte da sua estimativa de custos para Certificação e MRV",
       cert_source_placeholder: "Escolha uma base de custos",
       cert_source_estimate: "Estimativa da calculadora",
       cert_source_quote: "Cotação do fornecedor",
@@ -2070,27 +2432,35 @@ window.BiocharTranslations = {
       registry_placeholder: "-- Selecionar Registro --",
       registry_other: "Outro / Personalizado",
       registry_fees_label: "Taxas Estimadas ($/ano)",
-      registry_fees_tooltip: "Calculado com base no seu volume de CORC e número de centros.",
+      registry_fees_tooltip:
+        "Calculado com base no seu volume de CORC e número de centros.",
       mrv_part_label: "Parte B: Parceiro MRV",
       mrv_label: "Selecionar Parceiro MRV",
       mrv_placeholder: "-- Selecionar Parceiro --",
       mrv_custom: "Personalizado / Outro",
-      mrv_warning_text: "Aviso: Seu volume é muito baixo (<1000t). Este parceiro pode rejeitá-lo.",
-      planboo_info: "Nota: A taxa da Planboo inclui o custo de uma avaliação completa do ciclo de vida (ACV).",
+      mrv_warning_text:
+        "Aviso: Seu volume é muito baixo (<1000t). Este parceiro pode rejeitá-lo.",
+      planboo_info:
+        "Nota: A taxa da Planboo inclui o custo de uma avaliação completa do ciclo de vida (ACV).",
       mrv_setup_label: "Configuração (CAPEX $)",
       mrv_setup_tooltip: "Taxa fixa de configuração",
       mrv_annual_label: "Anual (OPEX $)",
       mrv_annual_tooltip: "Créditos × Taxa por crédito",
       lca_cost_label: "Custo Único de ACV (CAPEX $)",
-      lca_cost_tooltip: "Custo para contratar um consultor externo para sua Avaliação do Ciclo de Vida (ACV), frequentemente exigido para certificação.",
+      lca_cost_tooltip:
+        "Custo para contratar um consultor externo para sua Avaliação do Ciclo de Vida (ACV), frequentemente exigido para certificação.",
       lca_annual_label: "Renovação Anual ACV (OPEX $)",
-      lca_annual_tooltip: "Custo para atualizar os dados de ACV com uma nova auditoria.",
+      lca_annual_tooltip:
+        "Custo para atualizar os dados de ACV com uma nova auditoria.",
       opex_section: "Despesas Operacionais (OPEX Anual)",
       months_operational_label: "Meses de Operação por Ano",
-      months_operational_tooltip: "Você selecionou \"Encerrar\" na Ferr. 1. Os custos de mão de obra e serviços serão rateados com base neste número.",
-      store_note: "Nota: Você está armazenando matéria-prima. Garanta que suas estimativas de mão de obra e serviços abaixo cubram o trabalho extra de re-manuseio e re-secagem do material.",
+      months_operational_tooltip:
+        'Você selecionou "Encerrar" na Ferr. 1. Os custos de mão de obra e serviços serão rateados com base neste número.',
+      store_note:
+        "Nota: Você está armazenando matéria-prima. Garanta que suas estimativas de mão de obra e serviços abaixo cubram o trabalho extra de re-manuseio e re-secagem do material.",
       labor_section: "Despesas com Mão de Obra",
-      labor_note: "Insira salários anuais para todo o pessoal em tempo integral ou sazonal. Isso inclui motoristas, operadores, manutenção, gerência e mão de obra do local.",
+      labor_note:
+        "Insira salários anuais para todo o pessoal em tempo integral ou sazonal. Isso inclui motoristas, operadores, manutenção, gerência e mão de obra do local.",
       general_staff_label: "Quantidade Equipe Geral",
       general_salary_label: "Salário Médio (Geral) ($/ano)",
       mgmt_staff_label: "Quantidade Equipe de Gestão",
@@ -2102,18 +2472,23 @@ window.BiocharTranslations = {
       regulatory_label: "Conformidade da Qualidade do Ar ($/ano)",
       regulatory_tooltip: "Testes anuais e relatórios.",
       finance_section: "Premissas Financeiras",
-      forward_contract_label: "Você garantiu um Contrato de Compra Futura (Offtake)?",
+      forward_contract_label:
+        "Você garantiu um Contrato de Compra Futura (Offtake)?",
       prepayment_label: "Pagamento Antecipado em Dinheiro ($)",
-      prepayment_tooltip: "Dinheiro recebido antes da entrega. Frequentemente usado para cobrir pagamentos iniciais de equipamentos ou custos operacionais do Ano 1.",
-      prepayment_tip: "Dica: Um contrato futuro muitas vezes pode garantir uma taxa de juros mais baixa do seu banco.",
+      prepayment_tooltip:
+        "Dinheiro recebido antes da entrega. Frequentemente usado para cobrir pagamentos iniciais de equipamentos ou custos operacionais do Ano 1.",
+      prepayment_tip:
+        "Dica: Um contrato futuro muitas vezes pode garantir uma taxa de juros mais baixa do seu banco.",
       loan_amount_label: "Valor do Empréstimo ($)",
       interest_rate_label: "Taxa de Juros do Empréstimo (%)",
       tax_rate_label: "Taxa de Imposto Corporativo (%)",
       incentives_label: "Incentivos Fiscais Anuais ($)",
       discount_rate_label: "Taxa de Desconto para VPL (%)",
-      discount_rate_tooltip: "Usado para Valor Presente Líquido (VPL). É sua taxa mínima de retorno esperada, considerando o risco.",
+      discount_rate_tooltip:
+        "Usado para Valor Presente Líquido (VPL). É sua taxa mínima de retorno esperada, considerando o risco.",
       project_life_label: "Vida Útil do Projeto (Anos)",
-      project_life_tooltip: "O número de anos para modelar suas projeções financeiras (ex. 10 anos).",
+      project_life_tooltip:
+        "O número de anos para modelar suas projeções financeiras (ex. 10 anos).",
       notes_title: "Notas para Pesquisa Futura",
       notes_placeholder: "Escreva aqui...",
       save_btn: "Salvar Dados Financeiros",
@@ -2121,7 +2496,8 @@ window.BiocharTranslations = {
       next_btn: "Ir para Painel →",
       saving: "Salvando...",
       saved_status: "Dados Salvos!",
-      error_t1_t2: "Faltam dados da Ferramenta 1 ou 2. Por favor, complete as etapas anteriores.",
+      error_t1_t2:
+        "Faltam dados da Ferramenta 1 ou 2. Por favor, complete as etapas anteriores.",
       error_load: "Erro ao carregar dados das ferramentas anteriores.",
       error_save: "Falha ao Salvar",
     },
@@ -2129,14 +2505,16 @@ window.BiocharTranslations = {
       page_title: "Painel Executivo (Ferramenta 6)",
       step_name: "Resultados",
       yearly_table_title: "Fluxo de Caixa Anual",
-      yearly_table_desc: "A receita cresce de baixa para plena conforme o cenário de adoção escolhido na Ferramenta 4. O OPEX permanece fixo no valor de regime permanente.",
+      yearly_table_desc:
+        "A receita cresce de baixa para plena conforme o cenário de adoção escolhido na Ferramenta 4. O OPEX permanece fixo no valor de regime permanente.",
       yearly_col_year: "Ano",
       yearly_col_revenue: "Receita",
       yearly_col_opex: "OPEX",
       yearly_col_net: "Fluxo Líquido",
       yearly_col_cumulative: "Acumulado",
       dep_alert_title: "Dados anteriores ausentes.",
-      dep_alert_msg: " Os resultados usam dados das Tools 1–5. Alguns valores podem ser padrão.",
+      dep_alert_msg:
+        " Os resultados usam dados das Tools 1–5. Alguns valores podem ser padrão.",
       dep_alert_link: "Começar pela Tool 1 →",
       tool_label: "Ferramenta 6: Painel Executivo",
       step_label: "Passo 6 de 7: Painel",
@@ -2147,11 +2525,13 @@ window.BiocharTranslations = {
       hero_profit_label: "Lucro Líquido Anual",
       hero_profit_sub: "Pós Impostos e OPEX",
       hero_payback_label: "Período de Retorno",
-      hero_payback_tooltip: "**Fórmula:**<br>Ano em que o fluxo de caixa acumulado se torna positivo, com interpolação fracionária.<br><br>Usa o crescimento plurianual de receita segundo o cenário de adoção escolhido na Ferramenta 4 — não o lucro de um único ano.",
+      hero_payback_tooltip:
+        "**Fórmula:**<br>Ano em que o fluxo de caixa acumulado se torna positivo, com interpolação fracionária.<br><br>Usa o crescimento plurianual de receita segundo o cenário de adoção escolhido na Ferramenta 4 — não o lucro de um único ano.",
       hero_payback_sub: "Anos para ponto de equilíbrio",
       hero_npv_label: "VPL",
       hero_npv_sub: "Valor Presente Líquido",
-      hero_npv_tooltip: "**Valor Presente Líquido:**<br>Valor total de lucros futuros em dólares de hoje, menos investimento inicial.",
+      hero_npv_tooltip:
+        "**Valor Presente Líquido:**<br>Valor total de lucros futuros em dólares de hoje, menos investimento inicial.",
       npv_years_label: "{n}-Anos",
       never_text: "Nunca",
       years_suffix: " Anos",
@@ -2164,9 +2544,11 @@ window.BiocharTranslations = {
       input_cost_section: "Posição de Custo de Entrada",
       delivered_cost_desc: "Custo Total Entregue (Compra + Logística)",
       per_tonne: "por tonelada",
-      delivered_cost_tooltip: "**Fórmula:**<br>(Gasto Total Matéria-Prima + Logística) / Total Toneladas",
+      delivered_cost_tooltip:
+        "**Fórmula:**<br>(Gasto Total Matéria-Prima + Logística) / Total Toneladas",
       calculating: "Calculando...",
-      feasibility_comparing: "Comparando seus custos com referências da indústria...",
+      feasibility_comparing:
+        "Comparando seus custos com referências da indústria...",
       financial_summary_section: "Resumo Financeiro Anual",
       total_revenue_label: "Receita Total",
       total_revenue_tooltip: "Biochar + Créditos + Extrato",
@@ -2188,71 +2570,111 @@ window.BiocharTranslations = {
       risk_section_title: "Indicadores Chave de Risco",
       risk_loading: "Carregando avaliação de riscos...",
       action_plan_section: "Plano de Ação do Projeto (Notas Consolidadas)",
-      action_plan_empty: "Não há itens de ação marcados em ferramentas anteriores.",
+      action_plan_empty:
+        "Não há itens de ação marcados em ferramentas anteriores.",
       back_btn: "← Voltar para Ferramenta 5",
       print_btn: "🖨️ Imprimir / Salvar como PDF",
       next_btn: "Ir para Cenários →",
       main_menu_link: "← Voltar ao Menu Principal",
-      missing_tools_error: "Faltam dados das seguintes ferramentas: {tools}. Por favor volte e salve os dados.",
+      missing_tools_error:
+        "Faltam dados das seguintes ferramentas: {tools}. Por favor volte e salve os dados.",
       kpi_no_data: "Dados não encontrados.",
-      calc_error: "Ocorreu um erro durante o cálculo. Por favor, verifique as ferramentas anteriores para dados ausentes.",
-      missing_t1: "Ferramenta 1", missing_t2: "Ferramenta 2", missing_t3: "Ferramenta 3", missing_t4: "Ferramenta 4", missing_t5: "Ferramenta 5",
+      calc_error:
+        "Ocorreu um erro durante o cálculo. Por favor, verifique as ferramentas anteriores para dados ausentes.",
+      missing_t1: "Ferramenta 1",
+      missing_t2: "Ferramenta 2",
+      missing_t3: "Ferramenta 3",
+      missing_t4: "Ferramenta 4",
+      missing_t5: "Ferramenta 5",
       feasibility_0_badge: "Altamente Favorável",
-      feasibility_0_msg: "Sua matéria-prima é gratuita ($0/t). Isso lhe dá uma forte vantagem competitiva.",
+      feasibility_0_msg:
+        "Sua matéria-prima é gratuita ($0/t). Isso lhe dá uma forte vantagem competitiva.",
       feasibility_low_badge: "Altamente Favorável",
-      feasibility_low_msg: "Seu custo de entrega é excelente (<$20/t). Forte vantagem competitiva.",
+      feasibility_low_msg:
+        "Seu custo de entrega é excelente (<$20/t). Forte vantagem competitiva.",
       feasibility_mid_badge: "Favorável",
-      feasibility_mid_msg: "Seu custo de entrega é padrão ($20-$40/t). A lucratividade dependerá do seu modelo de vendas.",
+      feasibility_mid_msg:
+        "Seu custo de entrega é padrão ($20-$40/t). A lucratividade dependerá do seu modelo de vendas.",
       feasibility_high_badge: "Marginal",
-      feasibility_high_msg: "Seu custo de entrega é alto ($40-$60/t). Você é sensível a quedas no preço do biochar.",
+      feasibility_high_msg:
+        "Seu custo de entrega é alto ($40-$60/t). Você é sensível a quedas no preço do biochar.",
       feasibility_vhigh_badge: "Menos Favorável",
-      feasibility_vhigh_msg: "Seu custo de entrega é >$60/t. O transporte e a matéria-prima podem reduzir seu lucro.",
+      feasibility_vhigh_msg:
+        "Seu custo de entrega é >$60/t. O transporte e a matéria-prima podem reduzir seu lucro.",
       permit_title: "Cronograma de Licenciamento: {time}",
-      permit_msg: "Baseado em tempos típicos de licenciamento para {country}. Planeje seu lançamento de acordo.",
+      permit_msg:
+        "Baseado em tempos típicos de licenciamento para {country}. Planeje seu lançamento de acordo.",
       permit_unknown: "Desconhecido",
-      permit_BO: "4–8 meses", permit_BR: "6-9 meses", permit_CO: "6 meses",
-      permit_CR: "6–12 meses", permit_DO: "3–6 meses", permit_EC: "6–12 meses",
-      permit_SV: "3–6 meses", permit_GT: "6–12 meses", permit_HN: "6–12 meses",
-      permit_MX: "3–6 meses", permit_NI: "4–8 meses", permit_PA: "6–12 meses",
-      permit_PE: "4–8 meses", permit_custom: "Desconhecido",
+      permit_BO: "4–8 meses",
+      permit_BR: "6-9 meses",
+      permit_CO: "6 meses",
+      permit_CR: "6–12 meses",
+      permit_DO: "3–6 meses",
+      permit_EC: "6–12 meses",
+      permit_SV: "3–6 meses",
+      permit_GT: "6–12 meses",
+      permit_HN: "6–12 meses",
+      permit_MX: "3–6 meses",
+      permit_NI: "4–8 meses",
+      permit_PA: "6–12 meses",
+      permit_PE: "4–8 meses",
+      permit_custom: "Desconhecido",
       kpi_buyin_secured_title: "Apoio Comunitário: Garantido",
-      kpi_buyin_secured_msg: "Excelente. Uma base sólida para o sucesso do projeto.",
+      kpi_buyin_secured_msg:
+        "Excelente. Uma base sólida para o sucesso do projeto.",
       kpi_buyin_process_title: "Apoio Comunitário: Em Andamento",
-      kpi_buyin_process_msg: "Risco chave. Continue construindo relacionamentos locais.",
+      kpi_buyin_process_msg:
+        "Risco chave. Continue construindo relacionamentos locais.",
       kpi_buyin_none_title: "Apoio Comunitário: Não Garantido",
-      kpi_buyin_none_msg: "Alto risco. Projetos sem apoio comunitário frequentemente falham.",
+      kpi_buyin_none_msg:
+        "Alto risco. Projetos sem apoio comunitário frequentemente falham.",
       kpi_feedstock_high_title: "RISCO CRÍTICO: Fornecimento",
-      kpi_feedstock_high_msg: "Depender do mercado spot é um risco crítico. Garantir a matéria-prima é o desafio nº 1.",
+      kpi_feedstock_high_msg:
+        "Depender do mercado spot é um risco crítico. Garantir a matéria-prima é o desafio nº 1.",
       kpi_feedstock_med_title: "Risco Fornecimento: Moderado",
-      kpi_feedstock_med_msg: "Concorrência moderada ou contratos informais. Seus custos podem ser imprevisíveis.",
+      kpi_feedstock_med_msg:
+        "Concorrência moderada ou contratos informais. Seus custos podem ser imprevisíveis.",
       kpi_feedstock_low_title: "Risco Fornecimento: Baixo",
-      kpi_feedstock_low_msg: "Matéria-prima garantida por propriedade ou contrato escrito.",
+      kpi_feedstock_low_msg:
+        "Matéria-prima garantida por propriedade ou contrato escrito.",
       kpi_sales_secured_title: "Plano de Vendas: Garantido",
-      kpi_sales_secured_msg: "Distribuição integrada (como uma cooperativa) é o modelo de menor risco.",
+      kpi_sales_secured_msg:
+        "Distribuição integrada (como uma cooperativa) é o modelo de menor risco.",
       kpi_sales_moderate_title: "Plano de Vendas: Risco Moderado",
-      kpi_sales_moderate_msg: "Contrato regional é bom, mas depende do desempenho do parceiro.",
+      kpi_sales_moderate_msg:
+        "Contrato regional é bom, mas depende do desempenho do parceiro.",
       kpi_sales_high_title: "Plano de Vendas: Alto Risco",
       kpi_sales_high_msg: "Sem plano de marketing. Esta é uma lacuna crítica.",
       kpi_kiln_confirmed_title: "Custo Pirolisador: Confirmado",
-      kpi_kiln_confirmed_msg: "Custos baseados em cotação, tornando seu CAPEX confiável.",
+      kpi_kiln_confirmed_msg:
+        "Custos baseados em cotação, tornando seu CAPEX confiável.",
       kpi_kiln_estimate_title: "Custo Pirolisador: Estimado",
-      kpi_kiln_estimate_msg: "Seu CAPEX é uma estimativa. Obtenha uma cotação oficial.",
+      kpi_kiln_estimate_msg:
+        "Seu CAPEX é uma estimativa. Obtenha uma cotação oficial.",
       kpi_mrv_confirmed_title: "Custo MRV: Confirmado",
-      kpi_mrv_confirmed_msg: "Custos baseados em cotação, tornando seu OPEX confiável.",
+      kpi_mrv_confirmed_msg:
+        "Custos baseados em cotação, tornando seu OPEX confiável.",
       kpi_mrv_estimate_title: "Custo MRV: Estimado",
-      kpi_mrv_estimate_msg: "Seus custos MRV são estimados. Confirme este custo.",
+      kpi_mrv_estimate_msg:
+        "Seus custos MRV são estimados. Confirme este custo.",
       kpi_lab_confirmed_title: "Dados de Carbono: Confirmados",
-      kpi_lab_confirmed_msg: "Projeções baseadas em resultados de laboratório confiáveis.",
+      kpi_lab_confirmed_msg:
+        "Projeções baseadas em resultados de laboratório confiáveis.",
       kpi_lab_risk_title: "Dados de Carbono: Alto Risco",
-      kpi_lab_risk_msg: "Projeções baseadas em valores genéricos. Obtenha testes de laboratório para confirmar rentabilidade.",
+      kpi_lab_risk_msg:
+        "Projeções baseadas em valores genéricos. Obtenha testes de laboratório para confirmar rentabilidade.",
       kpi_deforestation_title: "Risco Desmatamento",
-      kpi_deforestation_msg: "Usar biomassa lenhosa requer auditoria rigorosa para provar que é resíduo. Mitigação: Cláusulas de rastreabilidade.",
+      kpi_deforestation_msg:
+        "Usar biomassa lenhosa requer auditoria rigorosa para provar que é resíduo. Mitigação: Cláusulas de rastreabilidade.",
       kpi_shutdown_title: "Risco Estratégia: Alto",
-      kpi_shutdown_msg: "Fechamentos sazonais geralmente são inviáveis devido à baixa utilização do equipamento.",
+      kpi_shutdown_msg:
+        "Fechamentos sazonais geralmente são inviáveis devido à baixa utilização do equipamento.",
       kpi_store_title: "Risco Estratégia: Moderado",
-      kpi_store_msg: "Armazenar requer capital de giro significativo e risco de perda de material.",
+      kpi_store_msg:
+        "Armazenar requer capital de giro significativo e risco de perda de material.",
       mrv_flag_title: "Aviso: Complexidade MRV",
-      mrv_flag_msg: "Seu projeto usa mais de 2 tipos de biomassa. Cada tipo requer sua própria documentação de Monitoramento, Relato e Verificação (MRV) para qualificar para créditos de carbono. Projetos com muitos tipos de biomassa enfrentam complexidade e custo de certificação significativamente maiores.",
+      mrv_flag_msg:
+        "Seu projeto usa mais de 2 tipos de biomassa. Cada tipo requer sua própria documentação de Monitoramento, Relato e Verificação (MRV) para qualificar para créditos de carbono. Projetos com muitos tipos de biomassa enfrentam complexidade e custo de certificação significativamente maiores.",
       action_tool_t1: "Ferr 1: Escala",
       action_tool_t2: "Ferr 2: Produção",
       action_tool_t3: "Ferr 3: Logística",
@@ -2275,7 +2697,8 @@ window.BiocharTranslations = {
       page_title: "Planejador de Cenários (Ferramenta 7)",
       step_name: "Cenários",
       dep_alert_title: "Dados anteriores ausentes.",
-      dep_alert_msg: " Os cenários usam dados financeiros das Tools 1–5. Alguns valores podem ser padrão.",
+      dep_alert_msg:
+        " Os cenários usam dados financeiros das Tools 1–5. Alguns valores podem ser padrão.",
       dep_alert_link: "Completar ferramentas anteriores →",
       tool_label: "Ferramenta 7: Planejador de Cenários",
       step_label: "Passo 7 de 7: Cenários",
@@ -2304,7 +2727,8 @@ window.BiocharTranslations = {
       npv_row: "VPL {n} Anos",
       npv_tooltip: "Valor presente total de lucros menos CAPEX.",
       notes_section: "Notas e Observações do Cenário",
-      notes_placeholder: "Ex: 'O projeto só é viável se o carbono ficar acima de $80'",
+      notes_placeholder:
+        "Ex: 'O projeto só é viável se o carbono ficar acima de $80'",
       save_btn: "Salvar Notas do Cenário",
       back_btn: "← Voltar ao Painel",
       print_btn: "🖨️ Imprimir / Salvar como PDF",
@@ -2314,12 +2738,12 @@ window.BiocharTranslations = {
       npv_label: "VPL {n} Anos",
       never_text: "Nunca",
       payback_unit: " anos",
-      missing_data_error: "Faltam dados das Ferramentas 1-5. Por favor complete todos os passos anteriores.",
+      missing_data_error:
+        "Faltam dados das Ferramentas 1-5. Por favor complete todos os passos anteriores.",
       error_loading: "Erro ao carregar o caso base.",
       saving_text: "Salvando...",
       saved_status: "Notas Salvas!",
       save_failed: "Erro ao Salvar",
-    }
-  }
-
+    },
+  },
 };
