@@ -38,28 +38,48 @@
     RATES_KEY: 'biocharExchangeRates_v2',
     RATES_TTL: 86400000, // 24 hours in ms
     _rates: null,
+    _ratesPromise: null,
 
-    async getRates() {
-      if (this._rates) return this._rates;
-      try {
-        const cached = JSON.parse(localStorage.getItem(this.RATES_KEY) || 'null');
-        if (cached && Date.now() - cached.timestamp < this.RATES_TTL) {
-          this._rates = cached.rates;
-          return this._rates;
+    _isValidRateTable(rates) {
+      return rates && typeof rates === 'object'
+        && rates.USD === 1
+        && Object.keys(rates).length >= 100;
+    },
+
+    getRates() {
+      if (this._rates) return Promise.resolve(this._rates);
+      if (this._ratesPromise) return this._ratesPromise;
+      this._ratesPromise = (async () => {
+        try {
+          const cached = JSON.parse(localStorage.getItem(this.RATES_KEY) || 'null');
+          if (cached && Date.now() - cached.timestamp < this.RATES_TTL
+              && this._isValidRateTable(cached.rates)) {
+            this._rates = cached.rates;
+            return this._rates;
+          }
+        } catch (_) {}
+        try {
+          const resp = await fetch('https://open.er-api.com/v6/latest/USD');
+          if (!resp.ok) throw new Error('rate fetch http ' + resp.status);
+          const data = await resp.json();
+          if (data.result !== 'success' || !data.rates) {
+            throw new Error('rate fetch unexpected payload');
+          }
+          const rates = Object.assign({ USD: 1 }, data.rates);
+          if (!this._isValidRateTable(rates)) {
+            throw new Error('rate fetch table failed validation');
+          }
+          this._rates = rates;
+          localStorage.setItem(this.RATES_KEY, JSON.stringify({
+            rates: this._rates, timestamp: Date.now()
+          }));
+        } catch (_) {
+          // Offline fallback — USD pass-through only. Do NOT cache this.
+          this._rates = { USD: 1 };
         }
-      } catch (_) {}
-      try {
-        const resp = await fetch('https://open.er-api.com/v6/latest/USD');
-        const data = await resp.json();
-        this._rates = Object.assign({ USD: 1 }, data.rates || {});
-        localStorage.setItem(this.RATES_KEY, JSON.stringify({
-          rates: this._rates, timestamp: Date.now()
-        }));
-      } catch (_) {
-        // Offline fallback — USD pass-through only
-        this._rates = { USD: 1 };
-      }
-      return this._rates;
+        return this._rates;
+      })();
+      return this._ratesPromise;
     },
 
     toBase(amount, fromCode) {
@@ -76,16 +96,28 @@
 
     format(baseUsdAmount, toCode, decimals) {
       const dec = (decimals === undefined) ? 0 : decimals;
-      const converted = this.fromBase(baseUsdAmount, toCode || 'USD');
+      let code = toCode || 'USD';
+      // Guard against silent label/number mismatch: if rates aren't loaded yet,
+      // or this specific code is missing from the table, fall back to USD so
+      // the symbol always matches the number we're rendering.
+      if (code !== 'USD' && !(this._rates && this._rates[code])) {
+        if (!this._missingRateWarned) this._missingRateWarned = {};
+        if (!this._missingRateWarned[code]) {
+          this._missingRateWarned[code] = true;
+          console.warn('[BiocharCurrency] missing rate for ' + code + ', rendering as USD');
+        }
+        code = 'USD';
+      }
+      const converted = this.fromBase(baseUsdAmount, code);
       try {
         return new Intl.NumberFormat('en-US', {
           style: 'currency',
-          currency: toCode || 'USD',
+          currency: code,
           maximumFractionDigits: dec,
           minimumFractionDigits: dec,
         }).format(converted);
       } catch (_) {
-        return (toCode || 'USD') + ' ' + Math.round(converted).toLocaleString();
+        return code + ' ' + Math.round(converted).toLocaleString();
       }
     },
 

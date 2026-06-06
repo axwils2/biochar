@@ -306,7 +306,7 @@ window.BiocharTranslations = {
       f_carbon_label: "Stable Carbon (%)",
       f_carbon_formula_tooltip: "Calculates: [Step 3 Biochar] * Carbon %",
       f1_carbon_tooltip:
-        "The percentage of the final biochar's mass that is stable carbon. 70% is a good starting point.",
+        "The percentage of the final biochar's mass that is stable carbon. 45% is a good starting point.",
       f2_carbon_tooltip:
         "Biochar from woody biomass often has very high carbon stability. 80% is a good default.",
       stable_carbon_label: "Total Stable Carbon",
@@ -1217,7 +1217,7 @@ window.BiocharTranslations = {
       f_carbon_label: "Carbono Estable (%)",
       f_carbon_formula_tooltip: "Calcula: [Paso 3 Biochar] * Carbono %",
       f1_carbon_tooltip:
-        "El porcentaje de la masa del biochar final que es carbono estable. 70% es un buen punto de partida.",
+        "El porcentaje de la masa del biochar final que es carbono estable. 45% es un buen punto de partida.",
       f2_carbon_tooltip:
         "El biochar de biomasa leñosa a menudo tiene una estabilidad de carbono muy alta. 80% es un buen valor predeterminado.",
       stable_carbon_label: "Total Carbono Estable",
@@ -2133,7 +2133,7 @@ window.BiocharTranslations = {
       f_carbon_label: "Carbono Estável (%)",
       f_carbon_formula_tooltip: "Calcula: [Passo 3 Biochar] * Carbono %",
       f1_carbon_tooltip:
-        "A porcentagem da massa do biochar final que é carbono estável. 70% é um bom ponto de partida.",
+        "A porcentagem da massa do biochar final que é carbono estável. 45% é um bom ponto de partida.",
       f2_carbon_tooltip:
         "Biochar de biomassa lenhosa frequentemente tem uma estabilidade de carbono muito alta. 80% é um bom valor padrão.",
       stable_carbon_label: "Total Carbono Estável",

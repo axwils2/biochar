@@ -220,8 +220,8 @@
             <li class="calc-step">
                 <div class="step-input-area"><div class="step-number-container"><span class="step-label-left"><span class="step-number">4</span><span class="input-label" data-i18n="tool2.f_carbon_label">Stable Carbon (%)</span></span><span class="step-label-right">
                     <div class="tooltip-wrap"><span class="f-icon">f</span><span class="tooltip-text" data-i18n="tool2.f_carbon_formula_tooltip">Calculates: [Step 3 Biochar] * Carbon %</span></div>
-                    <div class="tooltip-wrap"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f1_carbon_tooltip">The percentage of the final biochar's mass that is stable carbon. 70% is a good starting point.</span></div>
-                </span></div><input type="number" id="divF1_Carbon" value="70" class="input" min="0" step="0.1"></div>
+                    <div class="tooltip-wrap"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool2.f1_carbon_tooltip">The percentage of the final biochar's mass that is stable carbon. 45% is a good starting point.</span></div>
+                </span></div><input type="number" id="divF1_Carbon" value="45" class="input" min="0" step="0.1"></div>
                 <div class="step-connector">&rarr;</div>
                 <div class="step-output-area"><span class="step-output-label" data-i18n="tool2.stable_carbon_label">Total Stable Carbon</span><div id="divF1_StableCarbon" class="step-output-value">0 tonnes</div></div>
             </li>
@@ -608,7 +608,7 @@ function loadProject() {
         document.getElementById('divF1_Contract').value = d.f1_contract || 'own';
         document.getElementById('divF1_Ash').value = (d.f1_ash * 100) || 10;
         document.getElementById('divF1_Yield').value = (d.f1_yield * 100) || 25;
-        document.getElementById('divF1_Carbon').value = (d.f1_carbon * 100) || 70;
+        document.getElementById('divF1_Carbon').value = (d.f1_carbon * 100) || 45;
         document.getElementById('divF1_Conv').value = d.f1_conv || 2.29;
 
         // Migration shim: convert old flat f2_* keys to secondaryFeedstocks array
@@ -682,11 +682,31 @@ function loadProject() {
         BiocharCurrency.wrapInput('inputCustomKilnPrice', _fieldCurrencies.inputs['inputCustomKilnPrice'] || fallback, 'onInputCurrencyChange');
         document.querySelectorAll('.secondary-feedstock-card').forEach((card, idx) => {
             const priceEl = card.querySelector('[data-field="price"]');
-            if (priceEl) BiocharCurrency.wrapInput(priceEl.id || ('sf_price_input_' + idx), _fieldCurrencies.inputs['sf_price_' + idx] || fallback, 'onInputCurrencyChange');
+            if (priceEl) {
+                if (!priceEl.id) priceEl.id = 'sf_price_input_' + idx;
+                BiocharCurrency.wrapInput(priceEl.id, _fieldCurrencies.inputs['sf_price_' + idx] || fallback, 'onInputCurrencyChange');
+            }
         });
+        // Cost/shipping/total are tightly coupled (cost + shipping = total) — they
+        // share a currency. Initialize all three to the project currency (or the
+        // kiln input currency if the user already picked one) so labels and numbers
+        // are in the user's preferred currency from first paint. The catalog
+        // dropdown labels (formatted via formatUSD with displayPyrolyzerCost) and
+        // onInputCurrencyChange/onOutputCurrencyChange keep everything in lockstep.
+        const kilnInputCode = _fieldCurrencies.inputs['inputCustomKilnPrice'] || fallback;
+        // Persist the resolved input code so save / first-paint formatting see it.
+        _fieldCurrencies.inputs['inputCustomKilnPrice'] = kilnInputCode;
         ['displayPyrolyzerCost', 'displayShippingCost', 'displayTotalUpfrontCapex'].forEach(id => {
-            BiocharCurrency.injectOutputSelect(id, _fieldCurrencies.outputs[id] || fallback, 'onOutputCurrencyChange');
+            const code = _fieldCurrencies.outputs[id] || kilnInputCode;
+            // injectOutputSelect only builds the <select>; we must also write the
+            // chosen code into _fieldCurrencies.outputs so formatUSD/format calls
+            // (including the kiln catalog dropdown labels) read it back.
+            _fieldCurrencies.outputs[id] = code;
+            BiocharCurrency.injectOutputSelect(id, code, 'onOutputCurrencyChange');
         });
+        // Repopulate the kiln catalog dropdown so its labels use the resolved
+        // display currency (rates are now loaded, so conversion is correct).
+        calculateAll();
         updateTotalCapex();
     });
 }
@@ -770,12 +790,16 @@ function renderSecondaryCard(feedstock) {
 
     document.getElementById('secondaryFeedstocksContainer').appendChild(card);
 
-    // Wrap the price input with a currency selector for newly added cards
+    // Wrap the price input with a currency selector for newly added cards.
+    // loadProject() handles the initial render path inside its post-rates .then()
+    // block; this branch covers user-initiated "Add another feedstock" clicks.
     if (window.BiocharCurrency) {
         const priceInput = card.querySelector('[data-field="price"]');
         if (priceInput) {
             const idx = document.querySelectorAll('.secondary-feedstock-card').length - 1;
-            BiocharCurrency.wrapInput(priceInput.id || ('sf_price_input_' + idx), 'USD', 'onInputCurrencyChange');
+            if (!priceInput.id) priceInput.id = 'sf_price_input_' + idx;
+            const projCode = (window.BiocharProjectCurrency && BiocharProjectCurrency.getProjectCurrency()) || 'USD';
+            BiocharCurrency.wrapInput(priceInput.id, _fieldCurrencies.inputs['sf_price_' + idx] || projCode, 'onInputCurrencyChange');
         }
     }
     return card;
@@ -971,7 +995,10 @@ function runKilnLogic(totalFeedstock) {
         if (filteredKilns.length > 0) {
             kilnWarning.style.display = 'none';
             filteredKilns.forEach(kiln => {
-                addKilnOption(kilnSelect, `${kiln.name} (${formatUSD(kiln.price)})`, kiln.price);
+                // Kiln catalog prices are stored in USD. Format the label in the
+                // kiln display currency (set on displayPyrolyzerCost) so the
+                // dropdown labels and the cost outputs are always in sync.
+                addKilnOption(kilnSelect, `${kiln.name} (${formatUSD(kiln.price, 'displayPyrolyzerCost')})`, kiln.price);
             });
         } else {
             kilnWarning.style.display = 'block';
@@ -1083,16 +1110,41 @@ function formatUSD(n, outputId) {
     const code = (outputId && _fieldCurrencies.outputs[outputId]) || 'USD';
     return BiocharCurrency.format(n, code);
 }
+const KILN_OUTPUT_IDS = ['displayPyrolyzerCost', 'displayShippingCost', 'displayTotalUpfrontCapex'];
+
+function _syncKilnOutputCurrency(code) {
+    KILN_OUTPUT_IDS.forEach(id => {
+        _fieldCurrencies.outputs[id] = code;
+        const sel = document.getElementById(id + '_currency');
+        if (sel && sel.value !== code) sel.value = code;
+    });
+    // Re-run calculateAll so the kiln catalog <select> labels re-render in the
+    // new display currency. runKilnLogic preserves the current selection by
+    // option value (the underlying USD price), so the user's pick is kept.
+    calculateAll();
+}
+
 function onInputCurrencyChange(fieldId) {
-    _fieldCurrencies.inputs[fieldId] = document.getElementById(fieldId + '_currency').value;
+    const code = document.getElementById(fieldId + '_currency').value;
+    _fieldCurrencies.inputs[fieldId] = code;
+    // The kiln price drives all three kiln-cost displays so the user sees
+    // the totals in the same currency they entered the cost in.
+    if (fieldId === 'inputCustomKilnPrice') _syncKilnOutputCurrency(code);
     setUnsaved();
     updateTotalCapex();
 }
 function onOutputCurrencyChange(fieldId) {
     const el = document.getElementById(fieldId);
     if (!el) return;
-    const baseUsd = parseFloat(el.dataset.baseUsd) || 0;
     const code = document.getElementById(fieldId + '_currency').value;
+    // Keep cost/shipping/total in lockstep — the math couples them.
+    if (KILN_OUTPUT_IDS.indexOf(fieldId) !== -1) {
+        _syncKilnOutputCurrency(code);
+        updateTotalCapex();
+        setUnsaved();
+        return;
+    }
+    const baseUsd = parseFloat(el.dataset.baseUsd) || 0;
     _fieldCurrencies.outputs[fieldId] = code;
     el.textContent = baseUsd > 0 ? BiocharCurrency.format(baseUsd, code) : '$--';
     setUnsaved();
