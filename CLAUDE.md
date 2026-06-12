@@ -23,7 +23,7 @@ Biochar Project Feasibility Calculator for Latin American Coffee & Cacao Supply 
 
 1. **Tool 1** — Project info & feedstock scale (`tool1` key)
 2. **Tool 2** — Production calculator: biochar yield, carbon credits, kiln selection (`tool2` key). Reads `tool1.feedstockTonnes`, `tool1.projectType`, `tool1.numHubs`, `tool1.supplyModel`, `tool1.seasonalityStrategy`.
-3. **Tool 3** — Logistics planner: transport routes and costs (`tool3` key)
+3. **Tool 3** — Logistics planner: transport routes and costs, modeled per-feedstock (`tool3` key). Renders one collapsible section per upstream feedstock source — the primary feedstock from `tool2.diversified.f1_*`, plus each entry in `tool2.secondaryFeedstocks[]` (including the `fromTool1` pruned-wood entry seeded from `tool1.woodTonnes`). Each section has its own `selfDelivered` and its own `routes[]`. Saved shape: `tool3.feedstocks = [{ id, name, source, isWood, fromTool1, tonnes, selfDelivered, routes, annualCost }, ...]`, with `totalAnnualLogisticsCost` summed across sections (this is the field downstream tools read). Old projects with a flat top-level `routes[]` / `selfDelivered` are migrated on load by attaching them to the primary section.
 4. **Tool 4** — Revenue streams: pricing for biochar, credits, wood vinegar (`tool4` key)
 5. **Tool 5** — Site, ops & finance: CAPEX, OPEX, lending (`tool5` key)
 6. **Tool 6** — Results dashboard: reads all tool keys to compute financial metrics

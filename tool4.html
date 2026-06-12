@@ -418,7 +418,7 @@ function saveProject() {
             _currencies: { inputs: _fieldCurrencies.inputs, outputs: _fieldCurrencies.outputs }
         };
 
-        if (projectData.tool3 && !projectData.tool3.routes) delete projectData.tool3;
+        if (projectData.tool3 && !projectData.tool3.routes && !projectData.tool3.feedstocks) delete projectData.tool3;
         if (projectData.notes_T3) delete projectData.notes_T3;
 
         if (window.BiocharEngine && BiocharEngine.saveProjectData) {

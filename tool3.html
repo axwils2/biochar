@@ -77,24 +77,7 @@
         <div class="section-card">
             <h2 class="section-card-header" data-i18n="tool3.step1_title">Step 1: Set Your Logistics Target</h2>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 bg-white p-4 rounded-lg border border-gray-300">
-                <label class="block">
-                    <span class="input-label font-semibold text-gray-900" data-i18n="tool3.total_feedstock_label">Total Feedstock Required</span>
-                    <input type="number" id="inputTotalFeedstock" value="0" class="input" readonly>
-                    <p id="loadingIndicator" class="text-xs text-yellow-700 mt-1" data-i18n="tool3.loading_from_t2">Loading from Tool 2...</p>
-                </label>
-                <label class="block">
-                    <span class="input-label font-semibold text-gray-900">
-                        <span data-i18n="tool3.self_delivered_label">(-) Self-Delivered ($0 Cost)</span>
-                        <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool3.self_delivered_tooltip">Feedstock that arrives at the kiln with NO logistics cost to you.</span></span>
-                    </span>
-                    <input type="number" id="inputSelfDelivered" value="0" min="0" class="input border-yellow-400" required>
-                </label>
-                <div class="flex flex-col justify-center p-3 bg-yellow-100 rounded-lg border-2 border-yellow-300 text-center">
-                    <span class="input-label font-bold text-yellow-900 uppercase tracking-wider" data-i18n="tool3.logistics_target_label">Logistics Target</span>
-                    <span id="logisticsTarget" class="text-3xl font-extrabold text-yellow-800">0 t</span>
-                </div>
-            </div>
+            <p id="loadingIndicator" class="text-xs text-yellow-700 mb-3" data-i18n="tool3.loading_from_t2">Loading from Tool 2...</p>
 
             <div id="annualRainContainer" class="mb-4 hidden">
                 <label class="block">
@@ -120,17 +103,11 @@
         </div>
 
         <div class="section-card">
-            <h2 class="section-card-header" data-i18n="tool3.step2_title">Step 2: Build Feedstock Transport Routes</h2>
-            <p class="text-sm text-gray-600 mb-4" data-i18n="tool3.step2_intro">Your remaining feedstock can arrive via regional transport. Allocate this volume to transportation routes below.</p>
+            <h2 class="section-card-header" data-i18n="tool3.step2_title">Step 2: Plan Logistics per Feedstock</h2>
+            <p class="text-sm text-gray-600 mb-4" data-i18n="tool3.step2_intro">Define a self-delivered share and transport routes for each feedstock source feeding the kiln.</p>
 
-            <div id="routesContainer"></div>
-
-            <button id="addRouteBtn" class="add-button">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                </svg>
-                <span data-i18n="tool3.add_route_btn">Add Transport Route</span>
-            </button>
+            <div id="feedstockSections"></div>
+            <p id="noFeedstocksMsg" class="text-sm text-red-600 hidden" data-i18n="tool3.no_feedstocks_msg">No feedstocks found. Please complete Tool 2 first.</p>
         </div>
 
         <div class="section-card">
@@ -186,6 +163,50 @@
             </div>
         </div>
     </div>
+
+    <template id="feedstockSectionTemplate">
+        <div class="feedstock-section section-card bg-gray-50" style="border-left: 4px solid var(--color-primary); margin-bottom: 1.5rem;">
+            <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
+                <div>
+                    <h3 class="section-card-header section-title" style="margin-bottom: 0.25rem;">Logistics for X</h3>
+                    <span class="section-role-badge text-xs uppercase tracking-wider text-gray-500 font-semibold"></span>
+                </div>
+                <div class="text-right">
+                    <div class="text-xs text-gray-600 uppercase tracking-wider" data-i18n="tool3.section_upstream_label">Annual Tonnes (from upstream)</div>
+                    <div class="section-tonnes text-2xl font-bold text-gray-900">0 t</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 bg-white p-4 rounded-lg border border-gray-300">
+                <label class="block">
+                    <span class="input-label font-semibold text-gray-900">
+                        <span data-i18n="tool3.self_delivered_label">(-) Self-Delivered ($0 Cost)</span>
+                        <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool3.self_delivered_tooltip">Feedstock that arrives at the kiln with NO logistics cost to you.</span></span>
+                    </span>
+                    <input type="number" class="input border-yellow-400 section-self-delivered" value="0" min="0">
+                </label>
+                <div class="flex flex-col justify-center p-3 bg-yellow-100 rounded-lg border-2 border-yellow-300 text-center">
+                    <span class="input-label font-bold text-yellow-900 uppercase tracking-wider" data-i18n="tool3.section_target_label">Section Logistics Target</span>
+                    <span class="section-target text-2xl font-extrabold text-yellow-800">0 t</span>
+                </div>
+                <div class="flex flex-col justify-center p-3 bg-green-100 rounded-lg border-2 border-green-300 text-center">
+                    <span class="input-label font-bold text-green-900 uppercase tracking-wider" data-i18n="tool3.section_cost_label">Section Annual Cost</span>
+                    <span class="section-annual-cost text-2xl font-extrabold text-green-800">$0</span>
+                </div>
+            </div>
+
+            <p class="section-no-tonnes-msg text-xs text-gray-500 italic mb-2 hidden" data-i18n="tool3.no_tonnes_msg">No tonnes recorded for this feedstock. Add tonnes in Tool 1 / Tool 2 if logistics are needed.</p>
+
+            <div class="section-routes"></div>
+
+            <button class="section-add-route-btn add-button" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+                <span data-i18n="tool3.add_route_btn">Add Transport Route</span>
+            </button>
+        </div>
+    </template>
 
     <template id="routeTemplate">
         <div class="route-card">
@@ -287,10 +308,14 @@
 <script>
         let projectData = {};
         let T1_Data = {};
-        let routeCount = 0;
         let hasUnsavedChanges = false;
         let _fieldCurrencies = { inputs: {}, outputs: {} };
-        let _routeCurrencies = [];
+        // Keyed by feedstockId, then array of route-currency maps in section's route order.
+        let _routeCurrencies = {};
+        // Canonical list of feedstock sources to render (built from upstream tool1/tool2).
+        let _feedstockList = [];
+        // Saved data scoped per feedstockId: { selfDelivered, routes } — used to restore on load.
+        let _sectionSavedData = {};
 
         // --- Static DOM references ---
         const saveButton = document.getElementById('saveToDbButton');
@@ -303,9 +328,7 @@
         const annualContainer = document.getElementById('annualRainContainer');
         const mobileInfoBox = document.getElementById('mobileInfoBox');
 
-        const inputsToTrack = [
-            'inputSelfDelivered', 'inputRainyMonths', 'toolNotes'
-        ];
+        const inputsToTrack = ['inputRainyMonths', 'toolNotes'];
 
         window.addEventListener("beforeunload", e => {
             if (hasUnsavedChanges) {
@@ -355,44 +378,61 @@
                 showError(BiocharI18n.t('tool3.error_missing_tool1'));
             }
 
-            // 3. Handle Tool 2 safely
-            let totalFeedstock = 0;
-            if (projectData.tool2 && projectData.tool2.diversified) {
-                const d = projectData.tool2.diversified;
-                totalFeedstock = (d.f1_tonnes || 0) + (d.f2_tonnes || 0);
-                if (loadingIndicator) {
+            // 3. Build the canonical feedstock list from tool2 (preferred) or tool1 fallback.
+            _feedstockList = buildFeedstockList(projectData);
+
+            if (loadingIndicator) {
+                if (projectData.tool2 && projectData.tool2.diversified) {
                     loadingIndicator.textContent = BiocharI18n.t('tool3.loaded_from_t2');
                     loadingIndicator.classList.remove('text-yellow-700', 'text-red-600');
                     loadingIndicator.classList.add('text-green-600');
-                }
-            } else {
-                if (loadingIndicator) {
+                } else {
                     loadingIndicator.textContent = BiocharI18n.t('tool3.missing_t2');
                     loadingIndicator.classList.remove('text-yellow-700', 'text-green-600');
                     loadingIndicator.classList.add('text-red-600');
                 }
             }
-            document.getElementById('inputTotalFeedstock').value = totalFeedstock;
 
             // 4. Update UI based on T1 data
             const isSeasonal = T1_Data.supplyModel === 'seasonal';
             const isMobile = T1_Data.projectType === 'mobile';
             toggleSeasonalWindow(isSeasonal, isMobile);
 
-            // 5. Restore Tool 3 fields if they exist
-            const selfDeliveredInput = document.getElementById('inputSelfDelivered');
+            // 5. Prepare saved section data (handles both new `feedstocks[]` shape and legacy `routes`/`selfDelivered`).
+            _sectionSavedData = {};
+            _routeCurrencies = {};
+            const savedCurr = (t3 && t3._currencies) || {};
+            _fieldCurrencies.inputs  = savedCurr.inputs  || {};
+            _fieldCurrencies.outputs = savedCurr.outputs || {};
+
+            if (t3 && Array.isArray(t3.feedstocks)) {
+                t3.feedstocks.forEach(fs => {
+                    _sectionSavedData[fs.id] = {
+                        selfDelivered: fs.selfDelivered || 0,
+                        routes: Array.isArray(fs.routes) ? fs.routes : []
+                    };
+                });
+                const rcSaved = savedCurr.routeCurrencies;
+                if (rcSaved && typeof rcSaved === 'object' && !Array.isArray(rcSaved)) {
+                    _routeCurrencies = { ...rcSaved };
+                }
+            } else if (t3 && Array.isArray(t3.routes)) {
+                // Legacy shape — migrate to primary feedstock.
+                _sectionSavedData['primary'] = {
+                    selfDelivered: t3.selfDelivered || 0,
+                    routes: t3.routes
+                };
+                if (Array.isArray(savedCurr.routeCurrencies)) {
+                    _routeCurrencies = { primary: savedCurr.routeCurrencies };
+                }
+            }
+
+            // 6. Restore global fields (rainy months, notes).
             const rainyMonthsInput = document.getElementById('inputRainyMonths');
             const rainyMonthsVal = document.getElementById('rainyMonthsVal');
             const notesArea = document.getElementById('toolNotes');
-            const routesContainer = document.getElementById('routesContainer');
-
-            routeCount = 0;
-            if (routesContainer) {
-                routesContainer.innerHTML = '';
-            }
 
             if (t3 && t3.lastUpdated) {
-                if (selfDeliveredInput) selfDeliveredInput.value = t3.selfDelivered || 0;
                 if (rainyMonthsInput) {
                     rainyMonthsInput.value = t3.rainySeasonMonths || 6;
                     if (rainyMonthsVal) {
@@ -402,26 +442,15 @@
                 if (notesArea && t3.notes_T3) {
                     notesArea.value = t3.notes_T3;
                 }
-            } else {
-                if (selfDeliveredInput && selfDeliveredInput.value === "") {
-                    selfDeliveredInput.value = 0;
-                }
-                if (rainyMonthsInput && rainyMonthsInput.value === "") {
-                    rainyMonthsInput.value = 6;
-                    if (rainyMonthsVal) {
-                        rainyMonthsVal.textContent = `6 ${BiocharI18n.t('tool3.months_unit')}`;
-                    }
+            } else if (rainyMonthsInput && rainyMonthsInput.value === "") {
+                rainyMonthsInput.value = 6;
+                if (rainyMonthsVal) {
+                    rainyMonthsVal.textContent = `6 ${BiocharI18n.t('tool3.months_unit')}`;
                 }
             }
 
-            // Restore routes
-            if (Array.isArray(t3.routes) && t3.routes.length > 0) {
-                t3.routes.forEach((r) => {
-                    addRoute(r);
-                });
-            } else {
-                addRoute();
-            }
+            // 7. Render one section per feedstock and restore saved routes/self-delivered.
+            renderFeedstockSections();
 
             // Saved vs new state
             if (t3 && t3.lastUpdated) {
@@ -450,14 +479,6 @@
 
             calculateAll();
 
-            const addRouteBtn = document.getElementById('addRouteBtn');
-            if (addRouteBtn) {
-                addRouteBtn.addEventListener('click', () => {
-                    addRoute();
-                    setUnsaved();
-                });
-            }
-
             if (rainyMonthsInput) {
                 rainyMonthsInput.addEventListener('input', (e) => {
                     if (rainyMonthsVal) {
@@ -467,21 +488,11 @@
                 });
             }
 
-            if (selfDeliveredInput) {
-                selfDeliveredInput.addEventListener('input', calculateAll);
-            }
-
             if (saveButton) {
                 saveButton.addEventListener('click', saveProject);
             }
 
             addUnsavedListeners(inputsToTrack.map(id => document.getElementById(id)).filter(Boolean));
-
-            // Restore currency selections and inject output selectors
-            const savedCurr = (projectData.tool3 && projectData.tool3._currencies) || {};
-            _fieldCurrencies.inputs  = savedCurr.inputs  || {};
-            _fieldCurrencies.outputs = savedCurr.outputs || {};
-            _routeCurrencies = savedCurr.routeCurrencies || [];
 
             BiocharCurrency.getRates().then(() => {
                 const projCode = (window.BiocharProjectCurrency && BiocharProjectCurrency.getProjectCurrency()) || 'USD';
@@ -494,17 +505,22 @@
                 BiocharCurrency.injectOutputSelect('outputCostPerTonne', _fieldCurrencies.outputs['outputCostPerTonne'] || fallback, 'onOutputCurrencyChange');
                 // Re-populate route currency selectors so the full world list is available.
                 // For new projects, switch unset slots to the project currency.
-                document.querySelectorAll('.route-card').forEach((card, idx) => {
-                    if (!_routeCurrencies[idx]) _routeCurrencies[idx] = {};
-                    ['route-rate', 'route-quote-dry', 'route-quote-rain'].forEach(cls => {
-                        const sel = card.querySelector('.' + cls + '_currency');
-                        if (!sel) return;
-                        if (isNewForT3 && !_routeCurrencies[idx][cls]) {
-                            _routeCurrencies[idx][cls] = projCode;
-                            BiocharCurrency.populateSelect(sel, projCode, false);
-                        } else {
-                            BiocharCurrency.populateSelect(sel, _routeCurrencies[idx][cls] || 'USD', false);
-                        }
+                document.querySelectorAll('.feedstock-section').forEach(sectionEl => {
+                    const fid = sectionEl.dataset.feedstockId;
+                    if (!_routeCurrencies[fid]) _routeCurrencies[fid] = [];
+                    const rcList = _routeCurrencies[fid];
+                    sectionEl.querySelectorAll('.route-card').forEach((card, idx) => {
+                        if (!rcList[idx]) rcList[idx] = {};
+                        ['route-rate', 'route-quote-dry', 'route-quote-rain'].forEach(cls => {
+                            const sel = card.querySelector('.' + cls + '_currency');
+                            if (!sel) return;
+                            if (isNewForT3 && !rcList[idx][cls]) {
+                                rcList[idx][cls] = projCode;
+                                BiocharCurrency.populateSelect(sel, projCode, false);
+                            } else {
+                                BiocharCurrency.populateSelect(sel, rcList[idx][cls] || 'USD', false);
+                            }
+                        });
                     });
                 });
                 calculateAll();
@@ -539,33 +555,55 @@
             saveButton.disabled = true;
             saveStatus.style.display = 'none';
 
-            const selfDelivered = document.getElementById('inputSelfDelivered').value;
-            if (selfDelivered === "") {
-                alert(BiocharI18n.t('tool3.error_self_delivered'));
-                saveButton.textContent = BiocharI18n.t('tool3.save_btn');
-                saveButton.disabled = false;
-                return;
+            // Validate every section's self-delivered field.
+            const sections = document.querySelectorAll('.feedstock-section');
+            for (const sectionEl of sections) {
+                const selfDelInput = sectionEl.querySelector('.section-self-delivered');
+                if (selfDelInput && selfDelInput.value === "") {
+                    alert(BiocharI18n.t('tool3.error_self_delivered'));
+                    saveButton.textContent = BiocharI18n.t('tool3.save_btn');
+                    saveButton.disabled = false;
+                    return;
+                }
             }
 
             let maxWindow = 0;
-            const routes = [];
-            document.querySelectorAll('.route-card').forEach(card => {
-                const dur = parseFloat(card.querySelector('.route-weeks').value) || 0;
-                if (dur > maxWindow) maxWindow = dur;
-
-                routes.push({
-                    name: card.querySelector('.route-name').value,
-                    annualVolume: parseFloat(card.querySelector('.route-vol').value) || 0,
-                    tripsPerYear: parseFloat(card.querySelector('.route-freq').value) || 0,
-                    method: card.querySelector('.route-method').value,
-                    hourlyRate: parseFloat(card.querySelector('.route-rate').value) || 0,
-                    dryHours: parseFloat(card.querySelector('.route-hours-dry').value) || 0,
-                    rainyHours: parseFloat(card.querySelector('.route-hours-rain').value) || 0,
-                    dryQuote: parseFloat(card.querySelector('.route-quote-dry').value) || 0,
-                    rainyQuote: parseFloat(card.querySelector('.route-quote-rain').value) || 0,
-                    routeDuration: dur,
-                    routeRainyWeeks: parseFloat(card.querySelector('.route-rainy-weeks').value) || 0,
-                    annualCost: parseFloat(card.querySelector('.route-annual-cost').textContent.replace(/[^0-9.]/g, '')) || 0
+            const feedstocks = [];
+            sections.forEach(sectionEl => {
+                const fid = sectionEl.dataset.feedstockId;
+                const meta = _feedstockList.find(f => f.id === fid) || {};
+                const routes = [];
+                let sectionAnnualCost = 0;
+                sectionEl.querySelectorAll('.route-card').forEach(card => {
+                    const dur = parseFloat(card.querySelector('.route-weeks').value) || 0;
+                    if (dur > maxWindow) maxWindow = dur;
+                    const annual = parseFloat(card.querySelector('.route-annual-cost').dataset.baseUsd) || 0;
+                    sectionAnnualCost += annual;
+                    routes.push({
+                        name: card.querySelector('.route-name').value,
+                        annualVolume: parseFloat(card.querySelector('.route-vol').value) || 0,
+                        tripsPerYear: parseFloat(card.querySelector('.route-freq').value) || 0,
+                        method: card.querySelector('.route-method').value,
+                        hourlyRate: parseFloat(card.querySelector('.route-rate').value) || 0,
+                        dryHours: parseFloat(card.querySelector('.route-hours-dry').value) || 0,
+                        rainyHours: parseFloat(card.querySelector('.route-hours-rain').value) || 0,
+                        dryQuote: parseFloat(card.querySelector('.route-quote-dry').value) || 0,
+                        rainyQuote: parseFloat(card.querySelector('.route-quote-rain').value) || 0,
+                        routeDuration: dur,
+                        routeRainyWeeks: parseFloat(card.querySelector('.route-rainy-weeks').value) || 0,
+                        annualCost: annual
+                    });
+                });
+                feedstocks.push({
+                    id: fid,
+                    name: meta.name || fid,
+                    source: meta.source || 'primary',
+                    isWood: !!meta.isWood,
+                    fromTool1: !!meta.fromTool1,
+                    tonnes: meta.tonnes || 0,
+                    selfDelivered: parseFloat(sectionEl.querySelector('.section-self-delivered').value) || 0,
+                    routes,
+                    annualCost: sectionAnnualCost
                 });
             });
 
@@ -573,10 +611,9 @@
             const masterWindow = (isSeasonal && maxWindow > 0) ? maxWindow : 52;
 
             projectData.tool3 = {
-                selfDelivered: parseFloat(selfDelivered) || 0,
+                feedstocks,
                 rainySeasonMonths: parseFloat(document.getElementById('inputRainyMonths').value) || 0,
                 collectionWeeks: masterWindow,
-                routes: routes,
                 totalAnnualLogisticsCost: parseFloat(document.getElementById('outputAnnualCost').dataset.baseUsd) || 0,
                 avgLogisticsCostPerTonne: parseFloat(document.getElementById('outputCostPerTonne').dataset.baseUsd) || 0,
                 notes_T3: document.getElementById('toolNotes').value,
@@ -622,11 +659,20 @@
             }
         }
 
+        function getRouteCurrencyMap(card) {
+            const sectionEl = card.closest('.feedstock-section');
+            if (!sectionEl) return {};
+            const fid = sectionEl.dataset.feedstockId;
+            const idx = Array.from(sectionEl.querySelectorAll('.route-card')).indexOf(card);
+            if (!_routeCurrencies[fid]) _routeCurrencies[fid] = [];
+            if (!_routeCurrencies[fid][idx]) _routeCurrencies[fid][idx] = {};
+            return _routeCurrencies[fid][idx];
+        }
+
         function calculateRouteCost(card, isSeasonal) {
             const trips = parseFloat(card.querySelector('.route-freq').value) || 0;
             const method = card.querySelector('.route-method').value;
-            const idx = Array.from(document.querySelectorAll('.route-card')).indexOf(card);
-            const rc = _routeCurrencies[idx] || {};
+            const rc = getRouteCurrencyMap(card);
 
             let rainyRatio = 0;
             if (isSeasonal) {
@@ -666,18 +712,32 @@
         function calculateAll() {
             const isSeasonal = T1_Data.supplyModel === 'seasonal';
 
-            const totalProjectFeedstockDisplay = parseFloat(document.getElementById('inputTotalFeedstock').value) || 0;
-            const selfDelivered = parseFloat(document.getElementById('inputSelfDelivered').value);
-            const logisticsTarget = Math.max(0, totalProjectFeedstockDisplay - (isNaN(selfDelivered) ? 0 : selfDelivered));
-            document.getElementById('logisticsTarget').textContent = `${logisticsTarget.toLocaleString()} t`;
+            let totalAnnualCost = 0, totalVolume = 0, totalTarget = 0, totalUpstreamTonnes = 0;
 
-            let totalAnnualCost = 0, totalVolume = 0;
-            document.querySelectorAll('.route-card').forEach(card => {
-                const vol = parseFloat(card.querySelector('.route-vol').value) || 0;
-                const trips = parseFloat(card.querySelector('.route-freq').value) || 1;
-                totalVolume += vol;
-                card.querySelector('.route-avg-load').textContent = (vol / trips).toFixed(1);
-                totalAnnualCost += calculateRouteCost(card, isSeasonal);
+            document.querySelectorAll('.feedstock-section').forEach(sectionEl => {
+                const upstream = parseFloat(sectionEl.dataset.tonnes) || 0;
+                const selfDelInput = sectionEl.querySelector('.section-self-delivered');
+                const selfDel = parseFloat(selfDelInput.value);
+                const target = Math.max(0, upstream - (isNaN(selfDel) ? 0 : selfDel));
+                sectionEl.querySelector('.section-target').textContent = `${target.toLocaleString()} t`;
+
+                let sectionVolume = 0, sectionCost = 0;
+                sectionEl.querySelectorAll('.route-card').forEach(card => {
+                    const vol = parseFloat(card.querySelector('.route-vol').value) || 0;
+                    const trips = parseFloat(card.querySelector('.route-freq').value) || 1;
+                    sectionVolume += vol;
+                    card.querySelector('.route-avg-load').textContent = (vol / trips).toFixed(1);
+                    sectionCost += calculateRouteCost(card, isSeasonal);
+                });
+
+                const sectionCostEl = sectionEl.querySelector('.section-annual-cost');
+                sectionCostEl.dataset.baseUsd = sectionCost;
+                sectionCostEl.textContent = BiocharCurrency.format(sectionCost, _fieldCurrencies.outputs['outputAnnualCost'] || 'USD', 0);
+
+                totalAnnualCost += sectionCost;
+                totalVolume += sectionVolume;
+                totalTarget += target;
+                totalUpstreamTonnes += upstream;
             });
 
             const annualEl = document.getElementById('outputAnnualCost');
@@ -685,18 +745,18 @@
             annualEl.textContent = formatCurrency(totalAnnualCost, false, 'outputAnnualCost');
 
             const perTonneEl = document.getElementById('outputCostPerTonne');
-            const perTonne = totalProjectFeedstockDisplay > 0 ? totalAnnualCost / totalProjectFeedstockDisplay : 0;
+            const perTonne = totalUpstreamTonnes > 0 ? totalAnnualCost / totalUpstreamTonnes : 0;
             perTonneEl.dataset.baseUsd = perTonne;
-            perTonneEl.textContent = totalProjectFeedstockDisplay > 0
+            perTonneEl.textContent = totalUpstreamTonnes > 0
                 ? formatCurrency(perTonne, true, 'outputCostPerTonne')
                 : '$--';
 
             const statusEl = document.getElementById('outputStatus');
             const statusSub = document.getElementById('outputStatusSub');
-            statusEl.textContent = `${totalVolume.toLocaleString()}t / ${logisticsTarget.toLocaleString()}t`;
+            statusEl.textContent = `${totalVolume.toLocaleString()}t / ${totalTarget.toLocaleString()}t`;
             statusEl.classList.remove('text-yellow-300','text-red-300','text-green-300','text-white');
 
-            const ratio = logisticsTarget > 0 ? totalVolume / logisticsTarget : (totalVolume > 0 ? 999 : 1);
+            const ratio = totalTarget > 0 ? totalVolume / totalTarget : (totalVolume > 0 ? 999 : 1);
             if (ratio < 0.95) {
                 statusEl.classList.add('text-yellow-300');
                 statusSub.textContent = BiocharI18n.t('tool3.status_not_met');
@@ -709,14 +769,155 @@
             }
         }
 
-        function addRoute(data) {
-            routeCount++;
+        function buildFeedstockList(pd) {
+            const list = [];
+            const t1 = pd.tool1 || {};
+            const t2 = pd.tool2 || {};
+            if (t2.diversified) {
+                const d = t2.diversified;
+                if ((d.f1_tonnes || 0) > 0 || d.f1_name) {
+                    list.push({
+                        id: 'primary',
+                        name: d.f1_name || BiocharI18n.t('tool3.primary_label'),
+                        source: 'primary',
+                        isWood: false,
+                        fromTool1: false,
+                        tonnes: d.f1_tonnes || 0
+                    });
+                }
+                if (Array.isArray(t2.secondaryFeedstocks)) {
+                    t2.secondaryFeedstocks.forEach((sf, i) => {
+                        if ((sf.tonnes || 0) <= 0 && !sf.name && !sf.fromTool1) return;
+                        let nm = sf.name;
+                        if (!nm) {
+                            nm = sf.fromTool1
+                                ? BiocharI18n.t('tool3.wood_pruning_label')
+                                : `${BiocharI18n.t('tool3.secondary_label')} #${i + 1}`;
+                        }
+                        list.push({
+                            id: `secondary_${i}`,
+                            name: nm,
+                            source: 'secondary',
+                            isWood: !!sf.isWood,
+                            fromTool1: !!sf.fromTool1,
+                            tonnes: sf.tonnes || 0
+                        });
+                    });
+                }
+            } else {
+                // No tool2 yet — fall back to tool1 totals so users see something.
+                if ((t1.feedstockTonnes || 0) > 0) {
+                    list.push({
+                        id: 'primary',
+                        name: BiocharI18n.t('tool3.primary_label'),
+                        source: 'primary',
+                        isWood: false,
+                        fromTool1: false,
+                        tonnes: t1.feedstockTonnes || 0
+                    });
+                }
+                if ((t1.woodTonnes || 0) > 0) {
+                    list.push({
+                        id: 'secondary_0',
+                        name: BiocharI18n.t('tool3.wood_pruning_label'),
+                        source: 'secondary',
+                        isWood: true,
+                        fromTool1: true,
+                        tonnes: t1.woodTonnes || 0
+                    });
+                }
+            }
+            return list;
+        }
+
+        function renderFeedstockSections() {
+            const container = document.getElementById('feedstockSections');
+            const emptyMsg = document.getElementById('noFeedstocksMsg');
+            if (!container) return;
+            container.innerHTML = '';
+
+            if (_feedstockList.length === 0) {
+                if (emptyMsg) emptyMsg.classList.remove('hidden');
+                return;
+            }
+            if (emptyMsg) emptyMsg.classList.add('hidden');
+
+            const tpl = document.getElementById('feedstockSectionTemplate');
+
+            _feedstockList.forEach(fs => {
+                const frag = tpl.content.cloneNode(true);
+                const sectionEl = frag.querySelector('.feedstock-section');
+                sectionEl.dataset.feedstockId = fs.id;
+                sectionEl.dataset.tonnes = fs.tonnes || 0;
+
+                // i18n inside template content
+                frag.querySelectorAll('[data-i18n]').forEach(el => {
+                    el.textContent = BiocharI18n.t(el.dataset.i18n);
+                });
+                frag.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                    el.placeholder = BiocharI18n.t(el.dataset.i18nPlaceholder);
+                });
+                frag.querySelectorAll('[data-i18n-html]').forEach(el => {
+                    el.innerHTML = BiocharI18n.t(el.dataset.i18nHtml);
+                });
+
+                // Fill header
+                const title = sectionEl.querySelector('.section-title');
+                title.textContent = BiocharI18n.t('tool3.feedstock_section_title', { name: fs.name });
+                const badge = sectionEl.querySelector('.section-role-badge');
+                badge.textContent = fs.fromTool1
+                    ? BiocharI18n.t('tool3.wood_pruning_label')
+                    : (fs.source === 'primary'
+                        ? BiocharI18n.t('tool3.primary_label')
+                        : BiocharI18n.t('tool3.secondary_label'));
+                sectionEl.querySelector('.section-tonnes').textContent = `${(fs.tonnes || 0).toLocaleString()} t`;
+
+                // Restore saved self-delivered
+                const saved = _sectionSavedData[fs.id];
+                const selfDelInput = sectionEl.querySelector('.section-self-delivered');
+                if (saved && saved.selfDelivered != null) {
+                    selfDelInput.value = saved.selfDelivered;
+                }
+                selfDelInput.addEventListener('input', () => { calculateAll(); setUnsaved(); });
+
+                // Add-route button
+                const addBtn = sectionEl.querySelector('.section-add-route-btn');
+                addBtn.addEventListener('click', () => {
+                    addRoute(sectionEl);
+                    setUnsaved();
+                });
+
+                // Hide empty-feedstock notice if there are tonnes; show if 0
+                const noMsg = sectionEl.querySelector('.section-no-tonnes-msg');
+                if (noMsg) {
+                    if ((fs.tonnes || 0) > 0) noMsg.classList.add('hidden');
+                    else noMsg.classList.remove('hidden');
+                }
+
+                container.appendChild(frag);
+
+                // Restore saved routes for this section (or one empty route to start).
+                if (saved && Array.isArray(saved.routes) && saved.routes.length > 0) {
+                    saved.routes.forEach(r => addRoute(sectionEl, r));
+                } else {
+                    addRoute(sectionEl);
+                }
+            });
+        }
+
+        function addRoute(sectionEl, data) {
+            if (!sectionEl) return;
             const template = document.getElementById('routeTemplate');
             if (!template) return;
 
+            const fid = sectionEl.dataset.feedstockId;
+            if (!_routeCurrencies[fid]) _routeCurrencies[fid] = [];
+
+            const sectionRoutes = sectionEl.querySelector('.section-routes');
+            const routeIdx = sectionRoutes.querySelectorAll('.route-card').length;
+
             const clone = template.content.cloneNode(true);
 
-            // Apply i18n translations to template content (not processed by i18n.js DOMContentLoaded)
             clone.querySelectorAll('[data-i18n]').forEach(el => {
                 el.textContent = BiocharI18n.t(el.dataset.i18n);
             });
@@ -727,8 +928,7 @@
                 el.innerHTML = BiocharI18n.t(el.dataset.i18nHtml);
             });
 
-            // Override route title with current count
-            clone.querySelector('.route-title').textContent = BiocharI18n.t('tool3.route_title', { n: routeCount });
+            clone.querySelector('.route-title').textContent = BiocharI18n.t('tool3.route_title', { n: routeIdx + 1 });
 
             const isSeasonal = (T1_Data.supplyModel === 'seasonal');
             const seasonalInputs = clone.querySelector('.seasonal-route-inputs');
@@ -752,8 +952,7 @@
                 toggleMethod(methodSelect, false);
             }
 
-            const dynamicInputs = clone.querySelectorAll('input, select');
-            dynamicInputs.forEach(el => {
+            clone.querySelectorAll('input, select').forEach(el => {
                 const eventType = (el.tagName === 'SELECT' || el.type === 'checkbox') ? 'change' : 'input';
                 el.addEventListener(eventType, calculateAll);
                 el.addEventListener(eventType, setUnsaved);
@@ -767,20 +966,18 @@
                 toggleMethod(this, true);
             });
 
-            document.getElementById('routesContainer').appendChild(clone);
-            updateRemoveButtons();
+            sectionRoutes.appendChild(clone);
+            updateRemoveButtons(sectionEl);
 
-            // Wrap monetary route inputs with currency selectors.
-            // Must query from the DOM after appendChild — the DocumentFragment is empty after the append.
+            // Wrap monetary route inputs with currency selectors. Query from DOM after appendChild —
+            // the DocumentFragment is empty after the append.
             if (window.BiocharCurrency) {
-                const routeCards = document.querySelectorAll('.route-card');
-                const appendedCard = routeCards[routeCards.length - 1];
-                const idx = routeCards.length - 1;
-                if (!_routeCurrencies[idx]) _routeCurrencies[idx] = {};
-                const rc = _routeCurrencies[idx];
+                const cards = sectionRoutes.querySelectorAll('.route-card');
+                const appendedCard = cards[cards.length - 1];
+                const idx = cards.length - 1;
+                if (!_routeCurrencies[fid][idx]) _routeCurrencies[fid][idx] = {};
+                const rc = _routeCurrencies[fid][idx];
                 const projCode = (window.BiocharProjectCurrency && BiocharProjectCurrency.getProjectCurrency()) || 'USD';
-                // Newly-added routes default to the project currency. (For routes restored
-                // from saved data, the rc slots may already be populated from savedCurr.)
                 const seedCode = data ? 'USD' : projCode;
                 ['route-rate', 'route-quote-dry', 'route-quote-rain'].forEach(cls => {
                     if (!rc[cls]) rc[cls] = seedCode;
@@ -788,7 +985,6 @@
                 BiocharCurrency.wrapClassInput(appendedCard.querySelector('.route-rate'), 'route-rate', rc['route-rate'], 'onRouteCurrencyChange');
                 BiocharCurrency.wrapClassInput(appendedCard.querySelector('.route-quote-dry'), 'route-quote-dry', rc['route-quote-dry'], 'onRouteCurrencyChange');
                 BiocharCurrency.wrapClassInput(appendedCard.querySelector('.route-quote-rain'), 'route-quote-rain', rc['route-quote-rain'], 'onRouteCurrencyChange');
-                // Convert this card's USD template defaults to the project currency.
                 if (!data && window.BiocharProjectCurrency) {
                     BiocharProjectCurrency.applyHtmlDefaults(appendedCard);
                 }
@@ -799,21 +995,33 @@
             }
         }
 
-        function updateRemoveButtons() {
-            const routes = document.querySelectorAll('.route-card');
-            const showRemove = routes.length > 1;
-            routes.forEach(route => {
-                const removeBtn = route.querySelector('.remove-route');
-                if (removeBtn) {
-                    removeBtn.style.display = showRemove ? 'block' : 'none';
-                }
+        function updateRemoveButtons(sectionEl) {
+            const target = sectionEl || document;
+            const sections = sectionEl ? [sectionEl] : Array.from(document.querySelectorAll('.feedstock-section'));
+            sections.forEach(sec => {
+                const routes = sec.querySelectorAll('.route-card');
+                const showRemove = routes.length > 1;
+                routes.forEach(route => {
+                    const removeBtn = route.querySelector('.remove-route');
+                    if (removeBtn) {
+                        removeBtn.style.display = showRemove ? 'block' : 'none';
+                    }
+                });
             });
         }
 
         function removeRoute(el) {
-            el.closest('.route-card').remove();
+            const card = el.closest('.route-card');
+            const sectionEl = card.closest('.feedstock-section');
+            const fid = sectionEl && sectionEl.dataset.feedstockId;
+            const idx = sectionEl ? Array.from(sectionEl.querySelectorAll('.route-card')).indexOf(card) : -1;
+            card.remove();
+            // Shift _routeCurrencies for this section so indices stay aligned.
+            if (fid && Array.isArray(_routeCurrencies[fid]) && idx >= 0) {
+                _routeCurrencies[fid].splice(idx, 1);
+            }
+            updateRemoveButtons(sectionEl);
             calculateAll();
-            updateRemoveButtons();
         }
 
         function toggleMethod(selectEl, doCalculate) {
@@ -846,12 +1054,13 @@
             const code = document.getElementById(fieldId + '_currency').value;
             _fieldCurrencies.outputs[fieldId] = code;
             el.textContent = baseUsd > 0 ? BiocharCurrency.format(baseUsd, code, fieldId === 'outputCostPerTonne' ? 2 : 0) : '$--';
+            // Re-render per-section cost displays so they follow the global cost currency.
+            if (fieldId === 'outputAnnualCost') calculateAll();
         }
         function onRouteCurrencyChange(fieldClass, cardEl) {
             const select = cardEl.querySelector('.' + fieldClass + '_currency');
-            const idx = Array.from(document.querySelectorAll('.route-card')).indexOf(cardEl);
-            if (!_routeCurrencies[idx]) _routeCurrencies[idx] = {};
-            _routeCurrencies[idx][fieldClass] = select ? select.value : 'USD';
+            const rc = getRouteCurrencyMap(cardEl);
+            rc[fieldClass] = select ? select.value : 'USD';
             const isSeasonal = T1_Data.supplyModel === 'seasonal';
             calculateRouteCost(cardEl, isSeasonal);
             calculateAll();

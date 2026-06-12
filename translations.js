@@ -393,9 +393,20 @@ window.BiocharTranslations = {
         "Your project is seasonal. Please define the specific weather window for each route you build below.",
       mobile_info_text:
         "Note: Mobile kiln relocation costs are found in Tool 5.",
-      step2_title: "Step 2: Build Feedstock Transport Routes",
+      step2_title: "Step 2: Plan Logistics per Feedstock",
       step2_intro:
-        "Your remaining feedstock can arrive via regional transport. Allocate this volume to transportation routes below.",
+        "Define a self-delivered share and transport routes for each feedstock source feeding the kiln.",
+      feedstock_section_title: "Logistics for {name}",
+      primary_label: "Primary Feedstock",
+      secondary_label: "Secondary Feedstock",
+      wood_pruning_label: "Pruned Wood (from Tool 1)",
+      section_upstream_label: "Annual Tonnes (from upstream)",
+      section_target_label: "Section Logistics Target",
+      section_cost_label: "Section Annual Cost",
+      no_tonnes_msg:
+        "No tonnes recorded for this feedstock. Add tonnes in Tool 1 / Tool 2 if logistics are needed.",
+      no_feedstocks_msg:
+        "No feedstocks found. Please complete Tool 2 first.",
       add_route_btn: "Add Transport Route",
       step3_title: "Step 3: Final Logistics Summary",
       target_status_label: "Target Status",
@@ -1306,9 +1317,20 @@ window.BiocharTranslations = {
         "Su proyecto es estacional. Defina la ventana específica para cada ruta abajo.",
       mobile_info_text:
         "Nota: Los costos de reubicación del horno móvil están en la Herramienta 5.",
-      step2_title: "Paso 2: Crear Rutas de Transporte",
+      step2_title: "Paso 2: Planificar Logística por Materia Prima",
       step2_intro:
-        "Su materia prima restante puede llegar vía transporte regional. Asigne este volumen a las rutas abajo.",
+        "Defina la entrega propia y las rutas de transporte para cada fuente de materia prima que alimenta el horno.",
+      feedstock_section_title: "Logística para {name}",
+      primary_label: "Materia Prima Principal",
+      secondary_label: "Materia Prima Secundaria",
+      wood_pruning_label: "Madera de Poda (de Tool 1)",
+      section_upstream_label: "Toneladas Anuales (desde arriba)",
+      section_target_label: "Objetivo Logístico de esta Sección",
+      section_cost_label: "Costo Anual de esta Sección",
+      no_tonnes_msg:
+        "No hay toneladas registradas para esta materia prima. Agregue toneladas en Tool 1 / Tool 2 si necesita logística.",
+      no_feedstocks_msg:
+        "No se encontraron materias primas. Por favor complete la Herramienta 2 primero.",
       add_route_btn: "Agregar Ruta",
       step3_title: "Paso 3: Resumen Logístico Final",
       target_status_label: "Estado del Objetivo",
@@ -2222,9 +2244,20 @@ window.BiocharTranslations = {
         "Seu projeto é sazonal. Defina a janela específica para cada rota abaixo.",
       mobile_info_text:
         "Nota: Os custos de realocação do forno móvel estão na Ferramenta 5.",
-      step2_title: "Passo 2: Criar Rotas de Transporte",
+      step2_title: "Passo 2: Planejar Logística por Matéria-Prima",
       step2_intro:
-        "Sua matéria-prima restante pode chegar via transporte regional. Aloque este volume às rotas abaixo.",
+        "Defina a entrega própria e as rotas de transporte para cada fonte de matéria-prima que alimenta o forno.",
+      feedstock_section_title: "Logística para {name}",
+      primary_label: "Matéria-Prima Principal",
+      secondary_label: "Matéria-Prima Secundária",
+      wood_pruning_label: "Madeira de Poda (da Tool 1)",
+      section_upstream_label: "Toneladas Anuais (do passo anterior)",
+      section_target_label: "Meta Logística desta Seção",
+      section_cost_label: "Custo Anual desta Seção",
+      no_tonnes_msg:
+        "Nenhuma tonelada registrada para esta matéria-prima. Adicione toneladas em Tool 1 / Tool 2 se logística for necessária.",
+      no_feedstocks_msg:
+        "Nenhuma matéria-prima encontrada. Por favor, complete a Ferramenta 2 primeiro.",
       add_route_btn: "Adicionar Rota",
       step3_title: "Passo 3: Resumo Logístico Final",
       target_status_label: "Status da Meta",
