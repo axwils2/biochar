@@ -691,7 +691,23 @@
                 const t2 = projectData.tool2;
                 const t3 = projectData.tool3 || {};
 
-                projectState.totalFeedstock = (t2.diversified.f1_tonnes || 0) + (t2.diversified.f2_tonnes || 0);
+                // Migration shim: convert flat f2_* to secondaryFeedstocks[0] for old saved data
+                let secondaryFeedstocks = t2.secondaryFeedstocks;
+                if (!secondaryFeedstocks && (t2.diversified.f2_name || t2.diversified.f2_tonnes)) {
+                    secondaryFeedstocks = [{
+                        tonnes: t2.diversified.f2_tonnes || 0,
+                        ash: (t2.diversified.f2_ash * 100) || 2,
+                        yield: (t2.diversified.f2_yield * 100) || 30,
+                        carbon: (t2.diversified.f2_carbon * 100) || 80,
+                        price: t2.diversified.f2_price || 0,
+                        isWood: t2.diversified.f2_isWood || false,
+                        conv: t2.diversified.f2_conv || 2.63
+                    }];
+                }
+                secondaryFeedstocks = secondaryFeedstocks || [];
+
+                const totalSecondaryTonnes = secondaryFeedstocks.reduce((s, f) => s + (f.tonnes || 0), 0);
+                projectState.totalFeedstock = (t2.diversified.f1_tonnes || 0) + totalSecondaryTonnes;
                 projectState.scale = getProjectSize(projectState.totalFeedstock / (t1.numHubs || 1));
                 projectState.country = (window.BiocharProjectCurrency
                     ? BiocharProjectCurrency.normalizeCountryCode(t1.country)
@@ -700,9 +716,12 @@
                 projectState.type = t1.projectType || 'centralized';
 
                 const credits1 = (t2.diversified.f1_tonnes || 0) * (1 - (t2.diversified.f1_ash || 0)) * (t2.diversified.f1_yield || 0) * (t2.diversified.f1_carbon || 0) * (t2.diversified.f1_conv || 0);
-                const credits2 = (t2.diversified.f2_tonnes || 0) * (1 - (t2.diversified.f2_ash || 0)) * (t2.diversified.f2_yield || 0) * (t2.diversified.f2_carbon || 0) * (t2.diversified.f2_conv || 0);
-                projectState.totalCredits = credits1 + credits2;
-                projectState.needsChipper = t2.diversified.f2_isWood || false;
+                const secondaryCredits = secondaryFeedstocks.reduce((s, f) => {
+                    const b = (f.tonnes || 0) * (1 - (f.ash / 100 || 0)) * (f.yield / 100 || 0);
+                    return s + b * (f.carbon / 100 || 0) * (f.conv || 0);
+                }, 0);
+                projectState.totalCredits = credits1 + secondaryCredits;
+                projectState.needsChipper = secondaryFeedstocks.some(f => f.isWood);
                 projectState.strategy = t1.seasonalityStrategy || 'year_round';
 
                 document.getElementById('displayScale').textContent = `${projectState.scale.toUpperCase()} (${projectState.totalFeedstock.toLocaleString()}t/yr)`;
@@ -738,9 +757,9 @@
                 projectState.isNewProject = !savedData;
                 if (!savedData) {
                     const f1_cost = (t2.diversified.f1_tonnes || 0) * (t2.diversified.f1_price || 0);
-                    const f2_cost = (t2.diversified.f2_tonnes || 0) * (t2.diversified.f2_price || 0);
+                    const secondary_cost = secondaryFeedstocks.reduce((s, f) => s + ((f.tonnes || 0) * (f.price || 0)), 0);
                     const logistics_cost = t3.totalAnnualLogisticsCost || 0;
-                    document.getElementById('inputFeedstockLoanAmount').value = (f1_cost + f2_cost + logistics_cost).toFixed(0);
+                    document.getElementById('inputFeedstockLoanAmount').value = (f1_cost + secondary_cost + logistics_cost).toFixed(0);
 
                     const kilnCapex = t2.kiln?.total_upfront_pyrolyzer_capex || 0;
                     document.getElementById('outputTotalKilnCost').value = kilnCapex.toFixed(0);
