@@ -16,14 +16,14 @@
 
     <style>
         /* Grouping Style */
-        .step-group { background-color: #f9fafb; border-color: #d1d5db; }
+        .step-group { background-color: var(--bg-3); border-color: var(--color-neutral-300); }
 
         /* Route Cards */
-        .route-card { background-color: #fff; padding: 1rem; border-radius: 0.5rem; border: 1px solid #d1d5db; margin-bottom: 1rem; position: relative; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
-        .remove-route { position: absolute; top: 0.5rem; right: 0.5rem; color: #ef4444; cursor: pointer; font-size: 1.25rem; font-weight: 700; }
-        .remove-route:hover { color: #b91c1c; }
-        .add-button { width: 100%; padding: 1rem 0; background-color: #16a34a; border: 2px solid transparent; color: #fff; font-weight: 700; font-size: 1.125rem; border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: background-color 0.15s; }
-        .add-button:hover { background-color: #15803d; }
+        .route-card { background-color: #fff; padding: 1rem; border-radius: var(--radius-card); border: 1px solid var(--color-primary-border); margin-bottom: 1rem; position: relative; box-shadow: var(--shadow-card); }
+        .remove-route { position: absolute; top: 0.5rem; right: 0.5rem; color: var(--sec-red-outline); cursor: pointer; font-size: 1.25rem; font-weight: 700; }
+        .remove-route:hover { color: var(--sec-red-text); }
+        .add-button { width: 100%; padding: 1rem 0; background-color: var(--sec-green-outline); border: 2px solid transparent; color: #fff; font-weight: 700; font-size: 1.125rem; border-radius: var(--radius-card); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-card); transition: background-color 0.15s; }
+        .add-button:hover { background-color: var(--sec-green-text); }
         .summary-box { padding: 1rem; border-radius: 0.5rem; color: #fff; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
 
         /* --- TOOLTIPS & ICONS --- */
@@ -40,6 +40,7 @@
     <div class="app-logo-mark"></div>
     <span class="app-logo-name" data-i18n="common.header_h1">Biochar Calculator</span>
   </a>
+  <img class="icon icon-lg" src="icons/tool3-logistics.svg" alt="" style="flex-shrink:0;">
   <span class="app-step-badge">3</span>
   <span class="app-step-name" data-i18n="tool3.step_name">Logistics</span>
   <span class="app-step-of">· 3 of 7</span>
@@ -113,12 +114,12 @@
         <div class="section-card">
             <h2 class="section-card-header" data-i18n="tool3.step3_title">Step 3: Final Logistics Summary</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <div class="summary-box bg-blue-800 text-white">
+                <div class="summary-box text-white" style="background: var(--color-primary);">
                     <h3 class="text-sm uppercase tracking-wider opacity-80 mb-1 text-blue-200" data-i18n="tool3.target_status_label">Target Status</h3>
                     <p id="outputStatus" class="text-2xl font-bold mt-2 leading-tight text-white">0t / 0t</p>
                     <p id="outputStatusSub" class="text-xs opacity-80" data-i18n="tool3.target_status_sub">Volume Moved vs. Target</p>
                 </div>
-                <div class="summary-box bg-green-700">
+                <div class="summary-box" style="background: var(--sec-green-outline);">
                     <h3 class="text-sm uppercase tracking-wider opacity-80 mb-1 text-green-100 flex items-center">
                         <span data-i18n="tool3.annual_cost_label">Total Annual Logistics Cost</span>
                         <div class="tooltip-wrap">
@@ -128,7 +129,7 @@
                     </h3>
                     <p id="outputAnnualCost" class="text-3xl font-extrabold text-white">$0</p>
                 </div>
-                <div class="summary-box bg-blue-600">
+                <div class="summary-box" style="background: var(--sec-blue-outline);">
                     <h3 class="text-sm uppercase tracking-wider opacity-80 mb-1 text-blue-100 flex items-center">
                         <span data-i18n="tool3.cost_per_tonne_label">Logistics Cost per Tonne</span>
                         <div class="tooltip-wrap">
@@ -211,7 +212,10 @@
     <template id="routeTemplate">
         <div class="route-card">
             <div class="remove-route" style="display: none;">×</div>
-            <h3 class="font-bold text-gray-800 mb-3 route-title">Route #1</h3>
+            <div class="flex items-center gap-2 mb-3">
+                <span class="icon-chip icon-chip-sm"><img src="icons/route.svg" alt=""></span>
+                <h3 class="font-bold text-gray-800 route-title" style="margin:0;">Route #1</h3>
+            </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="space-y-3">
@@ -242,6 +246,7 @@
                 <div class="space-y-3 bg-gray-100 p-4 rounded-lg border-2 border-gray-300">
                     <label class="block">
                         <span class="input-label font-bold text-gray-800">
+                            <img class="icon icon-md" src="icons/tool3-logistics.svg" alt="" style="margin-right:4px;">
                             <span data-i18n="tool3.truck_model_label">Truck Ownership Model</span>
                             <span class="tooltip-wrap ml-1"><span class="tooltip-icon">?</span><span class="tooltip-text" data-i18n="tool3.truck_model_tooltip">Select 'Owned' if you pay a driver by the hour. Select 'Hired' if you pay a flat fee per trip.</span></span>
                         </span>
@@ -261,18 +266,21 @@
                             <input type="number" class="input route-rate border-2 border-gray-300" value="55" data-usd-default="55" min="0">
                         </label>
                         <div class="grid grid-cols-2 gap-4">
-                            <div class="bg-orange-100 rounded-lg border-2 border-orange-300 p-3"><label class="block"><span class="input-label text-orange-900 font-bold mb-2 block leading-tight" data-i18n="tool3.dry_hours_label">Dry Season Round-Trip (Hrs)</span><input type="number" class="input route-hours-dry border-orange-300" value="4" min="0.5" step="0.5"></label></div>
-                            <div class="bg-blue-100 rounded-lg border-2 border-blue-300 p-3"><label class="block"><span class="input-label text-blue-900 font-bold mb-2 block leading-tight" data-i18n="tool3.rainy_hours_label">Rainy Season Round-Trip (Hrs)</span><input type="number" class="input route-hours-rain border-blue-300" value="6" min="0.5" step="0.5"></label></div>
+                            <div class="bg-orange-100 rounded-lg border-2 border-orange-300 p-3"><label class="block"><span class="input-label text-orange-900 font-bold mb-2 leading-tight"><img class="icon icon-sm" src="icons/sun.svg" alt="" style="margin-right:4px;"><span data-i18n="tool3.dry_hours_label">Dry Season Round-Trip (Hrs)</span></span><input type="number" class="input route-hours-dry border-orange-300" value="4" min="0.5" step="0.5"></label></div>
+                            <div class="bg-blue-100 rounded-lg border-2 border-blue-300 p-3"><label class="block"><span class="input-label text-blue-900 font-bold mb-2 leading-tight"><img class="icon icon-sm" src="icons/rain.svg" alt="" style="margin-right:4px;"><span data-i18n="tool3.rainy_hours_label">Rainy Season Round-Trip (Hrs)</span></span><input type="number" class="input route-hours-rain border-blue-300" value="6" min="0.5" step="0.5"></label></div>
                         </div>
                     </div>
 
                     <div class="flat-inputs hidden space-y-5 mt-4">
-                        <p class="text-xs text-gray-500 mb-2" data-i18n-html="tool3.flat_note">
-                            <strong>Note:</strong> Use the full price negotiated with the driver for a round trip.
-                        </p>
+                        <div class="flex items-start gap-2 mb-2 p-2 rounded-lg" style="background: var(--bg-4);">
+                            <img class="icon icon-md" src="icons/lightbulb.svg" alt="" style="margin-top:1px; flex-shrink:0;">
+                            <p class="text-xs text-gray-600 m-0" data-i18n-html="tool3.flat_note">
+                                <strong>Note:</strong> Use the full price negotiated with the driver for a round trip.
+                            </p>
+                        </div>
                         <div class="grid grid-cols-2 gap-4">
-                            <div class="bg-orange-100 rounded-lg border-2 border-orange-300 p-3"><label class="block"><span class="input-label text-orange-900 font-bold mb-2 block" data-i18n="tool3.dry_quote_label">Dry Season Quote ($)</span><input type="number" class="input route-quote-dry border-orange-300" value="150" data-usd-default="150" min="0"></label></div>
-                            <div class="bg-blue-100 rounded-lg border-2 border-blue-300 p-3"><label class="block"><span class="input-label text-blue-900 font-bold mb-2 block" data-i18n="tool3.rainy_quote_label">Rainy Season Quote ($)</span><input type="number" class="input route-quote-rain border-blue-300" value="175" data-usd-default="175" min="0"></label></div>
+                            <div class="bg-orange-100 rounded-lg border-2 border-orange-300 p-3"><label class="block"><span class="input-label text-orange-900 font-bold mb-2"><img class="icon icon-sm" src="icons/sun.svg" alt="" style="margin-right:4px;"><span data-i18n="tool3.dry_quote_label">Dry Season Quote ($)</span></span><input type="number" class="input route-quote-dry border-orange-300" value="150" data-usd-default="150" min="0"></label></div>
+                            <div class="bg-blue-100 rounded-lg border-2 border-blue-300 p-3"><label class="block"><span class="input-label text-blue-900 font-bold mb-2"><img class="icon icon-sm" src="icons/rain.svg" alt="" style="margin-right:4px;"><span data-i18n="tool3.rainy_quote_label">Rainy Season Quote ($)</span></span><input type="number" class="input route-quote-rain border-blue-300" value="175" data-usd-default="175" min="0"></label></div>
                         </div>
                     </div>
                 </div>

@@ -33,15 +33,21 @@ Biochar Project Feasibility Calculator for Latin American Coffee & Cacao Supply 
 
 All shared visual styles live in **`styles.css`** — the single source of truth for component classes. Every HTML page loads it via `<link rel="stylesheet" href="styles.css">`. Never define button, input, card, or tooltip styles inside a page's own `<style>` block; page-level styles are reserved for truly page-specific components (e.g., accordion panels, kiln selection cards, scenario sliders).
 
-**CSS stack:** Tailwind v4 Browser CDN (`https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4`) for utility classes. No `@apply` — Tailwind v4 browser mode does not support it. Plain CSS component classes in `styles.css`. Inter font from Google Fonts.
+**CSS stack:** Tailwind v4 Browser CDN (`https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4`) for utility classes. No `@apply` — Tailwind v4 browser mode does not support it. Plain CSS component classes in `styles.css`. **Urbanist** font from Google Fonts.
+
+**Brand:** indigo `#4A52EB` primary + lime `#CBEE7C` accent, lavender background ramp, Urbanist type. Sourced from the project Style Guide (`~/Downloads/style_guide.png`). The old teal theme is fully retired — do not reintroduce `#0d9488`/`#0891b2` or `teal`/`emerald`/`cyan` Tailwind classes.
 
 **Design tokens** (CSS custom properties in `:root`):
-- `--color-primary` (`#0d9488`), `--color-primary-dark`, `--color-primary-deepest`, `--color-primary-light`, `--color-primary-border`, `--color-primary-border-light`
-- `--color-warning-bg/border/text/strong`, `--color-danger-bg/border/text`
-- `--color-neutral-50` through `--color-neutral-900`
-- `--shadow-card`, `--shadow-card-hover`, `--radius-card`, `--radius-input`, `--radius-btn`, `--radius-pill`
+- `--color-primary` (`#4A52EB`), `--color-primary-dark`, `--color-primary-deepest`, `--color-primary-light`, `--color-primary-border`, `--color-primary-border-light`
+- `--color-accent` (`#CBEE7C`), `--color-accent-dark`, `--color-accent-deep` — lime highlight
+- `--bg-1` … `--bg-5` — lavender background ramp (`#FFFFFF → #E4DCFF`); `body` background is `#F7F6FE`
+- `--sec-{green,orange,blue,red,indigo,gray}-{fill,outline,text}` — the Style Guide "secondary" triples. `--color-warning-*` aliases the orange set, `--color-danger-*` the red set. The tool 4/5/6 `.section-title-{green,blue,orange,gray,yellow}` variants use these text/outline colors.
+- `--color-neutral-50` through `--color-neutral-900` (neutral-500 = `#787878`)
+- `--shadow-card`, `--shadow-card-hover`, `--radius-card` (`16px`), `--radius-input`/`--radius-btn` (`10px`), `--radius-pill`
 
-**Shared component classes:** `.app-header`, `.app-logo`, `.app-logo-mark`, `.app-logo-name`, `.app-step-badge`, `.app-step-name`, `.app-step-of`, `.app-lang-select`, `.app-progress-track`, `.app-progress-fill`, `.step-nav`, `.step-pill`, `.step-pill-done`, `.step-pill-active`, `.step-pill-future`, `.dep-alert`, `.dep-alert-icon`, `.dep-alert-text`, `.page-content`, `.section-card`, `.section-card-header`, `.kpi-grid`, `.kpi`, `.kpi-label`, `.kpi-value`, `.kpi-unit`, `.btn`, `.btn-primary`, `.btn-secondary`, `.btn-danger`, `.btn-ghost`, `.btn-sm`, `.input-label`, `.input`, `.input-group`, `.tooltip-wrap`, `.tooltip-icon`, `.tooltip-text`, `.tool-card`, `.tool-card-number`, `.tool-card-title`, `.tool-card-desc`, `.app-footer`, `.footer-disclaimer-grid`, `.footer-card`, `.footer-card-title`, `.footer-card-text`, `.footer-attr`, `.hidden`
+**Icons:** SVG line-icons live in **`icons/`** (indigo `#4A52EB` + lime fills; provenance `~/Downloads/icons/`). Reference as `<img class="icon icon-sm|md|lg|xl" src="icons/…svg">`. Per-tool icons: `tool1-project`, `tool2-production`, `tool3-logistics`, `tool4-revenue`, `tool5-finance`, `tool6-results`; utility: `route`, `lightbulb`, `sun`, `rain`, `search`, `chat`, `user`, `arrow-right`, `chevron-down`, `status-{complete,progress,todo}`. `.app-logo-mark` is a background-image of `icons/logo.svg` (recreated "B" mark — indigo outline + lime bowl), no longer a gradient div. `.icon-chip` / `.icon-chip-sm` frame an icon in a lavender rounded square.
+
+**Shared component classes:** `.app-header`, `.app-logo`, `.app-logo-mark`, `.app-logo-name`, `.app-step-badge`, `.app-step-name`, `.app-step-of`, `.app-lang-select`, `.app-progress-track`, `.app-progress-fill`, `.step-nav`, `.step-pill`, `.step-pill-done`, `.step-pill-active`, `.step-pill-future`, `.dep-alert`, `.dep-alert-icon`, `.dep-alert-text`, `.page-content`, `.section-card`, `.section-card-header`, `.kpi-grid`, `.kpi`, `.kpi-label`, `.kpi-value`, `.kpi-unit`, `.btn`, `.btn-primary`, `.btn-secondary`, `.btn-danger`, `.btn-ghost`, `.btn-sm`, `.input-label`, `.input`, `.input-group`, `.tooltip-wrap`, `.tooltip-icon`, `.tooltip-text`, `.tool-card`, `.tool-card-number`, `.tool-card-title`, `.tool-card-desc`, `.tool-card-head`, `.tool-card-badge`, `.tool-card-icon`, `.tool-card-foot`, `.icon` (+`.icon-sm/-md/-lg/-xl`), `.icon-chip` (+`.icon-chip-sm`), `.status-badge` (+`.status-complete/-progress/-todo`, `.status-dot`, `.status-label`), `.t-title/.t-subtitle/.t-heading`, `.app-footer`, `.footer-disclaimer-grid`, `.footer-card`, `.footer-card-title`, `.footer-card-text`, `.footer-attr`, `.hidden`
 
 **Mobile-first:** All layout is single-column by default; `@media (min-width: 768px)` expands to multi-column. `.app-logo-name` and `.app-step-name` are hidden below 768px.
 
@@ -58,6 +64,7 @@ All shared visual styles live in **`styles.css`** — the single source of truth
 
 - **Save/unsaved guard:** Each tool tracks `hasUnsavedChanges`. `navigate(url)` calls `confirm(BiocharI18n.t('common.alert_unsaved_confirm'))` — user can choose to proceed or cancel. The `beforeunload` event warns on accidental close.
 - **Shared styles in `styles.css`, page-specific styles inline:** Inline `<style>` blocks are for page-specific components only (kiln cards, accordion, scenario sliders, etc.).
+- **Homepage tool status.** `index.html` renders a `.status-badge` per tool card, computed at load by `renderToolStatuses()` from `BiocharEngine.loadProjectData()`: *Complete* (green) when the tool's key is saved with its primary field set, *In Progress* (orange) when the key exists but incomplete, *Not Started* (indigo/gray) when absent. Labels use `common.status_complete/in_progress/not_started`. Each tool page also shows its icon next to the `.app-step-badge` in the header.
 - **Tailwind v4 via CDN:** `<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4">` — no `@apply`, utility classes only.
 - **Tooltips:** CSS tooltip system using `.tooltip-wrap` / `.tooltip-icon` / `.tooltip-text` from `styles.css` (old class names `.tooltip-container` / `.tooltip-text` no longer used).
 - **All monetary values are stored in USD (base currency).** Inputs may be entered in any currency via per-field selectors (`BiocharCurrency.wrapInput`); they are converted to USD with `BiocharCurrency.toBase` at save time. Outputs use `BiocharCurrency.format(usdAmount, displayCode)` for display in the user's selected currency.

@@ -29,6 +29,9 @@ window.BiocharTranslations = {
       footer_verify:
         "Users should independently verify all local costs, market prices, and regulatory requirements before making any investment.",
       sign_in: "Sign in →",
+      status_complete: "Complete",
+      status_in_progress: "In Progress",
+      status_not_started: "Not Started",
       my_projects: "My Projects →",
       sign_out: "Sign out",
     },
@@ -954,6 +957,9 @@ window.BiocharTranslations = {
       footer_verify:
         "Los usuarios deben verificar independientemente todos los costos locales, precios de mercado y requisitos regulatorios antes de realizar cualquier inversión.",
       sign_in: "Iniciar sesión →",
+      status_complete: "Completo",
+      status_in_progress: "En Progreso",
+      status_not_started: "No Iniciado",
       my_projects: "Mis Proyectos →",
       sign_out: "Cerrar sesión",
     },
@@ -1881,6 +1887,9 @@ window.BiocharTranslations = {
       footer_verify:
         "Os usuários devem verificar independentemente todos os custos locais, preços de mercado e requisitos regulatórios antes de fazer qualquer investimento.",
       sign_in: "Entrar →",
+      status_complete: "Concluído",
+      status_in_progress: "Em Andamento",
+      status_not_started: "Não Iniciado",
       my_projects: "Meus Projetos →",
       sign_out: "Sair",
     },

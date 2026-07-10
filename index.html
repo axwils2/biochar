@@ -129,9 +129,10 @@
 
         <!-- Tool cards grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-          <div class="tool-card">
-            <div class="tool-card-number" data-i18n="index.step1_num">
-              Step 1
+          <div class="tool-card" data-tool="1">
+            <div class="tool-card-head">
+              <span class="tool-card-badge" data-i18n="index.step1_num">Step 1</span>
+              <img class="tool-card-icon" src="icons/tool1-project.svg" alt="" />
             </div>
             <h3 class="tool-card-title" data-i18n="index.step1_title">
               Project Information &amp; Scale
@@ -139,17 +140,23 @@
             <p class="tool-card-desc" data-i18n="index.step1_desc">
               Define your project ID, location, and total feedstock volume.
             </p>
-            <a
-              href="tool1.html"
-              class="btn btn-primary btn-sm mt-4"
-              data-i18n="index.step1_btn"
-              >Open Tool 1 →</a
-            >
+            <div class="tool-card-foot">
+              <span class="status-badge status-todo js-status"
+                ><span class="status-dot"></span><span class="status-label">Not Started</span></span
+              >
+              <a
+                href="tool1.html"
+                class="btn btn-primary btn-sm"
+                data-i18n="index.step1_btn"
+                >Open Tool 1 →</a
+              >
+            </div>
           </div>
 
-          <div class="tool-card">
-            <div class="tool-card-number" data-i18n="index.step2_num">
-              Step 2
+          <div class="tool-card" data-tool="2">
+            <div class="tool-card-head">
+              <span class="tool-card-badge" data-i18n="index.step2_num">Step 2</span>
+              <img class="tool-card-icon" src="icons/tool2-production.svg" alt="" />
             </div>
             <h3 class="tool-card-title" data-i18n="index.step2_title">
               Production Calculator
@@ -157,17 +164,23 @@
             <p class="tool-card-desc" data-i18n="index.step2_desc">
               Select kiln tech and estimate biochar &amp; carbon credit yields.
             </p>
-            <a
-              href="tool2.html"
-              class="btn btn-primary btn-sm mt-4"
-              data-i18n="index.step2_btn"
-              >Open Tool 2 →</a
-            >
+            <div class="tool-card-foot">
+              <span class="status-badge status-todo js-status"
+                ><span class="status-dot"></span><span class="status-label">Not Started</span></span
+              >
+              <a
+                href="tool2.html"
+                class="btn btn-primary btn-sm"
+                data-i18n="index.step2_btn"
+                >Open Tool 2 →</a
+              >
+            </div>
           </div>
 
-          <div class="tool-card">
-            <div class="tool-card-number" data-i18n="index.step3_num">
-              Step 3
+          <div class="tool-card" data-tool="3">
+            <div class="tool-card-head">
+              <span class="tool-card-badge" data-i18n="index.step3_num">Step 3</span>
+              <img class="tool-card-icon" src="icons/tool3-logistics.svg" alt="" />
             </div>
             <h3 class="tool-card-title" data-i18n="index.step3_title">
               Logistics Planner
@@ -175,17 +188,23 @@
             <p class="tool-card-desc" data-i18n="index.step3_desc">
               Build transport routes and seasonality-based cost estimates.
             </p>
-            <a
-              href="tool3.html"
-              class="btn btn-primary btn-sm mt-4"
-              data-i18n="index.step3_btn"
-              >Open Tool 3 →</a
-            >
+            <div class="tool-card-foot">
+              <span class="status-badge status-todo js-status"
+                ><span class="status-dot"></span><span class="status-label">Not Started</span></span
+              >
+              <a
+                href="tool3.html"
+                class="btn btn-primary btn-sm"
+                data-i18n="index.step3_btn"
+                >Open Tool 3 →</a
+              >
+            </div>
           </div>
 
-          <div class="tool-card">
-            <div class="tool-card-number" data-i18n="index.step4_num">
-              Step 4
+          <div class="tool-card" data-tool="4">
+            <div class="tool-card-head">
+              <span class="tool-card-badge" data-i18n="index.step4_num">Step 4</span>
+              <img class="tool-card-icon" src="icons/tool4-revenue.svg" alt="" />
             </div>
             <h3 class="tool-card-title" data-i18n="index.step4_title">
               Revenue Streams
@@ -193,17 +212,23 @@
             <p class="tool-card-desc" data-i18n="index.step4_desc">
               Set pricing for biochar sales, carbon credits, and wood vinegar.
             </p>
-            <a
-              href="tool4.html"
-              class="btn btn-primary btn-sm mt-4"
-              data-i18n="index.step4_btn"
-              >Open Tool 4 →</a
-            >
+            <div class="tool-card-foot">
+              <span class="status-badge status-todo js-status"
+                ><span class="status-dot"></span><span class="status-label">Not Started</span></span
+              >
+              <a
+                href="tool4.html"
+                class="btn btn-primary btn-sm"
+                data-i18n="index.step4_btn"
+                >Open Tool 4 →</a
+              >
+            </div>
           </div>
 
-          <div class="tool-card">
-            <div class="tool-card-number" data-i18n="index.step5_num">
-              Step 5
+          <div class="tool-card" data-tool="5">
+            <div class="tool-card-head">
+              <span class="tool-card-badge" data-i18n="index.step5_num">Step 5</span>
+              <img class="tool-card-icon" src="icons/tool5-finance.svg" alt="" />
             </div>
             <h3 class="tool-card-title" data-i18n="index.step5_title">
               Site, Ops &amp; Finance
@@ -211,23 +236,30 @@
             <p class="tool-card-desc" data-i18n="index.step5_desc">
               CAPEX, OPEX, and lending assumptions for full feasibility.
             </p>
-            <a
-              href="tool5.html"
-              class="btn btn-primary btn-sm mt-4"
-              data-i18n="index.step5_btn"
-              >Open Tool 5 →</a
-            >
+            <div class="tool-card-foot">
+              <span class="status-badge status-todo js-status"
+                ><span class="status-dot"></span><span class="status-label">Not Started</span></span
+              >
+              <a
+                href="tool5.html"
+                class="btn btn-primary btn-sm"
+                data-i18n="index.step5_btn"
+                >Open Tool 5 →</a
+              >
+            </div>
           </div>
 
           <div
             class="tool-card"
+            data-tool="6"
             style="
               background: var(--color-primary-light);
               border-color: var(--color-primary-border);
             "
           >
-            <div class="tool-card-number" data-i18n="index.analysis_num">
-              Analysis
+            <div class="tool-card-head">
+              <span class="tool-card-badge" data-i18n="index.analysis_num">Analysis</span>
+              <img class="tool-card-icon" src="icons/tool6-results.svg" alt="" />
             </div>
             <h3 class="tool-card-title" data-i18n="index.analysis_title">
               Results &amp; Scenarios
@@ -235,7 +267,10 @@
             <p class="tool-card-desc" data-i18n="index.analysis_desc">
               Executive dashboard + stress-testing.
             </p>
-            <div class="flex gap-2 mt-4">
+            <span class="status-badge status-todo js-status mt-3" style="align-self:flex-start"
+              ><span class="status-dot"></span><span class="status-label">Not Started</span></span
+            >
+            <div class="tool-card-foot">
               <a
                 href="tool6.html"
                 class="btn btn-primary btn-sm flex-1 justify-center"
@@ -305,7 +340,67 @@
             currentId || BiocharI18n.t("index.welcome_default_name");
           document.getElementById("welcomeBack").classList.remove("hidden");
         }
+        renderToolStatuses();
       });
+
+      // Per-tool completion status driven by real saved data.
+      function renderToolStatuses() {
+        const data =
+          (window.BiocharEngine && BiocharEngine.loadProjectData()) || {};
+        const filled = (v) =>
+          v !== undefined &&
+          v !== null &&
+          v !== "" &&
+          !(typeof v === "number" && isNaN(v));
+        // "Complete" = the tool was saved (lastUpdated) with its primary field set.
+        const rules = {
+          1: (d) => filled(d.country) && Number(d.feedstockTonnes) > 0,
+          2: (d) => !!d.lastUpdated,
+          3: (d) => filled(d.totalAnnualLogisticsCost),
+          4: (d) => !!d.lastUpdated,
+          5: (d) => !!d.lastUpdated,
+        };
+        document.querySelectorAll(".tool-card[data-tool]").forEach((card) => {
+          const n = card.getAttribute("data-tool");
+          let state;
+          if (n === "6") {
+            // Analysis: complete once all inputs (through Tool 5) are saved.
+            const anyInput = [1, 2, 3, 4, 5].some((i) => data["tool" + i]);
+            state =
+              data.tool5 && data.tool5.lastUpdated
+                ? "complete"
+                : anyInput
+                ? "progress"
+                : "todo";
+          } else {
+            const d = data["tool" + n];
+            if (!d) state = "todo";
+            else state = rules[n] && rules[n](d) ? "complete" : "progress";
+          }
+          applyStatus(card.querySelector(".js-status"), state);
+        });
+      }
+
+      function applyStatus(el, state) {
+        if (!el) return;
+        const map = {
+          complete: ["status-complete", "common.status_complete", "Complete"],
+          progress: ["status-progress", "common.status_in_progress", "In Progress"],
+          todo: ["status-todo", "common.status_not_started", "Not Started"],
+        };
+        const [cls, key, fallback] = map[state];
+        el.classList.remove(
+          "status-complete",
+          "status-progress",
+          "status-todo"
+        );
+        el.classList.add(cls);
+        const label = el.querySelector(".status-label");
+        if (label)
+          label.textContent = window.BiocharI18n
+            ? BiocharI18n.t(key)
+            : fallback;
+      }
 
       function clearProject() {
         if (confirm(BiocharI18n.t("index.confirm_new"))) {
