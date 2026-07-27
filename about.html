@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-i18n="about.page_title">About — Biochar Calculator</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="engine.js"></script>
+    <script src="translations.js"></script>
+    <script src="i18n.js"></script>
+    <script src="auth.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .credit-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr; gap: 8px; }
+      @media (min-width: 640px) { .credit-list { grid-template-columns: 1fr 1fr; } }
+      .credit-name { font-weight: 700; color: var(--color-primary-deepest); font-size: 14px; }
+      .credit-role { font-size: 12px; color: var(--color-neutral-500); }
+    </style>
+  </head>
+
+  <body>
+    <!-- ── App Header ─────────────────────────────────────────── -->
+    <header class="app-header">
+      <a href="index.html" class="app-logo">
+        <div class="app-logo-mark"></div>
+        <span class="app-logo-name" data-i18n="common.header_h1"
+          >Biochar Calculator</span
+        >
+      </a>
+      <a
+        id="authHeaderLink"
+        href="login.html"
+        class="btn btn-ghost btn-sm hidden"
+        style="font-size: 0.8rem"
+        data-i18n="common.sign_in"
+        >Sign in →</a
+      >
+      <select
+        id="lang-select"
+        onchange="BiocharI18n.setLanguage(this.value)"
+        class="app-lang-select"
+      >
+        <option value="en">EN 🇺🇸</option>
+        <option value="es">ES 🇪🇸</option>
+        <option value="pt">PT 🇧🇷</option>
+      </select>
+    </header>
+
+    <!-- ── Page Content ───────────────────────────────────────── -->
+    <main class="page-content">
+      <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-8">
+          <h1
+            class="text-3xl font-extrabold mb-2"
+            style="color: var(--color-primary-deepest)"
+            data-i18n="about.heading"
+          >
+            Made By
+          </h1>
+          <p
+            class="text-sm max-w-2xl mx-auto"
+            style="color: var(--color-neutral-500)"
+            data-i18n="about.intro"
+          >
+            This calculator was built as a Climatebase Fellowship capstone
+            project by a cross-cohort team of volunteers, combining coffee &
+            cacao supply chain expertise with software and design to make
+            biochar project feasibility accessible to producers across Latin
+            America.
+          </p>
+        </div>
+
+        <div class="section-card">
+          <div class="section-card-header" data-i18n="about.section_core_team">
+            Core Team
+          </div>
+          <ul class="credit-list">
+            <li>
+              <div class="credit-name">Hillary Rodriguez</div>
+              <div class="credit-role" data-i18n="about.role_capstone_lead">
+                Capstone Lead
+              </div>
+            </li>
+            <li>
+              <div class="credit-name">Austin Wilson</div>
+              <div class="credit-role" data-i18n="about.role_software_engineer">
+                Software Engineer
+              </div>
+            </li>
+            <li>
+              <div class="credit-name">Shreya Sood</div>
+              <div class="credit-role" data-i18n="about.role_design">
+                Graphic Design &amp; UX
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="section-card">
+          <div class="section-card-header" data-i18n="about.section_cohort8">
+            Project Team — Cohort 8
+          </div>
+          <ul class="credit-list">
+            <li class="credit-name">Alejandra Prada</li>
+            <li class="credit-name">Natalia Garzon</li>
+            <li class="credit-name">Francisco Calise</li>
+            <li class="credit-name">Paula Chacon</li>
+            <li class="credit-name">Audrey Woodward</li>
+            <li class="credit-name">Elizabeth Fitton</li>
+            <li class="credit-name">Jimena Diaz Duran</li>
+            <li class="credit-name">Likhitha Yettela</li>
+          </ul>
+        </div>
+
+        <div class="section-card">
+          <div class="section-card-header" data-i18n="about.section_cohort9">
+            Project Team — Cohort 9
+          </div>
+          <ul class="credit-list">
+            <li class="credit-name">Bilal Tahir</li>
+            <li class="credit-name">Mark Pigot</li>
+            <li class="credit-name">Sacchin Patra</li>
+          </ul>
+        </div>
+
+        <div class="section-card">
+          <div
+            class="section-card-header"
+            data-i18n="about.section_special_thanks"
+          >
+            Special Thanks
+          </div>
+          <ul class="credit-list">
+            <li class="credit-name">Tom Miles</li>
+            <li class="credit-name">Matt Delaney</li>
+            <li class="credit-name">Monika Firl</li>
+            <li class="credit-name">Kathleen Draper</li>
+            <li class="credit-name">James Astuhuamán</li>
+            <li class="credit-name">Bryce Simmonds</li>
+            <li class="credit-name">Climatebase Fellowship team</li>
+          </ul>
+        </div>
+
+        <div class="text-center mt-8">
+          <a href="index.html" class="btn btn-secondary" data-i18n="about.back_home"
+            >← Back to Home</a
+          >
+        </div>
+      </div>
+    </main>
+
+    <!-- ── Footer ─────────────────────────────────────────────── -->
+    <footer class="app-footer">
+      <div class="footer-disclaimer-grid">
+        <div class="footer-card">
+          <div
+            class="footer-card-title"
+            data-i18n="common.footer_no_guarantee_label"
+          >
+            No Guarantee
+          </div>
+          <p class="footer-card-text" data-i18n="common.footer_no_guarantee">
+            Projections are based on user-entered data and are for illustrative
+            purposes only.
+          </p>
+        </div>
+        <div class="footer-card">
+          <div
+            class="footer-card-title"
+            data-i18n="common.footer_not_advice_label"
+          >
+            Not Financial Advice
+          </div>
+          <p class="footer-card-text" data-i18n="common.footer_not_advice">
+            Not a substitute for professional financial, legal, or agricultural
+            advice.
+          </p>
+        </div>
+        <div class="footer-card">
+          <div class="footer-card-title" data-i18n="common.footer_verify_label">
+            Verify All Data
+          </div>
+          <p class="footer-card-text" data-i18n="common.footer_verify">
+            Verify local costs, market prices, and regulations before investing.
+          </p>
+        </div>
+      </div>
+      <p class="footer-attr" data-i18n="common.cohort">
+        Climatebase Fellowship · Cohort 8 Capstone
+      </p>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        BiocharAuth.updateHeaderLink();
+      });
+    </script>
+  </body>
+</html>
